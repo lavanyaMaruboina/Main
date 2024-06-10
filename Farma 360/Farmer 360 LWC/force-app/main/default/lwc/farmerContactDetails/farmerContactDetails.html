@@ -1,0 +1,100 @@
+<template>
+    <div class="slds-scrollable_y" tabindex="0">
+    <div class="search-input">
+        <template if:true={handlSearchFunction}>
+        <lightning-input type="Search" variant="standard" name="Search" label="Search" onchange={handleSearchChange} ></lightning-input>
+    
+    </template>
+</div>
+    <template if:true={contactDetailsForm}>
+                <div class="mobile-view">
+                    <template for:each={contactDetails} for:item="contact" >
+                        <div key={contact.Id} class="tile-contact" data-id={contact.Id} onclick={handleCardClick}>
+                            <div class="name-class">{contact.Name}</div>
+                            <div class="email-phone">
+                                <span class="phone-class">{contact.Phone}</span>
+                                <span class="email-class">{contact.Email}</span>
+                            </div>
+
+                        </div>
+                    </template>
+                </div>
+
+                <div class="desktop-view">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={contactDetails}
+                        columns={contactColumns}
+                        onrowselection={handleRowSelection}
+                        oncellchange={handleCellChange}
+                        onsave={handleSave}
+                        draft-values={draftValues} >
+                    </lightning-datatable>
+                </div>
+        </template>
+    
+<!-- Contact Detail Section -->
+<div class="slds-col slds-size_12-of-12">
+    <template if:true={iscontactObj}>
+
+        <div class="slds-grid slds-wrap Farmer-Info-container">
+            <div class="slds-col slds-size_4-of-12 border-section">
+                <div class="farmer-info">Name</div>
+            </div>
+            <div class="slds-col slds-size_8-of-12 border-section">
+                <div class="farmer-info"> {contactObj.nameField}</div>
+            </div>
+            <div class="slds-col slds-size_4-of-12 border-section">
+                <div class="farmer-info">Phone</div>
+            </div>
+            <div class="slds-col slds-size_8-of-12 border-section">
+                <div class="farmer-info">{contactObj.phoneField}</div>
+            </div>
+            <div class="slds-col slds-size_4-of-12 border-section">
+                <div class="farmer-info">Email</div>
+            </div>
+            <div class="slds-col slds-size_8-of-12 border-section">
+                <div class="farmer-info">{contactObj.emailField}</div>
+            </div>
+            <div class="slds-align_absolute-center">
+            <lightning-button label="Back" onclick={handleBack} ></lightning-button>
+            </div>
+
+        </div>
+    </template>
+
+    <!-- Tabs Section -->
+    <template if:true={showLandDetailsForm}>
+        <c-get-contact-land-details contact-id={contactObj.idField}></c-get-contact-land-details>
+    </template>
+    <template if:true={showOrderDetailsForm}>
+        <c-get-contact-order-details contact-id={contactObj.idField} ></c-get-contact-order-details>
+    </template>
+    <template if:true={showHarvestDetailsForm}>
+        <c-get-contact-harvest-details contact-id={contactObj.idField}></c-get-contact-harvest-details>
+    </template>
+    <template if:true={showMapDetails}>
+        <c-reports-and-dashboards contact-id={contactObj.idField}></c-reports-and-dashboards>
+    </template>
+    <template if:true={showHandlerVisitNotes}>
+        <c-visit-contact-details contact-id={contactObj.idField}></c-visit-contact-details>
+    </template>
+    </div>
+
+</div>
+
+    
+    <div class="inside-footer">
+    <template if:true={tabsHandler}>
+                <div class="tabs-container">
+                    <template for:each={tabs} for:item="tab">
+                        <div key={tab.id} class={tab.className} data-label={tab.label} onclick={handleTabClick}>
+                            <img src={tab.logoUrl} class="tab-logo" />
+                            <span class="footer-label">{tab.label}</span>
+                        </div>
+                    </template>
+                    </div>
+    </template>
+    </div>
+
+</template>

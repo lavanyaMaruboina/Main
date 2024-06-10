@@ -1,0 +1,60 @@
+<template>
+    <div class="form-edit-container">
+      <template if:true={showContactForm}>
+          <div class="record-container"> 
+
+                <div class="heading">Farmer Details</div>
+                <lightning-input label="First Name" value={firstName} onchange={handleFirstNameChange}></lightning-input>
+                <lightning-input label="Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input>
+                
+                <div class="heading">Address</div>
+                <lightning-input label="Street" class="slds-col" value={mailingStreet} onchange={handleMailingStreetChange}></lightning-input>
+                <lightning-input label="City/Village" class="slds-col" value={mailingCity} onchange={handleMailingCityChange}></lightning-input>
+                <lightning-input label="State" class="slds-col" value={mailingState} onchange={handleMailingStateChange}></lightning-input>
+                <lightning-input label="Postal Code" class="slds-col" value={mailingPostalCode} onchange={handleMailingPostalCodeChange}></lightning-input>
+                <lightning-input label="Country" value={mailingCountry} onchange={handleMailingCountryChange}></lightning-input>
+                
+                <div class="heading">Communication</div>
+                <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange} required></lightning-input>
+                <lightning-input label="Phone" type="tel" value={phone} onchange={handlePhoneChange} required  minlength="10"
+                maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit phone number"></lightning-input>
+                
+                <div class="slds-align_absolute-center mar-top">
+                    <lightning-button label="Cancel" onclick={handleCancel} variant="neutral" class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button label="Save" onclick={handleSave} variant="brand" class="slds-m-left_x-small"></lightning-button>
+                </div>
+        </div>
+
+    </template>
+    </div>
+
+    <template if:true={contactDetails}>
+        <div class="record-container"> 
+        <div class="heading-contact-deails">Contact Details</div>
+                <div class="mobile-view">
+                    <template for:each={contact} for:item="contact">
+                        <div key={contact.Id} class="tile-contact" data-id={contact.Id}>
+                            <div class="head-text">Farmer Name : </div>
+                            <div class="main-text"> {contact.Name}</div>
+                            <div class="head-text">Farmer Phone : </div>
+                            <div class="main-text"> {contact.Phone}</div>
+                            <div class="head-text">Farmer Email : </div>
+                            <div class="main-text">{contact.Email}</div>
+                        </div>
+                    </template>
+                </div>
+                </div>
+                
+            <div class="slds-align_absolute-center">
+                <lightning-button label="Back" onclick={handleBack} variant="neutral" class="slds-m-left_x-small"></lightning-button>
+                <lightning-button label="Create Land" onclick={handleCreateLand} variant="brand" class="slds-m-left_x-small"></lightning-button>
+            </div>
+                
+
+    </template>
+
+    <template if:true={landForms}>
+        <c-create-land-details-form contact-id={contactId}> </c-create-land-details-form>
+    </template>
+
+</template>

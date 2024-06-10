@@ -1,0 +1,106 @@
+<template>
+
+    <template if:false={isInventorySelected}>
+        <!-- Dealer and Inventory Search Component -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
+            
+              <div class="heading">Inventory and Dealer Details </div>
+              <div class="search-input">
+                        <lightning-input 
+                            type="search" 
+                            label="Search Dealer" 
+                            onchange={handleAccountSearch}
+                            value={selectedAccountName}>
+                        </lightning-input>
+                    </div>
+
+                    <template if:true={accountData}>      
+                        <lightning-datatable
+                            key-field="Id"
+                            data={accountData}
+                            columns={accountColumns}
+                            hide-checkbox-column="true"
+                            onrowaction={handleAccountSelect}>
+                        </lightning-datatable>
+                    </template>
+                <template if:true={isInventorySearchDisabled}>
+                    <div class="slds-m-around_medium">
+                        <lightning-input 
+                            type="search" 
+                            label="Search Inventory" 
+                            onchange={handleInventorySearch}>
+                        </lightning-input>
+                    </div>
+            
+                    <template if:true={inventoryData}>
+                        <lightning-datatable
+                            key-field="Id"
+                            data={inventoryData}
+                            columns={inventoryColumns}
+                            hide-checkbox-column="true"
+                            onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </template>
+                    </template>
+
+            
+            </div>
+        </div>
+    </template>
+
+    <template if:true={isInventorySelected}>
+        <!-- Inventory Details Component -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
+               <lightning-card title="Inventory Details" icon-name="standard:inventory">
+    <div class="slds-m-around_medium">
+        <template if:true={selectedInventory}>
+            <p><strong>Name:</strong> {selectedInventory.Name}</p>
+            <template if:true={selectedInventory.Quntity__c}>
+                <p><strong>Quantity:</strong> {selectedInventory.Quntity__c}</p>
+            </template>
+            <template if:false={selectedInventory.Quntity__c}>
+                <p><strong>Quantity:</strong> </p>
+            </template>
+        
+            <template if:true={selectedInventory.Product__r}>
+                <p><strong>Product:</strong> {selectedInventory.Product__r.Name}</p>
+            </template>
+            <template if:false={selectedInventory.Product__r}>
+                <p><strong>Product:</strong> </p>
+            </template>
+            <template if:true={selectedInventory.Active__c}>
+                <p><strong>Active:</strong> {selectedInventory.Active__c}</p>
+            </template>
+            <template if:false={selectedInventory.Active__c}>
+                <p><strong>Active:</strong> </p>
+            </template>
+           
+            <template if:true={selectedInventory.Address__c}>
+                <p><strong>Address: </strong> 
+                    {selectedInventory.Address__c.street}, 
+                    {selectedInventory.Address__c.city}, 
+                    {selectedInventory.Address__c.state}, 
+                    {selectedInventory.Address__c.postalCode}, 
+                    {selectedInventory.Address__c.country}
+                </p>
+            </template>
+            <template if:false={selectedInventory.Address__c}>
+                <p><strong>Address:</strong> </p>
+            </template>
+            <template if:true={selectedInventory.Dealer__r}>
+                <p><strong>Dealer:</strong> {selectedInventory.Dealer__r.Name}</p>
+            </template>
+            <template if:false={selectedInventory.Dealer__r}>
+                <p><strong>Dealer:</strong> </p>
+            </template>
+        </template>
+        <br/>
+        <button class="slds-button slds-button_neutral" onclick={goBack}>Back</button>
+    </div>
+</lightning-card>
+            </div>
+        </div>
+    </template>
+</template>

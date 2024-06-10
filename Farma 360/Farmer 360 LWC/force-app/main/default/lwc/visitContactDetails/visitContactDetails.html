@@ -1,0 +1,75 @@
+<template>
+    <div class="container">
+    <div class="heading">Visit Details</div>
+        <template if:true={visitList}>
+        <div class="slds-align_absolute-center mar-top">
+            <lightning-button label="Create Visit" onclick={handleVisit} class="slds-m-bottom_small"></lightning-button>
+            <lightning-button label="Cancel" onclick={handlecancel} class="slds-m-bottom_small"></lightning-button>
+        </div>
+
+            <div class="slds-scrollable_y">
+                <div class="order-product-table">
+                <lightning-datatable
+                 class="slds-max-medium-table_stacked-horizontal slds-table_striped slds-table_header-hidden"
+                    key-field="Id"
+                    data={visits}
+                    columns={columns}
+                    onrowselection={handleRowSelection}>
+                </lightning-datatable>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={showVisitForm}>
+            <lightning-record-edit-form object-api-name="Visit__c" onsubmit={handleSave} onsuccess={handleSuccess} onerror={handleError}>
+                <div class="slds-p-around_medium form-container">
+                    <lightning-input-field field-name="Name" label="Visit Name" name="Name" onchange={handleInputChange}></lightning-input-field>
+
+                    <lightning-input-address
+                            label="Address"
+                            onchange={handleAddressChanges}
+                            street-label="Street"
+                            city-label="City"
+                            country-label="Country"
+                            province-label="State"
+                            postal-code-label="Pin Code"
+                            street={address.street}
+                            city={address.city}
+                            country={address.country}
+                            province={address.province}
+                            postal-code={address.postalCode}
+                            name={address.street}
+                            >
+                        </lightning-input-address>
+
+                        <lightning-input-field field-name="Visit_Type__c" label="Date" name="Visit_Type__c" onchange={handleInputChange}></lightning-input-field>
+
+                    <lightning-input-field field-name="Date__c" label="Date" name="Date__c" onchange={handleInputChange}></lightning-input-field>
+                    <lightning-input-field field-name="Customer__c" label="Customer" value={contactId} disabled></lightning-input-field>
+                    <lightning-input-field field-name="Visit_Notes__c" label="Visit Notes" name="Visit_Notes__c" onchange={handleInputChange}></lightning-input-field>
+
+                    <!-- Camera functionality -->
+                    <div class="slds-align_absolute-center mar-top">
+                    <div class="camera-wrapper">
+                        <lightning-button label="Open Camera" class="slds-m-left_xx-small" onclick={initCamera}></lightning-button>
+                        <lightning-button label="Capture Image" class="slds-m-left_xx-small" onclick={captureImage}></lightning-button>
+                        <lightning-button label="Save Image" class="slds-m-left_xx-small" onclick={sendImageToApex}></lightning-button>
+                    </div>
+                    </div>
+                    <div>
+                           <div> <video class="videoElement" autoplay></video></div>
+                            <div><canvas class="slds-hide canvas"></canvas></div>
+                           <div> <img src="" class="slds-hide imageElement" alt="captured image"/></div>
+                    
+                    </div>
+                </div>
+                <div class="slds-align_absolute-center mar-top">
+                 <lightning-button label="Back" onclick={handleBack} class="slds-m-bottom_small"></lightning-button>
+                 <lightning-button label="Save" type="submit" class="slds-m-bottom_small" ></lightning-button>
+                </div>
+                <!--<lightning-button label="Clear" onclick={clearAll} class="slds-m-bottom_small slds-col"></lightning-button>-->
+            </lightning-record-edit-form>
+        </template>
+        </div>
+
+</template>

@@ -1,0 +1,114 @@
+/* headerWithSearch.css */
+
+/* General header styles */
+.header {
+    padding: 20px;
+    background-color:rgb(255, 182, 47);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    flex-wrap: wrap; /* Allow items to wrap */
+}
+.nav-bar{
+    background-color: rgb(143, 78, 8);
+}
+
+/* Logo styles */
+.logo {
+    font-size: 24px; /* Default size */
+    font-weight: bold;
+    margin-bottom: 10px; /* Add margin bottom to separate from search bar */
+    display: flex; /* Add display flex to the logo container */
+    align-items: center; /* Center items vertically */
+}
+
+img {
+    max-width: 17%;
+    height: auto;
+}
+
+/* Input styles */
+.input-container {
+    display: flex; /* Use flexbox for input and search button */
+    align-items: center; /* Center items vertically */
+}
+
+input[type="text"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px; /* Set a fixed width for the input */
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #66afe9;
+}
+
+/* Navigation styles */
+nav ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px; /* Adjust spacing between nav items */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+/* headerWithSearch.css */
+
+/* Navigation styles */
+.nav-bar {
+    text-align: center; /* Center align the content */
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px; /* Adjust spacing between nav items */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Mobile view adjustments */
+@media only screen and (max-width: 600px) {
+    .logo {
+        font-size: 18px; /* Decrease size for mobile view */
+        width: 100%; /* Make logo fill the container */
+        text-align: center; /* Center the logo */
+        margin-bottom: 20px; /* Increase bottom margin */
+    }
+    input[type="text"] {
+        width: 100%; /* Make search bar fill the container */
+    }
+    nav ul li {
+        display: block; /* Display nav items vertically on mobile */
+        margin-left: 0; /* Remove margin between nav items */
+        margin-top: 10px; /* Add margin on top of each nav item */
+    }
+}

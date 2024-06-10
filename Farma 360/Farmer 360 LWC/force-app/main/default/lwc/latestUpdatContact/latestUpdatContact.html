@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="Contact Search and Update" icon-name="standard:contact">
+        <div class="slds-p-around_medium">
+            <lightning-input type="search" label="Search" onchange={handleSearchKeyChange}></lightning-input>
+        </div>
+        
+        <template if:true={contactDetailsForm}>
+            <template if:true={contactDetails}>
+                <div class="slds-scrollable_x" style="height:20rem;width:20rem" tabindex="0">
+                    <div class="slds-text-longform" style="width:200%">
+                        <div class="datatable-container">
+                            <lightning-datatable
+                                key-field="Id"
+                                data={contactDetails}
+                                columns={columns}
+                                onsave={handleSave}
+                                draft-values={draftValues}>
+                            </lightning-datatable>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,54 @@
+.slds-card__body {
+    padding: 1rem;
+}
+
+.form-container {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.slds-card__header-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+    .mobile-view {
+        display:none;
+    }
+
+    .heading{
+        font-size: 12px;
+        background-color: #6da93b;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 6px;
+        color: white;
+        margin: 15px 0px 0px 0px;
+    }
+    .tile-harvest{
+        background-color: #27904ae8;
+        border-radius: 9px;
+        margin: 20px 0px;
+        padding: 20px 16px;
+        border-top: 2px dotted white;
+        border-bottom: 2px dotted white;
+    }
+    .tile-land{
+        margin: 14px 5px;
+        border-radius: 10px;
+        background-color: #178000;
+        color: white;
+        padding: 12px;
+        border-bottom: 2px dotted;
+        font-weight: 600;
+    }
+    .record-container{
+        padding: 10px;
+    }
+    .land-details{
+        text-align: center;
+        font-size:14px;
+    }
+
+}

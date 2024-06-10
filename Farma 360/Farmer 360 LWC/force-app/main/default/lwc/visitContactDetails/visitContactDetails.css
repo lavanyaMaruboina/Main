@@ -1,0 +1,40 @@
+@media (max-width: 767px) {
+    .heading{
+        font-size: 14px;
+        background-color: #6da93b;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 3px;
+        color: white;
+        padding:10px;
+    }
+	
+	.green-button {
+		font-size: 14px !important;
+		padding: 0.5em !important;
+		background-color: #6da93b !important;
+		color: white !important;
+		border: none !important;
+		padding: 0.5em 1em !important;
+		border-radius: 0.25em !important;
+	}
+	.mar-top{
+		margin-top: 5px;
+	}
+	.container{
+		margin-bottom:50px;
+	}
+	.green-button {
+		background-color: green !important;
+		color: white !important;
+		border: none !important;
+		padding: 0.5em 1em !important;
+		border-radius: 0.25em !important;
+		font-size: 14px !important;
+		padding: 0.5em !important;
+	}
+	.videoElement{
+		width:100%;
+	}
+
+}

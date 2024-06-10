@@ -1,0 +1,150 @@
+.custom-button {
+    margin: 0 0.5rem; /* Add margin between buttons */
+    background-color: #cedbe7; /* Change button background color */
+    color: rgb(164, 42, 192); /* Change button text color */
+    border-radius: 0.25rem; /* Add button border radius */
+    padding: 0.5rem 1rem; /* Add button padding */
+    font-size: 0.7rem; /* Change button font size */
+    text-transform: uppercase; /* Uppercase button text */
+    letter-spacing: 0.05rem; /* Add letter spacing */
+}
+.slds-page-header__name-title h1 span {
+    font-size: 0.7rem; /* Adjust the font size as needed */
+}
+.tile-contact{
+    cursor: pointer;
+    padding: 8px 15px;
+    margin: 3px 0px;
+    border-radius: 5px;
+    background: linear-gradient(356.31deg, #e1e3f4 17.37%, #ffffff 70.19%);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    
+}
+.search-input{
+    margin-top: 5px;
+}
+.tile-contact:hover {
+    background-color: #d3e4fb;
+}
+.farmer-info{
+    font-size: 14px;
+    font-weight: 600;
+}
+.Farmer-Info-container{
+    padding:5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .desktop-view {
+        display:none;
+    }
+        .tabs-container {
+        overflow-x: scroll; /* Enable horizontal scrolling on smaller screens */
+    }
+
+    .tab {
+        flex: 0 0 auto; /* Prevent tabs from resizing to fit the container */
+    }
+    .tab-logo{
+        width:20px;
+    }
+    .footer-label{
+    padding: 6px;
+    font-size: 13px;
+
+    }
+    .inside-footer{
+        position: fixed;
+        bottom: 3%;
+        right: 0;
+        left: 0;
+        z-index: 999;
+    }
+    .border-section{
+        border-bottom:1px dotted grey;
+    }
+    .farmer-info{
+        font-size: 14px;
+        font-weight: 600;
+        padding:10px;
+    }
+    
+}
+
+@media only screen and (min-width: 601px) {
+    .mobile-view {
+        display:none;
+    }
+
+    .footer-label{
+        font-size: 12px;
+    }
+}
+
+.tabs-container {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    background-color: #1644bc;
+    justify-content: space-around;
+}
+
+.tags-unselected{
+    flex: 1 0 auto;
+    padding: 8px 5px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: white;
+    border-right: 1px dotted white;
+}
+.tab-logo{
+    width:20px;
+}
+
+    .tags-selected{
+    flex: 1 0 auto;
+    padding: 8px 5px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: white;
+    border-right: 1px dotted white;
+        background-color: #0f296c;
+    } 
+    .footer-label{
+    padding: 10px 10px 10px 5px;
+    font-size: 13px;
+    }
+
+.tab:hover {
+    background-color: #0f296c;
+}
+
+.name-class{
+    font-size: 12px;
+    font-weight: 600;
+}
+.email-phone {
+    display: flex;
+    justify-content: space-between;
+}
+
+.phone-class {
+    font-size: 12px;
+    text-align: left; /* Optional, as text aligns left by default */
+}
+
+.email-class {
+    font-size: 12px;
+    text-align: right;
+}
+@media only screen and (max-width: 600px) {
+    .tabs-container {
+        overflow-x: scroll; /* Enable horizontal scrolling */
+    }
+}

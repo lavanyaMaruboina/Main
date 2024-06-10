@@ -1,0 +1,188 @@
+<template>
+    <div class="container">
+    <!-- Order List Section -->
+    <template if:true={OrderDatatable}>
+        <div class="heading">All Orders</div>
+        <div class="slds-align_absolute-center">
+            <lightning-button label="Create Order" onclick={handleCreateOrder} class="slds-m-bottom_small"></lightning-button>
+    </div>
+            <div class="desktop-view">
+            <div class="slds-scrollable_x">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={orderDetails}
+                        columns={columns}
+                        onrowselection={handleOrderRowSelection}
+                        oncellchange={handleCellChange}
+                        draft-values={draftValues}>
+                    </lightning-datatable>
+                </div>
+            </div>
+
+    </template>
+    <div class="mobile-view">
+        <div class="slds-scrollable_y scroll-container">
+            <template if:true={OrderDatatable}>
+                <template for:each={orderDetails} for:item="order">
+                    <div key={order.Id} class="tile-order" data-id={order.Id}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Order Number</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.OrderNumber}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Start Date</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.EffectiveDate}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>End Date</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.EndDate}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Status</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.Status}</p>
+                            </div>
+                        </div>
+                        <div class="slds-align_absolute-center">
+                            <lightning-button label="Add Products" data-id={order.Id} onclick={handleAddProducts} class="slds-m-left_x-small"></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
+    <!-- Order Detail Section -->
+    <template if:true={OrderDetailsForm}>
+        <div class="heading">Create Order</div>
+        <div class="record-container"> 
+            <div class="slds-m-around_medium">
+                <lightning-button onclick={handleBack} variant="icon" icon-name="action:back"></lightning-button>
+                <lightning-input label="Order Number" value={OrderNumber} onchange={handleFieldChange} data-field="OrderNumber"></lightning-input>
+                <lightning-input label="Status" value={selectedRows.Status} onchange={handleFieldChange} data-field="Status"></lightning-input>
+                <lightning-input label="Start Date" value={EffectiveDate} onchange={handleFieldChange} data-field="EffectiveDate"></lightning-input>
+                <lightning-input label="End Date" value={EndDate} onchange={handleFieldChange} data-field="EndDate"></lightning-input>
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning-button label="Add Products" onclick={handleAddProducts}  class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+
+    </template>
+
+    <!-- Order Form Section -->
+    <template if:true={orderForm}>
+        
+        <div class="heading">Create New Order</div>
+        <div class="slds-scrollable_x">
+        <div class="record-container"> 
+            <div class="slds-p-around_medium">
+                <lightning-input type="search" label="Dealer Name" value={accountName} onchange={handleAccountSearch} required></lightning-input>
+                <template if:true={accounts.length}>
+                    <ul class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                        <template for:each={accounts} for:item="account">
+                            <li key={account.Id} class="slds-dropdown__item">
+                                <lightning-button variant="base" label={account.Name} onclick={selectAccount} data-id={account.Id}></lightning-button>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                <lightning-input label="Contact Name" value={contactName} onchange={handleContactChange} disabled></lightning-input>
+                <lightning-combobox
+                    name="status"
+                    label="Status"
+                    value={selectedStatus}
+                    placeholder="Select Status"
+                    options={statusOptions}
+                    onchange={handleStatusChange}>
+                </lightning-combobox>
+                <lightning-input label="Order Start Date" class="slds-col" value={orderStart} type="date" onchange={handleOrderStartChange} required></lightning-input>
+                <lightning-input label="End Date" class="slds-col" value={endDate} type="date" onchange={handleEndDateChange} required></lightning-input>
+                <lightning-layout>
+                    <lightning-layout-item size="12" medium-device-size="12" padding="around-medium">
+                        <lightning-input-address address-label="Billing Address" street-label="Street" city-label="City"
+                            country-label="Country" province-label="State/Province" postal-code-label="Zip/Postal Code"
+                            onchange={addressChange} class="validate" show-address-lookup>
+                        </lightning-input-address>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <div class="slds-align_absolute-center">
+                <lightning-button label="Back" onclick={handleBack} class="slds-m-top_small"></lightning-button>
+                <lightning-button label="Save" onclick={handleSave} class="slds-m-top_small"></lightning-button>
+               
+            </div>
+            </div>
+            </div>
+            </div>
+            
+    </template>
+
+    <!-- Add Products Section -->
+    <template if:true={showProductData}>
+        <div class="order-product-table">
+            <lightning-datatable
+                class="slds-max-medium-table_stacked-horizontal slds-table_striped slds-table_header-hidden"
+                key-field="Id"
+                data={dataTableColumns}
+                columns={productColumns}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+        </div>
+        <div class="slds-align_absolute-center">
+            <button class="slds-button" onclick={backToOrderDataTable}>Cancel</button>
+            <button class="slds-button" onclick={ShowSelectedLineItems}>Next</button>
+        </div>
+    </template>
+
+    <!-- Edit Products Section -->
+    <template if:true={showEditView}>
+        <div class="order-product-table">
+            <lightning-datatable
+                    class="slds-max-medium-table_stacked-horizontal slds-table_striped slds-table_header-hidden"
+                    key-field="Id"
+                    data={productLineItems}
+                    columns={editProductColumns}
+                    draft-values={draftValues}
+                    hide-checkbox-column="true"
+                    onrowselection={handleRowEditSelection}
+                    oncellchange={handleCellChange}
+                    onsave={saveLineItems}>
+                </lightning-datatable>
+            </div>
+    </template>
+
+    <!-- Opportunity Line Items Section -->
+    <template if:true={showOpportunityLineItems}>
+        <lightning-card title="Opportunity Line Items">
+            <div class="slds-m-around_medium">
+                <lightning-datatable
+                    key-field="Id"
+                    data={opportunityLineItems}
+                    columns={opportunityLineItemColumns}>
+                </lightning-datatable>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- Saved Items Section -->
+    <template if:true={showSavedItems}>
+        <lightning-card title="Saved Line Items">
+            <div class="slds-m-around_medium">
+                <lightning-datatable
+                    key-field="Id"
+                    data={savedLineItems}
+                    columns={savedColumns}>
+                </lightning-datatable>
+            </div>
+        </lightning-card>
+    </template>
+    </div>
+
+</template>

@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Search Account">
+        <div class="slds-p-around_medium">
+            <lightning-input type="text" label="Search" value={searchTerm} onchange={handleSearchTermChange}></lightning-input>
+            <template if:true={accounts.data}>
+                <template for:each={accounts.data} for:item="account">
+                    <p key={account.Id}>{account.Name}</p>
+                </template>
+            </template>
+            <template if:true={accounts.error}>
+                <p>Error retrieving accounts: {accounts.error}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

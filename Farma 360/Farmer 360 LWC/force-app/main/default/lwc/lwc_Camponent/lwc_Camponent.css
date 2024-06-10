@@ -1,0 +1,33 @@
+.slds-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+  }
+  
+  .slds-input {
+    margin-bottom: 1rem;
+  }
+  
+  .slds-button {
+    margin-top: 1rem;
+  }
+  
+  .slds-modal {
+    width: 400px;
+  }
+  
+  .slds-modal__content {
+    padding: 1rem;
+  }
+  
+  .slds-modal__footer {
+    padding: 1rem;
+    text-align: right;
+  }
+  
+  .slds-backdrop {
+    opacity: 0.5;
+  }
+ .form-boss{
+    background-color:white;
+ }

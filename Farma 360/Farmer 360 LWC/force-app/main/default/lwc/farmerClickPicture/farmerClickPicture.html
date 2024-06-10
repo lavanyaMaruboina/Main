@@ -1,0 +1,28 @@
+<template>
+    <lightning-card>
+        <div class="slds-m-around_medium">
+            <lightning-input label="Visit Type" onchange={handleVisitNameChange} value={visitName}></lightning-input>
+            <lightning-input label="Visit Notes" onchange={handleVisitNoteChange} value={visitNotes}></lightning-input>
+            <lightning-input type="Customer" label="Customer" onchange={handleContactSearch} value={ContactSearch}></lightning-input>
+            <lightning-input type="datetime-local" label="Actual Start Time" onchange={handleActualStartTimeChange} value={actualStartTime}></lightning-input>
+            <lightning-input type="datetime-local" label="Actual End Time" onchange={handleActualEndTimeChange} value={actualEndTime}></lightning-input>
+            <lightning-button label="Save Visit" variant="brand" onclick={handleVisitSave}></lightning-button>
+        </div>
+    </lightning-card>
+
+     <div class="camera-wrapper">
+        <lightning-button label="Open Camera" class="slds-m-left_xx-small" onclick={initCamera}></lightning-button>
+        <lightning-button label="Capture Image" class="slds-m-left_xx-small" onclick={captureImage}></lightning-button>
+        <!-- <lightning-button label="Stop Video" class="slds-m-left_xx-small" onclick={stopCamera}></lightning-button> -->
+        <lightning-button label="Save Image" class="slds-m-left_xx-small" onclick={sendImageToApex}></lightning-button>
+    </div>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+            <video class="videoElement" autoplay></video>
+            <canvas class="slds-hide canvas"></canvas>
+        </div>
+        <div class="slds-col">
+            <img src="" class="slds-hide imageElement" alt="captured image"/>
+        </div>
+    </div>
+  </template>

@@ -1,0 +1,57 @@
+<template>
+    <div class="header">
+        <!--<img src={logoUrl} alt="Farma 360 Logo" class="logo"/>-->
+        <lightning-input type="search" label="Search" onchange={handleSearchChange}></lightning-input>
+    </div>
+
+    <!-- Modal component markup -->
+    <template if:true={showModal}>
+        <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            class="slds-modal slds-fade-in-open slds-modal_large slds-modal_large-responsive">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Search Results</h2>
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={handleCloseModal}>
+                        <lightning-icon icon-name="utility:close" size="small" alternative-text="Close"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" style="overflow-x: auto;">
+                    <!-- Display search results here -->
+                    <template if:true={personAccounts}>
+                        <lightning-datatable class="slds-text-color_default"
+                            key-field="Id"
+                            data={personAccounts}
+                            columns={accountColumns}
+                            hide-checkbox-column="true"
+                            onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </template>
+                    <template if:true={leads}>
+                        <lightning-datatable class="slds-text-color_default"
+                            key-field="Id"
+                            data={leads}
+                            columns={leadColumns}
+                            hide-checkbox-column="true"
+                            onrowaction={handleRowAction}>
+                        </lightning-datatable>
+                    </template>
+                    <template if:true={error}>
+                        <p class="slds-text-color_error">{error}</p>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <div class="nav-bar">
+        <nav>
+            <ul>
+                <li><a href="/leads">Lead</a></li>
+                <li><a href="/accounts">Account</a></li>
+            </ul>
+        </nav>
+    </div>
+</template>
