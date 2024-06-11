@@ -1,4 +1,4 @@
-public with sharing class visitContactDetails { 
+public without sharing class visitContactDetails { 
 
     @AuraEnabled(cacheable=true)
     public static List<Visit__c> getVisits(List<Id> Contactlistdetails) {
@@ -9,17 +9,17 @@ public with sharing class visitContactDetails {
     }
 
     @AuraEnabled
-    public static void saveVisit(Visit__c visit, AddressWrapper address) {
+    public static void saveVisit(Visit__c visit) {
         try {
 
-            system.debug('test..>>'+address);
+            // system.debug('test..>>'+address);
             system.debug('test..>>'+JSON.serializePretty(visit));
 
-            visit.Address__City__s = address.city;
-            visit.Address__CountryCode__s = address.country;
-            visit.Address__PostalCode__s = address.postalCode;
-            visit.Address__StateCode__s = address.province;
-            visit.Address__Street__s = address.street;
+            // visit.Address__City__s = address.city;
+            // visit.Address__CountryCode__s = address.country;
+            // visit.Address__PostalCode__s = address.postalCode;
+            // visit.Address__StateCode__s = address.province;
+            // visit.Address__Street__s = address.street;
 
             upsert visit;
         } catch (Exception e) {
@@ -27,24 +27,24 @@ public with sharing class visitContactDetails {
         }
     }
 
-    public class AddressWrapper {
-        @AuraEnabled
-        public String street { get; set; }
+    // public class AddressWrapper {
+    //     @AuraEnabled
+    //     public String street { get; set; }
         
-        @AuraEnabled
-        public String city { get; set; }
+    //     @AuraEnabled
+    //     public String city { get; set; }
         
-        @AuraEnabled
-        public String province { get; set; }
+    //     @AuraEnabled
+    //     public String province { get; set; }
         
-        @AuraEnabled
-        public String country { get; set; }
+    //     @AuraEnabled
+    //     public String country { get; set; }
         
-        @AuraEnabled
-        public String postalCode { get; set; }
+    //     @AuraEnabled
+    //     public String postalCode { get; set; }
         
-        // Constructor
-        public AddressWrapper(){}
+    //     // Constructor
+    //     public AddressWrapper(){}
         
-    }
+    // }
 }

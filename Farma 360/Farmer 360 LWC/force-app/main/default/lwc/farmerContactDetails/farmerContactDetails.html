@@ -7,19 +7,26 @@
     </template>
 </div>
     <template if:true={contactDetailsForm}>
-                <div class="mobile-view">
-                    <template for:each={contactDetails} for:item="contact" >
-                        <div key={contact.Id} class="tile-contact" data-id={contact.Id} onclick={handleCardClick}>
-                            <div class="name-class">{contact.Name}</div>
-                            <div class="email-phone">
-                                <span class="phone-class">{contact.Phone}</span>
+        <div class="mobile-view">
+            <template for:each={contactDetails} for:item="contact">
+                <div key={contact.Id} class="tile-contact slds-box slds-p-around_medium slds-m-bottom_small" data-id={contact.Id} onclick={handleCardClick}>
+                    <div class="slds-grid slds-gutters slds-wrap slds-align_center">
+                        <div class="slds-col slds-size_1-of-12">
+                            <div class="slds-align_absolute-center image-avatar">
+                                <img src={avatar} alt="Avatar">
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_11-of-12">
+                            <div class="name-class slds-text-heading_small">{contact.Name}</div>
+                            <div class="email-phone slds-text-body_regular">
+                                <span class="phone-class slds-m-right_medium">{contact.Phone}</span>
                                 <span class="email-class">{contact.Email}</span>
                             </div>
-
                         </div>
-                    </template>
+                    </div>
                 </div>
-
+            </template>
+        </div>
                 <div class="desktop-view">
                     <lightning-datatable
                         key-field="Id"
@@ -74,7 +81,9 @@
         <c-get-contact-harvest-details contact-id={contactObj.idField}></c-get-contact-harvest-details>
     </template>
     <template if:true={showMapDetails}>
-        <c-reports-and-dashboards contact-id={contactObj.idField}></c-reports-and-dashboards>
+        <c-farmer-reports contact-id={contactObj.idField}></c-farmer-reports>
+        <c-farmer-visit-reports contact-id={contactObj.idField}></c-farmer-visit-reports>
+        <c-farmer-order-reports contact-id={contactObj.idField}></c-farmer-order-reports>
     </template>
     <template if:true={showHandlerVisitNotes}>
         <c-visit-contact-details contact-id={contactObj.idField}></c-visit-contact-details>

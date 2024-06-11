@@ -6,9 +6,8 @@ import getIrrigationTypePicklistValues from '@salesforce/apex/AccountSearchContr
 import getLandDetails from '@salesforce/apex/AccountSearchController.getLandDetailstrue';
 import getLandsByContactId from '@salesforce/apex/AccountSearchController.getLandsByContactId';
 
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { LightningElement, api, track, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
+import { LightningElement, api, track, wire } from 'lwc';
 export default class CreateLandDetailsForm extends LightningElement {
     @track landName = '';
     @track soilChange = '';
@@ -254,6 +253,7 @@ export default class CreateLandDetailsForm extends LightningElement {
     handleFCR(event) {
         this.fCR = event.target.value;
     }
+
     handleAddHarvest(){
         console.log('land id is new>>',event.target.dataset.id);
         this.landDetailId = event.target.dataset.id;
@@ -286,8 +286,8 @@ export default class CreateLandDetailsForm extends LightningElement {
     createHarvest({ harvest: harvestRecord, landDetailId: this.landDetailId })
         .then(result => {
             console.log('harvestRecord==>>'+harvestRecord);
-            this.harvestdata = [...this.harvestdata, result];
-            alert('Harvest Created Successfully1234');
+            this.harvestdata = [result];
+            alert('Harvest Created Successfully');
             console.log('harvestdata creted==>>',JSON.stringify(this.harvestdata));
             
             this.fetchDetails(this.contactId);

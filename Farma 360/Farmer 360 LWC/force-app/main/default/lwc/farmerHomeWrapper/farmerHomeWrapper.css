@@ -315,5 +315,9 @@ header.sticky {
         height: 100%;
         display: none;
     }
+    .contacts,
+    .inventory{
+        cursor: pointer;
+    }
 
 }

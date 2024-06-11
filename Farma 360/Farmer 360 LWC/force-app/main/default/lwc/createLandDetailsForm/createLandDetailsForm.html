@@ -12,6 +12,23 @@
                     <lightning-input label="Total Area (Acres)" value={totalAreaNumber} onchange={handleAreaChange} type='number'></lightning-input>
                     <lightning-input label="Total Area Sowed (Acres)" value={totalAreaSowed} onchange={handleTotalArea} type='number'></lightning-input>
                     <lightning-combobox label="Irrigation" value={selectedStatus} options={statusOptions} onchange={handleIrrigationChange}></lightning-combobox>
+                    <lightning-input label="Longitude"></lightning-input>
+                    <lightning-input label="Latitude"></lightning-input>
+                    <!--Geo Fencing-->
+                    <lightning-layout>
+                        <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <lightning-map map-markers={markLocation}></lightning-map>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+
+                                <!-- <lightning-button variant="brand" type="submit" label="Update in record" class="slds-float_right"
+                                onclick={updateHandler}></lightning-button>-->
+                        
+                    
+                    </lightning-layout-item>
+                    </lightning-layout>
+                    <!--Geo Fencing-->
+
                     <div class="slds-var-m-around_medium slds-align_absolute-center">
                         <lightning-button label="Back" onclick={handleBack}  variant="neutral" class="slds-m-left_small"></lightning-button>
                         <lightning-button type="submit" label="Save" onclick={saveLand}  variant="brand" class="slds-m-left_small"></lightning-button>     
@@ -59,6 +76,7 @@
                             <div class="slds-col slds-size_6-of-12">
                                 <p> {land.Name}</p>
                             </div>
+                       
                             <div class="slds-col slds-size_6-of-12">
                                 <div class="farmer-info">Soil Detail</div>
                             </div>
@@ -129,7 +147,14 @@
                         <p>{newLand.Contact__r.Name}</p>
                     </div>
                     <div class="slds-col slds-size_6-of-12">
-                        <div class="farmer-info">Soil Detail</div>
+                            <div class="farmer-info">Unique Number :</div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                            <p> {newLand.Unique_Number__c}</p>
+                    </div>
+                     </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="farmer-info">Soil Detail :</div>
                     </div>
                     <div class="slds-col slds-size_6-of-12">
                         <p>{newLand.Soil_Detail__c}</p>
@@ -140,8 +165,6 @@
                     <div class="slds-col slds-size_6-of-12">
                         <p>{newLand.Irrigation_Type__c}</p>
                     </div>
-                </div>
-          
             </div>
             <div class="slds-var-m-around_medium slds-align_absolute-center">
                 <lightning-button

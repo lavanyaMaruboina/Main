@@ -50,7 +50,7 @@ export default class FarmerContactDetails extends LightningElement {
         }
         reader.readAsDataURL(file)
     }*/
-    
+        avatar = Icons + '/farmer360/KipiIcons/HomePage/avatar.png';
     get acceptedFormats() {
         return ['.xlsx', '.xls', '.csv', '.png', '.doc', '.docx', '.pdf', '.jpg'];
     }
@@ -440,7 +440,7 @@ showToast(title, message, variant) {
         { id: 3, label: 'Order Details', logoUrl: this.order, className: 'tags-unselected', selected: false },
         { id: 4, label: 'Reports', logoUrl: this.report, className: 'tags-unselected', selected: false },
         { id: 5, label: 'Visit', logoUrl: this.visit, className: 'tags-unselected', selected: false },
-        { id: 6, label: 'Map', logoUrl: this.map, className: 'tags-unselected', selected: false }
+        // { id: 6, label: 'Map', logoUrl: this.map, className: 'tags-unselected', selected: false }
         // { id: 7, label: 'Visit Notes', logoUrl: this.notes, className: 'tags-unselected', selected: false },
         // { id: 8, label: 'Picture', logoUrl: this.picture, className: 'tags-unselected', selected: false }
     ];
@@ -483,15 +483,15 @@ showToast(title, message, variant) {
             case 'Visit':
                 this.handleVisitNotesClick(event);
                 break;
+            // case 'Reports':
+            //     this.handleReportClick(event);
+            //     break;
             case 'Reports':
-                this.handleReportClick(event);
-                break;
-            case 'Map':
                 this.handleMapClick(event);
                 break;
-            case 'Picture':
-                this.handlePictureClick(event);
-                break;
+            // case 'Picture':
+            //     this.handlePictureClick(event);
+            //     break;
             default:
                 break;
         }

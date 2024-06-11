@@ -4,6 +4,7 @@ import getVisits from '@salesforce/apex/visitContactDetails.getVisits';
 import saveVisit from '@salesforce/apex/visitContactDetails.saveVisit';
 import uploadFile from '@salesforce/apex/ImageController.uploadFile';
 import { refreshApex } from '@salesforce/apex';
+import Icons from '@salesforce/resourceUrl/farmer360';
 import Address from '@salesforce/schema/Asset.Address';
 
 const columns = [
@@ -12,7 +13,7 @@ const columns = [
     { label: 'Visit Type', fieldName: 'Visit_Type__c' },
     { label: 'Date', fieldName: 'Date__c' }, 
     { label: 'Visit Notes', fieldName: 'Visit_Notes__c', type: 'text' },
-    { label: 'Address', fieldName: 'fullAddress' },
+    //{ label: 'Address', fieldName: 'fullAddress' },
 ];
 
 export default class VisitContactDetails extends NavigationMixin(LightningElement) {
@@ -24,25 +25,28 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
     @api contactId;
     wiredVisitsResult;
 
-    address = {
+
+    camera = Icons + '/farmer360/KipiIcons/HomePage/camera.png';
+
+   /* address = {
         street: '',
         city: '',
         province: '',
         country: '',
         postalCode: ''
-    };
-
+    };*/
+    @track isCameraInitialized = false;
     videoElement;
     canvasElement;
     capturedImageData;
 
     visit = {
         Name: '',
-        Enter_Address__c: '',
-        Street__c: '',
-        State__c: '',
-        Country__c: '',
-        Zip_Code__c: '',
+        //Enter_Address__c: '',
+        //Street__c: '',
+        //State__c: '',
+        //Country__c: '',
+        //Zip_Code__c: '',
         Date__c: '',
         Customer__c: '',
         Visit_Notes__c: ''
@@ -55,7 +59,7 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
             this.visits = result.data.map(visit => ({
                 ...visit,
                 CustomerName: visit.Customer__r ? visit.Customer__r.Name : "",
-                fullAddress: `${visit.Address__Street__s || ''}, ${visit.Address__City__s || ''}, ${visit.Address__StateCode__s || ''}, ${visit.Address__CountryCode__s || ''}, ${visit.Address__PostalCode__s || ''}`.replace(/(, )+/g, ', ').replace(/^, |, $/g,'')
+                //fullAddress: `${visit.Address__Street__s || ''}, ${visit.Address__City__s || ''}, ${visit.Address__StateCode__s || ''}, ${visit.Address__CountryCode__s || ''}, ${visit.Address__PostalCode__s || ''}`.replace(/(, )+/g, ', ').replace(/^, |, $/g,'')
             }));
 
             console.log('visits>>',JSON.stringify(this.visits));
@@ -66,14 +70,17 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
     }
 
     renderedCallback() {
-        this.videoElement = this.template.querySelector('.videoElement');
-        this.canvasElement = this.template.querySelector('.canvas');
+        if (!this.videoElement) {
+            this.videoElement = this.template.querySelector('.videoElement');
+            this.canvasElement = this.template.querySelector('.canvasElement');
+        }
     }
 
     async initCamera() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             try {
                 this.videoElement.srcObject = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                this.isCameraInitialized = true;
             } catch (error) {
                 console.error('Error accessing camera: ', JSON.stringify(error));
             }
@@ -94,11 +101,8 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
             imageElement.setAttribute('src', this.capturedImageData);
             imageElement.classList.add('slds-show');
             imageElement.classList.remove('slds-hide');
-
-            if (this.videoElement && this.videoElement.srcObject) {
-                this.videoElement.srcObject.getTracks().forEach((track) => track.stop());
-                this.videoElement.srcObject = null;
-            }
+            
+            // Do not stop the camera here; keep it running until the image is sent
         }
         console.log('Image>>>>>', this.capturedImageData);
     }
@@ -113,6 +117,13 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
                     contactId: this.contactId 
                 });
                 console.log('Image sent successfully: ', response);
+                
+                // Stop the camera and update the state after sending the image
+                if (this.videoElement && this.videoElement.srcObject) {
+                    this.videoElement.srcObject.getTracks().forEach((track) => track.stop());
+                    this.videoElement.srcObject = null;
+                    this.isCameraInitialized = false;
+                }
             } catch (error) {
                 console.error('Error sending image to Apex: ', error);
             }
@@ -120,6 +131,7 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
             console.error('No image data to send');
         }
     }
+
 
     handleVisit() {
         this.showVisitForm = true;
@@ -145,11 +157,11 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
     }
 
 
-    handleAddressChanges(event){
+    /*handleAddressChanges(event){
         console.log('the adress is>>',JSON.stringify(event.detail));
         this.address = event.detail;
         console.log('the adress is>>',this.address.country);
-    }
+    }*/
 
     handleInputChange(event){
         console.log('name is>>', event.target.name);
@@ -172,7 +184,7 @@ export default class VisitContactDetails extends NavigationMixin(LightningElemen
         console.log('the adress is Keval>>>',this.fields);
         console.log('the adress is>>>',this.fields);
 
-        saveVisit({ visit: fields, address: this.address})
+        saveVisit({ visit: fields}) //address: this.address})
             .then(() => {
                 console.log('the visit is saved');
                 this.handleSuccess();

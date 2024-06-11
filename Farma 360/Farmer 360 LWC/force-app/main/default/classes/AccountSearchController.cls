@@ -133,7 +133,7 @@ public without sharing class AccountSearchController {
     @AuraEnabled(cacheable=true)
     public static Contact getContactDetails(Id contactId) {
         try {
-            return [SELECT Id, Name, Phone, Email FROM Contact WHERE Id = :contactId LIMIT 1];
+            return [SELECT Id, Name, Phone, Email,DOB__c,Aadhar_Number__c,Sub_Type__c,Type_of_Farmer__c,PAN_Card__c,MailingStreet FROM Contact WHERE Id = :contactId LIMIT 1];
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -185,13 +185,13 @@ public without sharing class AccountSearchController {
     @AuraEnabled
     public static Land_detals__c getLandDetails(Id contactId) {
         
-        return [SELECT Id, Name,Contact__c,Soil_Detail__c, Irrigation_Type__c from Land_detals__c where Contact__c = :contactId];
+        return [SELECT Id, Name,Contact__c,Soil_Detail__c,Unique_Number__c, Irrigation_Type__c from Land_detals__c where Contact__c = :contactId];
     }
     //Using in createLandDeatilsForm
     @AuraEnabled
     public static Land_detals__c getLandDetailstrue(Id contactId) {
         
-        return [SELECT Id, Name,Contact__r.Name,Soil_Detail__c, Irrigation_Type__c from Land_detals__c 
+        return [SELECT Id, Name,Contact__r.Name,Unique_Number__c,Soil_Detail__c, Irrigation_Type__c from Land_detals__c 
                 WHERE Contact__c = :contactId 
                 ORDER BY CreatedDate 
                 DESC 
@@ -220,11 +220,11 @@ public without sharing class AccountSearchController {
     //     return landWrapperList;
     // }
     
-    @AuraEnabled()
+    @AuraEnabled
     public static List<Land_detals__c> getLandsByContactId(Id contactId) {
         system.debug('fetching the contacts>>'+contactId);
         List<Land_detals__c> lands = [
-            SELECT Id, Name, Soil_Detail__c, Irrigation_Type__c,
+            SELECT Id, Name, Soil_Detail__c, Irrigation_Type__c,Unique_Number__c,
             (SELECT Id, Name, Stocking_Density_in_Millions__c, Cum_feed_MT__c 
              FROM Harvests__r)
             FROM Land_detals__c

@@ -25,7 +25,7 @@
                 <div class="slds-p-around_medium form-container">
                     <lightning-input-field field-name="Name" label="Visit Name" name="Name" onchange={handleInputChange}></lightning-input-field>
 
-                    <lightning-input-address
+                    <!--<lightning-input-address
                             label="Address"
                             onchange={handleAddressChanges}
                             street-label="Street"
@@ -40,29 +40,46 @@
                             postal-code={address.postalCode}
                             name={address.street}
                             >
-                        </lightning-input-address>
+                        </lightning-input-address>-->
 
-                        <lightning-input-field field-name="Visit_Type__c" label="Date" name="Visit_Type__c" onchange={handleInputChange}></lightning-input-field>
-
+                    <lightning-input-field field-name="Visit_Type__c" label="Date" name="Visit_Type__c" onchange={handleInputChange}></lightning-input-field>
                     <lightning-input-field field-name="Date__c" label="Date" name="Date__c" onchange={handleInputChange}></lightning-input-field>
                     <lightning-input-field field-name="Customer__c" label="Customer" value={contactId} disabled></lightning-input-field>
                     <lightning-input-field field-name="Visit_Notes__c" label="Visit Notes" name="Visit_Notes__c" onchange={handleInputChange}></lightning-input-field>
 
                     <!-- Camera functionality -->
-                    <div class="slds-align_absolute-center mar-top">
-                    <div class="camera-wrapper">
-                        <lightning-button label="Open Camera" class="slds-m-left_xx-small" onclick={initCamera}></lightning-button>
-                        <lightning-button label="Capture Image" class="slds-m-left_xx-small" onclick={captureImage}></lightning-button>
-                        <lightning-button label="Save Image" class="slds-m-left_xx-small" onclick={sendImageToApex}></lightning-button>
-                    </div>
-                    </div>
-                    <div>
+                    
+                        <div class="camera-wrapper">
+                            <template if:true={isCameraInitialized}>
+                                <div class="slds-align_absolute-center">
+                                <lightning-button label="Capture Image" class="slds-m-left_xx-small" onclick={captureImage}></lightning-button>
+                                <lightning-button label="Save Image" class="slds-m-left_xx-small" onclick={sendImageToApex}></lightning-button>
+                                </div>
+                            </template>
+                            <template if:false={isCameraInitialized}>
+                                <div class="slds-align_absolute-center">
+                                <img src={camera} alt="show" class="camera-icon" onclick={initCamera}>
+                            </div>
+                            </template>
+                        </div>
+                        <div class="video-container">
+                            <div class="slds-align_absolute-center ">
+                                 <video class="videoElement" autoplay></video>
+                            </div>
+                            <div class="slds-align_absolute-center ">
+                                 <canvas class="canvasElement" style="display:none;"></canvas>
+                            </div>
+                            <div class="slds-align_absolute-center ">
+                                 <img class="imageElement slds-hide" alt="captured image">
+                            </div>
+                        </div>
+                 
                            <div> <video class="videoElement" autoplay></video></div>
                             <div><canvas class="slds-hide canvas"></canvas></div>
                            <div> <img src="" class="slds-hide imageElement" alt="captured image"/></div>
                     
                     </div>
-                </div>
+        
                 <div class="slds-align_absolute-center mar-top">
                  <lightning-button label="Back" onclick={handleBack} class="slds-m-bottom_small"></lightning-button>
                  <lightning-button label="Save" type="submit" class="slds-m-bottom_small" ></lightning-button>

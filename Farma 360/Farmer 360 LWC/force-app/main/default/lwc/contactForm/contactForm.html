@@ -5,17 +5,22 @@
 
                 <div class="heading">Farmer Details</div>
                 <lightning-input label="First Name" value={firstName} onchange={handleFirstNameChange}></lightning-input>
-                <lightning-input label="Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input>
+                <lightning-input label="Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input> 
+                <lightning-input label="Date of Birth" value={dob} onchange={handleDOBChange} type="date"></lightning-input>
+                <lightning-input label="Aadhar Number" value={aadharNumber} onchange={handleAadharChange} type="tel" minlength="12" maxlength="12" pattern="[0-9]{12}" message-when-pattern-mismatch="Please enter a 12-digit Aadhar number"></lightning-input>
+                <lightning-input label="PAN Card" value={panNumber} onchange={handlePANNumberChange} minlength="10" maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit PAN number"></lightning-input>
+                <lightning-combobox label="Farmer Type" value={selectedFarmerType} options={continentOptions} onchange={handleFarmerTypeChange}></lightning-combobox>
+                <lightning-combobox label="Sub Type" value={selectedSubType} options={countyOptions} onchange={handleSubTypeChange}></lightning-combobox>
                 
                 <div class="heading">Address</div>
-                <lightning-input label="Street" class="slds-col" value={mailingStreet} onchange={handleMailingStreetChange}></lightning-input>
-                <lightning-input label="City/Village" class="slds-col" value={mailingCity} onchange={handleMailingCityChange}></lightning-input>
+                <lightning-input label="Village Name" class="slds-col" value={mailingStreet} onchange={handleMailingStreetChange}></lightning-input>
+                <lightning-input label="City" class="slds-col" value={mailingCity} onchange={handleMailingCityChange}></lightning-input>
                 <lightning-input label="State" class="slds-col" value={mailingState} onchange={handleMailingStateChange}></lightning-input>
-                <lightning-input label="Postal Code" class="slds-col" value={mailingPostalCode} onchange={handleMailingPostalCodeChange}></lightning-input>
+                <lightning-input label="Postal Code" class="slds-col" value={mailingPostalCode} onchange={handleMailingPostalCodeChange} type="tel" minlength="6" maxlength="6" pattern="[0-9]{6}" message-when-pattern-mismatch="Please enter a 6-digit Pin code number"></lightning-input>
                 <lightning-input label="Country" value={mailingCountry} onchange={handleMailingCountryChange}></lightning-input>
                 
                 <div class="heading">Communication</div>
-                <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange} required></lightning-input>
+                <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange}></lightning-input>
                 <lightning-input label="Phone" type="tel" value={phone} onchange={handlePhoneChange} required  minlength="10"
                 maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit phone number"></lightning-input>
                 
@@ -36,6 +41,16 @@
                         <div key={contact.Id} class="tile-contact" data-id={contact.Id}>
                             <div class="head-text">Farmer Name : </div>
                             <div class="main-text"> {contact.Name}</div>
+                            <div class="head-text">Farmer DOB : </div>
+                            <div class="main-text">{contact.DOB__c}</div>
+                            <div class="head-text">Farmer Aadhar Number : </div>
+                            <div class="main-text">{contact.Aadhar_Number__c}</div>
+                            <div class="head-text">Farmer PAN Number : </div>
+                            <div class="main-text">{contact.PAN_Card__c}</div>
+                            <div class="head-text">Type Of Farmer : </div>
+                            <div class="main-text">{contact.Type_of_Farmer__c}</div>
+                            <div class="head-text">Sub Type : </div>
+                            <div class="main-text">{contact.Sub_Type__c}</div>
                             <div class="head-text">Farmer Phone : </div>
                             <div class="main-text"> {contact.Phone}</div>
                             <div class="head-text">Farmer Email : </div>

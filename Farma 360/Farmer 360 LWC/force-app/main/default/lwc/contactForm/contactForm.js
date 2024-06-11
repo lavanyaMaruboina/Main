@@ -1,6 +1,10 @@
-import { LightningElement, track, wire } from 'lwc';
-import createContact from '@salesforce/apex/ContactController.createContact';
 import getContactDetails from '@salesforce/apex/AccountSearchController.getContactDetails';
+import createContact from '@salesforce/apex/ContactController.createContact';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
+import SUB_TYPE_FIELD from '@salesforce/schema/Contact.Sub_Type__c';
+import FARMER_TYPE_FIELD from '@salesforce/schema/Contact.Type_of_Farmer__c';
+import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { LightningElement, track, wire } from 'lwc';
 
 export default class ContactForm extends LightningElement {
     @track firstName = '';
@@ -12,11 +16,45 @@ export default class ContactForm extends LightningElement {
     @track mailingState = '';
     @track mailingPostalCode = '';
     @track mailingCountry = '';
+    @track dob = '';
+    @track aadharNumber = '';
+    @track panNumber = '';
     @track contactDetails = false;
     @track showContactForm = true;
     @track contactId = '';
     @track landForms = false;
-    @track contactList = [];
+    @track statusOptions = [];
+    @track subTypeOptions = [];
+    selectedFarmerType = '';
+    selectedSubType = '';
+    picklistValuesObj;
+    @track contactId;
+
+    @track countyOptions;
+    @track continentOptions;
+
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
+    contactInfo;
+
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: SUB_TYPE_FIELD })
+    countryFieldInfo({ data, error }) {
+        if (data) this.countryFieldData = data;
+    }
+
+    @wire(getPicklistValues, { recordTypeId: '$contactInfo.data.defaultRecordTypeId', fieldApiName: FARMER_TYPE_FIELD })
+    continentFieldInfo({ data, error }) {
+        if (data) this.continentOptions = data.values;
+    }
+
+    handleFarmerTypeChange(event) {
+        let key = this.countryFieldData.controllerValues[event.target.value];
+        this.countyOptions = this.countryFieldData.values.filter(opt => opt.validFor.includes(key));
+        this.selectedFarmerType = event.target.value;
+    }
+
+    handleSubTypeChange(event) {
+        this.selectedSubType = event.target.value;
+    }
 
     handleFirstNameChange(event) {
         this.firstName = event.target.value;
@@ -54,9 +92,21 @@ export default class ContactForm extends LightningElement {
         this.mailingCountry = event.target.value;
     }
 
+    handleDOBChange(event) {
+        this.dob = event.target.value;
+    }
+
+    handleAadharChange(event) {
+        this.aadharNumber = event.target.value;
+    }
+
+    handlePANNumberChange(event) {
+        this.panNumber = event.target.value;
+    }
+
     handleSave() {
         if (this.validateForm()) {
-            const contact = {
+            const fields = {
                 FirstName: this.firstName,
                 LastName: this.lastName,
                 Email: this.email,
@@ -65,24 +115,28 @@ export default class ContactForm extends LightningElement {
                 MailingCity: this.mailingCity,
                 MailingState: this.mailingState,
                 MailingPostalCode: this.mailingPostalCode,
-                MailingCountry: this.mailingCountry
+                MailingCountry: this.mailingCountry,
+                DOB__c: this.dob,
+                Aadhar_Number__c: this.aadharNumber,
+                PAN_Card__c: this.panNumber,
+                Type_of_Farmer__c: this.selectedFarmerType,
+                Sub_Type__c: this.selectedSubType
             };
 
-            createContact({ contact })
+            createContact({ contact: fields })
                 .then(result => {
-                    console.log('Contact created successfully', result);
-                    this.contactId = result.Id;
-                    this.fetchContactDetails(this.contactId);
-                    this.showContactForm = false;
+                    console.log('Contact created successfully:', result);
+                    console.log('contact id======',result.Id);
+                  
+                    this.resetForm();
+                    this.showContactForm=false;
                     alert('Contact created successfully');
+                     this.fetchContactDetails( result.Id);
+                     this.contactId=result.Id;
                 })
                 .catch(error => {
-                    console.error('Error creating contact', error);
-                    alert('An error occurred while creating the contact');
+                    console.error('Error creating contact:', error);
                 });
-        } else {
-            console.error('Please fill in all required fields');
-            alert('Please fill in all required fields');
         }
     }
 
@@ -109,6 +163,11 @@ export default class ContactForm extends LightningElement {
         this.mailingState = '';
         this.mailingPostalCode = '';
         this.mailingCountry = '';
+        this.selectedFarmerType = '';
+        this.selectedSubType = '';
+        this.dob = '';
+        this.aadharNumber = '';
+        this.panNumber = '';
     }
 
     fetchContactDetails(contactId) {
@@ -125,13 +184,13 @@ export default class ContactForm extends LightningElement {
             });
     }
 
-    handleCreateLand(){
+    handleCreateLand() {
         this.landForms = true;
         this.showContactForm = false;
         this.contactDetails = false;
     }
 
-    handleBack(){
+    handleBack() {
         window.location.reload();
     }
 }
