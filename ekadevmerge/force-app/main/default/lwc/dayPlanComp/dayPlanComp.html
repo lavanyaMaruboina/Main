@@ -1,0 +1,27 @@
+<template>
+  <lightning-card title="Day Plan of Opportunity" class="slds-align_absolute-center">
+    <div class="slds-m-around_medium">
+      <lightning-layout multiple-rows>
+          <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="search" label="Search Name" onchange={changeHandler}></lightning-input>
+          </lightning-layout-item>
+      </lightning-layout>
+        <template if:true={data}>
+      <div style="height: 500px">
+          <lightning-datatable
+          key-field="Id"
+          data={data}
+          show-row-number-column
+          columns={columns}
+          onsave={handleSave}
+          draft-values={draftValues}
+          hide-checkbox-column
+          ></lightning-datatable>
+      </div>
+      </template>
+      <template if:true={error}>
+        {error}
+    </template>
+    </div>
+  </lightning-card>
+</template>

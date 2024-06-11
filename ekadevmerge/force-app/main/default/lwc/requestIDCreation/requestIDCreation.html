@@ -1,0 +1,129 @@
+<template>
+    <template if:true={requestIDdataview}>
+    <lightning-card style="padding: 4px; width: 30%">
+        <div class ="slds-var-m-around_small">
+            <lightning-layout>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <lightning-combobox name="onboardtype" label="Onboarding Type" options={dropdownOptions}
+                        onchange={registrationId} required="true" class="validate" ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <lightning-input label="Onboarding Date/Time" type="datetime" name="onboarddate" required="true"
+                        value={rec.Onboarding_Date__c} class="validate" onchange={registrationId}></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                        <lightning-combobox name="councilname" label="Medical Council Name" required="true"
+                            onchange={registrationId} options={medicaldropdownOptions}
+                            value={rec.Medical_council_Name__c} class="validate"></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                        <lightning-input label="Qualification" name="qualifi" onchange={registrationId}
+                            value={rec.Qualification__c} required="true" type="text" class="validate" ></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-card>
+                <lightning-layout>
+                    <lightning-layout-item size="6" medium-device-size="6" padding="around-small">
+                <template if:true={fileData}>
+                    <p>{fileData.filename}</p>
+                </template>
+                </lightning-layout-item>
+                
+                    <lightning-layout-item size="6" medium-device-size="6" padding="around-small">
+                <template if:true={fileData1}>
+                    <p>{fileData1.filename}</p>
+                </template>
+                </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+            <lightning-layout>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <lightning-input label="Year of Graduation" name="yearofgraduate" onchange={registrationId}
+                    value={rec.Year_of_graduation__c} required="true" type="text" class="validate"
+                    pattern="[0-9]{4}" title="Please enter a valid year"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <lightning-input label="Year of Experience" name="yearofexp" onchange={registrationId}
+                        value={rec.Years_of_Experience__c} required="true" class="validate" type="text" 
+                        pattern="[0-9]+([.][0-9]+)?" title="Please enter a valid number or decimal"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                        <lightning-input label="Clinic Consultation Fees" name="cosultationfee"
+                        onchange={registrationId} value={rec.Clinic_Consultation_Fees__c} required="true"
+                        type="text" class="validate" pattern="^\d+(\.\d{1,2})?$" title="Please enter a valid currency amount"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <!-- <lightning-input label="Clinic Name" name="clinicName" onchange={registrationId}
+                        value={rec.Clinic_Name__c} required="true" type="text" class="validate"></lightning-input> -->
+                        <lightning-input label="Clinic Name" name="clinicName" value={clinicName} readonly></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    <lightning-input label="Registration Number" name="regNum" class="validate" 
+                        value={rec.Registration_Number__c} onchange={registrationId} required="true"
+                        type="text"></lightning-input>
+                </lightning-layout-item>
+                    <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                        <lightning-input label="Address" name="clinicadress" onchange={registrationId}
+                        value={rec.Clinic_Address2__c} required="true" type="text" class="validate"></lightning-input>
+                    </lightning-layout-item>
+            </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                <lightning-input label="Email ID" name="email" type="email" value={email} readonly></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+            <lightning-input type="checkbox" class="slds-hidden" variant="label-hidden" label="Hold">
+            </lightning-input>
+        </div>
+        <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+            <div class="slds-var-m-around_small">
+                <lightning-button label="Cancel" variant="destructive"  type="reset"
+                    onclick={cancelHandler}></lightning-button>
+                <lightning-button label="Submit" variant="brand" onclick={saveHandler}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+    </template>
+
+<!-- file uploaded  -->
+    <template if:true={filedataview}>
+        <lightning-card>
+            <lightning-layout>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+            
+                        <lightning-file-upload
+    label="Reg Certificate Picture"
+    name="fileData"
+    accept={acceptedFormats}
+    record-id={objectRecordId}
+    onuploadfinished={handleUploadFinished}
+    multiple
+    required="true"
+>
+</lightning-file-upload>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                   
+                    <lightning-file-upload
+                    label="Upload Pic"
+                    name="fileData1"
+                    accept={acceptedFormats}
+                    record-id={objectRecordId}
+                    onuploadfinished={handleUploadFinished}
+                    multiple
+                    required="true"
+                >
+                </lightning-file-upload>
+             
+
+                </lightning-layout-item>
+            </lightning-layout>
+            </lightning-card>
+            </template>
+</template>

@@ -1,0 +1,34 @@
+<template>
+    <div if:false={isFormVisible}>
+          <lightning-layout>
+            <lightning-layout-item flexibility="auto">
+                <div class="slds-box slds-box_xx-small slds-var-p-around_medium slds-text-align_center slds-theme_info">
+                <lightning-button label="On Leave" variant="success" onclick={showForm}></lightning-button>
+                </div>
+            </lightning-layout-item>
+         </lightning-layout>
+    </div> 
+    <lightning-card title="Leave Details" if:true={isFormVisible}>
+        <!-- Your form fields go here -->
+        <div class="fullPage">
+<div class="mainheading">
+  <div class="w3-container w3-card-4 w3-white"> 
+        <div class="slds-p-around_medium">
+            <!-- Example: -->
+            <lightning-input label="Start Date" type="date" require="true" value={startDate} onchange={handleStartDateChange}></lightning-input>
+            <lightning-input label="End Date" type="date" require="true" value={endDate} onchange={handleEndDateChange}></lightning-input>
+            <lightning-input label="Reason" type="string" require="true" value={Reason} onchange={handleReasonChange}></lightning-input>
+        </div>
+        <div class="slds-p-around_medium">
+            <!-- Your other form fields go here -->
+        </div>
+        <div class="slds-align_absolute-center">
+            <lightning-button label="Save" variant="brand" onclick={saveLeaveLog}></lightning-button>
+            <!-- <lightning-button label="Cancel" variant="destructive" onclick={cancelLeaveLog}></lightning-button> -->
+        </div>
+         </div>
+    </div>
+    </div>
+    </lightning-card>
+   
+</template>

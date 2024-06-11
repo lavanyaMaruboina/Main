@@ -1,0 +1,56 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:attribute name="leadlist" type="Lead[]"/>
+    <lightning:card title="Lead List" iconName="standard:record">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <div class="slds-truncate" title="">Sr. No.</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Lead Name">Lead Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="UseCase of the Lead">Type</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="City">City</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Lead Status">Lead Status</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="First Name">First Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Last Name">Last Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="OPD Dates">OPD Dates</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Specialization">Specialization</div>
+                    </th>
+                </tr>
+            </thead>
+             <tbody>
+                <aura:iteration items="{!v.leadlist}" var="a" indexVar="icount">
+                    <tr>  
+                        <td scope="row">
+                            {!icount+1}
+                        </td>
+                        <td scope="row">
+                            {!a.Lead_Name__c}
+                        </td>
+                        <td scope="row">
+                            {!a.Usecase_of_the_Lead__c}
+                        </td>
+                        <td scope="row">
+                            {!a.Specialization__c}
+                        </td>  
+                    </tr>
+                </aura:iteration> 
+            </tbody>
+        </table>
+     </lightning:card>     
+</aura:component>

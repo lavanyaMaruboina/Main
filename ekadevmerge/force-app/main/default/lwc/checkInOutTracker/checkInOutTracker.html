@@ -1,0 +1,55 @@
+<template>
+
+    <template if:true={displaySetLocationNCheckInBtn}> 
+        <lightning-layout>
+            <lightning-layout-item flexibility="auto">
+                <div class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_info">
+             <lightning-button name="setLocationNCheckInBtn" label="Set Geolocation & Check In" onclick={handleSetGeolocationNCheckIn} variant="success">
+            </lightning-button>
+        </div>
+            </lightning-layout-item>
+         </lightning-layout>
+         </template>
+    <template if:true={displayCheckInBtn}> 
+    <lightning-layout>
+        <lightning-layout-item flexibility="auto">
+            <div class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_info">
+         <lightning-button name="checkInBtn" label="Check In" onclick={handleCheckIn} variant="success">
+        </lightning-button>
+    </div>
+        </lightning-layout-item>
+     </lightning-layout>
+     </template>
+     <template if:true={displayCheckOutBtn}>
+     <lightning-layout>
+        <lightning-layout-item flexibility="auto">
+            <div class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_info">
+         <lightning-button name="checkOutBtn" label="Check Out" onclick={handleCheckOut} variant="success">
+        </lightning-button>
+    </div>
+        </lightning-layout-item>
+     </lightning-layout>
+     </template>
+
+    <template if:true={displaySelectAddresRG}> 
+        <div class="slds-p-around_medium slds-align_absolute-center slds-theme_info">
+            <lightning-radio-group name="radioGroup" label="Select Address to Check In" options={options} value={value} type="radio" onclick={handleAddressSelection} required></lightning-radio-group>
+         </div>
+</template>
+
+     <template if:true={displayMsgBanner}> 
+        <lightning-layout>
+            <lightning-layout-item flexibility="auto">
+                <div
+                    class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_shade slds-theme_alert-texture">
+                    {displayMsg}</div>
+            </lightning-layout-item>
+        </lightning-layout>
+        </template>
+<template if:true={displayPageLoader}> 
+    <lightning-spinner alternative-text="Loading User Geolocation...">
+    </lightning-spinner>
+     </template>
+        
+
+</template>

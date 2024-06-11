@@ -1,0 +1,64 @@
+<template>
+    <div class="fullPage">
+    <div class="slds-m-horizontal_small">
+        <div class="mainheading">
+            <div class="w3-container w3-card-4 w3-white">       
+    <lightning-card title="Eka Payments" class="slds-var-p-top_medium text-align-center"
+            style="padding: 4px; width: 50%" icon-name="custom:custom14">
+        <lightning-layout>
+            <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="Payment Amount" type="number" require="true"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+            <lightning-input label="Reviews" type="text" require="true"></lightning-input>
+            </lightning-layout-item>
+            <!-- <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="GMB" type="text" require="true"></lightning-input>
+        </lightning-layout-item> -->
+        </lightning-layout>
+        <lightning-layout>
+         
+            <!-- <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="Staff productivity/OPD" type="text" require="true"></lightning-input>
+        </lightning-layout-item> -->
+        </lightning-layout>
+        <!-- <lightning-layout>
+            <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="Management" type="text" require="true"></lightning-input>
+        </lightning-layout-item>
+            <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="Demand+0 commission APT" require="true"></lightning-input>
+        </lightning-layout-item>
+        </lightning-layout> -->
+        <lightning-layout>
+            <!-- <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="System" require="true" type="text" ></lightning-input>
+        </lightning-layout-item> -->
+        <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+            <lightning-input label="Remarks" type="text" require="true"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                <lightning-combobox label="Plan" type="text" options={plandrapdowns} require="true"></lightning-combobox>
+                </lightning-layout-item>
+            <!-- <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-input label="DHIS + ABHA" require="true" type="text"></lightning-input>
+        </lightning-layout-item> -->
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+        <lightning-combobox label="Interested Feature" type="text" options={drapdowns}></lightning-combobox>
+        </lightning-layout-item>
+        </lightning-layout>
+        <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+            <div class="slds-var-m-around_small">
+        <lightning-button label="submit" variant="brand" onclick={saveHandler}></lightning-button>
+        <lightning-button label="Cancel" variant="destructive" onclick={cancelHandler}></lightning-button>
+        </div>
+        </div>
+    </lightning-card>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+</template>

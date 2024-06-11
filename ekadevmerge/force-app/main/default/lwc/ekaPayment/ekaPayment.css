@@ -1,0 +1,20 @@
+.mainheading {
+    width: 550px;
+    height: 500px;
+    margin-left: 90px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+  }
+  .requestborder
+    {border-style: solid;}
+    .fullPage {
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(
+          to top,
+          paleturquoise 100%,
+          paleturquoise 100%
+        );
+        padding: 20px;
+      }

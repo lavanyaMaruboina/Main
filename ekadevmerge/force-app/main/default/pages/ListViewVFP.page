@@ -1,0 +1,2 @@
+<apex:page standardController="Lead" recordSetVar="l" extensions="ListViewExtension" action="{!redirectToLC}">
+ </apex:page>

@@ -1,0 +1,91 @@
+<template>
+  <lightning-card title="Eka Payments" class="slds-var-p-top_medium text-align-center"
+      style="padding: 4px; width: 50%" icon-name="custom:custom14">
+
+      <lightning-record-edit-form object-api-name="Eka_Payment__c" onsuccess={handleSuccess}>
+          <lightning-layout>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Payment_Amount__c" required class="validate" value={paymentAmount}> </lightning-input-field>
+              </lightning-layout-item>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Interested_Feature__c" required class="validate" value={interestedFeature}> </lightning-input-field>
+              </lightning-layout-item>
+          </lightning-layout>
+          
+          <!-- <div if:true={ekaPaymentData.data}>
+              <p>Lead Name: {ekaPaymentData.data[0].Lead_Name__c}</p>
+              <p>Record Name: {leadDetails.data ? leadDetails.data.RecordType.Name : ''}</p>
+          </div> -->
+          
+          <lightning-layout>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Subscription_Plan__c" required class="validate" value={subscription} onchange={onchangeevent}> </lightning-input-field>
+              </lightning-layout-item>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Discount_Rate__c" required class="validate" value={discountRate}> </lightning-input-field>
+              </lightning-layout-item>
+          </lightning-layout>
+          
+          <lightning-layout>
+            
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Number_Of_Years__c" required class="validate" value={numberOfYears}> </lightning-input-field>
+              </lightning-layout-item>
+            
+
+          <!--  <div if:true={ekaProVal}>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Number_of_years_for_EKA_Pro__c" required class="validate" value={numberOfYearsEKAPro}> </lightning-input-field>
+              </lightning-layout-item>
+            </div> -->
+
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Reviews__c" required class="validate" value={reviews}> </lightning-input-field>
+              </lightning-layout-item>
+            
+          </lightning-layout> 
+
+          <lightning-layout>
+            <div if:true={ekaPlusVal}>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Amount_of_Eka_Plus__c" required class="validate" value={amountplus}> </lightning-input-field>
+              </lightning-layout-item>
+            </div>
+            <div if:true={ekaProVal}>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Amount_of_Eka_Pro__c" required class="validate" value={amountpro}> </lightning-input-field>
+              </lightning-layout-item>
+            </div>
+
+            <div if:true={ekaPremiumVal}>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Amount_of_Eka_Premium__c" required class="validate" value={amountpremium}> </lightning-input-field>
+              </lightning-layout-item>
+            </div>
+
+            <div if:true={ekaPremiumPlusVal}>
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Amount_of_Eka_Premium_Plus__c" required class="validate" value={amountpremiumplus}> </lightning-input-field>
+              </lightning-layout-item>
+            </div>
+
+              <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                  <lightning-input-field field-name="Remarks__c" required class="validate" value={remarks}> </lightning-input-field>
+              </lightning-layout-item>
+          </lightning-layout>
+          <div class="slds-hide">
+              <lightning-input-field field-name="Lead_Name__c" value={recordId}> </lightning-input-field>
+              <lightning-input-field field-name="Record_Name__c" value={leadRecord}> </lightning-input-field>
+          </div>
+          <div class="custom-box slds-box slds-p-around_medium slds-text-align_center">
+              <div class="slds-var-m-around_small">
+                  <lightning-button label="Cancel" variant="destructive" type="reset"
+                      onclick={cancelHandler}></lightning-button>
+                  <lightning-button label="Submit" variant="brand"
+                      onclick={saveHandler}></lightning-button>
+              </div>
+          </div>
+      </lightning-record-edit-form>
+  </lightning-card>
+
+</template>

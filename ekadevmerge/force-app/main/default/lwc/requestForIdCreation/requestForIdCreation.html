@@ -1,0 +1,44 @@
+<template>
+    <div class="fullPage">
+        <div class="mainheading">
+            <div class="w3-container w3-card-4 w3-white">
+                <lightning-card title="Registration for ID Creation" class="slds-var-p-top_medium text-align-center"
+                    style="padding: 4px; width: 50%" icon-name="utility:user">
+                    <div class="slds-var-m-around_small">
+                        <lightning-input label="Onboarding Type" required="true" onchange={requestForId} name="Onboardtype"></lightning-input>
+                        <lightning-input label="Onboarding Date" required="true" type="Date"
+                            onchange={requestForId} name="Onboarddate"></lightning-input>
+                        <lightning-input label="Email Id" required="true" type="Email"
+                            onchange={requestForId} name="email"></lightning-input>
+                        <lightning-input label="Registration Number" required="true" type="Number"
+                            onchange={requestForId} name="registrationnumber"></lightning-input>
+                        <lightning-input label="Medical Council Name" required="true"
+                            onchange={requestForId} name="medicalcouncil"></lightning-input>
+                        <!-- <lightning-input label="Reg Cerficate Picture" required="true"
+                            onchange={requestForId}></lightning-input>
+                        <lightning-input label="Profile Pic" required="true"
+                            onchange={requestForId}></lightning-input> -->
+                        <lightning-input label="Qualification" required="true"
+                            onchange={requestForId} name="qualification"></lightning-input>
+                        <lightning-input label="Year of Graduation" required="Date"
+                            onchange={requestForId} name="yeargraduation"></lightning-input>
+                        <lightning-input label="Year of Experience" required="true"
+                            onchange={requestForId}></lightning-input>
+                        <lightning-input label="Clinic Consultation Fees" required="true"
+                            onchange={requestForId} name="fees"></lightning-input>
+                        <lightning-input label="clinic Address" required="true"
+                            onchange={requestForId} name="address"></lightning-input>
+                        <lightning-input label="Clininc name" required="true"
+                            onchange={requestForId} name="clinicname"></lightning-input>
+                            <div class="slds-var-m-around_small">
+                        <lightning-button label="Save" variant="base" onclick={saveHandler}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label="Cancel" variant="base" onclick={cancelHandler}
+                            class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </div>
+    </div>
+</template>

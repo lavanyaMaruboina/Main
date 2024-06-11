@@ -1,0 +1,39 @@
+<template>
+    <template if:true={displayCheckInBtn}> 
+    <lightning-layout>
+        <lightning-layout-item flexibility="auto">
+            <div class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_info">
+         <lightning-button name="checkInBtn" label="Check In" onclick={handleCheckIn} variant="success">
+        </lightning-button>
+    </div>
+        </lightning-layout-item>
+     </lightning-layout>
+     </template>
+     <template if:true={displayCheckOutBtn}>
+     <lightning-layout>
+        <lightning-layout-item flexibility="auto">
+            <div class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_info">
+         <lightning-button name="checkOutBtn" label="Check Out" onclick={handleCheckOut} variant="success">
+        </lightning-button>
+    </div>
+        </lightning-layout-item>
+     </lightning-layout>
+     </template>
+
+    <template if:true={displaySelectAddresRG}> 
+        <div class="slds-p-around_medium slds-align_absolute-center slds-theme_info">
+            <lightning-radio-group name="radioGroup" label="Select Address to Check In" options={options} value={value} type="radio" onclick={handleAddressSelection} required></lightning-radio-group>
+         </div>
+</template>
+
+     <template if:true={displayErrorBanner}> 
+        <lightning-layout>
+            <lightning-layout-item flexibility="auto">
+                <div
+                    class="slds-box slds-box_xx-small slds-p-around_medium slds-text-align_center slds-theme_error">
+                    {errorMsg}</div>
+            </lightning-layout-item>
+        </lightning-layout>
+        </template>
+
+</template>

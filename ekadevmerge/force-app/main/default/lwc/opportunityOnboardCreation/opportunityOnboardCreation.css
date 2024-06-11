@@ -1,0 +1,21 @@
+.mainheading {
+    width: 750px;
+    height: 10px;
+    margin-left: 60px;
+    margin-top: 10px;
+    margin-right: 80px;
+    margin-bottom: 150px;
+  }
+  .requestborder
+    {border-style: solid;}
+    .fullPage {
+        width: 100%;
+        height: 150vh;
+        background: linear-gradient(
+          to top,
+          white 50%,
+          paleturquoise 50%,
+          paleturquoise 100%
+        );
+        padding: 20px;
+      }

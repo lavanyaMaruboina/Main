@@ -1,0 +1,33 @@
+<template>
+  <lightning-card title="Day Plan of Go Live Doctors" class="slds-align_absolute-center">
+    <div class="slds-m-around_medium">
+      <lightning-layout multiple-rows>
+        <lightning-layout-item size="6" padding="around-small">
+          <lightning-input type="search" label="Search Name" onchange={changeHandler}></lightning-input>
+        </lightning-layout-item>
+      </lightning-layout>
+      <template if:true={data}>
+        <div style="height: 350px">
+          <lightning-datatable
+            key-field="Id"
+            data={data}
+            show-row-number-column
+            columns={columns}
+            onsave={handleSave}
+            draft-values={draftValues}
+            onrowaction={handleRowAction}
+          ></lightning-datatable>
+        </div>
+      </template>
+      <template if:true={isModalOpen}>
+        <c-dayplan-modal
+            account-id={selectedAccountId}
+            onclose={handleModalClose}
+        ></c-dayplan-modal>
+      </template>
+      <template if:true={error}>
+          {error}
+      </template>
+    </div>
+  </lightning-card>
+</template>
