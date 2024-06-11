@@ -1,0 +1,20 @@
+<apex:page standardController="Quote" extensions="SaveQuotePDF_controller" showHeader="false" title="Quotation PDF" showQuickActionVfHeader="false" sidebar="false">
+    <apex:form id="form">
+        <center style="font-size:15px;">
+            <br/><br/>
+            <apex:commandButton action="{!attachAndSave}" value="Save PDF" styleClass="slds-button slds-button_brand" onclick="showAlert('PDF will be saved.'); return true;"/>
+            <apex:commandButton action="{!sendMailMethod}" value="Create PDF and Email" styleClass="slds-button slds-button_brand" onclick="showAlert('Quote PDF has been sent successfully'); return true;"/>
+            <apex:commandButton action="{!cancelGeneration}" value="Cancel" styleClass="slds-button slds-button_brand"/><br/><br/><br/>
+        </center>
+        <apex:iframe src="/apex/QuotePDFGenerator?Id={!cusQtVar.Id}"/>
+    </apex:form>
+    <br/><br/><br/>
+    <!--<apex:iframe src="/apex/QuotePDFCreated?Id={!cusQtVar.Id}" scrolling="true" />-->
+    <footer class="slds-modal__footer"></footer>
+    
+    <script>
+    function showAlert(message) {
+        alert(message);
+    }
+    </script>
+</apex:page>

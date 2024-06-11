@@ -1,0 +1,406 @@
+<apex:page renderAs="pdf" standardController="Quote" extensions="quotepdfController" applyHtmlTag="false" showHeader="false" sidebar="false" cache="true">
+    <!-- Define the PDF content -->
+    <html>
+        <head>
+            <style type="text/css">
+                @page {
+                size: A4;
+                margin: 2.8cm 1cm 4cm 1cm;
+                }
+                
+                @page {
+                @top-center {content: element(header);}
+                @bottom-left {content: element(footer)}
+                }
+                
+                @page:first {
+                @top-center {content: element(header);}
+                @bottom-left {content: element(footer)}
+                }
+                
+                body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+                }
+                
+                .header {
+                background-color: #fff;
+                margin-left: 30px;
+                text-align: left;
+                
+                }
+                
+                .header-image {
+                margin-right: 5px;
+              margin-bottom: 0.01px;
+             
+                }
+                .footer-line {
+                margin-right: 5px;
+                margin-bottom: 0.01px;
+                border-bottom: 0px solid #333; /* Adds a bottom border to the image */-->
+                }
+                .header h1 {
+                <!--margin: 0;-->
+                color: #333;
+                }
+                
+                .content {
+                align="center";
+                padding-left: 15px;
+                }    
+                
+                div.footer {
+                margin-top: 0px;
+                <!--margin-bottom: 2cm;-->
+                display: block;
+                position: running(footer);
+                margin-left: -1cm;
+                margin-right: -1cm;
+                border-bottom: 1px solid black; /* Add a bottom border */
+                }
+                
+                .pagenumber:before {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                .pagecount:before {
+                content: counter(pages);
+                }
+                
+                
+                div.header {
+                display: block;
+                position: running(header);
+                <!--margin-top: 0px; -->
+                }
+                
+                .pageBreak {
+                page-break-after: always;
+                }
+                
+                .details-container{
+                margin-top: -15px;
+                margin-left: 1cm;
+                margin-right: 1cm;
+                text-align: left;
+                }
+                
+                h1, h3 {
+                font-size: 16px;
+                }
+                
+                .details-sty {
+                font-size: 10px;
+                }
+                
+                .title-head {
+                font-size: 30px;
+                color: #22DD22;
+                }
+                
+                .title-img img {
+                height: 400px;
+                width: 400px;
+                }
+                
+                .first-page {
+                width: 100%;
+                height: 100vh; /* Make the image occupy full viewport height */
+                overflow: hidden
+                }
+                
+                .first-page .full-width-image {
+                width: 100%;
+                height: 100%; /* Ensure the image fills the container */
+                object-fit: cover;
+                }
+                
+                .title-mar {
+                color: #22DD22;
+                font-size: 15px;
+                }
+                
+                .tmc-sty {
+                font-size: 14px;
+                }
+                
+                .company-logo {
+                height: 734px;
+                width: 624px;
+                }
+                
+                .title-text-con {
+                margin-top: -360px;
+                }
+                
+                .header-container {
+                text-align: center;
+                <!--margin-bottom: -200px;-->
+                }
+                
+                .title-img-con {
+                text-align: center;
+                margin-left: 200px;
+                }
+                
+                
+                .show-on-first-page {
+                display: none;
+                }
+                
+                @media print {
+                .show-on-first-page {
+                display: block;
+                }
+                }
+                
+                .first-page-container {
+                page-break-after: always; 
+                }
+                
+                .standard-table {
+                border-collapse: collapse;
+                width: 100%;
+                table-layout: fixed;
+                }
+                
+                .standard-table th, .standard-table td {
+                border: 0.5px solid #000;
+                padding: 8px;
+                text-align: left;
+                width: 14.28%; /* Divide by the number of columns you have (7 in your case) */
+                font-weight: 500;
+                }
+                
+                .standard-table th {
+                background-color: #94cf17;
+                color:#ffffff;
+                }
+                .standard-table td {
+                background-color: #c0c0c0;
+                } 
+                .purchase-container{
+                font-size:13px;
+                <!--border: 1px solid red; -->
+                height: 80px;
+                width: 120px;
+                margin-left:120px;
+                margin-right:-20px;
+                } 
+                .company-deatils-con{
+                font-size: 13px;
+                }
+                
+                <!-- table {
+page-break-inside: auto;
+}
+tr {
+page-break-inside: avoid;
+page-break-after: auto;
+}
+.page-break {
+page-break-after: always;
+}-->
+                
+                
+                
+                
+            </style>
+        </head>
+        <body>
+            
+            <div>
+                <!-- Header section -->
+                <div class="header left-and-right-margin;" >
+                    <img src="https://blauberguk3--uatsandbox--c.sandbox.vf.force.com/resource/1714110598000/BlaubergLogo?" alt="Company Logo" width="300" height="100" class="header-image"/>
+                    <hr style="margin-bottom: 20px;"/>
+                </div>
+                <!-- Footer section -->
+                <!-- Footer section -->
+                <div>
+                    
+                    <div class="footer" style="text-decoration: underline;color: black;">
+                        <div class="pagenumber" style="text-align:center; font-size: 12px; margin-bottom: 4px;"></div>
+                        <div style="border-top: 1px solid black; margin-left: 1cm; margin-right:1cm;"></div>
+                        <table cellspacing="0" cellpadding="0" border="0" style="width: 100%; border-collapse: collapse; margin-left: none; margin-right: none;">
+                            <tr style="background-color: #69b019; height:6px;"></tr>
+                            <!--<p style="text-decoration: underline;"></p>-->
+                            <tr style="text-underline-position: under; margin: auto;">
+                                <td style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;text-align:left;padding-bottom: 50px;">
+                                    <div style="margin-left: 1.2cm; font-weight: 800;">
+                                        <p class="details-sty">unit E, Boston Road, Beaumont Leys</p>
+                                        <p class="details-sty">Leicester, Leicestershire, LE4 1AW</p>
+                                        <p class="details-sty">Tel: +44 (0) 116 216 0650</p>
+                                        <p class="details-sty">VAT Registration No. GB729677578</p>
+                                        <p class="details-sty">Company Reg: 03728160</p>
+                                    </div>
+                                </td>
+                                <td style="text-align:center;">
+                                    <div style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;text-align:center;padding-bottom: 40px;margin-right: 6.5cm;font-weight: 800;">
+                                        <p class="details-sty">www.Blauberg.co.uk</p>
+                                        <p class="details-sty">www.blauberg-home.com</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                </div>
+                
+                
+                
+                <!-- Project details table -->
+                <!--<p style="page-break-after:always;"></p>-->
+                <div style="width: 650px; margin-left:5Px">       
+                    <apex:repeat value="{!quoteData}" var="quote">
+                        <table cellSpacing="8" style="padding-top:30Px; table-layout: fixed;">
+                            <tr>
+                                <td style=" font-family: Calibri;" width="6%" align="left">
+                                    <span style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">  
+                                        Quote Ref: <b><apex:outputField value="{!quote.Quote_Ref__c}" /></b>
+                                    </span> <br/>
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Project Reference:<b><apex:outputField value="{!quote.Project_Reference__c}" /></b>
+                                    </span> <br/>
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Bill To:&nbsp;&nbsp;<b><apex:outputField value="{!quote.Billingstreet}" />,</b>
+                                        <b><apex:outputField value="{!quote.BillingCity}" />,</b>
+                                        <b><apex:outputField value="{!quote.Billingstate}" />,</b>
+                                        <b><apex:outputField value="{!quote.Billingcountry}" />-<apex:outputField value="{!quote.BillingpostalCode}" />.</b>
+                                        
+                                    </span> <br/>
+                                </td>
+                                <td style=" font-family: Calibri, Helvetica, sans-serif; padding-right:10px" width="6%" align="right">
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Created Date: &nbsp;&nbsp;<b><apex:outputField value="{!quote.CreatedDate}" /></b>
+                                    </span><br/>
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Expiry Date: &nbsp;&nbsp;<b><apex:outputText value="{0,date,dd/MM/yyyy}">
+                                        <apex:param value="{!quote.ExpirationDate}"/>
+                                        </apex:outputText> </b>
+                                    </span> <br/>
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Prepared By:&nbsp;&nbsp;&nbsp;<b><apex:outputField value="{!quote.Owner.name}" /></b>
+                                    </span><br/>
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Email: &nbsp;&nbsp;&nbsp;<b><apex:outputField value="{!quote.Contact.Email}" /></b>
+                                    </span><br/>
+                                    <span style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">  
+                                        Ship To:&nbsp;&nbsp;<b><apex:outputField value="{!quote.ShippingStreet}" />,</b>
+                                        <b><apex:outputField value="{!quote.ShippingCity}" />,</b>
+                                        <b><apex:outputField value="{!quote.Shippingstate}" />,</b>
+                                        <b><apex:outputField value="{!quote.Shippingcountry}" />-<apex:outputField value="{!quote.ShippingpostalCode}" />.</b>
+                                    </span>
+                                </td>
+                            </tr> 
+                            
+                        </table>
+                    </apex:repeat>
+                </div>
+                
+                
+                <!-- Introduction section -->
+                <div class="content" style="width: 650px; padding-top:15Px;">
+                    <p style="font-family: Calibri, sans-serif; font-size: 12px; color: #333;">Dear {!contactName},</p>
+                    <apex:outputText value="{!introSection}" escape="false"/>
+                    <!--<p style="font-size: 16px; text-decoration: underline; font-weight:600;">
+Product Details:
+</p>-->
+                    <table  cellSpacing="0" Border="2" width="100%"  style="border: 1px solid black; "> 
+                        <tr>
+                            <td  style="text-align: left">
+                                <span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">Product Name </span>
+                            </td>
+                            
+                            <td style="text-align: left">
+                                <span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">
+                                    Product Description
+                                </span>
+                            </td>
+                            
+                            <td style="text-align: left"><span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">
+                                List Price
+                                </span>
+                            </td>
+                            <td style="text-align: left"><span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">
+                                Quantity
+                                </span>
+                            </td>
+                            <td style="text-align: left"><span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">
+                                Subtotal
+                                </span>
+                            </td>
+                            <td style="text-align: left"><span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">
+                                Discount
+                                </span>
+                            </td>
+                            <td style="text-align: left"><span style="font-weight: 600;font-family: Calibri, Helvetica, sans-serif;font-size: 13px;">
+                                Total Price
+                                </span>
+                            </td>
+                        </tr>
+                        <apex:repeat value="{!quoteLineItems}" var="item">
+                            <tr>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="{!item.Product2.Name}"/></td>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="{!item.Product2.Description}"/></td>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="£{!item.ListPrice}"/></td>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="{!item.Quantity}"/></td>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="£{!item.Subtotal}"/></td>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="{!item.Discount}%"/></td>
+                                <td style="text-align: center; width:10%; font-family: Calibri;font-size: 14px;"><apex:outputText value="£{!item.TotalPrice}"/></td>
+                            </tr>
+                        </apex:repeat>
+                    </table><br/>
+                    
+                    
+                    <div style="width: 650px; margin-left:30Px">       
+                        <apex:repeat value="{!quoteData}" var="quote">
+                            <table cellSpacing="8" style="padding-top:5Px; table-layout: fixed;">
+                                <tr style=" font-family: Calibri; border: 1px solid black;" align="right">
+                                    <td style=" font-family: Calibri, Helvetica, sans-serif; padding-right:10px" width="6%" align="right">
+                                        <span style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">  
+                                            Total Pricing: &nbsp;&nbsp;&nbsp;<b><apex:outputField value="{!quote.TotalPrice}" /></b>
+                                        </span><br/>
+                                        <span style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">  
+                                            Shipping and handling: &nbsp;&nbsp;&nbsp;<b><apex:outputField value="{!quote.ShippingHandling}" /></b>
+                                        </span><br/>
+                                        <span style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">  
+                                            Grand Total: &nbsp;&nbsp;&nbsp;<b><apex:outputField value="{!quote.Grand_Total__c}" /></b>
+                                        </span><br/>
+                                        <span style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">  
+                                            VAT: &nbsp;&nbsp;&nbsp;<b><apex:outputField value="{!quote.VAT__c}" /></b>
+                                        </span><br/> 
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:repeat>
+                        
+                    </div>
+              
+            
+            <div style="width: 650px;">
+                <p style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">Lead Time:In Stock-Next Day</p>
+                <p style="font-family: Calibri, sans-serif; font-size: 13px; color: #333;">Additional Information:</p>
+                <p></p>
+                <p style="font-family: Calibri, sans-serif; font-size: 14px; color: #333;"><b>Delivery: </b></p>
+                
+                <apex:outputText value="{!deliverySection}" escape="false"/>
+                
+                <p style="font-family: Calibri, sans-serif; font-size: 14px; color: #333;"><b>Term And Conditions: </b></p>
+                <apex:outputText value="{!termsAndConditions}" escape="false"/>
+                <p style="font-family: Calibri, sans-serif; font-size: 14px; color: #333;"><b>Exclusions Include (but not limited to): </b></p>
+                <apex:outputText value="{!exclusionsSection}" escape="false"/>
+                
+                
+                <p style="font-family: Calibri, sans-serif; font-size: 13px; color: #333; margin-left: 0.1cm; margin-top:50px">Sincerely,</p>
+                <p style="font-family: Calibri, sans-serif; font-size: 13px; color: #333; margin-left: 0.1cm; margin-top:30px">Sam Tuck</p>
+                <p style="font-family: Calibri, sans-serif; font-size: 13px; color: #333; margin-left: 0.1cm; margin-top:-10px">Technical Sales Manager – Blauberg UK</p>
+                <p style="font-family: Calibri, sans-serif; font-size: 13px; color: #333; margin-left: 0.1cm;">Sent via E-mail to: chris@bir.scot</p>
+            </div> 
+             </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

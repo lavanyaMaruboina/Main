@@ -1,0 +1,341 @@
+<apex:page renderas="pdf" standardController="Quote" extensions="quotepdfController" applyHtmlTag="false" showHeader="false" sidebar="false" cache="true">
+    <html>
+        <head>
+            <style type="text/css" media="print">
+                @page {
+                
+                @top-center {
+                content: element(header);
+            	} 
+                @bottom-left {
+                content: element(footer);
+                }
+                
+                }
+                @page {
+                size: A4;
+                margin: 4cm 1.5cm 3.5cm 1.5cm;  
+                @bottom-left {
+                content: element(footer);
+                }
+                }
+                
+                
+                div.content {
+                position: relative;
+                }
+                div.header {
+                display:block;
+                position: running(header);
+                }
+                
+                div.footer {
+                display: block;
+                padding-bottom: 10px;
+                position: running(footer);
+                }   
+                 .pageBreakAfter {
+                page-break-after: always;
+                }
+                
+                .pagenumber:before {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                body {
+                font-family: "Arial""Sans-Serif";
+                font-size: 12px;
+                margin: 0px;
+                }
+                
+                .page-break {
+                display:block;
+                page-break-after:always;
+                }
+                .page-break-before {
+                page-break-before:always;
+                page-break-inside:avoid;
+                }
+                .page-break-inside-avoid {            
+                page-break-inside:avoid;
+                }
+                table { page-break-inside:auto }
+   				tr { page-break-inside:avoid; page-break-after:auto }
+                   
+            </style>
+            
+        </head>
+        <body>
+            
+            <!-- Header Section -->            
+            <div class="header" name='footer'>
+                <img src="https://blauberguk3--uatsandbox--c.sandbox.vf.force.com/resource/1714110598000/BlaubergLogo?" alt="Company Logo" width="350" height="60"/>
+                <br/>
+                <br/>
+                <hr/>
+            </div>
+            
+             <!-- Footer section -->  
+                <div class="footer" name="footer">  
+                     <div class="pagenumber" style="text-align:center; font-size: 12px; margin-bottom: 0px;"></div>
+                <hr/>
+                <table style="table-layout:fixed; width:100%;">
+                    <tr>
+                        <td style="width:40%;">
+                            Unit E, Boston Road, Beaumont Leys<br/>
+                            Leicester, Leicestershire, LE4 1AW<br/>
+                            Tel.: +44 (0) 116 216 0650<br/><br/>
+                            VAT Registration No.GB729677578<br/>
+                            Company Reg: 03728160<br/>
+                        </td>
+                        <td style="width:60%;">
+                            <a href="{!blauberg1_Site}" target="_blank">{!blauberg1_Site_Title}</a><br/>
+                            
+                        </td>
+                    </tr>  
+                </table>
+            </div>
+            
+            <!-- Details Section -->
+            <table style="width:100%; table-layout:fixed;" >
+                <br/>
+                <br/>
+                <tr>
+                    <td style="vertical-align:top; width:50%;">
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="width:40%;">
+                                    <b>Quote Ref</b>
+                                </td>
+                                <td>
+                                    {!quoteData.Quote_Ref__c}<br/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="width:40%;">
+                                    <b>Project Reference</b>
+                                </td>
+                                <td>
+                                    {!quoteData.Project_Reference__c}
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                    <td style="width:50%;">
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="width:30%;">
+                                    <b>Expiry Date</b>
+                                </td>
+                                <td style="width:70%;">
+                                    <apex:outputText value="{0,date,dd MMMM yyyy}">
+                                        <apex:param value="{!quoteData.ExpirationDate}" />
+                                    </apex:outputText>
+                                    <br/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="width:30%;">
+                                    <b>Created Date</b>
+                                </td>
+                                <td style="width:70%;">
+                                    <apex:outputText value="{0,date,dd MMMM yyyy}">
+                                        <apex:param value="{!quoteData.CreatedDate}" />
+                                    </apex:outputText>
+                                    <br/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="width:30%;">
+                                    <b>Prepared By</b>
+                                </td>
+                                <td style="width:70%;">
+                                    {!currentUser.Name}<br/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="width:30%;">
+                                    <b>Email</b>
+                                </td>
+                                <td style="width:70%;">
+                                    {!currentUser.Email}<br/> 
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    
+                </tr><br/><br/>
+                
+                <tr>
+                    <td style="width:50%;">
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr >
+                                <td style="vertical-align:top; width:40%;">
+                                    <b>Bill To</b>
+                                </td>
+                                <td >
+
+                                    {!quoteData.BillingStreet}
+                                    {!quoteData.BillingCity}
+                                    {!quoteData.BillingState}
+                                    {!quoteData.BillingPostalCode}<br/>
+                                    {!quoteData.BillingCountry}<br/>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                    <td style="width:50%;">
+                        <table style="table-layout:fixed; width:100%;"> 
+                            <tr>
+                                <td style="vertical-align:top; width:30%;">
+                                    <b>Ship To</b>
+                                </td>
+                                <td style="width:70%;">
+                                    {!quoteData.ShippingStreet}
+                                    {!quoteData.ShippingCity}
+                                    {!quoteData.ShippingState}
+                                    {!quoteData.ShippingPostalCode}<br/>
+                                    {!quoteData.ShippingCountry}<br/>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                    
+                </tr>
+            </table><br/><br/>
+            
+            
+            <!-- Greetings Section -->
+            Dear {!contactName},<br/><br/>
+            <apex:outputText value="{!introSection}" escape="false"/>
+            <br/>
+            
+            
+            <!-- Line Items Section -->            
+            <table class="table repeatTableHeader" style="border-collapse:collapse; border:1px solid black; width:100%;">
+                <tr>
+                    <th style="border:1px solid black; text-align:center;">Product Name</th>
+                    <th style="border:1px solid black; text-align:center;">Product Description</th>
+                    
+                    <th style="border:1px solid black; width:8%; text-align:center;">Quantity</th>
+                    <th style="border:1px solid black; width:8%; text-align:center;">Subtotal</th>
+                    <th style="border:1px solid black; width:8%; text-align:center;">Discount</th>
+                    <th style="border:1px solid black; width:8%; text-align:center;">Total Price</th>
+                </tr>
+                <!-- Render items without optional lines -->
+                <apex:repeat value="{!lineItemsWithoutOptionalLines}" var="item">
+                    <tr style="border: 1px solid;">
+                        <td style="border:1px solid black">{!item.Product2.ProductCode}</td>
+                        <td style="border:1px solid black; padding:5px;">{!item.Product2.Description}</td>
+                        
+                        <td style="border:1px solid black; text-align:center;">{!item.Quantity}</td>
+                        <td style="border:1px solid black; text-align:center;">£{!ROUND(item.Subtotal, 2)}</td>
+                        <td style="border:1px solid black; text-align:center;">
+                            <apex:outputText value="{!IF(ISNULL(item.Discount), '0%', TEXT(item.Discount) + '%')}" />
+                        </td>
+                        <td style="border:1px solid black; text-align:center;">£{!ROUND(item.TotalPrice, 2)}</td>
+                    </tr>              
+                </apex:repeat>
+               
+                <apex:repeat value="{!optionalLineGroups}" var="group">
+                    <tr>
+                        <td colspan="7" style="background-color:#c6deef;">{!group.optionalLine}</td>
+                    </tr>
+                    <apex:repeat value="{!group.items}" var="item">
+                        <tr style="border: 1px solid;" id="rowTable">
+                            <td style="border:1px solid black">{!item.Product2.ProductCode}</td>
+                            <td style="border:1px solid black; padding:5px;">{!item.Product2.Description}</td>
+                            
+                            <td style="border:1px solid black; text-align:center;">{!item.Quantity}</td>
+                            <td style="border:1px solid black; text-align:center;">£{!ROUND(item.Subtotal, 2)}</td>
+                            <td style="border:1px solid black; text-align:center;">
+                                <apex:outputText value="{!IF(ISNULL(item.Discount), '0%', TEXT(item.Discount) + '%')}" />
+                            </td>
+                            <td style="border:1px solid black; text-align:center;">£{!ROUND(item.TotalPrice, 2)}</td>
+                        </tr>
+                    </apex:repeat>
+                </apex:repeat>
+            </table>          
+            <br/>
+            <br/>
+            <!-- Calculation Section -->
+          
+            <table style="table-layout:fixed; width:100%;">
+                <tr>
+                    <td style="width:70%; text-align:right;">
+                        Total Price
+                    </td>
+                    <td style="width:30%; text-align:right;">
+                        £{!ROUND(quoteData.TotalPrice, 2)}
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td style="width:70%; text-align:right;">
+                        Shipping and Handling
+                    </td>
+                    <td style="width:30%; text-align:right;">
+                        £{!ROUND(quoteData.ShippingHandling, 2)}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="width:70%; text-align:right;">
+                        VAT
+                    </td>
+                    <td style="width:30%; text-align:right;">
+                        £{!quoteData.VAT__c}
+                    </td>
+                </tr> 
+                <tr>
+                    <td style="width:70%; text-align:right;">
+                        <b>Grand Total</b>
+                    </td>
+                    <td style="width:30%; text-align:right;">
+                        <b>£{!ROUND(quoteData.Grand_Total__c, 2)}</b>
+                    </td>
+                </tr>
+            </table>
+            <br/><br/>
+        
+            Lead time: In Stock - Next Day<br/>
+            Additional Information:  
+              
+            <br/><br/>
+            
+            
+            <!-- Delivery Section -->
+            <b>Delivery: </b><br/><br/> 
+            <apex:outputText value="{!deliverySection}" escape="false"/>
+            <br/>
+            
+            
+            <!-- Terms and Conditions Section -->
+            <b>Terms and Conditions:</b><br/><br/> 
+            <apex:outputText value="{!termsAndConditions}" escape="false"/><br/><br/> 
+            
+            
+            <b>Exclusions Include (but not limited to): </b><br/><br/> 
+            <apex:outputText value="{!exclusionsSection}" escape="false"/>
+            <br/><br/> 
+            
+            <!-- Regards Section -->
+            Sincerely,<br/>
+            {!currentUser.Name}
+            {!currentUser.UserRoleId} – Blauberg UK<br/>
+            Sent via E-mail to: {!quoteData.Contact.Email}  
+           
+           
+        </body>
+    </html>   
+</apex:page>
