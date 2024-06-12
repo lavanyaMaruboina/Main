@@ -29,7 +29,7 @@ export default class FarmerReports extends LightningElement {
                 const textY = chartArea.top + (chartArea.bottom - chartArea.top) / 2;
     
                 // Configure the text appearance
-                ctx.font = '1.3vw Poppins';
+                ctx.font = '20px Poppins';
                 ctx.fillStyle = '#727272';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';

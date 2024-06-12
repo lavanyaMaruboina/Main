@@ -21,14 +21,14 @@ export default class FarmerOrderReports extends LightningElement {
               id: 'doughnutLabel',
               beforeDatasetsDraw: (chart, args, pluginOption) => {
                 const { ctx, chartArea, config } = chart;
-                const text = 'Reports';
+                const text = 'Orders';
     
                 // Calculate the coordinates for the text
                 const textX = chartArea.left + (chartArea.right - chartArea.left) / 2;
                 const textY = chartArea.top + (chartArea.bottom - chartArea.top) / 2;
     
                 // Configure the text appearance
-                ctx.font = '1.3vw Poppins';
+                ctx.font = '20px Poppins';
                 ctx.fillStyle = '#727272';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';

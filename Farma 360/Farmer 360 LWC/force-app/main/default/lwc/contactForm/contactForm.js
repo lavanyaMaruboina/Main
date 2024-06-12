@@ -4,9 +4,14 @@ import CONTACT_OBJECT from '@salesforce/schema/Contact';
 import SUB_TYPE_FIELD from '@salesforce/schema/Contact.Sub_Type__c';
 import FARMER_TYPE_FIELD from '@salesforce/schema/Contact.Type_of_Farmer__c';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
+import uploadFile from '@salesforce/apex/ImageController.uploadFile';
+import Icons from '@salesforce/resourceUrl/farmer360';
 import { LightningElement, track, wire } from 'lwc';
 
 export default class ContactForm extends LightningElement {
+
+    camera = Icons + '/farmer360/KipiIcons/HomePage/camera.png';
+
     @track firstName = '';
     @track lastName = '';
     @track email = '';
@@ -32,6 +37,12 @@ export default class ContactForm extends LightningElement {
 
     @track countyOptions;
     @track continentOptions;
+
+
+    @track isCameraInitialized = false;
+    videoElement;
+    canvasElement;
+    capturedImageData;
 
     @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     contactInfo;
@@ -193,4 +204,69 @@ export default class ContactForm extends LightningElement {
     handleBack() {
         window.location.reload();
     }
+
+
+    renderedCallback() {
+        if (!this.videoElement) {
+            this.videoElement = this.template.querySelector('.videoElement');
+            this.canvasElement = this.template.querySelector('.canvasElement');
+        }
+    }
+
+    async initCamera() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            try {
+                this.videoElement.srcObject = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                this.isCameraInitialized = true;
+            } catch (error) {
+                console.error('Error accessing camera: ', JSON.stringify(error));
+            }
+        } else {
+            console.error('getUserMedia is not supported in this browser');
+        }
+    }
+
+    async captureImage() {
+        if (this.videoElement && this.videoElement.srcObject) {
+            this.canvasElement.height = this.videoElement.videoHeight;
+            this.canvasElement.width = this.videoElement.videoWidth;
+            const context = this.canvasElement.getContext('2d');
+            context.drawImage(this.videoElement, 0, 0, this.canvasElement.width, this.canvasElement.height);
+            this.capturedImageData = this.canvasElement.toDataURL('image/png');
+
+            const imageElement = this.template.querySelector('.imageElement');
+            imageElement.setAttribute('src', this.capturedImageData);
+            imageElement.classList.add('slds-show');
+            imageElement.classList.remove('slds-hide');
+            
+            // Do not stop the camera here; keep it running until the image is sent
+        }
+        console.log('Image>>>>>', this.capturedImageData);
+    }
+
+    async sendImageToApex() {
+        console.log('Apex called', this.capturedImageData);
+        if (this.capturedImageData) {
+            try {
+                const response = await uploadFile({ 
+                    base64: this.capturedImageData.split(',')[1], 
+                    filename: 'CapturedImage.png', 
+                    contactId: this.contactId 
+                });
+                console.log('Image sent successfully: ', response);
+                
+                // Stop the camera and update the state after sending the image
+                if (this.videoElement && this.videoElement.srcObject) {
+                    this.videoElement.srcObject.getTracks().forEach((track) => track.stop());
+                    this.videoElement.srcObject = null;
+                    this.isCameraInitialized = false;
+                }
+            } catch (error) {
+                console.error('Error sending image to Apex: ', error);
+            }
+        } else {
+            console.error('No image data to send');
+        }
+    }
+
 }

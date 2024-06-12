@@ -12,11 +12,9 @@ import { LightningElement, api, track, wire } from 'lwc';
 // import getHarvestDetails from '@salesforce/apex/LandDetailsController.getHarvestDetails';
 import { refreshApex } from '@salesforce/apex';
 import getIrrigationTypePicklistValues from '@salesforce/apex/LandDetailsController.getIrrigationTypePicklistValues';
-import getWaterStatusPicklistValues from '@salesforce/apex/LandDetailsController.getWaterStatusPicklistValues';
 import saveHarvestDetails from '@salesforce/apex/LandDetailsController.saveHarvestDetails';
 
 
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class GetContactLandDetails extends LightningElement {
 
@@ -70,6 +68,7 @@ export default class GetContactLandDetails extends LightningElement {
     @track fCR = '';
     @track statusOptions = []; 
     @track selectedStatus
+    @track selectedOption = '';
 
     @track landName = '';
     @track soilChange = '';
@@ -78,7 +77,7 @@ export default class GetContactLandDetails extends LightningElement {
     @track dateOfInspection = '';
     @track totalAreaNumber = '';
     @track totalAreaSowed = '';
-    @track statusOptions = [];
+    //@track statusOptions = [];
 
     // @track selectedLandRecord;
     // @track landDetailId; // Store the selected land ID
@@ -114,8 +113,8 @@ export default class GetContactLandDetails extends LightningElement {
         { label: 'Soil Detail', fieldName: 'Soil_Detail__c', type: 'text', editable: true },
         { label: 'Irrigation', fieldName: 'Irrigation_Type__c', type: 'picklist', editable: true, options: this.statusOptions  }, 
         { label: 'Total area Sowed', fieldName: 'Total_Area_Sowed__c',type: 'number', editable: true },
-        { label: 'Last date of inspection', fieldName: 'Last_date_of_inspection__c', type: 'date', editable: true },
-        { label: 'Water Source', fieldName: 'Water_Source__c', type: 'picklist', editable: true, options: this.statusOptions }
+        { label: 'Last date of inspection', fieldName: 'Last_date_of_inspection__c', type: 'date', editable: true }
+       
     ]; 
 
     // harvestColumns = [
@@ -155,16 +154,16 @@ export default class GetContactLandDetails extends LightningElement {
             this.error = error;
         }
     }
-    @wire(getWaterStatusPicklistValues)
-    wiredWaterStatusPicklistValues({ error, data }) {
-    if (data) {
-        this.statusOptions = data.map(value => ({ label: value, value }));
-        console.log('statusOptions Water : ', this.statusOptions);
-        console.log('status options Water: ' + JSON.stringify(this.statusOptions));
-    } else if (error) {
-        this.error = error;
-    }
-}
+//     @wire(getWaterStatusPicklistValues)
+//     wiredWaterStatusPicklistValues({ error, data }) {
+//     if (data) {
+//         this.statusOptions = data.map(value => ({ label: value, value }));
+//         console.log('statusOptions Water : ', this.statusOptions);
+//         console.log('status options Water: ' + JSON.stringify(this.statusOptions));
+//     } else if (error) {
+//         this.error = error;
+//     }
+// }
 
 @wire(getContactDetails, { contactId: '$contactId' })
 wiredContactDetails({ error, data }) {
@@ -395,6 +394,7 @@ wiredContactDetails({ error, data }) {
         }
 
         console.log('the land is is2>>',this.landDetailId);
+        if (this.validateForm()) {
         const harvestDetails = {
             Name: this.name,
             Stocking_Density_in_Millions__c: this.density,
@@ -449,6 +449,7 @@ wiredContactDetails({ error, data }) {
                 alert('Error: ' + message);
             });
     }
+}
     
     resetHarvestForm() {
         this.name = '';
@@ -497,25 +498,25 @@ wiredContactDetails({ error, data }) {
     //=========================================================Harvest Form End====================================================
 
     //======================================================== Land Details Save button in Datatable start ==========================================
-      @wire(getWaterStatusPicklistValues)
-    wiredStatusPicklistValues({ error, data }) {
-        if (data) {
-            this.statusOptions = Object.keys(data).map(key => ({ label: data[key], value: key }));
-            console.log('statusOptions : ', this.statusOptions);
-            console.log('selectedStatus :'+ this.selectedStatus);
+    //   @wire(getWaterStatusPicklistValues)
+    // wiredStatusPicklistValues({ error, data }) {
+    //     if (data) {
+    //         this.statusOptions = Object.keys(data).map(key => ({ label: data[key], value: key }));
+    //         console.log('statusOptions : ', this.statusOptions);
+    //         console.log('selectedStatus :'+ this.selectedStatus);
            
              
 
-        } else if (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error fetching picklist values',
-                    message: error.body.message,
-                    variant: 'error',
-                }),
-            );
-        }
-    }
+    //     } else if (error) {
+    //         this.dispatchEvent(
+    //             new ShowToastEvent({
+    //                 title: 'Error fetching picklist values',
+    //                 message: error.body.message,
+    //                 variant: 'error',
+    //             }),
+    //         );
+    //     }
+    // }
 
 
     
@@ -536,6 +537,7 @@ wiredContactDetails({ error, data }) {
 
 
     saveLand(event) {
+        if (this.validateForm()) {
         const fields = {
             Name: this.landName,
             Soil_Detail__c: this.soilChange,
@@ -545,6 +547,7 @@ wiredContactDetails({ error, data }) {
             Total_Area__c: this.totalAreaNumber,
             Total_Area_Sowed__c: this.totalAreaSowed,
             Irrigation_Type__c: this.selectedOption ? this.selectedOption.label : null
+
         };
 
         createLand({ land: fields })
@@ -573,8 +576,18 @@ wiredContactDetails({ error, data }) {
                 console.error('Error creating contact', error);
                 alert('An error occurred while creating the Land');
             });
+        }
    
 }
+validateForm() {
+    const allValid = [...this.template.querySelectorAll('lightning-input')]
+        .reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+    return allValid;
+}
+
 fetchLandDetails(contactId) {
     getLandDetails({ contactId })
         .then(data => {

@@ -1,5 +1,6 @@
 <template>
     <div class="form-edit-container">
+        <div class="container">
       <template if:true={showContactForm}>
           <div class="record-container"> 
 
@@ -8,7 +9,7 @@
                 <lightning-input label="Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input> 
                 <lightning-input label="Date of Birth" value={dob} onchange={handleDOBChange} type="date"></lightning-input>
                 <lightning-input label="Aadhar Number" value={aadharNumber} onchange={handleAadharChange} type="tel" minlength="12" maxlength="12" pattern="[0-9]{12}" message-when-pattern-mismatch="Please enter a 12-digit Aadhar number"></lightning-input>
-                <lightning-input label="PAN Card" value={panNumber} onchange={handlePANNumberChange} minlength="10" maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit PAN number"></lightning-input>
+                <lightning-input label="PAN Card" value={panNumber} onchange={handlePANNumberChange} minlength="10" maxlength="10" pattern="[A-Za-z0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit PAN number"></lightning-input>
                 <lightning-combobox label="Farmer Type" value={selectedFarmerType} options={continentOptions} onchange={handleFarmerTypeChange}></lightning-combobox>
                 <lightning-combobox label="Sub Type" value={selectedSubType} options={countyOptions} onchange={handleSubTypeChange}></lightning-combobox>
                 
@@ -16,14 +17,44 @@
                 <lightning-input label="Village Name" class="slds-col" value={mailingStreet} onchange={handleMailingStreetChange}></lightning-input>
                 <lightning-input label="City" class="slds-col" value={mailingCity} onchange={handleMailingCityChange}></lightning-input>
                 <lightning-input label="State" class="slds-col" value={mailingState} onchange={handleMailingStateChange}></lightning-input>
-                <lightning-input label="Postal Code" class="slds-col" value={mailingPostalCode} onchange={handleMailingPostalCodeChange} type="tel" minlength="6" maxlength="6" pattern="[0-9]{6}" message-when-pattern-mismatch="Please enter a 6-digit Pin code number"></lightning-input>
+                <lightning-input label="Postal Code" class="slds-col" value={mailingPostalCode} onchange={handleMailingPostalCodeChange} minlength="6" maxlength="6" pattern="[0-9]{6}" message-when-pattern-mismatch="Please enter a 6-digit Pin code number"></lightning-input>
                 <lightning-input label="Country" value={mailingCountry} onchange={handleMailingCountryChange}></lightning-input>
                 
                 <div class="heading">Communication</div>
                 <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange}></lightning-input>
-                <lightning-input label="Phone" type="tel" value={phone} onchange={handlePhoneChange} required  minlength="10"
+                <lightning-input label="Phone" value={phone} onchange={handlePhoneChange} required  minlength="10"
                 maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit phone number"></lightning-input>
+
+                  <!-- Camera functionality -->
+                <div class="camera-wrapper">
+                    <template if:true={isCameraInitialized}>
+                        <div class="slds-align_absolute-center">
+                        <lightning-button label="Capture Image" class="slds-m-left_xx-small" onclick={captureImage}></lightning-button>
+                        <lightning-button label="Save Image" class="slds-m-left_xx-small" onclick={sendImageToApex}></lightning-button>
+                        </div>
+                    </template>
+                    <template if:false={isCameraInitialized}>
+                        <div class="slds-align_absolute-center">
+                        <img src={camera} alt="show" class="camera-icon" onclick={initCamera}>
+                    </div>
+                    </template>
+                </div>
+                <div class="video-container">
+                    <div class="slds-align_absolute-center ">
+                         <video class="videoElement" autoplay></video>
+                    </div>
+                    <div class="slds-align_absolute-center ">
+                         <canvas class="canvasElement" style="display:none;"></canvas>
+                    </div>
+                    <div class="slds-align_absolute-center ">
+                         <img class="imageElement slds-hide" alt="captured image">
+                    </div>
+                </div>                
                 
+                   <!-- end camera-->
+
+
+
                 <div class="slds-align_absolute-center mar-top">
                     <lightning-button label="Cancel" onclick={handleCancel} variant="neutral" class="slds-m-left_x-small"></lightning-button>
                     <lightning-button label="Save" onclick={handleSave} variant="brand" class="slds-m-left_x-small"></lightning-button>
@@ -31,7 +62,7 @@
         </div>
 
     </template>
-    </div>
+   
 
     <template if:true={contactDetails}>
         <div class="record-container"> 
@@ -39,22 +70,57 @@
                 <div class="mobile-view">
                     <template for:each={contact} for:item="contact">
                         <div key={contact.Id} class="tile-contact" data-id={contact.Id}>
-                            <div class="head-text">Farmer Name : </div>
-                            <div class="main-text"> {contact.Name}</div>
-                            <div class="head-text">Farmer DOB : </div>
-                            <div class="main-text">{contact.DOB__c}</div>
-                            <div class="head-text">Farmer Aadhar Number : </div>
-                            <div class="main-text">{contact.Aadhar_Number__c}</div>
-                            <div class="head-text">Farmer PAN Number : </div>
-                            <div class="main-text">{contact.PAN_Card__c}</div>
-                            <div class="head-text">Type Of Farmer : </div>
-                            <div class="main-text">{contact.Type_of_Farmer__c}</div>
-                            <div class="head-text">Sub Type : </div>
-                            <div class="main-text">{contact.Sub_Type__c}</div>
-                            <div class="head-text">Farmer Phone : </div>
-                            <div class="main-text"> {contact.Phone}</div>
-                            <div class="head-text">Farmer Email : </div>
-                            <div class="main-text">{contact.Email}</div>
+                            <div class="slds-grid slds-wrap Farmer-Info-container">
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Name </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {contact.Name}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text"> Phone</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {contact.Phone}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text"> DOB</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text">{contact.DOB__c}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text"> Aadhar Number </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text">{contact.Aadhar_Number__c}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text"> PAN Number </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text">{contact.PAN_Card__c}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Farmer Type</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text">{contact.Type_of_Farmer__c}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Sub Type </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text">{contact.Sub_Type__c}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text"> Email</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text">{contact.Email}</div>
+                                </div>
+                            </div>
+                           
                         </div>
                     </template>
                 </div>
@@ -71,5 +137,7 @@
     <template if:true={landForms}>
         <c-create-land-details-form contact-id={contactId}> </c-create-land-details-form>
     </template>
+</div>
+</div>
 
 </template>

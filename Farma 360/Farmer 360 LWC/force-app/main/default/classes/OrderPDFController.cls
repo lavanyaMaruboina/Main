@@ -18,12 +18,12 @@ public without sharing class OrderPDFController {
             termsAndConditions = notesRecords[0].TermsAndConditions__c;
             exclusionsSection = notesRecords[0].Exclusions_Section__c;
         }
-             String recordId='801QH00000zYGKFYA4';
+             String recordId='801QH000010Ev7ZYAS';
         //String recordId = ApexPages.currentPage().getParameters().get('Id');
         
         orderData = [SELECT Id, Name, EndDate, OrderNumber, TotalAmount, Type, BillingAddress, EffectiveDate, Status, 
                             Contact__r.Name,Contact__r.Email, Account.Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, 
-                            BillingCountry, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry 
+                            BillingCountry,Contact__r.MailingStreet, Contact__r.MailingCity,Contact__r.MailingState,Contact__r.MailingPostalCode,Contact__r.MailingCountry 
                      FROM Order WHERE Id = :recordId LIMIT 1];
         
         contactName = '';

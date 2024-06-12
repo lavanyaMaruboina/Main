@@ -202,12 +202,12 @@
                             data-id={selectedRecord.Id}
                             onchange={handleInputChange}>
                         </lightning-input>
-                        <lightning-input
+                        <!-- <lightning-input
                             label="Brand"
                             value={selectedRecord.Brand__c}
                             data-id={selectedRecord.Id}
                             onchange={handleInputChange}>
-                        </lightning-input>
+                        </lightning-input> -->
                         <lightning-input type="date" name="input2" label="Sampling Harvest Date" value={selectedRecord.Date_of_Sampling_Harvest__c} data-id={selectedRecord.Id} onchange={handleInputChange}></lightning-input>
                         <!-- <lightning-input
                             label="Sampling Harvest Date"
@@ -246,12 +246,12 @@
                             data-id={selectedRecord.Id}
                             onchange={handleInputChange}>
                         </lightning-input>
-                        <lightning-combobox name="progress"
+                        <!-- <lightning-combobox name="progress"
                             label="Water Source"
                             value={selectedRecord.Water_Source__c}
                             options={WaterPickListValues.data.values}
                             onchange={handleInputChange} >
-                        </lightning-combobox>
+                        </lightning-combobox> -->
                         <lightning-combobox name="progress"
                             label="Irrigation Type"
                             value={selectedRecord.Irrigation_Type__c}

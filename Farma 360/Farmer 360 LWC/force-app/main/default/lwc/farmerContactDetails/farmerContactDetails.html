@@ -81,9 +81,8 @@
         <c-get-contact-harvest-details contact-id={contactObj.idField}></c-get-contact-harvest-details>
     </template>
     <template if:true={showMapDetails}>
-        <c-farmer-reports contact-id={contactObj.idField}></c-farmer-reports>
-        <c-farmer-visit-reports contact-id={contactObj.idField}></c-farmer-visit-reports>
         <c-farmer-order-reports contact-id={contactObj.idField}></c-farmer-order-reports>
+        <c-farmer-visit-reports contact-id={contactObj.idField}></c-farmer-visit-reports>
     </template>
     <template if:true={showHandlerVisitNotes}>
         <c-visit-contact-details contact-id={contactObj.idField}></c-visit-contact-details>

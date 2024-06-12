@@ -1,10 +1,10 @@
 import { LightningElement, wire, track } from 'lwc';
 import getUserDetails from '@salesforce/apex/userController.getUserDetails';
-
+import Id from "@salesforce/user/Id";
 export default class CurrentUser extends LightningElement {
     @track userName;
     @track isModalOpen = true;
-    @track userId = '005QH000000umunYAA'; 
+    @track userId = Id; 
 
     @wire(getUserDetails, { userId: '$userId' })
     wiredUser({ error, data }) {

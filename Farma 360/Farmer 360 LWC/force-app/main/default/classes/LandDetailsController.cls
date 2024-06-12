@@ -11,7 +11,7 @@ public with sharing class LandDetailsController {
             landDetails.Date_of_Stocking__c = stockingDate;
             landDetails.Pond_Number__c = pondNumber;
             landDetails.Soil_testing_date__c = soilTestingDate;
-            landDetails.Water_Source__c = waterSource;
+            //landDetails.Water_Source__c = waterSource;
             landDetails.Irrigation_Type__c = irrigation;
           //  landDetails.Number_of_Lands__c=Lands;
             

@@ -1,4 +1,4 @@
-public with sharing class AddProductsComponent {
+public without sharing class AddProductsComponent {
  
     @AuraEnabled(cacheable=true)
     public static List<ProductWrapper> collectproductsData(String searchkey) {
