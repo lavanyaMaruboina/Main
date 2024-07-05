@@ -1,3 +1,4 @@
+import { LightningElement, track, wire } from 'lwc';
 import getContactDetails from '@salesforce/apex/AccountSearchController.getContactDetails';
 import createContact from '@salesforce/apex/ContactController.createContact';
 import CONTACT_OBJECT from '@salesforce/schema/Contact';
@@ -6,7 +7,8 @@ import FARMER_TYPE_FIELD from '@salesforce/schema/Contact.Type_of_Farmer__c';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import uploadFile from '@salesforce/apex/ImageController.uploadFile';
 import Icons from '@salesforce/resourceUrl/farmer360';
-import { LightningElement, track, wire } from 'lwc';
+import LightningAlert from 'lightning/alert';
+
 
 export default class ContactForm extends LightningElement {
 
@@ -138,15 +140,19 @@ export default class ContactForm extends LightningElement {
                 .then(result => {
                     console.log('Contact created successfully:', result);
                     console.log('contact id======',result.Id);
+
                   
                     this.resetForm();
+                    this.showSuccessAlert();
                     this.showContactForm=false;
-                    alert('Contact created successfully');
                      this.fetchContactDetails( result.Id);
                      this.contactId=result.Id;
+                     this.sendImageToApex();
+                    
                 })
                 .catch(error => {
                     console.error('Error creating contact:', error);
+                    this.showErrorAlert();
                 });
         }
     }
@@ -268,5 +274,25 @@ export default class ContactForm extends LightningElement {
             console.error('No image data to send');
         }
     }
+
+    //
+
+    // Method to show an success alert
+        showSuccessAlert() {
+            LightningAlert.open({
+                message: 'Contact Created',
+                theme: 'Success',
+                label: 'Success',
+            });
+        }
+
+        // Method to show an error alert
+        showErrorAlert(headerLabel, bodyMessage) {
+            LightningAlert.open({
+                message: bodyMessage,
+                theme: 'error',
+                label: headerLabel,
+            });
+        }
 
 }

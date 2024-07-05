@@ -1,0 +1,77 @@
+<template>
+
+    <header lwc:ref="myHeader">
+    <div class="site-logo">
+      <a href="/">
+        <img src={logoUrl} alt="Logo" class="navbar-logo">
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <nav>
+        <ul>
+          <!-- <li class="nav-item inventory">
+            <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+          </li> -->
+            <li class="nav-item contacts">
+                <div onclick={handleContactsClick}>Add Dealer</div>
+            </li>
+  
+            <li class="nav-item inventory">
+                <div onclick={handleInventoryClick}>Inventory</div>
+            </li>
+            <li class="nav-item inventory">
+              <div onclick={showSchemePDF}>Schemes</div>
+            </li>
+           
+            <li class="nav-item inventory">
+              <a href={logoutLink} class='logoutCss'><img src={Login_Icon}>Log Out</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="hamberger-menu" onclick={toggleMobileMenu}>
+        <img src={hide} alt="show" class="show">
+        <img src={show} alt="hide" class="hide">
+          <ul class="mobile-menu">
+            <!-- <li class="nav-item inventory">
+              <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+            </li> -->
+            <li class="nav-item contacts">
+               <div onclick={handleContactsClick}>Add Dealer</div>
+            </li>
+  
+            <li class="nav-item inventory">
+                 <div onclick={handleInventoryClick}>Inventory</div>
+            </li>
+            <li class="nav-item inventory">
+              <div onclick={showSchemePDF}>Schemes</div>
+            </li>
+            
+            <li class="nav-item inventory">
+              <a href={logoutLink}>Log Out</a>
+            </li>
+          </ul>
+    </div>
+  
+  </header>
+    <template class="slds-m-around_medium" if:true={showSearch}>
+       <c-dealer-contact-details></c-dealer-contact-details>
+    </template>
+     <template class="slds-m-around_medium" if:true={showSearchInventory}>
+        <c-inventory-form></c-inventory-form>
+    </template>
+    <template class="slds-m-around_medium" if:true={showContactForm}>
+        <c-dealer-creation-form></c-dealer-creation-form>
+    </template>
+
+  
+    <!-- Next button -->
+    <!-- <template if:true={showContactForm}>
+        <div class="slds-p-around_medium">
+            <div class="slds-m-top_medium">
+                <lightning-button label="Next" onclick={handleNext} variant="brand"></lightning-button>
+            </div>
+        </div>
+    </template> -->
+    
+  </template>

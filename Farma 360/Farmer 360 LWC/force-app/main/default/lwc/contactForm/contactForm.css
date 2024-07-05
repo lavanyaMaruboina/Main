@@ -10,6 +10,27 @@
     display: inline-block;
     width: calc(50% - 0.75rem); /* Adjust width as needed */
 }
+.align-right{
+    text-align: right;
+}
+
+.farmer-info{
+    font-size: 14px;
+    font-weight: 600;
+}
+.Farmer-Info-container{
+    padding:5px;
+}
+.tile-contact{
+    cursor: pointer;
+    margin: 3px 0px;
+    border-radius: 5px;
+    padding:12px;
+}
+.border-section{
+    border-bottom: 1px dotted grey;
+    padding: 8px;
+}
 
 /* Styles for smaller screens */
 @media (max-width: 767px) {
@@ -81,5 +102,9 @@
 		cursor: pointer;
         width: 20%;
 	}
+    .border-section{
+        border-bottom: 1px dotted grey;
+        padding: 8px;
+    }
 
 }

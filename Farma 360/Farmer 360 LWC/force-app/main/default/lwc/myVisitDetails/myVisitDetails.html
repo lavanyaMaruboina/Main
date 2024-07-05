@@ -1,0 +1,28 @@
+<template>
+    <div class="container">
+        <div class="heading">
+            <span>Visit Details</span>
+            <span class="text-align">{userName}</span>
+        </div>
+
+        <template if:true={showVisitForm}>
+            <lightning-record-edit-form object-api-name="Visit__c" onsubmit={handleSave} onsuccess={handleSuccess} onerror={handleError}>
+                <div class="slds-p-around_medium form-container">
+                    <lightning-input-field field-name="Name" value={userName} label="Reps Name" name="Name" onchange={handleInputChange} disabled></lightning-input-field>
+
+                    <lightning-input-field field-name="Type_Of_Visit__c" label="Visit" name="Type_Of_Visit__c" onchange={handleInputChange}></lightning-input-field> 
+					
+                    <lightning-input-field field-name="Date__c" label="Date" name="Date__c" onchange={handleInputChange}>
+					</lightning-input-field>
+                    
+                    <lightning-input-field field-name="Visit_Notes__c" label="Visit Notes" name="Visit_Notes__c" onchange={handleInputChange}></lightning-input-field>
+        </div>
+                <div class="slds-align_absolute-center mar-top">
+					 <lightning-button label="Back" onclick={handleBack} class="slds-m-bottom_small"></lightning-button>
+					 <lightning-button label="Save" type="submit" class="slds-m-bottom_small" ></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </template>
+        </div>
+
+</template>

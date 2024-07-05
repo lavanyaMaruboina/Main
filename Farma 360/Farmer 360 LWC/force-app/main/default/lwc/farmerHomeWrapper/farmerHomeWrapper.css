@@ -218,8 +218,9 @@ header.sticky {
 
 
 .hamberger-menu {
+    display: block;
+    margin: 10px;
     cursor: pointer;
-    display: none;
 }
 
 .navbar-menu {

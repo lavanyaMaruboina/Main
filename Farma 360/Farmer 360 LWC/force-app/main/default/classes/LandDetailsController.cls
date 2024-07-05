@@ -56,7 +56,7 @@ public with sharing class LandDetailsController {
     @AuraEnabled
     public static void saveLandDetails(List<Land_detals__c> data) {
         try {
-            update data;
+            upsert data;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -220,12 +220,14 @@ public with sharing class LandDetailsController {
 
     
      @AuraEnabled
-    	public static Id updateLandDetails(Id id, String name) {
+    	public static Id updateLandDetails(Id id, String name, String soilChange) {
         system.debug('Name>>>'+ name);
         system.debug('Name>>>'+ id);
-        Land_detals__c land = [SELECT Id, Name FROM Land_detals__c WHERE Id = :id LIMIT 1];
+        Land_detals__c land = [SELECT Id, Name, Soil_Detail__c FROM Land_detals__c WHERE Id = :id LIMIT 1];
         land.Name = name;
+        land.Soil_Detail__c=soilChange;
         system.debug('Name>>>'+ land);
+        system.debug('Soil>>>'+ land);
         update land;
         return land.Id;
     }

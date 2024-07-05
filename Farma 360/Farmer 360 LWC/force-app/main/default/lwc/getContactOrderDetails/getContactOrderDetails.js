@@ -1,16 +1,19 @@
-import { LightningElement, api, track, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import collectproductsData from '@salesforce/apex/AddProductsComponent.collectproductsData';
 import createOrder from '@salesforce/apex/AddProductsComponent.createOrder';
 import getOpportunityLineItems from '@salesforce/apex/AddProductsComponent.getOpportunityLineItems';
 import getOrderList from '@salesforce/apex/AddProductsComponent.getOrderDetailsByContactId';
-import getStatusPicklistValues from '@salesforce/apex/AddProductsComponent.getStatusPicklistValues';
+import getOrderDetailsEndDate from '@salesforce/apex/AddProductsComponent.getOrderDetailsEndDate';
+import getPrescriptionDetails from '@salesforce/apex/AddProductsComponent.getPrescriptionDetails';
 import orderLineItems from '@salesforce/apex/AddProductsComponent.orderLineItems';
 import pPbIds from '@salesforce/apex/AddProductsComponent.pPbIds';
 import saveOrderLineDetails from '@salesforce/apex/AddProductsComponent.saveOrderLineDetails';
 import searchAccounts from '@salesforce/apex/AddProductsComponent.searchAccounts';
+import LightningAlert from 'lightning/alert';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { LightningElement, api, track, wire } from 'lwc';
+
 
 export default class GetContactOrderDetails extends NavigationMixin(LightningElement) {
 
@@ -27,27 +30,18 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
     @api contactId;
     @track orderDetails;
     @track orderForm = false;
-    //@track orderDetailsVisible = true;
+
     @track accounts = [];
     @track accountName = '';
     @track accountId = '';
-    @track statusOptions = [
-        { label: 'Draft', value: 'Draft' },
-        { label: 'New', value: 'New' },
-        { label: 'Accepted', value: 'Accepted' },
-        { label: 'In Progress', value: 'In Progress' },
-        { label: 'On Hold', value: 'On Hold' },
-        { label: 'Shipped', value: 'Shipped' },
-        { label: 'Cancel', value: 'Cancel' }
-    ];
-  //  @track statusOptions = []; 
+
     @track contactName = '';
     @track draftValues = [];
     @track isorderObj = false;
     @track selectedRows = [];
     @track OrderDetailsForm = false;
     @track OrderDatatable = true;
-    @track selectedStatus = 'New';
+    @track selectedStatus = 'Draft';
     defaultStatusSet = false;
     @track addProductsDetails = false;
     @track showProductsDetails = false;
@@ -57,25 +51,27 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
     @track showAddProductsDetails = false;
     @track createId='';
 
-    selectedOption='';
-  //  selectedStatus = 'New';
-    orderStart = '';
+    selectedOption='Draft';
+
+  @track orderStart = this.getCurrentDate();
+  @track Comments= '';
+
+  @track showModal = false;
     endDate = '';
-    billingStreet = '';
-    billingCity = '';
-    billingState = '';
-    billingCountry = '';
-    billingPostalCode = '';
+    shippingStreet = '';
+    shippingCity = '';
+    shippingState = '';
+    shippingCountry = '';
+    shippingPostalCode = '';
     OrderNumber= '';
     statusField= '';
     EffectiveDate= '';
     EndDate= '';
     orderAmount ='';
     @track pricebookId;
-   // @track OrderDatatable=false;
+  
    backupResponseFromWire;
 
-   
 
 
     columns = [
@@ -92,6 +88,19 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         { label: 'List Price', fieldName: 'ListPrice', type: 'currency' },
         { label: 'Line Description', fieldName: 'LineDescription', type: 'text', editable: true }
     ];
+    getSearchdata(event) {
+        this.searchInput = event.target.value;
+    }
+
+
+    checkEndDate() {
+        const today = new Date().toISOString().split('T')[0]; 
+        console.log('today date ===>',today);
+        console.log('today date current ===>',this.selectedRows.EndDate);
+        return this.selectedRows.EndDate === today;
+    }
+    
+
 
     @wire(pPbIds)
     wiredPricebookIds({ error, data }) {
@@ -103,51 +112,52 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         }
     }
 
+    contactName = '';
+
     @wire(getOrderList, { contactId: '$contactId' })
-    getOrderListDetail(result) { 
+    getOrderListDetail(result) {
         this.backupResponseFromWire = result;
         if (result.data) {
-            this.orderDetails = result.data;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+    
+            this.orderDetails = result.data.map(order => {
+                const effectiveDate = new Date(order.EffectiveDate);
+                effectiveDate.setHours(0, 0, 0, 0);
+    
+                return {
+                    ...order,
+                    ContactName: order.Contact__r ? order.Contact__r.Name : "",
+                    effectiveDateFormatted: this.formatDate(effectiveDate),
+                    canAddProducts: effectiveDate >= today
+                };
+            });
+    
+            if (this.orderDetails.length > 0) {
+                this.contactName = this.orderDetails[0].ContactName;
+            }
+    
             console.log('Order Details >>>>', JSON.stringify(this.orderDetails));
         } else if (result.error) {
             this.orderDetails = undefined;
         }
     }
+    
 
-    @wire(getStatusPicklistValues)
-    wiredStatusPicklistValues({ error, data }) {
-        if (data) {
-            this.statusOptions = Object.keys(data).map(key => ({ label: data[key], value: key }));
-            console.log('statusOptions : ', this.statusOptions);
-            console.log('selectedStatus :'+ this.selectedStatus);
-           
-             
-
-        } else if (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error fetching picklist values',
-                    message: 'erro message',
-                    variant: 'error',
-                }),
-            );
+    formatDate(date) {
+        let day = date.getDate();
+        let month = date.getMonth() + 1; 
+        let year = date.getFullYear();
+    
+        if (day < 10) {
+            day = '0' + day;
         }
+        if (month < 10) {
+            month = '0' + month;
+        }
+    
+        return `${day}-${month}-${year}`;
     }
-   
-    
-    // fetchPricebookId(productName) {
-    //     getPricebookId({ productName: '$productName' })
-    //         .then(result => {
-    //             // Use the fetched Price Book ID
-    //             this.pricebookId = result;
-    //         })
-    //         .catch(error => {
-    //             // Handle any errors
-    //             console.error('Error fetching Price Book ID: ', error);
-    //         });
-    // }
-
-    
 
     handleCreateOrder() {
         this.orderForm = true;
@@ -156,7 +166,7 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         if (this.orderDetails && this.orderDetails.length > 0) {
             this.contactName = this.orderDetails[0].Contact__r.Name;
         }
-        // this.orderDetailsVisible = false;
+       
         this.OrderDatatable = false;
         this.OrderDetailsForm =false;
         this.addProductsDetails =false;
@@ -182,7 +192,7 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
                     );
                 });
         } else {
-            this.accounts = []; // Clear the accounts list if search term length is less than 3
+            this.accounts = [];
         }
     }
 
@@ -207,18 +217,35 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
             this.EffectiveDate = event.target.value;
         } else if (field === 'End Date') {
             this.EndDate = event.target.value;
+            console.log('this.EndDate==>'+this.EndDate);
         }
         else if (field === 'Order Amount') {
             this.TotalAmount = event.target.value;
         }
+    }
+    getCurrentDate() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1; 
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        return `${yyyy}-${mm}-${dd}`;
     }
 
     handleOrderStartChange(event) {
         this.orderStart = event.target.value;
     }
 
+    handleCommentChange(event) {
+        this.Comments = event.target.value;
+    }
+
     handleEndDateChange(event) {
         this.endDate = event.target.value;
+        this.endDateId = event.target.dataset.id;
     }
 
     handleContactChange(event) {
@@ -236,11 +263,11 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
     }
 
     addressChange(event) {
-        this.billingStreet = event.target.street;
-        this.billingCity = event.target.city;
-        this.billingState = event.target.province;
-        this.billingCountry = event.target.country;
-        this.billingPostalCode = event.target.postalCode;
+        this.shippingStreet = event.target.street;
+        this.shippingCity = event.target.city;
+        this.shippingState = event.target.province;
+        this.shippingCountry = event.target.country;
+        this.shippingPostalCode = event.target.postalCode;
     }
 
     handleSave() {
@@ -255,35 +282,19 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
             );
             return;
         }
-      //  ======== Validation for Start Date and end date ===========
-         if (this.endDate && this.orderStart) {
-            const endDate = new Date(this.endDate);
-            const startDate = new Date(this.orderStart);
-            if (endDate < startDate) {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: 'Order End Date cannot be earlier than Order Start Date',
-                        variant: 'error'
-                    })
-                );
-                return;
-            }
-        }
-        //  ======== Validation for Start Date and end date ===========
 
         const fields = {
             AccountId: this.accountId,
-            Status: this.selectedOption.label,
+            Status: this.selectedStatus,
             EffectiveDate: this.orderStart,
+            Comments_on_prescription__c: this.Comments,
             EndDate: this.endDate,
-            //orderAmount: this.orderAmount,
             Contact__c: this.contactId,
-            BillingStreet: this.billingStreet,
-            BillingCity: this.billingCity,
-            BillingState: this.billingState,
-            BillingCountry: this.billingCountry,
-            BillingPostalCode: this.billingPostalCode
+            ShippingStreet: this.shippingStreet,
+            ShippingCity: this.shippingCity,
+            ShippingState: this.shippingState,
+            ShippingCountry: this.shippingCountry,
+            ShippingPostalCode: this.shippingPostalCode
         };
 
         console.log('fields :'+ fields)
@@ -299,12 +310,7 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
                 console.log('Create Order Id : ', this.createId);
                 console.log('Order Fields result : ', result);
                 console.log('Order Fields : ', this.orderDetails);
-                //            this[NavigationMixin.Navigate]({
-                //           "type": "standard__webPage",
-                //           "attributes": {
-                //           "url": "/orderdetails"
-                //     }
-                // });
+            
                 this.orderForm = false;
                 this.showProductData = true;  
                 this.orderForm =false;
@@ -315,7 +321,7 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
                 this.showSavedItems =false;
 
                 console.log('refrereshing apex1');
-                //this.clearNewOrderData();
+                this.saveLineItems();
                 this.refreshNewData();
                 
                 
@@ -338,15 +344,16 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
     }
 
     clearNewOrderData(){
-         this.accountId = '';
-            this.selectedOption = '';
-            this.orderStart = '';
-          this.endDate = '';
-            this.billingStreet = '';
-             this.billingCity = '';
-      this.billingState = '';
-          this.billingCountry = '';
-            this.billingPostalCode = '';
+        this.accountId = '';
+        this.selectedOption = '';
+        this.orderStart = '';
+        this.Comments = '';
+        this.endDate = '';
+        this.shippingStreet = '';
+        this.shippingCity = '';
+        this.shippingState = '';
+        this.shippingCountry = '';
+        this.shippingPostalCode = '';
     }
 
         handleCellChange(event) {
@@ -385,16 +392,10 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         console.log('EndDate: ' + this.selectedRows.EndDate);
         console.log('EndDate: ' + this.EndDate);
 
-        // Close the order table and open the detail order page
-        //this.orderDetailsVisible = false;
-        this.isorderObj = true;
+    
         this.OrderDatatable = false;
         
     }
-
-
-
-
 
         handleShowProducts() {
         this.showEditView = true;
@@ -409,20 +410,14 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         this.wiredOrderLineData = result;
         if (result.data) {
             this.productLineItems = result.data;
-            console.log('productLineItems====>425', this.productLineItems);
+            console.log('productLineItems====>425', JSON.stringify(this.productLineItems));
            
         } else if (result.error) {
             this.productLineItems = result.error;
             
+
         }
     }
-
-
-
-    // handleHarvestCellChange(event) {
-    //     const { draftValues } = event.detail;
-    //     this.harvestDraftValues = draftValues;
-    // }
 
       handleCellOrdelineChange(event) {
         const updatedDraftValues = event.detail.draftValues;
@@ -463,17 +458,58 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
     @track showEditView = false;
     @track showOpportunityLineItems = false;
     @track showSavedItems = false;
-   // @track createId='';
+  
     @track selectedOrderDetails='';
+  
+  
+   incrementCount(event) {
+    var productId = event.currentTarget.dataset.id;
+    var product = this.dataTableColumns.find(prod => prod.Id === productId);
+    console.log('Product Increament => 421',product);
     
+    if (product) {
+        product.count++;
+    }
+    this.dataTableColumns = [...this.dataTableColumns]; 
+    console.log('data table of products Increment=>425', JSON.stringify(this.dataTableColumns));
+}
 
+decrementCount(event) {
+    var productId = event.currentTarget.dataset.id;
+    var product = this.dataTableColumns.find(prod => prod.Id === productId);
+    console.log('Product Decrement => 421',product);
+    
+    if (product && product.count > 0) {
+        product.count--;
+    }
+    this.dataTableColumns = [...this.dataTableColumns]; 
+    console.log('data table of products Decrement=>425', JSON.stringify(this.dataTableColumns));
+
+}
+
+handleCountChange(event) {
+    var productId = event.currentTarget.dataset.id;
+    var product = this.dataTableColumns.find(prod => prod.Id === productId);
+    if (product) {
+        console.log(event.target.value);
+        //alert(event.target.value);
+        product.count = event.target.value;
+        
+    }
+    this.dataTableColumns = [...this.dataTableColumns];
+
+
+        console.log('dataTableColumns===>', JSON.stringify(this.dataTableColumns));
+    }
+    
     @track productColumns = [
+      
         { label: 'Product Name', fieldName: 'Name', cellAttributes: { alignment: 'right' } },
         { label: 'Product Code', fieldName: 'ProductCode', cellAttributes: { alignment: 'right' } },
         { label: 'Product Family', fieldName: 'Family', cellAttributes: { alignment: 'right' } },
         { label: 'List Price', fieldName: 'UnitPrice', type: 'currency', cellAttributes: { alignment: 'right' } },
         { label: 'Product Description', fieldName: 'Description', cellAttributes: { alignment: 'right' } }
-    ];
+     ];
     @track editProductColumns = [
         { label: 'Product', fieldName: 'Name', cellAttributes: { alignment: 'right' } },
         { label: 'Quantity', fieldName: 'Quantity', type: 'number', editable: true, cellAttributes: { alignment: 'right' } },
@@ -505,8 +541,30 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
     @api recordId;
     searchInput = '';
     @track OrderId = '';
+    @track productId = '';
 
 
+    handleRowAction(event) {
+        const actionName = event.detail.action.name;
+        const row = event.detail.row;
+     
+
+        const productIndex = this.products.findIndex(p => p.Id === row.Id);
+        if (productIndex !== -1) {
+            if (actionName === 'incrementCount') {
+                this.products[productIndex].Quantity += 1;
+            } else if (actionName === 'decrementCount') {
+                if (this.products[productIndex].Quantity > 0) {
+                    this.products[productIndex].Quantity -= 1;
+                }
+            }
+        }
+
+
+        this.products = [...this.products];
+
+    }
+   
     @wire(CurrentPageReference)
     currentPageReference;
 
@@ -516,10 +574,12 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
             this.opportunityLineItems = data.map(item => ({
                 Id: item.Id,
                 ProductName: item.ProductName,
-                Quantity: item.Quantity,
+                Quantity: item.count,
                 UnitPrice: item.UnitPrice,
                 Description: item.Description
+                
             }));
+            console.log('data =====>532',JSON.stringify(this.opportunityLineItems));
             this.showOpportunityLineItems = true;
         } else if (error) {
             console.error('Error retrieving opportunity line items:', error);
@@ -540,14 +600,9 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         }
     }
 
-    // @api
-    // addProductsModal() {
-    //     this.showProductData = true;
-    // }
+   
 
-    getSearchdata(event) {
-        this.searchInput = event.target.value;
-    }
+    @track allProducts;
 
     @wire(collectproductsData, { searchkey: '$searchInput' })
     wiredProducts({ error, data }) {
@@ -558,8 +613,12 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
                 ProductCode: item.ProductCode,
                 Family: item.Family,
                 Description: item.Description,
-                UnitPrice: item.UnitPrice
+                UnitPrice: item.UnitPrice,
+                count : 0
+                
             }));
+            this.allProducts = this.dataTableColumns;
+            console.log('product===>582', JSON.stringify(this.dataTableColumns ));
             this.error = undefined;
         } else if (error) {
             this.error = error;
@@ -616,42 +675,208 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
        console.log('Record ID>>>>>> Card Click:', this.orderId);
     }
 
-    handleAddProducts(event) {
-        const orderId = event.currentTarget.dataset.id; // Correctly retrieve the order ID
-        this.orderIdToCreateLineItem = orderId;
+@track orderProductList = null;
 
+    handleAddProducts(event) {
+        const orderId = event.currentTarget.dataset.id; 
+        this.orderIdToCreateLineItem = orderId;
+        console.log('Order Got:', this.orderIdToCreateLineItem);
+        this.fetchOrderDetails(this.orderIdToCreateLineItem);
+
+        // if(this.checkEndDate()) {
+        //     this.showOrderDeliveredAlert();
+        //   alert('Order has been Delivered');
+        //   this.showProductData = false;
+        
+        // }
+        this.showProductData = true;
         this.showEditView = false;
         this.showProductsDetails = false;
-        this.showProductData = true;
         this.OrderDetailsForm = false;
         this.OrderDatatable = false;
-
-        console.log('Record ID>>>>>> Button click:', this.orderIdToCreateLineItem);
+        console.log('Record ID>>>>>> Button click:', this.orderIdToCreateLineItem);  
+        
     }
 
-    
-    saveLineItems() {
-        // Check if `createId` is present and assign it to `orderIdToCreateLineItem`
-        if (this.createId) {
-            this.orderIdToCreateLineItem = this.createId;            
+    handleViewProducts(event) {
+        const orderId = event.currentTarget.dataset.id; 
+        this.orderIdToCreateLineItem = orderId;
+        console.log('Order Got:', this.orderIdToCreateLineItem);
+        this.fetchOrderItemDetails(this.orderIdToCreateLineItem);
+
+        // if(this.checkEndDate()) {
+        //     this.showOrderDeliveredAlert();
+        //   //alert('Order has been Delivered');
+        //   this.showProductData = false;
+        
+        // }
+        this.showPrescriptionData = true;
+        this.showEditView = false;
+        this.showProductsDetails = false;
+        this.OrderDetailsForm = false;
+        this.OrderDatatable = false;
+        console.log('Record ID>>>>>> Button click:', this.orderIdToCreateLineItem);  
+        
+    }
+    handleBacktoPrescription(){
+        this.showPrescriptionData = false;
+        this.showEditView = false;
+        this.showProductsDetails = false;
+        this.OrderDetailsForm = false;
+        this.OrderDatatable = true;
+
+    }
+
+
+
+
+    @track orderEndDate = '';
+    @track allProducts;
+    @track addOrderNumber;
+
+    fetchOrderDetails(orderIdToCreateLineItem) {
+        getOrderDetailsEndDate({ orderIdToCreateLineItem })
+            .then(data => {
+                if (data && data.length > 0) {
+                    console.log('passing Id to check date: ', orderIdToCreateLineItem);
+                    console.log('Fetched Order details', JSON.stringify(data));
+                    this.addOrderNumber = data.length > 0 ? data[0].Order.OrderNumber : '';
+                    let productQuantities = {};
+                    data.forEach(orderProduct => {
+                        let productId = orderProduct.Product2.Id;
+                        let quantity = orderProduct.Quantity;
+            
+                        if (!productQuantities[productId]) {
+                            productQuantities[productId] = 0;
+                        }
+            
+                        productQuantities[productId] += quantity;
+                    });
+            
+                    // Create a new list of products with added quantity field
+                    this.dataTableColumns = this.allProducts.map(product => {
+                        let productId = product.Id; 
+                        let quantity = productQuantities[productId] || 0;
+            
+                        return { ...product, count: quantity };
+                    }).sort((a, b) => b.count - a.count);
+
+                    console.log('this.dataTableColumns Lavanya>>>',JSON.stringify(this.dataTableColumns));
+                    this.orderEndDate = data[0].EffectiveDate; // Use EffectiveDate if that's the correct field
+                    console.log('today date from apex keval ===>', this.orderEndDate);
+                    if (this.checkEndDateToday()) {
+                        this.showProductData = false;
+                        this.OrderDatatable = true;
+                        // alert('Order has been Delivered');
+                        this.showOrderDeliveredAlert();
+                    }
+                    this.refreshApexPrescription();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching contact details:', error);
+            });
+    }
+
+    @track displayedDataTableColumns = [];
+    searchInput = '';
+
+    getSearchdataInProduct(event) {
+        console.log('I am called');
+        // this.searchInput = event.target.value.toLowerCase();
+        // this.filterDataTableColumns();
+    }
+
+    filterDataTableColumns() {
+        if (!this.searchInput) {
+            console.log('I am inside');
+            this.displayedDataTableColumns = [...this.dataTableColumns];
+        } else {
+            this.displayedDataTableColumns = this.dataTableColumns.filter(product => 
+                product.Name.toLowerCase().includes(this.searchInput)
+            );
         }
+        console.log('Filtered dataTableColumns:', JSON.stringify(this.displayedDataTableColumns));
+    }
 
-        console.log('Created Id=>', this.orderIdToCreateLineItem);
-        console.log('New Order Id', this.createId);
 
-        // Create order items to save
-        const orderItems = this.productLineItems.map(item => ({
-            OrderId: this.orderIdToCreateLineItem,
+    refreshApexPrescription() {
+        // Refresh Apex data for PrescriptionItem and orderDetails
+        refreshApex(this.PrescriptionItem)
+        .then(() => {
+            console.log('Successfully refreshed PrescriptionItem:', this.PrescriptionItem);
+        })
+        .catch(error => {
+            console.error('Error refreshing PrescriptionItem:', error);
+        });
+        refreshApex(this.orderDetails);
+        //refreshApex(this.dataTableColumns);
+        console.log('refreshApex(this.orderDetails)==>',refreshApex(this.orderDetails));
+    }
+    checkEndDateToday() {
+        const today = new Date().toISOString().split('T')[0];
+        console.log('today date ===>', today);
+        console.log('today date current End Date ===>', this.orderEndDate);
+        return this.orderEndDate <= today;
+    }
+
+
+
+    @track PrescriptionItem;
+    @track prescriptionNumber;
+    @track productQuantity;
+    
+    fetchOrderItemDetails(orderIdToCreateLineItem) {
+        getPrescriptionDetails({ orderIdToFetchLineItem : orderIdToCreateLineItem })
+            .then(data => {
+                if (data) {
+                    this.PrescriptionItem = data;
+                    console.log('fetch Order Item Details', JSON.stringify(data));
+                    // this.orderEndDate = data[0].EndDate;
+                    // console.log('today date current 605===>',this.orderEndDate);
+                    // if(this.checkEndDateToday()) {
+                    //     this.showProductData = false;
+                    //     this.OrderDatatable = true;
+                    //     //alert('Order has been Delivered');
+                    //     this.showOrderDeliveredAlert();
+    
+                    // }
+                    this.productQuantity = data[0].Quantity;
+                    this.prescriptionNumber = data[0]?.Order?.OrderNumber;
+                    
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching contact details:', error);
+            });
+    }
+
+    saveLineItems(event) {    
+        let orderIdToCreateLineItem = '';   
+        if (this.createId) { 
+            orderIdToCreateLineItem = this.createId;
+            console.log('New Order Id', orderIdToCreateLineItem);
+        } else {
+            orderIdToCreateLineItem = this.orderIdToCreateLineItem;
+            console.log('Selected Order Id>>.', orderIdToCreateLineItem);
+        }
+    
+        console.log('Created Id=> ', orderIdToCreateLineItem);
+    
+        const orderItems = this.dataTableColumns
+        .filter(item => item.count !== 0 && item.count !== null && item.count !== undefined)
+        .map(item => ({
+            OrderId: orderIdToCreateLineItem,
             Product2Id: item.Id,
-            Quantity: item.Quantity,
+            Quantity: item.count,
             UnitPrice: item.UnitPrice,
             Description: item.LineDescription
-            // PricebookEntryId: this.pricebookId
+            //PricebookEntryId: this.pricebookId
         }));
-
+    
+        console.log('Filtered Order Items:', JSON.stringify(orderItems));
         console.log('Order Items to save:', JSON.stringify(orderItems));
 
-        // Save order line items
         orderLineItems({ orderlineitems: orderItems })
             .then(() => {
                 this.OrderDatatable = true;
@@ -660,8 +885,9 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
                 this.showEditView = false;
                 this.showProductData = false;
                 this.OrderDetailsForm = false;
-                alert('Order Line Item Added Successfully');
-
+                this.showSuccessAlertPrescription();
+                //alert('Order Line Item Added Successfully');
+                console.log('template true>>>', this.OrderDatatable);
                 this.refreshNewData();
             })
             .catch(error => {
@@ -685,6 +911,29 @@ export default class GetContactOrderDetails extends NavigationMixin(LightningEle
         this.showOrderDataTable =false;
         this.orderForm = false;
         this.OrderDetailsForm = false;
+    }
+      // Method to show an error alert
+      showErrorAlert(headerLabel, bodyMessage) {
+        LightningAlert.open({
+            message: bodyMessage,
+            theme: 'error',
+            label: headerLabel,
+        });
+    }
+    //Method to show success land
+    showSuccessAlertPrescription() {
+        LightningAlert.open({
+            message: 'Prescription Save Successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
+    showOrderDeliveredAlert() {
+        LightningAlert.open({
+            message: 'Prescription has been Delivered',
+            theme: 'Warning',
+            label: 'Warning',
+        });
     }
     
     }

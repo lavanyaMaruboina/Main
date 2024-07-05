@@ -1,0 +1,272 @@
+<template>
+    <div class="slds-scrollable_y" tabindex="0">
+    <div class="search-input">
+        <template if:true={handlSearchFunction}>
+            <lightning-input type="Search" variant="standard" name="Search" label="Search" onchange={handleSearchChange} ></lightning-input>
+        </template>
+    </div>
+    <template if:true={contactDetailsForm}>
+        <div class="mobile-view">
+            <template for:each={dealerDetails} for:item="account">
+                <div key={account.Id} class="tile-contact slds-box slds-p-around_medium slds-m-bottom_small" data-id={account.Id} onclick={handleCardClick}>
+                    <div class="slds-grid slds-gutters slds-wrap slds-align_center">
+                        <div class="slds-col slds-size_1-of-12">
+                            <div class="slds-align_absolute-center image-avatar">
+                                <img src={avatar} alt="Avatar">
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_11-of-12">
+                            <div class="name-class slds-text-heading_small">{account.Name}</div>
+                            <div class="email-phone slds-text-body_regular">
+                                <span class="phone-class slds-m-right_medium">{account.Phone}</span>
+                                <span class="email-class">{account.Email__c}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+                <div class="desktop-view">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={dealerDetails}
+                        columns={contactColumns}
+                        onrowselection={handleRowSelection}
+                        oncellchange={handleCellChange}
+                        onsave={handleSave}
+                        draft-values={draftValues} >
+                    </lightning-datatable>
+                </div>
+        </template>
+    
+<!-- Contact Detail Section -->
+<div class="slds-col slds-size_12-of-12">
+    <template if:true={iscontactObj}>
+        <!-- <div class="heading">Dealer Details</div> -->
+     <lightning-button icon-name="utility:back" onclick={handleBack} class="slds-m-right_small" variant="neutral"></lightning-button>
+        <div class="Farmer-Info-container">
+            <div class="container-image">
+                <template if:true={filesList}>
+                    <template for:each={filesList} for:item="file">
+                        <div key={file.contentDocumentId}>
+                            <img src={file.imageUrl} alt={avatar} />
+                        </div>
+                    </template>
+                </template>
+            </div>
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Company Name</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 text-align">
+                <div class="farmer-info"> {contactObj.nameField}</div>
+            </div>
+
+        </div>
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Phone</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 text-align">
+                <div class="farmer-info">{contactObj.phoneField}</div>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12 ">
+                <div class="farmer-info">Email</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 text-align">
+                <div class="farmer-info">{contactObj.emailField}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Primary Contact Name</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 text-align">
+                <div class="farmer-info">{contactObj.ContactName}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Primary Contact Phone</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 text-align">
+                <div class="farmer-info">{contactObj.ContactPhone}</div>
+            </div>
+        </div>
+    
+
+
+        <!-- <div class="slds-grid slds-wrap border-section">
+            
+                <div class="slds-col slds-size_4-of-12 ">
+                    <div class="farmer-info">Address</div>
+                </div>
+                <div class="slds-col slds-size_8-of-12">
+                    <div class="farmer-info">{contactObj.shippingStreetField},
+                                            {contactObj.shippingCityField},
+                                            {contactObj.shippingStateField},
+                                            {contactObj.shippingPostalCodeField},
+                                            {contactObj.shippingCountryField}</div>
+                </div>
+            </div> -->
+            <div class="slds-grid slds-wrap border-section">
+                <div class="slds-col slds-size_5-of-12 ">
+                    <div class="farmer-info">Street</div>
+                </div>
+                <div class="slds-col slds-size_7-of-12 text-align">
+                    <div class="farmer-info">{contactObj.shippingStreetField}</div>
+                </div>
+                </div>
+                <div class="slds-grid slds-wrap border-section">
+                <div class="slds-col slds-size_5-of-12 ">
+                    <div class="farmer-info">City</div>
+                </div>
+                <div class="slds-col slds-size_7-of-12 text-align">
+                    <div class="farmer-info">{contactObj.shippingCityField}</div>
+                </div>
+                </div>
+                </div>
+                <div class="slds-grid slds-wrap border-section">
+                <div class="slds-col slds-size_5-of-12 ">
+                    <div class="farmer-info">PinCode</div>
+                </div>
+                <div class="slds-col slds-size_7-of-12 text-align">
+                    <div class="farmer-info">{contactObj.shippingPostalCodeField}</div>  
+                </div>
+                </div>
+
+            
+            <div class="slds-align_absolute-center buton-top">
+               <!-- <lightning-button label="Back" onclick={handleBack} class="slds-m-right_small" variant="neutral"></lightning-button> -->
+                <lightning-button label="Modify" data-id={contactObj.Id} onclick={handleUpdate} variant="brand" class="slds-m-right_small"></lightning-button>
+             
+            </div>
+</template>
+</div>
+
+            <!--Updated Dealer Fields-->
+            <div class="form-edit-container">
+            <template if:true={selectedAccountRecord}>
+                <div class="heading">Edit Dealer Details</div>
+            <div class="record-container">
+            <lightning-button-icon  
+            icon-name="utility:back" 
+            onclick={backToDealerDetails} 
+            class="slds-m-right_small">
+            </lightning-button-icon>
+            <lightning-input
+            label="Name"
+            name="nameField"
+            data-field="nameField"
+            value={contactObj.nameField}
+            onchange={handleInputChange}>
+        </lightning-input>
+        <lightning-input
+            label="Phone"
+            name="phoneField"
+            data-field="phoneField"
+            value={contactObj.phoneField}
+            onchange={handleInputChange}>
+        </lightning-input>
+        <lightning-input
+            label="Email"
+            name="emailField"
+            data-field="emailField"
+            value={contactObj.emailField}
+            onchange={handleInputChange}>
+        </lightning-input>
+
+        <lightning-input
+            label="Primary Contact Name"
+            name="ContactName"
+            data-field="ContactName"
+            value={contactObj.ContactName}
+            onchange={handleInputChange}>
+        </lightning-input>
+        <lightning-input
+            label="Primary Contact Phone"
+            name="ContactPhone"
+            data-field="ContactPhone"
+            value={contactObj.ContactPhone}
+            onchange={handleInputChange}>
+        </lightning-input>
+        <lightning-input
+            label="Street"
+            name="ContactStreet"
+            data-field="shippingStreetField"
+            value={contactObj.shippingStreetField}
+            onchange={handleInputChange}>
+        </lightning-input>
+        <lightning-input
+            label="City"
+            name="ContactCity"
+            data-field="shippingCityField"
+            value={contactObj.shippingCityField}
+            onchange={handleInputChange}>
+        </lightning-input>
+        <lightning-input
+            label="PinCode"
+            name="ContactPinCode"
+            data-field="shippingPostalCodeField"
+            value={contactObj.shippingPostalCodeField}
+            onchange={handleInputChange}>
+        </lightning-input>
+
+        <div class="slds-align_absolute-center">
+        <lightning-button
+            label="Save"
+            data-id={contactObj.Id}
+            variant="brand"
+            onclick={handleUpdatesave}>
+        </lightning-button>
+    </div>
+    </div>
+
+      
+    </template>
+
+
+    <!-- Tabs Section -->
+    <!-- <template if:true={showLandDetailsForm}>
+        <c-get-contact-land-details contact-id={contactObj.idField}></c-get-contact-land-details>
+    </template> -->
+    <template if:true={showOrderDetailsForm}>
+        <c-get-dealer-order-details account-id={contactObj.idField} ></c-get-dealer-order-details>
+    </template>
+    <!-- <template if:true={showHarvestDetailsForm}>
+        <c-get-contact-harvest-details contact-id={contactObj.idField}></c-get-contact-harvest-details>
+    </template> -->
+    <template if:true={showMapDetails}>
+        <!-- Reports for Dealer -->
+        <c-dealer-visit-report account-id={contactObj.idField}></c-dealer-visit-report>
+        <!-- <c-dealer-reports contact-id={contactObj.idField}></c-dealer-reports> -->
+        <c-dealer-reports text-value="8"></c-dealer-reports>
+        <!-- <c-dealer-visit-report account-id={contactObj.idField}></c-dealer-visit-report>
+        <c-dealer-visit-report account-id={contactObj.idField}></c-dealer-visit-report> -->
+    </template>
+    <template if:true={showHandlerVisitNotes}>
+        <c-visit-dealer-details contact-id={contactObj.idField}></c-visit-dealer-details>
+    </template>
+    </div>
+
+</div>
+
+    
+    <div class="inside-footer">
+    <template if:true={tabsHandler}>
+                <div class="tabs-container">
+                    <template for:each={tabs} for:item="tab">
+                        <div key={tab.id} class={tab.className} data-label={tab.label} onclick={handleTabClick}>
+                            <img src={tab.logoUrl} class="tab-logo" />
+                            <span class="footer-label">{tab.label}</span>
+                        </div>
+                    </template>
+                    </div>
+    </template>
+    </div>
+
+</template>

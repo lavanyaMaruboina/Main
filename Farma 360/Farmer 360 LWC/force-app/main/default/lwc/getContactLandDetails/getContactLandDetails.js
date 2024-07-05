@@ -1,23 +1,20 @@
+import { refreshApex } from '@salesforce/apex';
 import createHarvest from '@salesforce/apex/AccountSearchController.createHarvest';
 import getContactDetails from '@salesforce/apex/AccountSearchController.getContactDetails';
 import getHarvestDetailsEqualtoLand from '@salesforce/apex/AccountSearchController.getHarvestDetailsEqualtoLand';
 import createLand from '@salesforce/apex/LandDetailsController.createLand';
+import getIrrigationTypePicklistValues from '@salesforce/apex/LandDetailsController.getIrrigationTypePicklistValues';
+import saveHarvestDetails from '@salesforce/apex/LandDetailsController.saveHarvestDetails';
 import getLandDetails from '@salesforce/apex/updateLandDetails.getLandDetails';
 import updateLandDetailsMethod from '@salesforce/apex/updateLandDetails.updateLandDetailsMethod';
 import Land_Object from '@salesforce/schema/Land_detals__c';
 import Irrigation_Field from '@salesforce/schema/Land_detals__c.Irrigation_Type__c';
 import Water_Field from '@salesforce/schema/Land_detals__c.Water_Source__c';
+import LightningAlert from 'lightning/alert';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { LightningElement, api, track, wire } from 'lwc';
-// import getHarvestDetails from '@salesforce/apex/LandDetailsController.getHarvestDetails';
-import { refreshApex } from '@salesforce/apex';
-import getIrrigationTypePicklistValues from '@salesforce/apex/LandDetailsController.getIrrigationTypePicklistValues';
-import saveHarvestDetails from '@salesforce/apex/LandDetailsController.saveHarvestDetails';
-
-
 
 export default class GetContactLandDetails extends LightningElement {
-
 
     @track value;
 
@@ -74,18 +71,9 @@ export default class GetContactLandDetails extends LightningElement {
     @track soilChange = '';
     @track landTopography = '';
     @track contactName = '';
-    @track dateOfInspection = '';
-    @track totalAreaNumber = '';
-    @track totalAreaSowed = '';
-    //@track statusOptions = [];
-
-    // @track selectedLandRecord;
-    // @track landDetailId; // Store the selected land ID
-    // @track harvestdata = []; // Store harvest data
-    // @track isHarvestFormOpen = false;
-    // @track isHarvestDataOpen = false;
-    // @track contactDetails = false;
-    
+    @track dateOfInspection = this.getCurrentDate();
+    @track totalAreaNumber = 0;
+    @track totalAreaSowed = 0;
 
     wiredLandDetailsResult;
     wiredHarvestDetailsResult;
@@ -116,36 +104,47 @@ export default class GetContactLandDetails extends LightningElement {
         { label: 'Last date of inspection', fieldName: 'Last_date_of_inspection__c', type: 'date', editable: true }
        
     ]; 
-
-    // harvestColumns = [
-    //     { label: 'Name', fieldName: 'Name', type: 'text', editable: true },
-    //     { label: 'Stocking Density', fieldName: 'Stocking_density_millions__c', type: 'number', editable: true },
-    //     { label: 'Cum Feed', fieldName: 'Cum_feed_MT__c', type: 'number', editable: true },
-    //     { label: 'Salinity ppt', fieldName: 'Salinity_ppt__c', type: 'number', editable: true },
-    //     { label: 'Partial 1', fieldName: 'Partial_1__c', type: 'number', editable: true },
-    //     { label: 'Partial 3', fieldName: 'Partial_3__c', type: 'number', editable: true },
-    //     { label: 'Present Final Count', fieldName: 'Present_final_count__c', type: 'number', editable: true },
-    //     { label: 'Pond Status', fieldName: 'Pond_Status__c', type: 'text', editable: true },
-    //     { label: 'Remarks', fieldName: 'Remarks__c', type: 'text', editable: true },
-    //     { label: 'ADG grams', fieldName: 'ADG_grams__c', type: 'number', editable: true },
-    //     { label: 'Weekly Growth', fieldName: 'Weekly_growth__c', type: 'number', editable: true },
-    //     { label: 'FCR', fieldName: 'FCR__c', type: 'number', editable: true }
-    // ];
-
-   
+    contactName = ''; // Variable to store contact name
 
     @wire(getLandDetails, { contactId: '$contactId' })
     wiredLandDetails(result) {
         this.wiredLandDetailsResult = result;
         if (result.data) {
-            this.data = result.data;
+            this.data = result.data.map(landDetail => ({
+                ...landDetail,
+                ContactName: landDetail.Contact__r ? landDetail.Contact__r.Name : "",
+                formatedateLand: this.formatDate(new Date(landDetail.Last_date_of_inspection__c))
+
+            }));
+
+            if (this.data.length > 0) {
+                this.contactName = this.data[0].ContactName;
+            }
+
             console.log('Contact Id data >>>>', JSON.stringify(this.wiredLandDetailsResult));
+            console.log('Contact Name >>>>', this.contactName);
             this.error = undefined;
         } else if (result.error) {
             this.error = result.error;
             this.data = undefined;
         }
     }
+    formatDate(date) {
+        let day = date.getDate();
+        let month = date.getMonth() + 1; 
+        let year = date.getFullYear();
+    
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+    
+        return `${day}-${month}-${year}`;
+    }
+
+
     @wire(getIrrigationTypePicklistValues)
     wiredPicklistValues({ error, data }) {
         if (data) {
@@ -154,20 +153,12 @@ export default class GetContactLandDetails extends LightningElement {
             this.error = error;
         }
     }
-//     @wire(getWaterStatusPicklistValues)
-//     wiredWaterStatusPicklistValues({ error, data }) {
-//     if (data) {
-//         this.statusOptions = data.map(value => ({ label: value, value }));
-//         console.log('statusOptions Water : ', this.statusOptions);
-//         console.log('status options Water: ' + JSON.stringify(this.statusOptions));
-//     } else if (error) {
-//         this.error = error;
-//     }
-// }
 
 @wire(getContactDetails, { contactId: '$contactId' })
 wiredContactDetails({ error, data }) {
+    console.log('Wire method called>>>')
     if (data) {
+        console.log('Wire method inside>>>', this.data);
         this.contactList = [data];
         this.contactName = data.Name;
         this.contactEmail = data.Email;
@@ -179,6 +170,7 @@ wiredContactDetails({ error, data }) {
 }
 
 
+
     @track selectedLandRecord = false;
     @track selectedRecord = {};
     @track updatedFields = {}; 
@@ -186,9 +178,7 @@ wiredContactDetails({ error, data }) {
 
     handleEditClick(event){
 
-        //
         this.landDatatable = false;
-        //
         this.listViewLand = false;
         this.selectedLandRecord = true;
         this.selectedRecordId = event.currentTarget.dataset.id;
@@ -205,18 +195,35 @@ wiredContactDetails({ error, data }) {
         this.listViewLand = false;
     }
 
-    handleInputChange(event) {
+    /*handleInputChange(event) {
         let field = event.target.label.replace(/ /g, '_');
         if ((field.includes('Water_Source') && !field.endsWith('__c')) || (field.includes('Irrigation_Type') && !field.endsWith('__c'))) {
             field += '__c';
         }
     
         this.updatedFields[field] = event.target.value;
-    }
-    
-
-    updateRecord() {
+        console.log('Fields Data first >>>>', JSON.stringify(this.selectedRecord));
+        console.log('Fields Data second >>>>', JSON.stringify(event.target.value));
+    }*/ 
+         handleInputChange(event) {
+            const field = event.target.dataset.field;
+            let value = event.target.value;
+        
+            if (field === 'Last_date_of_inspection__c') {
+                // Ensure the value is in the correct format
+                value = new Date(value).toISOString().split('T')[0];
+            }
+            if (field === 'Total_Area__c' || field === 'Total_Area_Sowed__c') {
+                value = parseFloat(value);
+            }
+        
+            this.updatedFields[field] = value;
+            this.selectedRecord = { ...this.selectedRecord, [field]: value };
+            console.log('updatedFields =>190'+JSON.stringify(this.updatedFields));
+        }
+    /*updateRecord() {
         const recordId = this.selectedRecordId;
+        console.log('Fields Data >>>>', JSON.stringify(this.selectedRecord));
         console.log('Fields Data >>>>', JSON.stringify(this.updatedFields));
         updateLandDetailsMethod({ id: recordId, updatedFields: this.updatedFields })
         .then(() => {
@@ -229,7 +236,53 @@ wiredContactDetails({ error, data }) {
         .catch(error => {
             console.error('Error updating record:', error);
         });
+    }*/ 
+        // updateRecord() {
+        //     const recordId = this.selectedRecordId;
+        //     const fieldsToUpdate = {};
+        //     console.log('recordId ====> 210',recordId);
+        
+        //     // Iterate through updatedFields and add valid fields
+        //     for (let key in this.updatedFields) {
+        //         if (Object.prototype.hasOwnProperty.call(this.updatedFields, key)) {
+        //             if (key === 'Name' || key === 'Soil_Detail__c' || key === 'Irrigation_Type__c' || key === 'Total_Area__c' ||
+        //                 key === 'Total_Area_Sowed__c' || key === 'Last_date_of_inspection__c'|| key === 'Land_topography__c') {
+        //                 fieldsToUpdate[key] = this.updatedFields[key];
+        //             }
+        //         }
+        //     }
+        
+        //     console.log('Fields to Update:', JSON.stringify(fieldsToUpdate));
+        
+         
+updateRecord() {
+    const recordId = this.selectedRecordId;
+
+    const fieldsToUpdate = {};
+    for (let key in this.updatedFields) {
+        if (this.updatedFields.hasOwnProperty(key)) {
+            if (key === 'Name' || key === 'Soil_Detail__c' || key === 'Irrigation_Type__c' || key === 'Total_Area__c' || key === 'Total_Area_Sowed__c' || key === 'Last_date_of_inspection__c' || key === 'Land_topography__c') {
+                fieldsToUpdate[key] = this.updatedFields[key];
+            }
+        }
     }
+
+    updateLandDetailsMethod({ id: recordId, updatedFields: fieldsToUpdate })
+        .then(() => {
+            console.log('Record updated successfully:', recordId);
+            this.listViewLand = true;
+            this.landDatatable = true;
+            this.showSuccessAlertUpdate();
+            this.selectedLandRecord = false;
+            refreshApex(this.wiredLandDetailsResult);
+        })
+        .catch(error => {
+            console.error('Error updating record:', error);
+            this.error = error;
+            this.showToast('Error updating record', error.body.message, 'error');
+        });
+}
+
 
     backToLandDetails(){
         this.landName = '';
@@ -316,8 +369,7 @@ wiredContactDetails({ error, data }) {
     }
 
     handleCellChange(event) {
-      //  const { draftValues } = event.detail;
-      //  this.draftValues = draftValues;
+   
       const draftValues = event.detail.draftValues;
       this.draftValues = draftValues;
     }
@@ -354,11 +406,6 @@ wiredContactDetails({ error, data }) {
         this.finalCount = event.target.value;
     }
 
-    // handleFinalSurvival(event) {
-    //     this.finalSurvival = event.target.value;
-    // }
-
-
     handleRemarks(event) {
         this.remarks = event.target.value;
     }
@@ -374,22 +421,13 @@ wiredContactDetails({ error, data }) {
     handleFCR(event) {
         this.fCR = event.target.value;
     }
-    // handleInputChange(event) {
-    //     const field = event.target.name;
-    //     this.selectedLandRecord = { ...this.selectedLandRecord, [field]: event.target.value };
-    // }
 
-    // updateRecord(event) {
-    //     const recordId = event.target.dataset.id;
-    //     // Logic to update the record, including setting landDetailId
-    //     this.landDetailId = recordId; // Store the ID when updating the record
-    // }
-    
     saveHarvest() {
         console.log('the land is is1>>',this.landDetailId);
         if (!this.landDetailId) {
             console.error('Land Detail ID is not set');
-            alert('Please select a land detail before saving the harvest.');
+            //alert('Please select a land detail before saving the harvest.');
+            this.showErrorAlert();
             return;
         }
 
@@ -417,16 +455,15 @@ wiredContactDetails({ error, data }) {
                 this.harvestdata = [...this.harvestdata, result];
                 this.contactDetails = true;
                 this.fetchDetails(this.contactId);
-                alert('Harvest Created Successfully');
+                //alert('Harvest Created Successfully');
+                this.showSuccessAlertHarvest();
                 this.resetHarvestForm();
                 this.isHarvestFormOpen = false;
                 this.isHarvestDataOpen = false;
                 this.LandDetailsForm = false;
                 this.selectedLandRecord = false;
 
-                //edieted
                 this.isHarvestDataOpen = true;
-                //FETCHING NEW DATA
                 this.fetchDetails(this.landDetailId);
 
             })
@@ -446,7 +483,8 @@ wiredContactDetails({ error, data }) {
                 }
     
                 console.error('Error: ' + message);
-                alert('Error: ' + message);
+                //alert('Error: ' + message);
+                this.showErrorAlert();
             });
     }
 }
@@ -467,14 +505,7 @@ wiredContactDetails({ error, data }) {
         this.fCR = '';
 }
 
-    // createHarvestForm(event) {
-        
-    //     this.isHarvestFormOpen = true;
-    //     this.isHarvestDataOpen = false;
-    //     this.LandDetailsForm = false;
-    //     this.selectedLandRecord = false;
-    
-    // }
+
     createHarvestForm(event) {
 
         const selectedLandId = event.target.dataset.id;
@@ -483,7 +514,7 @@ wiredContactDetails({ error, data }) {
         console.log( 'this.selectedRecordId >>',this.selectedRecordId);
         console.log( 'selectedLandId >>',selectedLandId);
 
-        this.landDetailId = this.selectedRecordId; // Set the landDetailId when "New" is clicked
+        this.landDetailId = this.selectedRecordId;
 
         console.log( 'this.landDetailId >>',this.landDetailId );
 
@@ -498,28 +529,7 @@ wiredContactDetails({ error, data }) {
     //=========================================================Harvest Form End====================================================
 
     //======================================================== Land Details Save button in Datatable start ==========================================
-    //   @wire(getWaterStatusPicklistValues)
-    // wiredStatusPicklistValues({ error, data }) {
-    //     if (data) {
-    //         this.statusOptions = Object.keys(data).map(key => ({ label: data[key], value: key }));
-    //         console.log('statusOptions : ', this.statusOptions);
-    //         console.log('selectedStatus :'+ this.selectedStatus);
-           
-             
 
-    //     } else if (error) {
-    //         this.dispatchEvent(
-    //             new ShowToastEvent({
-    //                 title: 'Error fetching picklist values',
-    //                 message: error.body.message,
-    //                 variant: 'error',
-    //             }),
-    //         );
-    //     }
-    // }
-
-
-    
 
     openHarvestData(landDetailId) {
         this.landDatatable = false;
@@ -533,6 +543,17 @@ wiredContactDetails({ error, data }) {
             .catch(error => {
                 this.harvesterror = error;
             });
+    }
+    getCurrentDate() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1; 
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        return `${yyyy}-${mm}-${dd}`;
     }
 
 
@@ -561,7 +582,8 @@ wiredContactDetails({ error, data }) {
             this.landDatatable = true;
             this.isHarvestDataOpen = false;
 
-            alert('Land created successfully');
+            //alert('Land created successfully');
+            this.showSuccessAlertLand();
             this.landName = '';
             this.soilChange = '';
             this.landTopography = '';
@@ -574,7 +596,8 @@ wiredContactDetails({ error, data }) {
             })
             .catch(error => {
                 console.error('Error creating contact', error);
-                alert('An error occurred while creating the Land');
+                //alert('An error occurred while creating the Land');
+                this.showErrorAlert();
             });
         }
    
@@ -644,7 +667,6 @@ fetchLandDetails(contactId) {
         this.LandDetailsForm = false;
         this.isHarvestFormOpen = false;
         this.isHarvestDataOpen = true;
-        // Assuming you have the landDetailId stored in a variable
         const landHarvestDetail = event.target.dataset.id;
         this.fetchDetails(landHarvestDetail);
         this.landDatatable = false;
@@ -666,5 +688,38 @@ fetchLandDetails(contactId) {
     }
     handleBackToListview(event){
       //  this.listViewLand=true;
-    }  
+    }
+    //shivanipandarkar
+    // Method to show sucess harvest
+    showSuccessAlertHarvest() {
+        LightningAlert.open({
+            message: 'Harvest has been created successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
+ 
+    // Method to show an error alert
+    showErrorAlert(headerLabel, bodyMessage) {
+        LightningAlert.open({
+            message: bodyMessage,
+            theme: 'error',
+            label: headerLabel,
+        });
+    }
+    //Method to show success land
+    showSuccessAlertLand() {
+        LightningAlert.open({
+            message: 'land has been created successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
+    showSuccessAlertUpdate() {
+        LightningAlert.open({
+            message: 'land has been Updated successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
 }

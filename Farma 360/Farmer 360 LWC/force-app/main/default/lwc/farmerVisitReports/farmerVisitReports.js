@@ -22,7 +22,7 @@ export default class FarmerVisitReports extends LightningElement {
               id: 'doughnutLabel',
               beforeDatasetsDraw: (chart, args, pluginOption) => {
                 const { ctx, chartArea, config } = chart;
-                const text = 'Visit';
+                const text = '';
     
                 // Calculate the coordinates for the text
                 const textX = chartArea.left + (chartArea.right - chartArea.left) / 2;

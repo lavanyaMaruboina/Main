@@ -11,6 +11,20 @@
     font-size: 1.25rem;
     font-weight: bold;
 }
+.border-section{
+    border-bottom: 1px dotted grey;
+    padding: 8px;
+}
+.align-right{
+    text-align: right;
+}
+
+.harvest-details-heding,
+.land-details{
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
 
 @media (max-width: 767px) {
     .mobile-view {
@@ -27,7 +41,7 @@
         margin: 15px 0px 0px 0px;
     }
     .tile-harvest{
-        background-color: #27904ae8;
+        background-color: #6da93b;
         border-radius: 9px;
         margin: 20px 0px;
         padding: 20px 16px;
@@ -37,18 +51,13 @@
     .tile-land{
         margin: 14px 5px;
         border-radius: 10px;
-        background-color: #178000;
+        background-color: #58914c;
         color: white;
         padding: 12px;
         border-bottom: 2px dotted;
-        font-weight: 600;
     }
     .record-container{
         padding: 10px;
-    }
-    .land-details{
-        text-align: center;
-        font-size:14px;
     }
 
 }

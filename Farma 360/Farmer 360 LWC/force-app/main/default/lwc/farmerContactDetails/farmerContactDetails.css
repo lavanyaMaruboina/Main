@@ -20,6 +20,26 @@
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     
 }
+.container-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  
+  .container-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .container-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 .search-input{
     margin-top: 5px;
 }
@@ -27,11 +47,21 @@
     background-color: #d3e4fb;
 }
 .farmer-info{
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
 }
 .Farmer-Info-container{
     padding:5px;
+}
+.form-edit-container{
+    padding:5px;
+}
+.container{
+    margin-bottom: 15%;
+
+}
+.aligh-right{
+    text-align: right;
 }
 
 @media only screen and (max-width: 600px) {
@@ -55,7 +85,7 @@
     }
     .inside-footer{
         position: fixed;
-        bottom: 3%;
+        bottom: 4%;
         right: 0;
         left: 0;
         z-index: 999;
@@ -64,7 +94,7 @@
         border-bottom:1px dotted grey;
     }
     .farmer-info{
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 600;
         padding:10px;
     }
@@ -75,6 +105,9 @@
     .image-avatar{
         width: 1.85rem;
         margin: 2px 0px 0px -10px;
+    }
+    .button-top{
+        margin-top: 1rem;
     }
 }
 
@@ -94,7 +127,7 @@
     width: 100%;
     overflow-x: auto;
     scrollbar-width: thin;
-    background-color: #1644bc;
+    background-color: #6da93b;
     justify-content: space-around;
 }
 
@@ -112,7 +145,7 @@
     width:20px;
 }
 
-    .tags-selected{
+.tags-selected{
     flex: 1 0 auto;
     padding: 8px 5px;
     text-align: center;
@@ -121,15 +154,16 @@
     transition: background-color 0.3s;
     color: white;
     border-right: 1px dotted white;
-        background-color: #0f296c;
-    } 
-    .footer-label{
+    background-color: #47682c;
+} 
+
+.footer-label{
     padding: 10px 10px 10px 5px;
     font-size: 13px;
     }
 
 .tab:hover {
-    background-color: #0f296c;
+    background-color: #47682c;
 }
 
 .name-class{

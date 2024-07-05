@@ -78,9 +78,14 @@ public with sharing class ContactController {
     //     return subTypeValues;
     // }
 
-     @AuraEnabled
-    public static void updateContact(Contact contact) {
-        update contact;
+   @AuraEnabled
+    public static void updateContacts(Id id, Map<String, Object> Accounts) {
+        try {
+           system.debug('Account to Id' +  id);
+           system.debug('Account to update' +  Accounts);
+            
+        } catch (DmlException e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
-
 }

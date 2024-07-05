@@ -1,3 +1,4 @@
+import { refreshApex } from '@salesforce/apex';
 import createHarvest from '@salesforce/apex/AccountSearchController.createHarvest';
 import createLand from '@salesforce/apex/AccountSearchController.createLand';
 import getContactDetails from '@salesforce/apex/AccountSearchController.getContactDetails';
@@ -5,15 +6,14 @@ import getHarvestDetailsEqualtoLand from '@salesforce/apex/AccountSearchControll
 import getIrrigationTypePicklistValues from '@salesforce/apex/AccountSearchController.getIrrigationTypePicklistValues';
 import getLandDetails from '@salesforce/apex/AccountSearchController.getLandDetailstrue';
 import getLandsByContactId from '@salesforce/apex/AccountSearchController.getLandsByContactId';
-
-import { refreshApex } from '@salesforce/apex';
+import LightningAlert from 'lightning/alert';
 import { LightningElement, api, track, wire } from 'lwc';
 export default class CreateLandDetailsForm extends LightningElement {
     @track landName = '';
     @track soilChange = '';
     @track landTopography = '';
     @track contactName = '';
-    @track dateOfInspection = '';
+    @track dateOfInspection = this.getCurrentDate();
     @track totalAreaNumber = '';
     @track totalAreaSowed = '';
     @track statusOptions = [];
@@ -80,6 +80,17 @@ export default class CreateLandDetailsForm extends LightningElement {
             this.harvestdata = undefined;
         }
     }
+    getCurrentDate() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1; 
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        return `${yyyy}-${mm}-${dd}`;
+    }
 
 
     handleLandChange(event) {
@@ -120,6 +131,7 @@ export default class CreateLandDetailsForm extends LightningElement {
         this.totalAreaSowed = '';
         this.selectedStatus = '';
     }
+   
 
     saveLand(event) {
             const fields = {
@@ -143,7 +155,8 @@ export default class CreateLandDetailsForm extends LightningElement {
                 this.landDetails = true;
 
                
-                alert('Land created successfully');
+                //alert('Land created successfully');
+                this.showSuccessAlertLand();
                 this.landName = '';
                 this.soilChange = '';
                 this.landTopography = '';
@@ -155,7 +168,8 @@ export default class CreateLandDetailsForm extends LightningElement {
                 })
                 .catch(error => {
                     console.error('Error creating contact', error);
-                    alert('An error occurred while creating the Land');
+                    this.showErrorAlert();
+                    //alert('An error occurred while creating the Land');
                 });
        
     }
@@ -287,7 +301,8 @@ export default class CreateLandDetailsForm extends LightningElement {
         .then(result => {
             console.log('harvestRecord==>>'+harvestRecord);
             this.harvestdata = [result];
-            alert('Harvest Created Successfully');
+            //alert('Harvest Created Successfully');
+            this.showSuccessAlertHarvest();
             console.log('harvestdata creted==>>',JSON.stringify(this.harvestdata));
             
             this.fetchDetails(this.contactId);
@@ -319,6 +334,8 @@ export default class CreateLandDetailsForm extends LightningElement {
             } else if (typeof error.body.message === 'string') {
                 message = error.body.message;
             }
+            //this.showErrorAlert();
+
         });
 }
    resetHarvestForm() {
@@ -360,4 +377,38 @@ export default class CreateLandDetailsForm extends LightningElement {
             console.error('Error fetching contact details:', error);
         });
     }
+     //shivanipandarkar
+    // Method to show sucess harvest
+    showSuccessAlertHarvest() {
+        LightningAlert.open({
+            message: 'Harvest has been created successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
+
+    // Method to show an error alert
+    showErrorAlert(headerLabel, bodyMessage) {
+        LightningAlert.open({
+            message: bodyMessage,
+            theme: 'error',
+            label: headerLabel,
+        });
+    }
+    //Method to show success land
+    showSuccessAlertLand() {
+        LightningAlert.open({
+            message: 'Land has been created successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
+    showSuccessAlertUpdate() {
+        LightningAlert.open({
+            message: 'Land has been Updated successfully',
+            theme: 'Success',
+            label: 'Success',
+        });
+    }
+
 }

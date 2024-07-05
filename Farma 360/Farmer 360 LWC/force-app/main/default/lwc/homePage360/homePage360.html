@@ -1,0 +1,211 @@
+<template>
+    <header lwc:ref="myHeader">
+        <div class="site-logo">
+          <a href="/">
+            <img src={logoUrl} alt="Logo" class="navbar-logo">
+          </a>
+        </div>
+        <div class="navbar-menu">
+          <nav>
+            <ul>
+              <li class="nav-item inventory">
+                <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+              </li>
+                <!-- <li class="nav-item contacts">
+                    <div onclick={handleContactsClick}>Add Farmer</div>
+                </li>
+      
+                <li class="nav-item inventory">
+                    <div onclick={handleInventoryClick}>Inventory</div>
+                </li> -->
+
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick2}>Schemes</div>
+              </li>
+
+               
+                <li class="nav-item inventory">
+                  <a href={logoutLink} class='logoutCss'><img src={Login_Icon}>Log Out</a>
+                </li>
+                
+               
+            </ul>
+          </nav>
+        </div>
+        <div class="hamberger-menu" onclick={toggleMobileMenu}>
+            <img src={hide} alt="show" class="show">
+            <img src={show} alt="hide" class="hide">
+              <ul class="mobile-menu">
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+                </li>
+                <!-- <li class="nav-item contacts">
+                   <div onclick={handleContactsClick}>Add Farmer</div>
+                </li>
+      
+                <li class="nav-item inventory">
+                     <div onclick={handleInventoryClick}>Inventory</div>
+                </li> -->
+
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick2}>Schemes</div>
+                </li>
+                <li class="nav-item inventory">
+                  <a href={logoutLink}>Log Out</a>
+                </li>
+              </ul>
+        </div>
+      
+      </header> 
+      <template if:true={homePageData}>   
+      <div class="welcom-name">Hello, {userName}!</div>
+      <div class="desciption">Have a great day !</div>
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={redirectToFarmer}>Farmer</button>
+      </div>
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={redirectToDealer}>Dealer</button>
+      </div>
+        <div class="slds-align_absolute-center">
+          <button class="filter-button" onclick={showCalenderButton}>My Visit</button>
+        </div>
+
+        
+
+      <div class="desciption">{todayDate}</div>
+      <div class="slds-grid slds-wrap border-bottom back-green">
+        <div class="slds-col slds-size_12-of-12 ">
+            <p><strong>Visits Planned</strong></p>
+        </div>
+        </div>
+
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+            <p><strong><span class="margin-left">Farmer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>5</p>
+        </div>
+      </div>
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+            <p><strong><span class="margin-left">Dealer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>3</p>
+        </div>
+      </div>
+      <div class="slds-grid slds-wrap border-bottom back-green">
+        <div class="slds-col slds-size_12-of-12">
+            <p><strong>Visits Executed</strong></p>
+        </div>
+        </div>
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+          <p><strong><span class="margin-left">Farmer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>3</p>
+        </div>
+      </div>
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+          <p><strong><span class="margin-left">Dealer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>2</p>
+        </div>
+      </div> 
+    </template>
+
+    <template if:true={showCalender}>
+
+      <lightning-button icon-name="utility:back" onclick={handleBackToHome}  class="slds-m-right_small"></lightning-button>
+
+    <!--Modified on  3/7/24-->
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={openvist}>Create Visit</button>
+      </div>
+   
+      <c-calendar user-id={userId} oneventclicked={handleEvent}></c-calendar>
+    </template>
+
+    <template if:true={showsite}>
+
+      <lightning-button icon-name="utility:back" onclick={handleToCalender}  class="slds-m-right_small"></lightning-button>
+
+      <lightning-card title="Create New Visit" icon-name="standard:event">
+        <div class="slds-m-around_medium">
+          
+          <!-- <lightning-record-form object-api-name="Visit__c" mode="readonly">
+            <lightning-formatted-text value="Sales Rep Name"></lightning-formatted-text>
+            <lightning-input-field field-name="User_Name__c" value={userId} variant="label-hidden" disabled></lightning-input-field>
+          </lightning-record-form> -->
+          
+          <lightning-input label="Sales Rep Name" value={userName} disabled></lightning-input>
+          <!-- <lightning-record-edit-form object-api-name="Visit__c">
+            
+            <lightning-layout>
+                <lightning-layout-item padding="around-small">
+                    <lightning-formatted-text value="Custom User Name Label"></lightning-formatted-text>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" flexibility="grow">
+                    <lightning-input-field field-name="User_Name__c" value={userId} variant="label-hidden"></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form> -->
+
+            <lightning-combobox
+                name="visitType"
+                label="Visit Type"
+                data-id="subject"
+                value={subject}
+                placeholder="Select Visit Type"
+                options={picklistOptions}
+                onchange={handleInputChange}>
+            </lightning-combobox>
+            <!-- <lightning-input label="Subject" value={subject} onchange={handleInputChange} data-id="subject"></lightning-input> -->
+            <!-- <lightning-input label="Location" value={location} onchange={handleInputChange} data-id="location"></lightning-input> -->
+            <lightning-input type="datetime-local" label="Start Date and Time" value={startDateTime} onchange={handleInputChange} data-id="startDateTime"></lightning-input>
+            <lightning-input type="datetime-local" label="End Date and Time" value={endDateTime} onchange={handleInputChange} data-id="endDateTime"></lightning-input>
+
+            <lightning-button label="Create Visit" onclick={createEvent} class="slds-m-top_medium"></lightning-button>
+
+        </div>
+      </lightning-card>
+
+
+
+      <!-- <lightning-card title="Create Event" icon-name="standard:event">
+      
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form 
+                object-api-name="Event" 
+                onsuccess={handleSuccess} 
+                onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                
+                <lightning-input-field field-name="Subject"></lightning-input-field>
+                <lightning-input-field field-name="Location"></lightning-input-field>
+                <lightning-input-field field-name="StartDateTime"></lightning-input-field>
+                <lightning-input-field field-name="EndDateTime"></lightning-input-field>
+                <lightning-input-field field-name="EndDateTime"></lightning-input-field>
+                <lightning-input-field field-name="WhatId"></lightning-input-field>
+                <lightning-input-field field-name="WhoId"></lightning-input-field>
+                
+                <lightning-button 
+                    class="slds-m-top_medium" 
+                    type="submit" 
+                    label="Create Event">
+                </lightning-button>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card> -->
+
+      <!-- <c-my-visit-details user-id={userId}></c-my-visit-details>  -->
+    </template>
+
+    <!--Modified on  3/7/24-->
+    
+
+</template>

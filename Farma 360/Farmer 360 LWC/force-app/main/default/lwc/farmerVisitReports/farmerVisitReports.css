@@ -17,3 +17,9 @@
 	width:10px;	
 	height:10px;
 }
+.border-bottom{
+	border-bottom: 3px solid white;
+}
+.margin-bottom{
+	margin-bottom: 4%;
+}

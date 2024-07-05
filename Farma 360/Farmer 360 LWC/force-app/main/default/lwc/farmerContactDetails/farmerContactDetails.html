@@ -2,10 +2,9 @@
     <div class="slds-scrollable_y" tabindex="0">
     <div class="search-input">
         <template if:true={handlSearchFunction}>
-        <lightning-input type="Search" variant="standard" name="Search" label="Search" onchange={handleSearchChange} ></lightning-input>
-    
-    </template>
-</div>
+            <lightning-input type="Search" variant="standard" name="Search" label="Search" onchange={handleSearchChange} ></lightning-input>
+        </template>
+    </div>
     <template if:true={contactDetailsForm}>
         <div class="mobile-view">
             <template for:each={contactDetails} for:item="contact">
@@ -42,33 +41,211 @@
     
 <!-- Contact Detail Section -->
 <div class="slds-col slds-size_12-of-12">
+   
     <template if:true={iscontactObj}>
-
-        <div class="slds-grid slds-wrap Farmer-Info-container">
-            <div class="slds-col slds-size_4-of-12 border-section">
-                <div class="farmer-info">Name</div>
+        <div class="Farmer-Info-container">
+            <lightning-button icon-name="utility:back" onclick={handleBack} variant="neutral" class="slds-m-right_small"></lightning-button>
+            <div class="container-image">
+                <template if:true={filesList}>
+                    <template for:each={filesList} for:item="file">
+                        <div key={file.contentDocumentId}>
+                            <img src={file.imageUrl} alt={avatar} />
+                        </div>
+                    </template>
+                </template>
             </div>
-            <div class="slds-col slds-size_8-of-12 border-section">
-                <div class="farmer-info"> {contactObj.nameField}</div>
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Farmer Name</div>
             </div>
-            <div class="slds-col slds-size_4-of-12 border-section">
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <div class="farmer-info">{contactObj.firstNameField}</div>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Last Name</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <div class="farmer-info"> {contactObj.lastNameField}</div>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
                 <div class="farmer-info">Phone</div>
             </div>
-            <div class="slds-col slds-size_8-of-12 border-section">
+            <div class="slds-col slds-size_7-of-12 aligh-right">
                 <div class="farmer-info">{contactObj.phoneField}</div>
             </div>
-            <div class="slds-col slds-size_4-of-12 border-section">
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">D.O.B</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <div class="farmer-info">{contactObj.DOB}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Aadhar</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <!-- <div class="farmer-info">{contactObj.aadharNumber}</div> -->
+                <div class="farmer-info">{formattedAadhar}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">PAN Card</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <!-- <div class="farmer-info">{contactObj.panCardNumber}</div> -->
+                <div class="farmer-info">{formattedPanCard}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Farmer Type</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <div class="farmer-info">{contactObj.farmerType}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="farmer-info">Farmer Sub Type</div>
+            </div>
+            <div class="slds-col slds-size_7-of-12 aligh-right">
+                <div class="farmer-info">{contactObj.subType}</div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_5-of-12">
                 <div class="farmer-info">Email</div>
             </div>
-            <div class="slds-col slds-size_8-of-12 border-section">
+            <div class="slds-col slds-size_7-of-12 aligh-right">
                 <div class="farmer-info">{contactObj.emailField}</div>
             </div>
-            <div class="slds-align_absolute-center">
-            <lightning-button label="Back" onclick={handleBack} ></lightning-button>
+        </div>
+        <!-- <div class="slds-grid slds-wrap border-section">
+            <div class="slds-col slds-size_4-of-12">
+                <div class="farmer-info">Pan Dummy</div>
             </div>
+            <div class="slds-col slds-size_8-of-12">
+                <div class="farmer-info">{contactObj.pancardNumber11}</div>
+            </div>
+        </div> -->
+       
+
+            <div class="slds-align_absolute-center button-top">
+            <!-- <lightning-button label="Back" onclick={handleBack} variant="neutral" class="slds-m-right_small"></lightning-button> -->
+                <lightning-button label="Modify" onclick={handleUpdate} variant="brand" class="slds-m-right_small"></lightning-button>
+                </div>
 
         </div>
     </template>
+       <!--contact Update-->
+       <div class="form-edit-container">
+       <template if:true={SelectContactUpdate}>
+        <div class="record-container">
+        <lightning-button-icon  
+        icon-name="utility:back" 
+        onclick={backToFarmerDetails} 
+        class="slds-m-right_small">
+        </lightning-button-icon>
+        <lightning-input
+        label="First Name"
+        name="firstNameField"
+        value={contactObj.firstNameField}
+        onchange={handleInputChange}>
+
+    </lightning-input>
+    <lightning-input
+    label="Last Name"
+    name="lastNameField"
+    value={contactObj.lastNameField}
+    onchange={handleInputChange}>
+
+</lightning-input>
+    <lightning-input
+        label="Phone"
+        name="phoneField"
+        value={contactObj.phoneField}
+        onchange={handleInputChange}>
+    </lightning-input>
+    <lightning-input
+        label="DOB"
+        name="DOB"
+        value={contactObj.DOB}
+        type="date"
+        onchange={handleInputChange}>
+    </lightning-input>
+    <lightning-input
+    label="Aadhar Number"
+    name="aadharNumber"
+    value={contactObj.aadharNumber}
+    onchange={handleInputChange}
+    type="tel" 
+    minlength="12" 
+    maxlength="12" 
+    pattern="[0-9]{12}" 
+    message-when-pattern-mismatch="Please enter a 12-digit Aadhar number">
+    </lightning-input>
+    <lightning-input
+        label="PAN Card Number"
+        name="panCardNumber"
+        value={contactObj.panCardNumber}
+        onchange={handleInputChange}
+        minlength="10" 
+        maxlength="10" 
+        pattern="[A-Za-z0-9]{10}" 
+        message-when-pattern-mismatch="Please enter a 10-digit PAN number">
+    </lightning-input>
+    <!-- <lightning-input
+    label="Farmer Type"
+    name="farmerType"
+    value={contactObj.farmerType}
+
+    onchange={handleInputChange}>
+   </lightning-input>
+   <lightning-input
+   label="Sub Type"
+   name="subType"
+   value={contactObj.subType}
+   onchange={handleInputChange}>
+   </lightning-input> -->
+   <lightning-input
+   label="Email"
+   name="emailField"
+   value={contactObj.emailField}
+   onchange={handleInputChange}>
+   </lightning-input>
+   <!-- <lightning-input
+   label="pan dummy"
+   name="pancardNumber11"
+   value={contactObj.pancardNumber11}
+   onchange={handleInputChange}>
+   </lightning-input> -->
+
+
+   <div class="slds-align_absolute-center">
+   <lightning-button
+            label="Save"
+            variant="brand"
+            data-id={contactObj.Id}
+            onclick={handleContactSave}>
+        </lightning-button>
+    </div>
+    </div>
+        </template>
+        </div>
 
     <!-- Tabs Section -->
     <template if:true={showLandDetailsForm}>
@@ -81,8 +258,9 @@
         <c-get-contact-harvest-details contact-id={contactObj.idField}></c-get-contact-harvest-details>
     </template>
     <template if:true={showMapDetails}>
-        <c-farmer-order-reports contact-id={contactObj.idField}></c-farmer-order-reports>
+        <!-- <c-farmer-reports contact-id={contactObj.idField}></c-farmer-reports> -->
         <c-farmer-visit-reports contact-id={contactObj.idField}></c-farmer-visit-reports>
+        <c-farmer-order-reports contact-id={contactObj.idField}></c-farmer-order-reports>
     </template>
     <template if:true={showHandlerVisitNotes}>
         <c-visit-contact-details contact-id={contactObj.idField}></c-visit-contact-details>
@@ -93,16 +271,16 @@
 
     
     <div class="inside-footer">
-    <template if:true={tabsHandler}>
-                <div class="tabs-container">
-                    <template for:each={tabs} for:item="tab">
-                        <div key={tab.id} class={tab.className} data-label={tab.label} onclick={handleTabClick}>
-                            <img src={tab.logoUrl} class="tab-logo" />
-                            <span class="footer-label">{tab.label}</span>
-                        </div>
-                    </template>
+        <template if:true={tabsHandler}>
+            <div class="tabs-container">
+                <template for:each={tabs} for:item="tab">
+                    <div key={tab.id} class={tab.className} data-label={tab.label} onclick={handleTabClick}>
+                        <img src={tab.logoUrl} class="tab-logo" />
+                        <span class="footer-label">{tab.label}</span>
                     </div>
-    </template>
+                </template>
+            </div>
+        </template>
     </div>
-
+            
 </template>

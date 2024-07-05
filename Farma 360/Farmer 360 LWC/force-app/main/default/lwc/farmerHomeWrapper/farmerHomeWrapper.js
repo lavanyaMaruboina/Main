@@ -1,7 +1,9 @@
 import basePath from '@salesforce/community/basePath';
 import logoResource from '@salesforce/resourceUrl/Logo360';
 import Icons from '@salesforce/resourceUrl/farmer360';
-import { LightningElement, track } from 'lwc';
+import getUserDetails from '@salesforce/apex/userController.getUserDetails';
+import Id from "@salesforce/user/Id";
+import { LightningElement, track, wire } from 'lwc';
 
 export default class FarmerHomeWrapper extends LightningElement {
     @track showHTMLCSSSubMenu = false;
@@ -20,6 +22,27 @@ export default class FarmerHomeWrapper extends LightningElement {
       @track isMenuOpen = false;
       _headerElement;
   
+
+      @track userName;
+      @track userId = Id; 
+  
+      @wire(getUserDetails, { userId: '$userId' })
+      wiredUser({ error, data }) {
+          if (data) {
+              this.userName = data.Name; 
+          } else if (error) {
+              console.error(error);
+          }
+      }
+
+      handleLogOut() {
+        console.log('Logout clicked');
+    }
+
+    get logoutLink() {
+        const sitePrefix = basePath.replace(/\/s$/i, ""); // site prefix is the site base path without the trailing "/s"
+        return sitePrefix + "/secur/logout.jsp";
+    }
       
     show = Icons + '/farmer360/KipiIcons/HomePage/show.png';
     hide = Icons + '/farmer360/KipiIcons/HomePage/hide.png';
@@ -44,6 +67,17 @@ export default class FarmerHomeWrapper extends LightningElement {
     backToHomePage(){
       location.reload();
     }
+    redirectToDealer(){
+      window.location.href = '/dealer'; 
+      console.log('dealer')
+    }
+
+    showSchemePDF() {
+      // The URL of the PDF you want to open
+      const pdfUrl = 'https://farmer360-dev-ed.develop.my.salesforce.com/sfc/p/QH000002VKqv/a/QH0000003YI5/423YOI3S1cxdSRauZhLrUOjcR2.UthtWu7LYt2App7A';
+      // Open the URL in a new tab
+      window.open(pdfUrl, '_blank');
+  }
     
   
     connectedCallback() {

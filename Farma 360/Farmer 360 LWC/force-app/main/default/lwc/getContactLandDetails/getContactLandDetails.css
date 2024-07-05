@@ -92,7 +92,7 @@
     }
     .bottom-section{
         margin-top: 13px;
-        padding: 10px;
+        padding: 10px 0px;
         border-top: 1px dotted grey;
         cursor: pointer;
 
@@ -107,6 +107,21 @@
         font-size: 12px;
         font-weight: 600;
         padding: 1px;
+    }
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        background-color: #6da93b;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 3px;
+        color: white;
+        padding: 10px;
+    }
+	.text-align {
+        margin-left: auto;
     }
 
 }
