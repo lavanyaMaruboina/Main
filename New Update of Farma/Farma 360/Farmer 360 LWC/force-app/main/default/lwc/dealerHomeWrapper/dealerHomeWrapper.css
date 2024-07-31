@@ -1,0 +1,168 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 5px;
+    font-size: 18px;
+    font-weight: 500;
+    background-image: linear-gradient(315deg, #6da93b 45%, #000000 0%);
+
+}
+
+header.sticky {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    box-shadow: 0px 4px 5px gray;
+    z-index: 100;
+    transition: all 1s;
+
+}
+
+.site-logo {
+    min-width: 12.5rem;
+}
+
+.site-logo img {
+    width: 12.5rem;
+    height: 100%;
+    object-fit: contain;
+
+}
+
+
+.navbar-menu nav ul {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 15px;
+}
+
+
+.navbar-menu nav ul li {
+    padding: 10px 0px;
+    margin-left: 25px;
+    font-weight: 600;
+}
+
+.navbar-menu nav ul li a {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    color: #1B1C1E;
+}
+
+.navbar-menu nav ul li a .material-icons:before {
+    content: "\e5cf";
+}
+
+
+.navbar-menu nav ul li a:hover {
+    color: var(--secondary-background-color);
+}
+
+
+.hamberger-menu {
+    display: block;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.navbar-menu {
+    align-items: center;
+    display: flex;
+    color: white;
+    text-decoration: none;
+}
+
+/* .hamberger-menu div {
+    width: 35px;
+    height: 5px;
+    margin: 6px 0px;
+    background-color: black;
+} */
+
+.color-white {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.hide {
+    display: none;
+  }
+  .show,
+  .hide{
+    width:30px;
+  }
+
+
+.mobile-menu {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    top: 50px;
+    display: none;
+    background-color: black;
+    height: 100VH;
+    color:white;
+}
+
+.open .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    z-index: 99;
+}
+
+@media screen and (max-width:767px) {
+    .site-logo {
+        min-width: 8.5rem;
+    }
+    
+    .site-logo img {
+        width: 8.5rem;
+        height: 100%;
+        object-fit: contain;
+    
+    }
+    nav ul {
+        display: none;
+    }
+
+    .hamberger-menu {
+        display: block;
+    }
+
+    ul li {
+        padding: 5px;
+        margin: 9px 5px 5px 30px;
+        border-bottom: 2px solid grey;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 5px;
+        font-size: 18px;
+        font-weight: 600;
+        background-color: black;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 5px;
+        font-size: 18px;
+        font-weight: 500;
+        background-image: linear-gradient(315deg, #6da93b 46%, #000000 0%);
+    
+    }
+
+    .navbar-menu nav ul {
+        align-items: center;
+        height: 100%;
+        display: none;
+    }
+    .contacts,
+    .inventory{
+        cursor: pointer;
+    }
+
+}

@@ -1,0 +1,32 @@
+<template>
+    <lightning-card>
+        <div class="slds-grid slds-wrap slds-p-around_medium">
+            <div class="slds-col slds-size_1-of-1">
+             
+                    <div class="slds-scrollable_x" style="height:60rem;width:90rem" tabindex="0">
+                        <template if:true={data}>
+                            <div class="slds-text-longform" style="width:500%">
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={data}
+                                    show-row-number-column
+                                    columns={columns}
+                                    draft-values={draftValues}
+                                    hide-checkbox-column
+                                    resize-column-disabled
+                                    min-column-width="50"
+                                    max-column-width="300"
+                                ></lightning-datatable>
+                            </div>
+                        </template>
+                    </div>
+                    <template if:true={error}>
+                        <div class="slds-text-color_error">
+                            {error}
+                        </div>
+                    </template>
+               
+            </div>
+        </div>
+    </lightning-card>
+</template>

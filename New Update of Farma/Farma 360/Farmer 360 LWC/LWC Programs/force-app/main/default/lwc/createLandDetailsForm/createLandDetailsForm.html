@@ -1,0 +1,261 @@
+<template>
+    <template if:true={LandDetailsForm}>
+           
+            <div class="form-edit-container">
+                <div class="record-container">
+                    <div class="heading">Create Land Details Record</div>
+                    <lightning-input label="Land Name" value={landName} onchange={handleLandChange} required></lightning-input>
+                    <lightning-input label="Soil Detail" value={soilChange} onchange={handleSoilChange} type='text'></lightning-input>
+                    <lightning-input label="Land Topography" value={landTopography} onchange={handleLandtopographyChange} type='text'></lightning-input>
+                    <lightning-input label="Contact Name" value={contactName} onchange={handleContactChange} disabled></lightning-input>
+                    <lightning-input label="Date of Inspection" value={dateOfInspection} onchange={handleDateChange} type='date'></lightning-input>
+                    <lightning-input label="Total Area (Acres)" value={totalAreaNumber} onchange={handleAreaChange} type='number'></lightning-input>
+                    <lightning-input label="Total Area Sowed (Acres)" value={totalAreaSowed} onchange={handleTotalArea} type='number'></lightning-input>
+                    <lightning-combobox label="Irrigation" value={selectedStatus} options={statusOptions} onchange={handleIrrigationChange}></lightning-combobox>
+                    <lightning-input label="Longitude"></lightning-input>
+                    <lightning-input label="Latitude"></lightning-input>
+                    <!--Geo Fencing-->
+                    <lightning-layout>
+                        <!-- <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                            <lightning-map map-markers={markLocation}></lightning-map>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                    
+                            <lightning-button variant="brand" type="submit" label="Update in record" class="slds-float_right"
+                                                    onclick={updateHandler}></lightning-button>
+                    
+                    
+                        </lightning-layout-item> -->
+                        <lightning-layout-item size="3" medium-device-size="6" padding="around-small">
+                            <lightning-map map-markers={markerVar}></lightning-map>
+                            <lightning-button label="Get Location" onclick={handleGetLocation}></lightning-button>
+                            <div class="slds-m-top_medium">
+                                <p>Latitude: {latitude}</p>
+                                <p>Longitude: {longitude}</p>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <!--Geo Fencing-->
+
+                    <div class="slds-var-m-around_medium slds-align_absolute-center">
+                        <lightning-button label="Back" onclick={handleBack}  variant="neutral" class="slds-m-left_small"></lightning-button>
+                        <lightning-button type="submit" label="Save" onclick={saveLand}  variant="brand" class="slds-m-left_small"></lightning-button>     
+                    </div>
+                
+                </div>
+            </div>
+    </template>
+
+    <template if:true={contactDetails}>
+        <div class="heading">Land Details</div>
+            <div class="record-container">
+                <div class="mobile-view">
+                <template for:each={contactList} for:item="contact">
+                    <div key={contact.Id} class="tile-contact" data-id={contact.Id}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_4-of-12">
+                                <div class="farmer-info">Farmer Name</div>
+                            </div>
+                            <div class="slds-size_8-of-12 align-right">
+                                <div class="farmer-info">{contact.Name}</div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_4-of-12">
+                                <div class="farmer-info">Farmer Phone</div>
+                            </div>
+                            <div class="slds-size_8-of-12 align-right">
+                                <div class="farmer-info">{contact.Phone}</div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_4-of-12">
+                                <div class="farmer-info">Farmer Email</div>
+                            </div>
+                            <div class="slds-size_8-of-12 align-right">
+                                <div class="farmer-info">{contact.Email}</div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                </div>
+            </div>
+            <lightning-button-icon  
+            icon-name="utility:back" 
+            onclick={handleBackHome} 
+            class="slds-m-right_small">
+            </lightning-button-icon>
+            <template if:true={finalData}>
+                <div class="land-details">Land Deatils</div>
+                <template for:each={landData} for:item="land">
+                    <div key={land.Id} class="tile-land" data-id={land.Id}>
+                       
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="farmer-info">Land Name</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <p> {land.Name}</p>
+                            </div>
+                       
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="farmer-info">Soil Detail</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <p> {land.Soil_Detail__c}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="farmer-info">Irrigation Type</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <p> {land.Irrigation_Type__c}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="harvest-details-heding">Harvest Deatils</div>
+                        <template for:each={land.Harvests__r} for:item="harvest">
+                            <div key={harvest.Id} class="tile-harvest" data-id={harvest.Id}>
+                                
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="farmer-info">Harvest Name</div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 align-right">
+                                        <p> {harvest.Name}</p>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="farmer-info">Harvest Date</div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 align-right">
+                                        <p> {harvest.Harvest_Date__c}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="farmer-info">Stocking Density</div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 align-right">
+                                        <p> {harvest.Stocking_Density_in_Millions__c}</p>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <div class="farmer-info">Cum Feed (MT)</div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 align-right">
+                                        <p> {harvest.Cum_feed_MT__c}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <div class="slds-var-m-around_medium slds-align_absolute-center">
+                                <lightning-button
+                                    data-id={land.Id}
+                                    label="Add Harvest"
+                                    onclick={handleAddHarvest}
+                                    variant="brand">
+                                    </lightning-button>
+                            </div>
+                    </div>
+                </template>
+                <div class="slds-var-m-around_medium slds-align_absolute-center">
+                <lightning-button label="Land Create" onclick={handleCreateLand} variant="brand"> </lightning-button>
+                </div>
+                
+            </template>
+    </template>
+
+    <template if:true={landDetails}>
+        <div class="heading">Land Details</div>
+
+                <div class="slds-grid slds-wrap border-section">
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="farmer-info">Land Name</div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{newLand.Name}</p>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap border-section">
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="farmer-info">Owner Name</div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{newLand.Contact__r.Name}</p>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap border-section">
+                    <div class="slds-size_6-of-12">
+                            <div class="farmer-info">Unique Number</div>
+                    </div>
+                    <div class="slds-size_6-of-12 align-right">
+                            <p> {newLand.Unique_Number__c}</p>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap border-section">
+                    <div class="slds-size_6-of-12">
+                        <div class="farmer-info">Soil Detail</div>
+                    </div>
+                    <div class="slds-size_6-of-12 align-right">
+                        <p>{newLand.Soil_Detail__c}</p>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap border-section">
+                    <div class="slds-size_6-of-12">
+                        <div class="farmer-info">Irrigation Type</div>
+                    </div>
+                    <div class="slds-size_6-of-12 align-right">
+                        <p>{newLand.Irrigation_Type__c}</p>
+                    </div>
+                </div>
+
+            <div class="slds-var-m-around_medium slds-align_absolute-center">
+                <lightning-button
+                    label="Back"
+                    onclick={handleBackContact}
+                    variant="neutral"
+                    style="padding-right: 10%;">
+                </lightning-button>
+            
+                <lightning-button
+                    data-id={newLand.Id}
+                    label="Add Harvest"
+                    onclick={handleAddHarvest}
+                    variant="brand">
+                </lightning-button>
+            </div>
+    </template>
+   
+
+    <template if:true={isHarvestFormOpen}>
+        <div class="heading">Create Harvest Record</div>
+            <div class="form-edit-container slds-var-m-around_medium">
+                <div class="record-container">
+                    <!-- <h3 class="slds-section__title" style="background-color: gray; font-weight: bold">New Harvest Create</h3> -->
+                    <lightning-input type="text" label="Name" value={name} onchange={handleName} required ></lightning-input>
+                    <lightning-input label="Stocking Density" value={density} onchange={handleDensity} type="number"></lightning-input>
+                    <lightning-input label="Harvest Date" value={harvestDate} onchange={handleHarvest} type="Date"></lightning-input>
+                    <lightning-input label="Cum Feed (MT)" class="slds-col" value={feed} onchange={handleFeed} type="number"></lightning-input>
+                    <lightning-input label="Salinity (ppt)" class="slds-col" type="number" value={pPT} onchange={handlePPT}></lightning-input>
+                    <lightning-input label="Partial 1 Count" class="slds-col" value={part1} onchange={handlePart1} type="number"></lightning-input>
+                    <lightning-input label="Partial 2 Count" class="slds-col" value={part3} onchange={handlePart3} type="number"></lightning-input>
+                    <lightning-input label="Present Final Count" class="slds-col" value={finalCount} onchange={handleNumberFinalCount} type="number"></lightning-input>
+                    <lightning-input label="Remarks" class="slds-col" value={remarks} onchange={handleRemarks} type="number"></lightning-input>
+                    <lightning-input label="ADG (grams)" class="slds-col" value={gRams} onchange={handleGRams} type="text"></lightning-input>
+                    <lightning-input label="Weekly Growth" class="slds-col" value={weeklyGrowth} onchange={handleWeeklyGrowth} type="number"></lightning-input>
+                    <lightning-input label="FCR" class="slds-col" value={fCR} onchange={handleFCR} type="number"></lightning-input>
+                    <div class="slds-align_absolute-center button-mar">
+                        <lightning-button label="Cancel" onclick={resetHarvestForm} variant="neutral" class="slds-m-left_small"></lightning-button>
+                        <lightning-button label="Save" onclick={saveHarvest} variant="brand" class="slds-m-left_small"></lightning-button>
+                    </div>
+                </div>
+            </div>
+    </template>
+</template>

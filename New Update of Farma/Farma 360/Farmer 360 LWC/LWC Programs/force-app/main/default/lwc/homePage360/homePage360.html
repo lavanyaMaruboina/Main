@@ -1,0 +1,208 @@
+<template>
+    <header lwc:ref="myHeader">
+        <div class="site-logo">
+          <a href="/">
+            <img src={logoUrl} alt="Logo" class="navbar-logo">
+          </a>
+        </div>
+        <div class="navbar-menu">
+          <nav>
+            <ul>
+              <li class="nav-item inventory">
+                <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+              </li>
+                <!-- <li class="nav-item contacts">
+                    <div onclick={handleContactsClick}>Add Farmer</div>
+                </li>
+      
+                <li class="nav-item inventory">
+                    <div onclick={handleInventoryClick}>Inventory</div>
+                </li> -->
+
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick2}>Schemes</div>
+              </li>
+
+               
+                <li class="nav-item inventory">
+                  <a href={logoutLink} class='logoutCss'><img src={Login_Icon}>Log Out</a>
+                </li>
+                
+               
+            </ul>
+          </nav>
+        </div>
+        <div class="hamberger-menu" onclick={toggleMobileMenu}>
+            <img src={hide} alt="show" class="show">
+            <img src={show} alt="hide" class="hide">
+              <ul class="mobile-menu">
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+                </li>
+                <!-- <li class="nav-item contacts">
+                   <div onclick={handleContactsClick}>Add Farmer</div>
+                </li>
+      
+                <li class="nav-item inventory">
+                     <div onclick={handleInventoryClick}>Inventory</div>
+                </li> -->
+
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick2}>Schemes</div>
+                </li>
+                <li class="nav-item inventory">
+                  <a href={logoutLink}>Log Out</a>
+                </li>
+              </ul>
+        </div>
+      
+      </header> 
+      <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={handleCloseModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                </button>
+                <!-- <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Scheme</h1>
+                </div> -->
+                <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+                    <iframe src={pdfUrl} width="100%" height="400px"></iframe>
+                    <!-- <template if:false={fileId}>
+                        Please enter a valid PDF File ID.
+                    </template> -->
+                </div>
+                <!-- <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCloseModal}>Cancel</button>
+                </div> -->
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+      <template if:true={homePageData}>   
+      <div class="welcom-name">Hello, {userName}!</div>
+      <div class="desciption">Have a great day !</div>
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={redirectToFarmer}>Farmer</button>
+      </div>
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={redirectToDealer}>Dealer</button>
+      </div>
+        <div class="slds-align_absolute-center">
+          <button class="filter-button" onclick={showCalenderButton}>My Visit</button>
+        </div>
+
+        
+
+      <div class="desciption">{todayDate}</div>
+      <div class="slds-grid slds-wrap border-bottom back-green">
+        <div class="slds-col slds-size_12-of-12 ">
+            <p><strong>Visits Planned</strong></p>
+        </div>
+        </div>
+
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+            <p><strong><span class="margin-left">Farmer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>{farmerPlannedVisits}</p>
+        </div>
+      </div>
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+            <p><strong><span class="margin-left">Dealer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>{farmerExecutedVisits}</p>
+        </div>
+      </div>
+      <div class="slds-grid slds-wrap border-bottom back-green">
+        <div class="slds-col slds-size_12-of-12">
+            <p><strong>Visits Executed</strong></p>
+        </div>
+        </div>
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+          <p><strong><span class="margin-left">Farmer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>{dealerPlannedVisits}</p>
+        </div>
+      </div>
+      <div class="slds-grid slds-wrap border-bottom">
+        <div class="slds-col slds-size_6-of-12">
+          <p><strong><span class="margin-left">Dealer</span></strong></p>
+        </div>
+        <div class="slds-col slds-size_6-of-12 text-align">
+            <p>{dealerExecutedVisits}</p>
+        </div>
+      </div> 
+    </template>
+
+    <template if:true={showCalender}>
+
+      <lightning-button icon-name="utility:back" onclick={handleBackToHome}  class="slds-m-right_small"></lightning-button>
+
+    <!--Modified on  3/7/24-->
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={openvist}>Create Visit</button>
+      </div>
+   
+      <c-calendar user-id={userId} oneventclicked={handleEvent}></c-calendar>
+      <c-my-visit-today></c-my-visit-today>
+      </template>
+     
+
+    <template if:true={showsite}>
+
+      <lightning-button icon-name="utility:back" onclick={handleToCalender}  class="slds-m-right_small"></lightning-button>
+
+      <c-create-visit></c-create-visit>
+      <!-- <lightning-card title="Create Event" icon-name="standard:event">
+        <div class="slds-m-around_medium">
+            <lightning-input label="Subject" value={subject} onchange={handleInputChange} data-id="subject"></lightning-input>
+            <lightning-input label="Location" value={location} onchange={handleInputChange} data-id="location"></lightning-input>
+            <lightning-input type="datetime-local" label="Start Date and Time" value={startDateTime} onchange={handleInputChange} data-id="startDateTime"></lightning-input>
+            <lightning-input type="datetime-local" label="End Date and Time" value={endDateTime} onchange={handleInputChange} data-id="endDateTime"></lightning-input>
+            <lightning-button label="Create Event" onclick={createEvent} class="slds-m-top_medium"></lightning-button>
+
+        </div>
+      </lightning-card> -->
+
+
+
+      <!-- <lightning-card title="Create Event" icon-name="standard:event">
+      
+        <div class="slds-m-around_medium">
+            <lightning-record-edit-form 
+                object-api-name="Event" 
+                onsuccess={handleSuccess} 
+                onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                
+                <lightning-input-field field-name="Subject"></lightning-input-field>
+                <lightning-input-field field-name="Location"></lightning-input-field>
+                <lightning-input-field field-name="StartDateTime"></lightning-input-field>
+                <lightning-input-field field-name="EndDateTime"></lightning-input-field>
+                <lightning-input-field field-name="EndDateTime"></lightning-input-field>
+                <lightning-input-field field-name="WhatId"></lightning-input-field>
+                <lightning-input-field field-name="WhoId"></lightning-input-field>
+                
+                <lightning-button 
+                    class="slds-m-top_medium" 
+                    type="submit" 
+                    label="Create Event">
+                </lightning-button>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card> -->
+
+      <!-- <c-my-visit-details user-id={userId}></c-my-visit-details>  -->
+    </template>
+
+    <!--Modified on  3/7/24-->
+    
+
+</template>

@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title="Land Counter" if:true={showCounter}>
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-button-icon icon-name="utility:add" alternative-text="Increment" onclick={incrementCount}></lightning-button-icon>
+                </div>
+                <div class="slds-col">
+                    <lightning-input type="number" label="Number of Lands" value={count} onchange={handleCountChange}></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-button-icon icon-name="utility:subtract" alternative-text="Decrement" onclick={decrementCount}></lightning-button-icon>
+                </div>
+            </div>
+            <div class="slds-m-top_medium">
+              <lightning-button label="Next" onclick={handleFormNext}></lightning-button>
+            </div>
+        </div>
+        <!-- Render the form dynamically based on count -->
+         <template for:each={landForms} for:item="form">
+        <c-create-land-details-form key={form.key} 
+                                    show-form={form.showForm}>
+        </c-create-land-details-form>
+    </template>
+    </lightning-card>
+</template>

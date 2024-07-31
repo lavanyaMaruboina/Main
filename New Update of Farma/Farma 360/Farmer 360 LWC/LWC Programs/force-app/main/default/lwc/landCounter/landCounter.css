@@ -1,0 +1,8 @@
+.slds-col {
+    display: flex;
+    align-items: center;
+}
+
+.slds-button_icon svg {
+    fill: #0070d2; /* Adjust icon color as needed */
+}

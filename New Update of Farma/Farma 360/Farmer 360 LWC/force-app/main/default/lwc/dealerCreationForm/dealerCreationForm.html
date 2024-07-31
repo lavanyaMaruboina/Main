@@ -1,0 +1,114 @@
+<template>
+    <div class="form-edit-container">
+      <!-- <template if:true={showContactForm}> -->
+        <template if:true={showAccountForm}>
+          <div class="record-container">
+            <lightning-button-icon  
+                    icon-name="utility:back" 
+                    onclick={backToDealerDetails} 
+                    class="slds-m-right_small">
+                    </lightning-button-icon>
+
+                <div class="heading">Dealer Details</div>
+                <lightning-input label="Company Name" value={firstName} onchange={handleFirstNameChange}></lightning-input>
+                <lightning-input label="Company Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input>
+
+                <div class="heading">Communication</div>
+                <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange} required></lightning-input>
+                <lightning-input label="Phone" type="tel" value={phone} onchange={handlePhoneChange} required  minlength="10"
+                maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit phone number"></lightning-input>
+                <!-- <lightning-input label="Registration Number" value={registrationNumber} onchange={handleRegistrationNumber}></lightning-input> -->
+                <lightning-input label="Year Started" value={yearStarted} onchange={handleYearStarted} type="number" maxlength="4"></lightning-input>
+                <!-- <lightning-combobox label="Is Active" value={selectedStatus} options={statusOptions} onchange={handleIsActive}></lightning-combobox> -->
+                <!-- <lightning-input label="GST Number" value={gstNumber} onchange={handlGstNumber} ></lightning-input> -->
+
+                <div class="heading">Primary Conatct Details</div>
+                <lightning-input label="Name"  value={ContactName} onchange={handleContactNameChange} required></lightning-input>
+                <lightning-input label="Phone" type="tel" value={ContactPhone} onchange={handleContactPhoneChange} required  minlength="10"
+                maxlength="10" pattern="[0-9]{10}" message-when-pattern-mismatch="Please enter a 10-digit phone number"></lightning-input>
+                
+                <div class="heading">Address</div>
+                <lightning-layout>
+                    <lightning-layout-item size="12" medium-device-size="12" padding="around-medium">
+                        <lightning-input-address street-label="Street" city-label="City"
+                            country-label="Country" province-label="State/Province" postal-code-label="Zip/Postal Code"
+                            onchange={addressChange} class="validate" show-address-lookup>
+                        </lightning-input-address>
+                    </lightning-layout-item>
+                </lightning-layout>
+                
+                
+                <div class="slds-align_absolute-center mar-top">
+                    <lightning-button label="Cancel" onclick={resetForm} variant="neutral" class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button label="Save" onclick={handleSave} variant="brand" class="slds-m-left_x-small"></lightning-button>
+                </div>
+        </div>
+        </template>
+
+    <!-- </template> -->
+    </div>
+
+    <!-- <template if:true={contactDetails}> -->
+        <template if:true={accountDetails}>
+        <div class="record-container">
+            
+        <div class="heading-contact-deails">Dealer Details</div>
+                <div class="mobile-view">
+                    <lightning-button-icon  
+                    icon-name="utility:back" 
+                    onclick={backToDealerDetails} 
+                    class="slds-m-right_small"> 
+                    </lightning-button-icon>
+                    <template for:each={account} for:item="account">
+                        <div key={account.Id} class="tile-contact" data-id={account.Id}>
+                            <div class="slds-grid slds-wrap Farmer-Info-container">
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Dealer Name :  </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {account.FirstName}{account.LastName}  </div>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Phone :  </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {account.Phone}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Year Started:  </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {account.YearStarted}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Email :  </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {account.Email__c}</div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="head-text">Address :  </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 border-section">
+                                    <div class="main-text"> {account.ShippingStreet},
+                                                            {account.shippingCity},
+                                                            {account.ShippingState},
+                                                            {account.ShippingPostalCode},
+                                                            {account.ShippingCountry}
+
+                                    </div>
+                                </div>
+                                </div>
+                        </div>
+                    </template>
+                </div>
+                </div>
+            
+                </template>
+
+      <template if:true={ShowListofDealers}>
+        <c-dealer-contact-details> </c-dealer-contact-details>
+    </template>
+
+</template>

@@ -1,0 +1,69 @@
+<template>
+    <!-- The Add Products button has been removed -->
+
+    <template if:true={showProductData}>
+                <div>
+                        <lightning-datatable 
+                            key-field="Id" 
+                            data={dataTableColumns} 
+                            columns={columns}
+                            onrowselection={handleRowSelection}>
+                        </lightning-datatable>
+                    </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={ShowSelectedLineItems}>Next</button>
+                </div>
+           
+    </template>
+
+    <template if:true={showEditView}>
+        <lightning-card title="Edit Products">
+            <div class="slds-m-around_medium">
+                <lightning-datatable 
+                    key-field="Id" 
+                    data={productLineItems} 
+                    columns={editColumns} 
+                    draft-values={draftValues}
+                    hide-checkbox-column="true"
+                    onrowselection={handleRowEditSelection}
+                    oncellchange={handleCellChange}
+                    onsave={saveLineItems}>
+                </lightning-datatable>
+                <!-- <div class="slds-m-top_medium">
+                    <lightning-button label="Save" onclick={saveLineItems} class="slds-m-right_small"></lightning-button>
+                    <lightning-button label="Cancel" onclick={cancelEdit}></lightning-button>
+                </div> -->
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={showOpportunityLineItems}>
+        <lightning-card title="Opportunity Line Items">
+            <div class="slds-m-around_medium">
+                <lightning-datatable 
+                    key-field="Id" 
+                    data={opportunityLineItems} 
+                    columns={opportunityLineItemColumns}>
+                </lightning-datatable>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={showSavedItems}>
+        <lightning-card title="Saved Line Items">
+            <div class="slds-m-around_medium">
+                <lightning-datatable 
+                    key-field="Id" 
+                    data={savedLineItems} 
+                    columns={savedColumns}>
+                </lightning-datatable>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={showOrderDataTable}>
+        <c-get-contact-order-details></c-get-contact-order-details>
+        </template>
+
+    
+</template>

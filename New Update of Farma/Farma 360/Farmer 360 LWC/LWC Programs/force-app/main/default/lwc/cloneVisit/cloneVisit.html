@@ -1,0 +1,133 @@
+<template>
+    <template if:true={visitRecord}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCloseModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Clone Visit</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-combobox 
+                        data-field="visitLocation" 
+                        value={visitLocation}
+                        options={visitLocationOptions} 
+                        placeholder="Select visited party type" 
+                        label="Visited Party"
+                        onchange={handleFieldChange}
+                        disabled>
+                    </lightning-combobox>
+
+                    <template if:true={isDealerSelected}>
+                        <lightning-input 
+                            label="Dealer Name" 
+                            value={dealerName} 
+                            placeholder="Dealer Name" 
+                            data-id="dealerNameField"
+                            disabled>
+                        </lightning-input>
+                        <lightning-input 
+                            label="Type Of Visit" 
+                            value={typeOfVisitDealer} 
+                            placeholder="-Type Of Visit-" 
+                            data-id="TypeOfDealerVisitField"
+                            disabled>
+                        </lightning-input>
+                    </template>
+
+                    <template if:true={isFarmerSelected}>
+                        <lightning-input 
+                            label="Farmer Name" 
+                            value={farmerName} 
+                            placeholder="Farmer Name" 
+                            data-id="farmerNameField"
+                            disabled>
+                        </lightning-input>
+                        <lightning-input 
+                            label="Type Of Visit" 
+                            value={typeOfVisitFarmer} 
+                            placeholder="-Type Of Visit farmer-" 
+                            data-id="TypeOfFarmerVisitField"
+                            disabled>
+                        </lightning-input>
+                    </template>
+
+                    <lightning-input 
+                        type="search" 
+                        label="Land Details" 
+                        value={landSearchTerm} 
+                        onchange={handleLandSearch} 
+                        name="Land_Details__c">
+                    </lightning-input>
+                    
+                    <template if:true={lands.length}>
+                        <ul class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid lookup-popup">
+                            <template for:each={lands} for:item="land">
+                                <li key={land.Id} class="slds-dropdown__item">
+                                    <lightning-button 
+                                        variant="base" 
+                                        label={land.Name} 
+                                        onclick={selectLand} 
+                                        data-id={land.Id}>
+                                    </lightning-button>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+
+                    <lightning-input 
+                            label="Visit Notes" 
+                            value={visitNotes}
+                            placeholder="Visit Notes Here" 
+                            data-field="visitNotes"
+                            onchange={handleFieldChange}>
+                    </lightning-input>
+                    <lightning-input 
+                            label="Quantity" 
+                            value={quantity}
+                            placeholder="-required quantity-" 
+                            data-field="quantity"
+                            onchange={handleFieldChange}>
+                    </lightning-input>
+
+                    <!-- Camera functionality -->
+                    <!-- <div class="camera-wrapper">
+                        <template if:true={isCameraInitialized}>
+                            <div class="slds-align_absolute-center">
+                                <lightning-button label="Capture Image" class="slds-m-left_xx-small"
+                                    onclick={captureImage}></lightning-button>
+                            </div>
+                        </template>
+                        <template if:false={isCameraInitialized}>
+                            <div class="slds-align_absolute-center">
+                                <img src={camera} alt="show" class="camera-icon" onclick={initCamera}>
+                            </div>
+                        </template>
+                    </div> -->
+                    <!-- <div class="video-container">
+                        <div class="slds-align_absolute-center">
+                            <video class="videoElement" autoplay></video>
+                        </div>
+                        <div class="slds-align_absolute-center">
+                            <canvas class="canvasElement" style="display:none;"></canvas>
+                        </div>
+                        <div class="slds-align_absolute-center">
+                            <div class="imageContainer"></div>
+                        </div>
+                    </div> -->
+
+                </div>
+                <!-- Hidden file input for gallery upload -->
+                <!-- <input type="file" accept="image/*" style="display:none;" onchange={handleFileUpload}
+                class="file-input"> -->
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={handleReset}></lightning-button>
+                    <lightning-button variant="brand" label="Clone" onclick={handleSave}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>   
+</template>

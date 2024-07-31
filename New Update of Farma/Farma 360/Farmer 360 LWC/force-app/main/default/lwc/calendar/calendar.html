@@ -1,0 +1,14 @@
+<template>
+    <div style="background: white;" class="slds-grid">
+        <div class="fullcalendar-container" if:false={isLoading}>
+            <!-- Calendar container -->
+            <div id="calendar" class="fullcalendarjs"></div>
+        </div>
+        <!-- Show a spinner when isLoading is true -->
+        <template if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </template>
+    </div>
+</template>

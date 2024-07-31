@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>First Page</label>
+    <protected>false</protected>
+    <values>
+        <field>Delivery_Section__c</field>
+        <value xsi:type="xsd:string">&lt;p style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333;&quot;&gt;We have allowed for a single delivery, orders requiring multiple deliveries may incur additional charges. Delivery is assumed to be kerb-side on a hard road surface, during normal working hours (Monday to Friday 9am till 5.30pm).&lt;/p&gt;
+&lt;p style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333;&quot;&gt;</value>
+    </values>
+    <values>
+        <field>Exclusions_Section__c</field>
+        <value xsi:type="xsd:string">&lt;p style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333;&quot;&gt;We exclude the following from our quotation unless otherwise agreed:&lt;/p&gt;
+&lt;ul style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333; list-style-type: circle; padding-left: 0;&quot;&gt;
+  &lt;li style=&quot;margin-left: 0; padding-left: 20px; text-indent: -20px;&quot;&gt;&amp;#9679; All Installation works.&lt;/li&gt;
+  &lt;li style=&quot;margin-left: 0; padding-left: 20px; text-indent: -20px;&quot;&gt;&amp;#9679; System &amp;amp; Control Commissioning.&lt;/li&gt;
+  &lt;li style=&quot;margin-left: 0; padding-left: 20px; text-indent: -20px;&quot;&gt;&amp;#9679; Special vehicles, timed, weekend or out of hours delivery.&lt;/li&gt;
+  &lt;li style=&quot;margin-left: 0; padding-left: 20px; text-indent: -20px;&quot;&gt;&amp;#9679; Any Unloading, Lifting Gear, Cranage etc.&lt;/li&gt;
+  &lt;li style=&quot;margin-left: 0; padding-left: 20px; text-indent: -20px;&quot;&gt;&amp;#9679; Removal or disposal of redundant equipment.&lt;/li&gt;
+&lt;/ul&gt;</value>
+    </values>
+    <values>
+        <field>Intro__c</field>
+        <value xsi:type="xsd:string">&lt;p style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333;&quot;&gt;Thank you for your valued enquiry, we have pleasure in submitting our order for the supply of the Farmer 360 equipment listed in the below proposal. Please ensure our selections meet your project requirements and that we have interpreted your needs accurately.&lt;/p&gt;</value>
+    </values>
+    <values>
+        <field>TermsAndConditions__c</field>
+        <value xsi:type="xsd:string">&lt;p style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333;&quot;&gt;This quotation is provided in good faith and is based on all available information provided to Farmer 360. This quotation does not guarantee all required parts for installation are supplied. If additional components are required to complete installation these should be purchased at an additional cost.&lt;/p&gt;
+&lt;p style=&quot;font-family: Calibri, sans-serif; font-size: 13px; color: #333;&quot;&gt;The Quotation provided assumes standard current Fire regulation compliance . Any project specific fire regulations should be provided to Farmer 360 at the time of quotation to ensure system suitability and compliance.&lt;/p&gt;</value>
+    </values>
+</CustomMetadata>

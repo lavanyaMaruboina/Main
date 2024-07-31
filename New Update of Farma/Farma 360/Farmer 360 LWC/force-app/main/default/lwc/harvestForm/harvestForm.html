@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Harvest Record Form">
+        <div class="slds-p-around_medium">
+            <!-- Input fields for harvest record details -->
+            <lightning-input label="ADG Grams" type="text" value={adgGrams} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Cumulative Feed" type="number" value={cumulativeFeed} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Density" type="number" value={density} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Density After Harvest" type="number" value={densityAfterHarvest} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Density After Survival" type="number" value={densityAfterSurvival} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="DOC" type="number" value={doc} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="FCR" type="number" value={fcr} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Last Week's ABW" type="number" value={lastWeekABW} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Partial 1 Biomass" type="number" value={partial1Biomass} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Partial 1 Count" type="number" value={partial1Count} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Partial 2 Biomass" type="number" value={partial2Biomass} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Partial 2 Count" type="number" value={partial2Count} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Partial 3 Biomass" type="number" value={partial3Biomass} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Partial 3 Count" type="number" value={partial3Count} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Pond Status" type="text" value={pondStatus} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Present Final Count" type="number" value={presentFinalCount} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Remarks" type="text" value={remarks} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Salinity" type="number" value={salinity} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Stocking Density" type="number" value={stockingDensity} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Weekly Growth" type="number" value={weeklyGrowth} onchange={handleInputChange}></lightning-input>
+             <lightning-input label="Contact ID" type="text" value={contactId} onchange={handleContactChange}></lightning-input>
+            <!-- <lightning-input-field field-name="Contact__c" onchange={handleContactChange}></lightning-input-field>-->
+            
+            
+            <!-- Add more input fields for other record details -->
+            
+            <!-- Save button -->
+            <div class="slds-m-top_medium">
+                <lightning-button label="Save" onclick={saveRecord}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

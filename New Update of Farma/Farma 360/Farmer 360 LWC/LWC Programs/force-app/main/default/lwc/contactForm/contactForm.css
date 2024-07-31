@@ -1,0 +1,146 @@
+/* contactForm.css */
+
+/* Styles for larger screens */
+.slds-section__title {
+    background-color: #6da93b;
+    font-weight: bold;
+}
+
+.slds-col {
+    display: inline-block;
+    width: calc(50% - 0.75rem); /* Adjust width as needed */
+}
+.align-right{
+    text-align: right;
+}
+
+.farmer-info{
+    font-size: 14px;
+    font-weight: 600;
+}
+.Farmer-Info-container{
+    padding:5px;
+}
+.tile-contact{
+    cursor: pointer;
+    margin: 3px 0px;
+    border-radius: 5px;
+    padding:12px;
+}
+.border-section{
+    border-bottom: 1px dotted grey;
+    padding: 8px;
+}
+.image-wrapper {
+    position: relative !important;
+    display: inline-block !important;
+    margin: 10px !important;
+}
+
+.image-wrapper img {
+    display: block !important;
+}
+
+.delete-button {
+    position: absolute !important;
+    top: 5px !important;
+    right: 5px !important;
+}
+
+/* Styles for smaller screens */
+@media (max-width: 767px) {
+    .slds-p-around_medium {
+        padding: 1rem;
+    }
+    .farmer-details{
+        padding: 10px;
+        height: 75vh;
+    }
+
+    .slds-col {
+        display: block;
+        width: 100%;
+    }
+      .form-edit-container{
+    padding:5px;
+    }
+    .button-mar{
+        margin:12px;
+    }
+    .contact-form{
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px;
+    }
+    .heading{
+        font-size: 14px;
+        background-color: #6da93b;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 3px;
+        color: white;
+        margin: 15px 0px 0px 0px;
+    }
+    .heading-contact-deails{
+        font-size: 14px;
+        background-color: #6da93b;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 3px;
+        color: white;
+        margin: 0px 6px 0px 6px;
+    }
+    .image-wrapper {
+        position: relative !important;
+        display: inline-block !important;
+        margin: 10px !important;
+    }
+    
+    .image-wrapper img {
+        display: block !important;
+    }
+    
+    .delete-button {
+        position: absolute !important;
+        top: 5px !important;
+        right: 5px !important;
+    }
+    .mar-top{
+        margin-top: 10px;
+    }
+    .head-text{
+        font-size: 14px;
+        color: green;
+
+    }
+    .main-text{
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .container{
+        padding-bottom:12%;
+    }
+    .tile-contact{
+        padding: 12px;
+    }
+    .videoElement{
+		width:100%;
+	}
+	.camera-icon{
+		cursor: pointer;
+		cursor: pointer;
+        width: 20%;
+	}
+    .border-section{
+        border-bottom: 1px dotted grey;
+        padding: 8px;
+    }
+    @font-face {
+        font-family: 'GreatVibes-Regular'; 
+        src: url('../../resource/signature/GreatVibes-Regular.ttf');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+}

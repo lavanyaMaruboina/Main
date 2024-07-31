@@ -1,0 +1,192 @@
+<template>
+        <!-- <template if:true={showSearch}>
+            <div class="slds-tabs_card">
+                <div class="slds-page-header">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-standard-contact">
+                                        <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                                            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h1>
+                                                <span>Contacts</span>
+                                                <span class="slds-page-header__title slds-truncate" title="Recently Viewed">All Contacts</span>
+                                            </h1>
+                                        </div>
+                                        <div class="slds-page-header__name-switcher">
+                                            <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+                                                <button class="slds-button slds-button_icon slds-button_icon-small" aria-haspopup="true" title="Switch list view">
+                                                    <svg class="slds-button__icon slds-icon_x-small" aria-hidden="true">
+                                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                                    </svg>
+                                                    <span class="slds-assistive-text">Switch list view</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__control" style="margin-top: 10px;">
+                        <lightning-layout>
+                            <lightning-layout-item size="12" padding="around-small">
+                                <lightning-input type="Search" variant="standard" name="Search" label="Search" onchange={handleSearchChange}></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </div>
+            </div>
+        </template> -->
+
+        <!-- <div class="slds-grid slds-wrap slds-gutters"> -->
+            <!-- <div class="slds-col slds-size_12-of-12"> -->
+                <div class="search-input">
+                    <lightning-input type="Search" variant="standard" name="Search" label="Search" onchange={handleSearchChange} ></lightning-input>
+                </div>
+                <template if:true={contactDetailsForm}>
+                    <!-- <div class="slds-scrollable_x" style="height:20rem;width:90rem" tabindex="0"> -->
+                    <!-- <div class="slds-text-longform" style="width:200%"> -->
+                    <template if:true={contactDetails}>
+                            <div class="mobile-view">
+                                <template for:each={contactDetails} for:item="contact" >
+                                    <div key={contact.Id} class="tile-contact" data-id={contact.Id} onclick={handleCardClick}>
+                                        <div class="name-class">{contact.Name}</div>
+                                        <div class="email-phone">
+                                            <span class="phone-class">{contact.Phone}</span>
+                                            <span class="email-class">{contact.Email}</span>
+                                        </div>
+
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="desktop-view">
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={contactDetails}
+                                    columns={contactColumns}
+                                    onrowselection={handleRowSelection}
+                                    oncellchange={handleCellChange}
+                                    onsave={handleSave}
+                                    draft-values={draftValues} >
+                                </lightning-datatable>
+                            </div>
+                    </template>
+                    <!-- </div> -->
+                    <!-- </div> -->
+                </template>
+               
+                    
+
+            <!-- Contact Detail Section -->
+            <div class="slds-col slds-size_12-of-12">
+                <template if:true={iscontactObj}>
+                    <lightning-button onclick={handleBack} variant="icon" icon-name="action:back"></lightning-button>
+                    <div class="slds-grid slds-wrap Farmer-Info-container">
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="farmer-info">Name:</div>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12">
+                            <p> {contactObj.nameField}</p>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="farmer-info">Phone:</div>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12">
+                            <p>{contactObj.phoneField}</p>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="farmer-info">EMail:</div>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12">
+                            <p> {contactObj.emailField}</p>
+                        </div>
+                        
+                    </div>
+
+                        <!-- <lightning-button onclick={handleBack} variant="icon" icon-name="action:back"></lightning-button>
+                        <div class="slds-m-around_medium">
+                            <lightning-input label="Name" value={contactObj.nameField} onchange={handleFieldChange} data-field="Name"></lightning-input>
+                        </div>
+                        <div class="slds-m-around_medium">
+                            <lightning-input label="Email" value={contactObj.emailField} onchange={handleFieldChange} data-field="Email"></lightning-input>
+                        </div>
+                        <div class="slds-m-around_medium">
+                            <lightning-input label="Phone" value={contactObj.phoneField} onchange={handleFieldChange} data-field="Phone"></lightning-input>
+                        </div> -->
+                </template>
+
+                <!-- <div class="slds-m-around_medium">
+                    <template if:true={pictureHandler}>
+                       <lightning-file-upload
+                        label="Attach files"
+                        accept={acceptedFormats}
+                        onuploadfinished={handleUploadFinished}
+                        multiple
+                         ></lightning-file-upload>
+                    </template>
+                </div> -->
+
+                <!-- Tabs Section -->
+                <template if:true={showLandDetailsForm}>
+                    <c-get-contact-land-details contact-id={contactObj.idField}></c-get-contact-land-details>
+                </template>
+                <template if:true={showOrderDetailsForm}>
+                    <c-get-contact-order-details contact-id={contactObj.idField} ></c-get-contact-order-details>
+                </template>
+                <template if:true={showHarvestDetailsForm}>
+                    <c-get-contact-harvest-details contact-id={contactObj.idField}></c-get-contact-harvest-details>
+                </template>
+                <template if:true={showMapDetails}>
+                    <c-get-map-show contact-id={contactObj.idField}></c-get-map-show>
+                </template>
+                <!-- <template if:true={showHandlerVisitNotes}>
+                    <lightning-card>
+                        <div class="slds-m-around_medium">
+                            <lightning-input label="Visit Name" contact-id={contactObj.idField} onchange={handleVisitNameChange} value={visitName} data-field="text"></lightning-input>
+                            <lightning-input label="Contact Name" class="slds-col" value={contactName} onchange={handleContactChange} required></lightning-input>
+                            <lightning-input label="Visit" contact-id={contactObj.idField} onchange={handleVisitChange} value={visitNotes} data-field="text"></lightning-input>
+                            <lightning-button label="Save" variant="brand" onclick={handlVisitSave}></lightning-button>
+                        </div>
+                    </lightning-card>
+                </template> -->
+                <template if:true={tabsHandler}>
+
+                            <div class="tabs-container">
+                                <template for:each={tabs} for:item="tab">
+                                    <div key={tab.id} class={tab.className} data-label={tab.label} onclick={handleTabClick}>
+                                        <img src={tab.logoUrl} class="tab-logo" />
+                                        <span class="footer-label">{tab.label}</span>
+                                    </div>
+                                </template>
+                             </div>
+                      
+                    
+                    <!-- <div class="slds-scrollable_x" style="height:5rem;width:100%;max-width:100%;overflow-x:auto;">
+                        <div class="slds-text-longform" style="width:400%">
+                            <div style="background-color:white;padding:0.5rem">
+                                <lightning-button class="clickable" variant="brand" label="Main" onclick={handleMain} style="margin-right: 5px;"></lightning-button>
+                                <lightning-button class="clickable" variant="brand" label="Land Details" onclick={handleLandDetails} style="margin-right: 5px;"></lightning-button>
+                                <lightning-button class="clickable" variant="brand" label="Order Details" onclick={handleOrderChange} style="margin-right: 5px;"></lightning-button>
+                                <lightning-button class="clickable" variant="brand" label="Visit" onclick={handleVisitNotesClick} style="margin-right: 5px;"></lightning-button>
+                                <lightning-button class="clickable" variant="brand" label="Reports" style="margin-right: 5px;" onclick={handleReportClick}></lightning-button>
+                                <lightning-button class="clickable" variant="brand" label="Map" onclick={handleMapClick} style="margin-right: 5px;"></lightning-button>
+                                <lightning-button class="clickable" variant="brand" label="Picture" onclick={handlePictureClick}></lightning-button>
+                               
+                            </div>
+                        </div>
+                    </div> -->
+                </template>
+            </div>
+        <!-- </div> -->
+  
+    
+</template>

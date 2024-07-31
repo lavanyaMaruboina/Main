@@ -1,0 +1,50 @@
+<template>
+    <div class="form-boss slds-m-around_small">
+        <h1 class="slds-text-heading_medium">Create Lead</h1>
+        <form class="slds-form slds-form_stacked">
+            <lightning-input label="First Name" value={firstName} onchange={handleFirstNameChange} required></lightning-input>
+            <lightning-input label="Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input>
+            <lightning-input label="Company" value={company} onchange={handleCompanyChange} required></lightning-input>
+            <lightning-input label="Title" value={title} onchange={handleTitleChange}></lightning-input>
+            <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange} required></lightning-input>
+            <lightning-input label="Phone" type="tel" value={phone} onchange={handlePhoneChange} required></lightning-input>
+            <lightning-button label="Create Lead" class="slds-m-top_small" onclick={handleSubmit}></lightning-button>
+        </form>
+    </div>
+
+    <!-- Success pop-up -->
+    <template if:true={showSuccess}>
+        <div class="slds-modal slds-fade-in-open slds-modal_small" tabindex="-1" role="dialog">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{success.title}</h2>
+                </div>
+                <div class="slds-modal__content">
+                    <p>{success.message}</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCloseSuccess}>Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Error pop-up -->
+    <template if:true={showError}>
+        <div class="slds-modal slds-fade-in-open slds-modal_small" tabindex="-1" role="dialog">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{error.title}</h2>
+                </div>
+                <div class="slds-modal__content">
+                    <p>{error.message}</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCloseError}>Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

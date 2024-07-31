@@ -1,0 +1,60 @@
+<template>
+    <header lwc:ref="myHeader">
+        <div class="site-logo">
+          <a href={homePageUrl}>
+            <img src={logoUrl} alt="Logo" class="navbar-logo" onclick={backToHomePage}>
+          </a>
+        </div>
+        <div class="navbar-menu">
+          <nav>
+            <ul>
+              <li class="nav-item inventory">
+                <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+              </li>
+                <!-- <li class="nav-item contacts">
+                    <div onclick={handleContactsClick}>Add Farmer</div>
+                </li>
+      
+                <li class="nav-item inventory">
+                    <div onclick={handleInventoryClick}>Inventory</div>
+                </li> -->
+               
+                <li class="nav-item inventory">
+                  <a href={logoutLink} class='logoutCss'><img src={Login_Icon}>Log Out</a>
+                </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="hamberger-menu" onclick={toggleMobileMenu}>
+            <img src={hide} alt="show" class="show">
+            <img src={show} alt="hide" class="hide">
+              <ul class="mobile-menu">
+                <li class="nav-item inventory">
+                  <div onclick={handleInventoryClick}>Hello, {userName}!</div>
+                </li>
+                <!-- <li class="nav-item contacts">
+                   <div onclick={handleContactsClick}>Add Farmer</div>
+                </li>
+      
+                <li class="nav-item inventory">
+                     <div onclick={handleInventoryClick}>Inventory</div>
+                </li> -->
+               
+                <li class="nav-item inventory">
+                  <a href={logoutLink}>Log Out</a>
+                </li>
+              </ul>
+        </div>
+      
+      </header>    
+      <div class="welcom-name">Hello, {userName}!</div>
+      <div class="desciption">Please conform at which location you are !</div>
+      <div class="slds-align_absolute-center">
+        <button class="filter-button" onclick={redirectToFarmer}>Farmer</button>
+      </div>
+      <div class="slds-align_absolute-center">
+        <div><button class="filter-button" onclick={redirectToDealer}>Dealerr</button></div>
+      </div>
+      
+
+</template>

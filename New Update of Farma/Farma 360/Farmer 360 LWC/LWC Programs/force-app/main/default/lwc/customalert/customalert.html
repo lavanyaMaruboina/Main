@@ -1,0 +1,11 @@
+<template>
+    <lightning-modal onclose={handleClose}>
+        <div>
+            <p>{message}</p>
+        </div>
+        <div slot="footer">
+            <lightning-button label="Ok" onclick={handleOk}></lightning-button>
+            <lightning-button label="Clone" onclick={handleClone}></lightning-button>
+        </div>
+    </lightning-modal>
+</template>

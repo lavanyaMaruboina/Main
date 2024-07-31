@@ -1,0 +1,59 @@
+<template>
+    <lightning-card>
+        <lightning-button class="slds-m-right_small" variant="brand" label="New" icon-name="utility:add" onclick={createLandForm}></lightning-button>
+        <div class="slds-p-around_medium">
+            <b>Harvest Details</b><br/>
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
+                <template if:true={HarvestDatatable}>
+                    <template if:true={data}>
+                        <div class="slds-scrollable_x" style="height:15rem;width:15rem" tabindex="0">
+                            <div class="slds-text-longform" style="width:500%">
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={data}
+                                    show-row-number-column
+                                    columns={columns}
+                                    draft-values={draftValues}
+                                    hide-checkbox-column
+                                    onsave={handleSave}
+                                ></lightning-datatable>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <template if:true={HarverDetailsForm}>
+                    <lightning-card>
+                      
+                            <h3 class="slds-section__title" style="background-color: gray; font-weight: bold">New Harvest Create</h3>
+                            <lightning-input type="text" label="Name" value={name} onchange={handleName} required></lightning-input>
+                            <lightning-input label="Stocking Density (in Millions)" value={density} onchange={handleDensity}></lightning-input>
+                            <lightning-input label="Cum Feed (MT)" class="slds-col" value={feed} onchange={handleFeed}></lightning-input>
+                            <lightning-input label="Last Week ABW" class="slds-col" value={week} onchange={handleWeek} required></lightning-input>
+                            <lightning-input label="Salinity (ppt)" class="slds-col" type="number" value={pPT} onchange={handlePPT}></lightning-input>
+                            <lightning-input label="Partial 1 Count" class="slds-col" value={part1} onchange={handlePart1}></lightning-input>
+                            <lightning-input label="Partial 2 Count" class="slds-col" value={part2} onchange={handlePart2}></lightning-input>
+                            <lightning-input label="Partial 3 Count" class="slds-col" value={part3} onchange={handlePart3}></lightning-input>
+                            <lightning-input label="Present Final Count" class="slds-col" value={finalCount} onchange={handleNumberFinalCount}></lightning-input>
+                            <lightning-input label="Present Final Survival (in Millions)" class="slds-col" value={finalSurvival} onchange={handleFinalSurvival}></lightning-input>
+                            <!-- <lightning-input label="Pond Status" class="slds-col" value={pondStatus} onchange={handlePondStatus}></lightning-input> -->
+                            <lightning-input label="Remarks" class="slds-col" value={remarks} onchange={handleRemarks}></lightning-input>
+                            <lightning-input label="Contact" class="slds-col" value={contact} onchange={handleOntact}></lightning-input>
+                            <lightning-input label="ADG (grams)" class="slds-col" value={gRams} onchange={handleGRams}></lightning-input>
+                            <lightning-input label="Weekly Growth" class="slds-col" value={weeklyGrowth} onchange={handleWeeklyGrowth}></lightning-input>
+                            <lightning-input label="FCR" class="slds-col" value={fCR} onchange={handleFCR}></lightning-input>
+                            <div class="slds-m-top_medium">
+                                <lightning-button label="Save" onclick={saveHarvest} variant="brand" class="slds-var-m-around_small"></lightning-button>
+                
+                                <lightning-button label="Cancel" onclick={handleBack} variant="neutral" icon-name="action:back"> </lightning-button>
+                                     
+                                    </div>
+                            </div>
+                        </div>
+                    </lightning-card>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

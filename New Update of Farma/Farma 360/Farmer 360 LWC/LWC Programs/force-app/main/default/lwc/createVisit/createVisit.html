@@ -1,0 +1,110 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="Rep Name" value={userName} onchange={handleRepNameChange}></lightning-input>
+        </div>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-combobox
+            name="progress"
+            label="Visited Party"
+            value={visitedPartyValue}
+            placeholder="Select Visited Party"
+            options={visitedPartyOptions}
+            onchange={visitedPartyHandleChange} ></lightning-combobox>
+        </div>
+
+        <template if:true={isFarmer}>
+            <div class="slds-p-around_medium lgc-bg">
+                <lightning-combobox
+                name="progress"
+                label="Visit type"
+                value={visitTypeFarmerValue}
+                placeholder="Select Visited Party"
+                options={visitTypeFarmerOptions}
+                onchange={visitTypeFarmerHandleChange} ></lightning-combobox>
+            </div>
+        </template>
+
+        <template if:true={isDealer}>
+            <div class="slds-p-around_medium lgc-bg">
+                <lightning-combobox
+                name="progress"
+                label="Visit type"
+                value={visitTypeDealerValue}
+                placeholder="Select Visited Party"
+                options={visitTypeDealerOptions}
+                onchange={visitTypeDealerHandleChange} ></lightning-combobox>
+            </div>
+        </template>
+
+        <template if:true={isFarmer}>
+            <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="search" label="Farmer Name" value={contactName} onchange={handleContactSearch}></lightning-input>
+            <template if:true={contacts.length}>   
+            <ul class="slds-p-around_medium lgc-bg">
+                    <template for:each={contacts} for:item="contact">
+                        <li key={contact.Id} class="slds-dropdown__item">
+                            <lightning-button variant="base" label={contact.Name} onclick={selectContact} data-id={contact.Id}></lightning-button>
+                        </li>
+                    </template>
+                </ul>
+            </template> 
+            </div>
+        </template>
+
+        
+
+        <template if:true={isDealer}>
+            <div class="slds-p-around_medium lgc-bg">
+                <lightning-input type="search" label="Dealer Name" value={dealerName} onchange={handleDealerSearch}></lightning-input>
+                <template if:true={dealers.length}>   
+                <ul class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid lookup-popup">
+                        <template for:each={dealers} for:item="dealers">
+                            <li key={dealers.Id} class="slds-dropdown__item">
+                                <lightning-button variant="base" label={dealers.Name} onclick={selectDealer} data-id={dealers.Id}></lightning-button>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                </div>
+        </template>
+
+        <!-- <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="Status" value="Planned" readonly></lightning-input>
+        </div> -->
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="datetime" name="input2" label="Start Date" value={vistiDateTime} onchange={handleStartDateChange}></lightning-input>
+        </div>
+
+        <div class="slds-align_absolute-center">
+            <lightning-button label="Cancel" onclick={handleReset} variant="neutral" class="slds-m-left_x-small"></lightning-button>
+            <lightning-button label="Create Visit" onclick={handleCreateVisit} variant="brand" class="slds-m-left_x-small"></lightning-button>
+        </div>
+
+    </lightning-card>
+
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Visit Created Successfully</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>The visit has been created successfully.</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Ok" onclick={handleReset} variant="destructive"></lightning-button>
+                    <lightning-button label="Clone" onclick={handleClone} variant="brand"></lightning-button>
+                    
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

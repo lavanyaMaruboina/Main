@@ -1,0 +1,85 @@
+.heading{    
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin: 11px;
+}
+.search-input{
+    margin-top: 5px;
+}
+
+.search-container {
+    position: relative;
+    margin-top:3px;
+}
+
+.search-container .slds-input {
+    border-radius: 0;
+    border-color: lightgrey;
+    font-size: 13px;
+}
+
+.filter-button {
+    background-color: #6583a5;
+    border: 5px solid lightgrey;
+    border-radius: 50px;
+    color: white;
+    padding: 10px;
+    width:100%;
+    font-weight: 600;
+    margin: 10px;
+}
+
+.filter-button:hover {
+    background-color: #7ab65b;
+    color: black;
+    width:100%;
+    font-weight: 600;
+}
+
+.flyout {
+    position: absolute;
+    background: white;
+    border: 0.0625rem solid #ccc;
+    top: 100%;
+    z-index: 1000;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+
+.flyout ul {
+    list-style: none;
+    padding: 0.3125rem 0;
+    margin: 0;
+}
+
+
+.flyout ul li a {
+    display: block;
+    padding: 0.625rem;
+    text-decoration: none;
+    color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.flyout ul li a:hover {
+    background-color: #f0eeee;
+    text-decoration: underline;
+}
+
+.tile-visit{
+    font-size: 12px;
+    padding: 8px 15px;
+    margin: 3px 0px;
+    border-radius: 5px;
+    background: linear-gradient(356.31deg, #e1e3f4 17.37%, #ffffff 70.19%);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);  
+}
+
+
+.text-align-right{
+    text-align: right;
+}

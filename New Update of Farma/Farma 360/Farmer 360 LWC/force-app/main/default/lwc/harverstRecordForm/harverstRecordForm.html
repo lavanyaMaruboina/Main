@@ -1,0 +1,41 @@
+<template>
+    <lightning-card title="New Harvest">
+        <div class="slds-p-around_medium">
+            <lightning-record-edit-form object-api-name="Harvest__c" onsuccess={handleSuccess}>
+                <div class="slds-p-top_medium">
+                
+                    <lightning-input-field field-name="Name" type="String"></lightning-input-field>
+                    <lightning-input-field field-name="Stocking_Density_in_Millions__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Cum_feed_MT__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Last_week_ABW__c" type="Number"></lightning-input-field>  
+                    <lightning-input-field field-name="Salinity_ppt__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Partial_1_Count__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Partial_1_Biomass_MT__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Partial_2_Count__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Partial_2_Biomass_MT__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Partial_3_Count__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Partial_3_Biomass_MT__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Present_Final_Count__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Present_Final_Survival_Millions__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Pond_status__c"></lightning-input-field>
+                    <lightning-input-field field-name="Remarks__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Contact__c" onchange={handleContactChange1}></lightning-input-field>
+                    <!--<lightning-input-field field-name="Land_detals__c" onchange={handleLandChange1}></lightning-input-field>-->
+                    <lightning-input-field field-name="ADG_gRAMS__c"></lightning-input-field>
+
+                    <lightning-input-field field-name="Weekly_growth__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="FCR__c" type="Number"></lightning-input-field>
+                    <lightning-input-field field-name="Pond_status__c"></lightning-input-field>
+                    
+
+
+
+                </div>
+                   <div class="slds-m-top_medium">
+                    <lightning-button type="submit" label="Create Record" variant="brand"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+        
+    </lightning-card>
+</template>

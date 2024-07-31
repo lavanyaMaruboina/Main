@@ -1,0 +1,53 @@
+<template>
+   
+    <!--<nav class="navbar">
+        <div class="logo">
+            <img src={logoUrl} onclick={handleLogoClick} alt="Farma 360 Logo">
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item contacts">
+                <a href="javascript:void(0);" onclick={handleContactsClick} class={contactsClass}>Contacts</a>
+            </li>
+
+            <li class="nav-item inventory">
+                <a href="javascript:void(0);" onclick={handleInventoryClick} class={InventoryClass}>Inventory</a>
+            </li>
+        </ul>
+
+          <div class="hamburger" onclick={toggleMenu}>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>-->
+
+    <template class="slds-m-around_medium" if:true={showSearch}>
+        <c-tab></c-tab>
+    </template>
+     <template class="slds-m-around_medium" if:true={showSearchInventory}>
+        <c-inventory-form></c-inventory-form>
+    </template>
+    
+    <template class="slds-m-around_medium" if:true={showContactForm}>
+        <c-contact-form></c-contact-form>
+    </template>
+    <!-- number of lands -->
+    <template class="slds-m-around_medium" if:true={showLandCounter}>
+        <c-land-counter></c-land-counter>
+    </template>
+    <!-- land details form -->
+    <template class="slds-m-around_medium" if:true={showLandDetailsForm}>
+        <c-create-land-details-form></c-create-land-details-form>
+    </template>
+
+    <!-- Next button -->
+    <template if:true={showContactForm}>
+        <div class="slds-p-around_medium">
+            <div class="slds-m-top_medium">
+                <lightning-button label="Next" onclick={handleNext} variant="brand"></lightning-button>
+            </div>
+        </div>
+    </template>
+    
+
+   </template>

@@ -1,0 +1,505 @@
+<template>
+<div class="container">
+<!-- <div class="heading">Land Details</div> -->
+
+    <template if:true={landDatatable}>
+        <div class="heading">
+            <span>Land Details</span>
+            <span class="text-align">{contactName}</span>
+        </div>
+        <!-- <div class="heading">Land Details</div> -->
+        <div class="slds-align_absolute-center button-mar">
+        <!-- <lightning-button class="slds-m-right_small" label="Back" onclick={handleBackToMain}></lightning-button> -->
+        <lightning-button class="slds-m-right_small" label="Create New" onclick={createLandForm} icon-name="utility:add" variant="brand"></lightning-button> 
+        </div>
+    </template>
+        
+
+         <div if:true={showSpinner}>
+        <lightning-spinner
+            alternative-text="Loading..." variant="brand">
+        </lightning-spinner>
+        </div>
+
+
+  <template if:true={listViewLand}>
+    <template if:true={data}>
+        <template for:each={data} for:item="record">
+            <div key={record.Id} class="tile-land" data-id={record.Id}>
+                <div class="heading-land">{record.Name}</div>
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Soil Detail</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p> {record.Soil_Detail__c}</p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Land Topography</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{record.Land_topography__c}</p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Irrigation Type</strong> </p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{record.Irrigation_Type__c}</p>
+                    </div>
+                    
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Date of Inspection</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right" >
+                        <p>{record.formatedateLand}</p>
+                    </div>
+
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Total Area(Acres)</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{record.Total_Area__c}</p>
+                    </div>
+
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Total Area Sowed</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{record.Total_Area_Sowed__c}</p>
+                    </div>
+
+                    <div class="slds-col slds-size_6-of-1">
+                        <p><strong>Geo Fencing</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 align-right">
+                        <p>{record.Geo_Fencing__c}</p>
+                    </div>
+                    <!-- <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Total Area:</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p>{record.Total_Area__c}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Sowed Area:</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p>{record.Total_Area_Sowed__c}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Country:</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p>{record.Address__CountryCode__s}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>City :</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p>{record.Address__City__s}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>State Code:</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p>{record.Address__StateCode__s}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Postal Code:</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p>{record.Address__PostalCode__s}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_12-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_3-of-12">
+                                <p><strong>Street:</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_9-of-12">
+                                <p>{record.Address__Street__s}</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                
+                <div class="slds-grid slds-wrap bottom-section" >
+                    <div class="slds-col slds-size_4-of-12 harvest-text">
+                        <lightning-button 
+                        label="Harvests" 
+                        onclick={handleHarvestButton} 
+                        data-id={record.Id} 
+                        class="slds-m-bottom_small">
+                    </lightning-button>
+                        <!-- <div onclick={handleHarvestButton} data-id={record.Id}>Harvest Details</div> -->
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 edit-text">
+                        <lightning-button 
+                        label="Edit Land" 
+                        onclick={handleEditClick} 
+                        data-id={record.Id} 
+                        class="slds-m-bottom_small">
+                    </lightning-button>
+                        <!-- <div onclick={handleEditClick} data-id={record.Id}>Edit Land</div>  -->
+                    </div>
+                    <div class="slds-col slds-size_4-of-12 yield-text">
+                        <lightning-button 
+                        label="Yield" 
+                        onclick={handleLandYieldClick} 
+                        data-id={record.Id}
+                        class="slds-m-bottom_small">
+                    </lightning-button>
+                        <!-- <div onclick={handleEditClick} data-id={record.Id}>Edit Land</div>  -->
+                    </div>
+                </div>
+                
+                
+            </div>
+        </template>
+    </template>
+    </template>
+    
+    <template if:true={showYieldForm}>
+        <lightning-button-icon  
+                    icon-name="utility:back" 
+                    onclick={backToLandDetails} 
+                    class="slds-m-right_small">
+                    </lightning-button-icon>
+        <c-land-yield-details land-id={selectedRecordId}></c-land-yield-details>
+    </template>
+
+        <div class="form-edit-container">
+            <template if:true={selectedLandRecord}>
+                <div class="heading">
+                    <span>Edit Land Details</span>
+                    <span class="text-align">{contactName}</span>
+                </div>
+                <!-- <div class="heading">Edit Land Details</div> -->
+                <div class="record-container">
+                    <lightning-button-icon  
+                    icon-name="utility:back" 
+                    onclick={backToLandDetails} 
+                    class="slds-m-right_small">
+                    </lightning-button-icon>
+                    <lightning-input
+                        label="Name"
+                        data-field="Name"
+                        value={selectedRecord.Name}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <!--<lightning-input
+                        label="Country Code"
+                        value={selectedRecord.Address__CountryCode__s}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <lightning-input
+                        label="City"
+                        value={selectedRecord.Address__City__s}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <lightning-input
+                        label="State Code"
+                        value={selectedRecord.Address__StateCode__s}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <lightning-input
+                        label="Postal Code"
+                        value={selectedRecord.Address__PostalCode__s}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <lightning-input
+                        label="Street"
+                        value={selectedRecord.Address__Street__s}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>-->
+                    <!--<lightning-input
+                        label="Total Area(Acres)"
+                        value={selectedRecord.Area_Acres__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>-->
+                    <lightning-input
+                        label="Date of inspection"
+                        data-field="Last_date_of_inspection__c"
+                        value={selectedRecord.Last_date_of_inspection__c}
+                        data-id={selectedRecord.Id}
+                        type="date"
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <!-- <lightning-input
+                        label="Brand"
+                        value={selectedRecord.Brand__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input> -->
+                    <!-- <lightning-input type="date" name="input2" label="Sampling Harvest Date" value={selectedRecord.Date_of_Sampling_Harvest__c} data-id={selectedRecord.Id} onchange={handleInputChange}></lightning-input>
+                    <lightning-input
+                        label="Sampling Harvest Date"
+                        value={selectedRecord.Date_of_Sampling_Harvest__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input> -->
+                    <!--<lightning-input
+                        label="Pond Number"
+                        value={selectedRecord.Pond_Number__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>-->
+                    <lightning-input
+                        label="Soil Detail"
+                        data-field = "Soil_Detail__c"
+                        value={selectedRecord.Soil_Detail__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <lightning-input
+                        label="Land Topography"
+                            data-field = "Land_topography__c"
+                        value={selectedRecord.Land_topography__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    
+                    <!--<lightning-input type="date" name="input2" label="Testing Date"  value={selectedRecord.Soil_testing_date__c} data-id={selectedRecord.Id} onchange={handleInputChange}></lightning-input>
+                        <lightning-input
+                        label="Testing Date"
+                        value={selectedRecord.Soil_testing_date__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input> -->
+                    <lightning-input
+                        label="Total Area"
+                        data-field="Total_Area__c"
+                        value={selectedRecord.Total_Area__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <lightning-input
+                        label="Sowed Area"
+                        data-field = "Total_Area_Sowed__c"
+                        value={selectedRecord.Total_Area_Sowed__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input>
+                    <!-- <lightning-combobox name="progress"
+                        label="Water Source"
+                        value={selectedRecord.Water_Source__c}
+                        options={WaterPickListValues.data.values}
+                        onchange={handleInputChange} >
+                    </lightning-combobox> -->
+                    <lightning-combobox name="progress"
+                        label="Irrigation Type"
+                        data-field="Irrigation_Type__c"
+                        value={selectedRecord.Irrigation_Type__c}
+                        options={IrrigationPickListValues.data.values}
+                        onchange={handleInputChange} >
+                    </lightning-combobox>
+                    <!-- <lightning-input
+                        label="Water Source"
+                        value={selectedRecord.Water_Source__c}
+                        data-id={selectedRecord.Id}
+                        onchange={handleInputChange}>
+                    </lightning-input> -->
+                    <div class="slds-align_absolute-center">
+                        <!-- <lightning-button label="Cancel"  onclick={backToLandDetails} class="slds-m-right_small"></lightning-button> -->
+                        <lightning-button label="Modify" variant="brand" data-id={selectedRecord.Id} onclick={updateRecord} class="slds-m-right_small"></lightning-button>
+                    </div>
+                </div>
+            </template>
+    
+
+        <!-- <template if:true={data}>
+            <c-l-w-c-custom-datatable-type
+            key-field="Id"
+            data={data}
+            columns={columns}
+            draft-values={draftValues}
+            oncellchange={handleCellChange}
+            onrowaction={handleRowAction}
+            hide-checkbox-column
+            min-column-width="100"
+            max-column-width="300">
+            </c-l-w-c-custom-datatable-type>
+        </template> -->
+    </div>
+    
+    
+        
+
+    <template if:true={LandDetailsForm}>
+        <!-- <div class="heading">New Land</div> -->
+        <div class="heading">
+            <span>New Land</span>
+            <span class="text-align">{contactName}</span>
+        </div>
+        <div class="form-edit-container">
+            <div class="record-container"> 
+            <lightning-button-icon  icon-name="utility:back" onclick={handleBack} class="slds-m-right_small"></lightning-button-icon>
+            <lightning-input label="Land Name" value={landName} onchange={handleLandChange} required></lightning-input>
+            <lightning-input label="Soil Detail" value={soilChange} onchange={handleSoilChange} type='text'></lightning-input>
+            <lightning-input label="Land Topography" value={landTopography} onchange={handleLandtopographyChange} type='text'></lightning-input>
+            <lightning-input label="Contact Name" value={contactName} onchange={handleContactChange} disabled></lightning-input>
+            <lightning-input label="Date of Inspection" value={dateOfInspection} onchange={handleDateChange} type='date'></lightning-input>
+            <lightning-input label="Total Area (Acres)" value={totalAreaNumber} onchange={handleAreaChange} type='number'></lightning-input>
+            <lightning-input label="Total Area Sowed (Acres)" value={totalAreaSowed} onchange={handleTotalArea} type='number'></lightning-input>
+            <lightning-combobox label="Irrigation" value={selectedStatus} options={statusOptions} onchange={handleIrrigationChange}></lightning-combobox>
+        <!-- <lightning-button label="Back" onclick={handleBack} class="slds-m-right_small"></lightning-button> -->
+        <div class="slds-align_absolute-center">
+        <lightning-button label="Save" onclick={saveLand} variant="brand" class="slds-m-right_small"></lightning-button>
+        </div>
+        </div>
+        </div>
+
+    </template>
+
+
+    <template if:true={isHarvestDataOpen}>
+        <div class="heading">
+            <span>Harvest Details</span>
+            <span class="text-align">{contactName}</span>
+        </div>
+        <div class="slds-m-bottom_medium slds-align_absolute-center">
+        <lightning-button icon-name="utility:back" onclick={handleBack}  class="slds-m-right_small"></lightning-button>
+        <lightning-button class="slds-m-right_small" label="New" variant="brand" data-id={selectedRecord.Id} onclick={createHarvestForm}></lightning-button>
+            <!--<lightning-button class="slds-m-right_small" variant="brand" label="Save" onclick={handleHarvestSave}></lightning-button>-->
+        </div>
+        <!-- <lightning-datatable
+            key-field="Id"
+            data={harvestdata}
+            columns={harvestColumns}
+            draft-values={harvestDraftValues}
+            oncellchange={handleHarvestCellChange}
+            onsave={saveHarvestDetails}
+            min-column-width="100"
+            max-column-width="300"
+            hide-checkbox-column>
+        </lightning-datatable> -->
+
+            <div class="mobile-view">
+                <template for:each={harvestdata} for:item="harvest">
+                    <div key={harvest.Id} class="tile-land" data-id={harvest.Id}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Harvest Name</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Name}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Harvest Date</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Harvest_Date__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Stocking Density</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Stocking_density_millions__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Remarks</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Remarks__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Partial Count 1</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data"> {harvest.Partial_1_Count__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Partial Count 2</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Partial_3_Count__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Cum Feed</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Cum_feed_MT__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">ADG Grams</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.ADG_gRAMS__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Salinity ppt</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Salinity_ppt__c}</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="heading-data">Weekly Growth</div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 align-right">
+                                <div class="text-data">{harvest.Weekly_growth__c}</div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        
+</template>
+
+<template if:true={isHarvestFormOpen}>
+        <div class="record-container">
+            <h3 class="slds-section__title" style="background-color: green; padding:10px; font-weight: bold; color:white;">Create New Harvest</h3>
+            <lightning-input type="text" label="Name" value={name} onchange={handleName} required></lightning-input>
+            <lightning-input label="Harvest Date" value={harvestDate} onchange={handleHarvestDate} type="date"></lightning-input>
+            <lightning-input label="Stocking Density" value={density} onchange={handleDensity} type="number"></lightning-input>
+            <lightning-input label="Cum Feed (MT)" class="slds-col" value={feed} onchange={handleFeed} type="number"></lightning-input>
+            <lightning-input label="Salinity (ppt)" crlass="slds-col" type="number" value={pPT} onchange={handlePPT}></lightning-input>
+            <lightning-input label="Partial 1 Count" class="slds-col" value={part1} type="number" onchange={handlePart1}></lightning-input>
+            <lightning-input label="Partial 2 Count" class="slds-col" value={part3} type="number" onchange={handlePart3}></lightning-input>
+            <lightning-input label="Present Final Count" class="slds-col" value={finalCount} type="number" onchange={handleNumberFinalCount}></lightning-input>
+            <lightning-input label="Remarks" class="slds-col" value={remarks} onchange={handleRemarks} type="text"></lightning-input>
+            <lightning-input label="ADG (grams)" class="slds-col" value={gRams} onchange={handleGRams} type="text"></lightning-input>
+            <lightning-input label="Weekly Growth" class="slds-col" value={weeklyGrowth} onchange={handleWeeklyGrowth} type="number"></lightning-input>
+            <lightning-input label="FCR" class="slds-col" value={fCR} onchange={handleFCR} type="number"></lightning-input>
+            <div class="slds-align_absolute-center button-mar">
+                <lightning-button label="Cancel" onclick={handleBackHarvest} class="slds-m-left_small"></lightning-button>
+                <lightning-button label="Save" onclick={saveHarvest} variant="brand" data-id={selectedRecord.Id} class="slds-m-left_small"></lightning-button>
+            </div>
+        </div>
+</template>
+<template if:true={isMainContactDetailOpen}>
+<c-farmer-contact-details></c-farmer-contact-details>
+</template>
+
+</div>
+</template>

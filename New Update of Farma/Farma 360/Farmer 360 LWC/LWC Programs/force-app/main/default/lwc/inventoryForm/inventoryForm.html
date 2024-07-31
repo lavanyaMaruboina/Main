@@ -1,0 +1,307 @@
+<template>
+        <template if:true={searchWithDealerName}>
+            
+        <!-- Dealer and Inventory Search Component -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <button class="filter-button" onclick={showDealerInven}>Search by Inventory</button> 
+                    </div>
+                  </div>
+               
+              <div class="heading">Search Dealer</div>
+              <div class="search-input">
+                <lightning-input 
+                    onfocus={searchFocusHandler}
+                    onblur={searchBlurHandler} 
+                    onkeyup={handleSearchKeyUp} 
+                    type="search"
+                    variant="standard"
+                    label="Search Dealer" 
+                    onchange={handleAccountSearch}
+                    value={selectedAccountName}>
+                </lightning-input>
+            </div>
+
+            <template lwc:if={showSearch}>
+                <div class="flyout">
+                    <template if:true={accountData}>      
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid">
+                            <template for:each={accountData} for:item="account">
+                                <li key={account.Id} class="slds-listbox__item">
+                                    <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center" role="presentation" onclick={handleAccountSelect} data-id={account.Id}>
+                                        <h3 class="slds-truncate" title={account.Name}>{account.Name}</h3>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    </div>
+            </template>
+       
+
+        
+                <template if:true={inventoryData}>
+                    <!-- <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <p><strong>Name</strong></p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p><strong>Quantity</strong></p>
+                        </div>
+                    </div> -->
+                    <template for:each={inventoryData} for:item="inventory">
+                        
+                        <div key={inventory.Id} class="tile-visit" onclick={handleProductSelect} data-id={inventory.Id}>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <p><strong>{inventory.Name}</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 text-align-right">
+                                    <p>{inventory.Quntity__c}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+               </template>
+
+            </div>
+        </div>
+
+        </template>
+            <!--=====================================================================================-->
+            <!-- <template if:true={inventoryData}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered tile-visit">
+                    <thead>
+                        <tr class="slds-grid slds-wrap">
+                            <th scope="col">
+                                <div class="slds-truncate" title="Product Name">Product Name</div>
+                            </th>
+                            <th scope="col" class="right-align">
+                                <div class="slds-truncate" title="Quantity">Quantity</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={inventoryData} for:item="inventory">
+                            <tr key={inventory.Id} class="tile-visit" onclick={handleProductSelect} data-id={inventory.Id}>
+                                <td data-label="Product Name">
+                                    <div class="slds-truncate">{inventory.Name}</div>
+                                </td>
+                                <td data-label="Quantity" class="text-align-right">
+                                    <div class="slds-truncate">{inventory.Quantity__c}</div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                    </table>
+       
+        </template> -->
+            
+           
+    
+        <template if:true={searchWithInventoryName}>
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <button class="filter-button" onclick={showProductInven}>Search by Dealer</button>
+                </div>
+            </div>
+            <div class="heading">Search Inventory </div>
+            <div class="search-input">
+                <lightning-input 
+                    onfocus={searchFocusHandlerIn}
+                    onblur={searchBlurHandlerIn} 
+                    onkeyup={handleSearchKeyUpIn} 
+                    type="search"
+                    variant="standard"
+                    label="Search Inventory" 
+                    onchange={handleAccountSearchIn}
+                    value={selectedAccountNameIn}>
+                </lightning-input>
+            </div>
+        
+        <!-- <template lwc:if={showSearchIn}>
+            <div class="flyout">
+                <template if:true={accountDataIn}>
+                    <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid">
+                        <template for:each={accountDataIn} for:item="inventory">
+                            <li key={inventory.Id} class="slds-listbox__item">
+                                <div class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small slds-media_center" role="presentation" onclick={handleAccountSelectIn} data-id={inventory.Id}> -->
+                                    <!-- <h3 class="slds-truncate" title={inventory.Name}>{inventory.Dealer__r.Name}</h3> -->
+                                    <!-- <h3 class="slds-truncate">{inventory.Product__r.Name}</h3> -->
+                                    <!-- <h3 class="slds-truncate">{inventory.Quntity__c}</h3> -->
+                                <!-- </div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+            </div>
+        </template> -->
+
+    <template if:true={accountDataIn}>
+            <template for:each={accountDataIn} for:item="accountData">
+                <div key={accountData.Id} class="tile-visit" onclick={handleInventoryProductSelect} data-id={accountData.Id}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <p><strong>{accountData.Dealer__r.Name}</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <p>{accountData.Name}</p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p>{accountData.Quntity__c}</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+
+        </template>
+
+        <!-- <template if:true={inventoryDataIn}>
+            <template for:each={inventoryDataIn} for:item="inventory">
+                <div key={inventory.Id} class="tile-visit" onclick={handleAccountProductSelect} data-id={inventory.Id}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <p><strong>{inventory.Name}</strong></p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p>{inventory.Quantity__c}</p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p>{inventory.Dealer__r.Name}</p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p>{inventory.Product__r.Name}</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template> -->
+
+        
+
+
+    <template if:true={isInventorySelected}>
+        <!-- Inventory Details Component -->
+        <lightning-button-icon icon-name="utility:back" onclick={goBack} class="slds-m-right_small"></lightning-button-icon>
+            <div class="tile-visit">
+            <template if:true={selectedInventory}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Name</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p>{selectedInventory.Name}</p>
+                    </div>
+                </div>
+                <!-- <p><strong>Name:</strong> {selectedInventory.Name}</p> -->
+                <template if:true={selectedInventory.Quntity__c}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <p><strong>Quantity</strong></p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p>{selectedInventory.Quntity__c}</p>
+                        </div>
+                    </div>
+                    <!-- <p><strong>Quantity:</strong> {selectedInventory.Quntity__c}</p> -->
+                </template>
+                <!-- <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Product</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p>{selectedInventory.Product__r.Name}</p>
+                    </div>
+                </div> -->
+
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Dealer</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p> {selectedInventory.Dealer__r.Name}</p>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Address</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p> {selectedInventory.Address__c.street}, 
+                            {selectedInventory.Address__c.city}, 
+                            {selectedInventory.Address__c.state}, 
+                            {selectedInventory.Address__c.postalCode}, 
+                            {selectedInventory.Address__c.country}</p>
+                    </div>
+                </div>
+                
+            
+            <!-- <template if:true={selectedInventory.Active__c}>
+                    <p><strong>Active:</strong> {selectedInventory.Active__c}</p>
+                </template>
+                <template if:false={selectedInventory.Active__c}>
+                    <p><strong>Active:</strong> </p>
+                </template>-->
+            
+            </template>
+         <!-- <button class="slds-button slds-button_neutral" onclick={goBack}>Back</button> -->
+        </div>
+    </template>
+
+    <template if:true={isInventoryAccSelected}>
+        <!-- Inventory Details Component -->
+        <lightning-button-icon icon-name="utility:back" onclick={goInventoryBack} class="slds-m-right_small"></lightning-button-icon>
+            <div class="tile-visit">
+            <template if:true={selectedInventoryAcc}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Inventory Name</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p>{selectedInventoryAcc.Name}</p>
+                    </div>
+                </div>
+                <!-- <p><strong>Name:</strong> {selectedInventory.Name}</p> -->
+                <!-- <template if:true={selectedInventory.Quntity__c}>-->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_6-of-12">
+                            <p><strong>Quantity</strong></p>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 text-align-right">
+                            <p>{selectedInventoryAcc.Quntity__c}</p>
+                        </div>
+                    </div>
+                    <!-- <p><strong>Quantity:</strong> {selectedInventory.Quntity__c}</p> -->
+                <!-- </template> -->
+        
+                <!-- <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Address</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p> {selectedInventoryAcc.Address__c.street}, 
+                            {selectedInventoryAcc.Address__c.city}, 
+                            {selectedInventoryAcc.Address__c.state}, 
+                            {selectedInventoryAcc.Address__c.postalCode}, 
+                            {selectedInventoryAcc.Address__c.country}</p>
+                    </div>
+                </div> -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Dealer Name</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p> {selectedInventoryAcc.Dealer__r.Name}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

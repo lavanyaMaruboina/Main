@@ -1,0 +1,52 @@
+<template>
+    <lightning-card>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="Land Yield Name" onchange={handleLandYieldNameChange}></lightning-input>
+        </div>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-combobox name="progress" label="Period" placeholder="Choose the Period" options={periodOptions}
+                onchange={handlePeriodChange}></lightning-combobox>
+        </div>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-combobox name="progress" label="Year" placeholder="Choose the Year" options={yearOptions}
+                onchange={handleYearChange}></lightning-combobox>
+        </div>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="Number" label="Quantity" onchange={handleLandYieldQuantityChange}></lightning-input>
+        </div>
+
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="Description"
+                onchange={handleLandYieldDescriptionChange}></lightning-input>
+        </div>
+    
+        <div class="slds-p-around_medium lgc-bg">
+        <template if:false={landId}>
+            <lightning-input type="search" label="Land Name" value={landSearched}
+                onchange={handleLandSearch}></lightning-input>
+            </template>
+            <template if:true={lands.length}>
+                <ul class="slds-p-around_medium lgc-bg">
+                    <template for:each={lands} for:item="land">
+                        <li key={land.Id} class="slds-dropdown__item">
+                            <lightning-button variant="base" label={land.Name} value={land.Id} onclick={selectLand}
+                                data-id={land.Id}></lightning-button>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+
+        <div class="slds-align_absolute-center">
+            <lightning-button label="Cancel" onclick={handleReset} variant="neutral"
+                class="slds-m-left_x-small"></lightning-button>
+            <lightning-button label="Create Visit" onclick={handleCreateLandYield} variant="brand"
+                class="slds-m-left_x-small"></lightning-button>
+        </div>
+
+    </lightning-card>
+</template>

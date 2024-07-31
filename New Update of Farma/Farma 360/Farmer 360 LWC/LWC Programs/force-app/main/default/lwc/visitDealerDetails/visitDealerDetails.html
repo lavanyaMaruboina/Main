@@ -1,0 +1,125 @@
+<template>
+    <div class="container">
+        <div class="heading">
+            <span>Visit Details</span>
+            <span class="text-align">{dealerName}</span>
+        </div>
+
+        <template if:true={visitList}>
+        <div class="slds-align_absolute-center mar-top">
+            <lightning-button label="Create Visit" onclick={handleVisit} class="slds-m-bottom_small" icon-name="utility:add" variant="brand"></lightning-button>
+            <!-- <lightning-button label="Cancel" onclick={handlecancel} class="slds-m-bottom_small"></lightning-button> -->
+        </div>
+
+        <template for:each={visits} for:item="visit">
+            <div key={visit.Id} class="tile-visit" data-id={visit.Id}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Sales Rep</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p>{visit.Name}</p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Visit Date</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p>{visit.FormattedDate}</p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <p><strong>Visit Type</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 text-align-right">
+                        <p>{visit.Type_Of_Visit__c}</p>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <p><strong>Visit Notes</strong></p>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12 text-align-right">
+                        <p>{visit.Visit_Notes__c}</p>
+                    </div>
+                </div>
+
+                </div>
+        </template>
+        </template>
+
+        <template if:true={showVisitForm}>
+            <lightning-record-edit-form object-api-name="Visit__c" onsubmit={handleSave} onsuccess={handleSuccess} onerror={handleError}>
+                <div class="slds-p-around_medium form-container">
+                    <lightning-input-field field-name="Name" value={userName} label="Reps Name" name="Name" onchange={handleInputChange} disabled></lightning-input-field>
+
+                    <!--<lightning-input-address
+                            label="Address"
+                            onchange={handleAddressChanges}
+                            street-label="Street"
+                            city-label="City"
+                            country-label="Country"
+                            province-label="State"
+                            postal-code-label="Pin Code"
+                            street={address.street}
+                            city={address.city}
+                            country={address.country}
+                            province={address.province}
+                            postal-code={address.postalCode}
+                            name={address.street}
+                            >
+                        </lightning-input-address>-->
+
+                    <!-- <lightning-combobox 
+                        name="Type_Of_Visit__c"
+                        label="Visit Type"
+                        value={value}
+                        placeholder="-Select-"
+                        options={visitPicklistValues}
+                        onchange={handleInputChange}>
+                    </lightning-combobox> -->
+
+                    <lightning-input-field field-name="Type_Of_Visit_For_Dealer__c" label="Visit" name="Type_Of_Visit_For_Dealer__c" onchange={handleInputChange}></lightning-input-field> 
+                    <lightning-input-field field-name="Date__c" label="Date" name="Date__c" onchange={handleInputChange}></lightning-input-field>
+                    <!-- <lightning-input-field field-name="Dealer__c" label="Dealer" value={contactId} disabled></lightning-input-field> -->
+                    <lightning-input-field field-name="Visit_Notes__c" label="Visit Notes" name="Visit_Notes__c" onchange={handleInputChange}></lightning-input-field>
+
+                    <!-- Camera functionality -->
+                    
+                        <div class="camera-wrapper">
+                            <template if:true={isCameraInitialized}>
+                                <div class="slds-align_absolute-center">
+                                <lightning-button label="Capture Image" class="slds-m-left_xx-small" onclick={captureImage}></lightning-button>
+                                <lightning-button label="Save Image" class="slds-m-left_xx-small" onclick={sendImageToApex}></lightning-button>
+                                </div>
+                            </template>
+                            <template if:false={isCameraInitialized}>
+                                <div class="slds-align_absolute-center">
+                                <img src={camera} alt="show" class="camera-icon" onclick={initCamera}>
+                            </div>
+                            </template>
+                        </div>
+                        <div class="video-container">
+                            <div class="slds-align_absolute-center ">
+                                 <video class="videoElement" autoplay></video>
+                            </div>
+                            <div class="slds-align_absolute-center ">
+                                 <canvas class="canvasElement" style="display:none;"></canvas>
+                            </div>
+                            <div class="slds-align_absolute-center ">
+                                 <img class="imageElement slds-hide" alt="captured image">
+                            </div>
+                        </div>
+                 
+                           <div> <video class="videoElement" autoplay></video></div>
+                            <div><canvas class="slds-hide canvas"></canvas></div>
+                           <div> <img src="" class="slds-hide imageElement" alt="captured image"/></div>
+                    
+                    </div>
+        
+                <div class="slds-align_absolute-center mar-top">
+                 <lightning-button label="Back" onclick={handleBack} class="slds-m-bottom_small"></lightning-button>
+                 <lightning-button label="Save" type="submit" class="slds-m-bottom_small" ></lightning-button>
+                </div>
+                <!--<lightning-button label="Clear" onclick={clearAll} class="slds-m-bottom_small slds-col"></lightning-button>-->
+            </lightning-record-edit-form>
+        </template>
+        </div>
+
+</template>

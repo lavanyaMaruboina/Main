@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Current Location">
+        <lightning-layout>
+            <lightning-layout-item size="6" medium-device-size="12" padding="around-small">
+                <!-- <lightning-map map-markers={markerVar}></lightning-map> -->
+                <lightning-button label="Get Current Location" onclick={handleGetLocation}></lightning-button>
+                <div class="slds-m-top_medium">
+                    <p>Latitude: {latitude}</p>
+                    <p>Longitude: {longitude}</p>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

@@ -1,0 +1,440 @@
+<template>
+    <div class="container">
+    <!-- Order List Section -->
+        <template if:true={OrderDatatable}>
+            <div class="heading">
+                <span>Prescriptions</span>
+                <span class="text-align">{contactName}</span>
+            </div>
+                <div class="slds-align_absolute-center">
+                    <lightning-button label="Create Prescription" onclick={handleCreateOrder} variant="brand" icon-name="utility:add" class="slds-m-bottom_small"></lightning-button>
+            </div>
+                    <div class="desktop-view">
+                    <div class="slds-scrollable_x">
+                            <lightning-datatable
+                                key-field="Id"
+                                data={orderDetails}
+                                columns={columns}
+                                onrowselection={handleOrderRowSelection}
+                                oncellchange={handleCellChange}
+                                draft-values={draftValues}>
+                            </lightning-datatable>
+                        </div>
+                    </div>
+
+        </template>
+    <div class="mobile-view">
+        <div class="slds-scrollable_y scroll-container">
+            <template if:true={OrderDatatable}>
+                <template for:each={orderDetails} for:item="order" for:index="index" onlick={handleCardClick}>
+                    <div key={order.Id} class="tile-order" data-id={order.Id}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Prescription Number</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.OrderNumber}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Prescription Date</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.effectiveDateFormatted}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Number Of Products</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.Total_Products__c}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Comments</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.Comments_on_prescription__c}</p>
+                            </div>
+                            <!-- <div class="slds-col slds-size_6-of-12">
+                                <p><strong>End Date</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.EndDate}</p>
+                            </div> -->
+                            <!-- <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Status</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{order.Status}</p>
+                            </div> -->
+                        </div>
+
+                        <div class="slds-grid slds-wrap small-button">
+                            <div class="slds-col slds-size_6-of-12 harvest-text">
+                                <lightning-button label="View Products" data-id={order.Id} onclick={handleViewProducts} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                            <template if:true={order.canAddProducts}>
+                                <div class="slds-col slds-size_6-of-12 edit-text">
+                                    <lightning-button label="Add Products" data-id={order.Id} onclick={handleAddProducts} class="slds-m-left_x-small"></lightning-button>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
+
+    <!-- Order Detail Section -->
+    <template if:true={OrderDetailsForm}>
+        <div class="heading">
+            <span>Create Prescription</span>
+            <span class="text-align">{contactName}</span>
+        </div>
+        <!-- <div class="heading">Create Prescription</div> -->
+        <div class="record-container"> 
+            <div class="slds-m-around_medium">
+                <lightning-button onclick={handleBack} variant="icon" icon-name="action:back"></lightning-button>
+                <lightning-input label="Order Number" value={OrderNumber} onchange={handleFieldChange} data-field="OrderNumber"></lightning-input>
+                <lightning-input label="Status" value={selectedRows.Status} onchange={handleFieldChange} data-field="Status"></lightning-input>
+                <lightning-input label="Start Date" value={EffectiveDate} onchange={handleFieldChange} data-field="EffectiveDate"></lightning-input>
+                <lightning-input label="End Date" value={EndDate} onchange={handleFieldChange} data-field="EndDate"></lightning-input>
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning-button label="Add Products" onclick={handleAddProducts}  class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+
+    </template>
+
+    <!-- Order Form Section -->
+    <template if:true={orderForm}>
+
+        <div class="heading">
+            <span>New Prescription</span>
+            <span class="text-align">{contactName}</span>
+        </div>
+        <lightning-button class="slds-button" icon-name="utility:back" variant = "neutral" onclick={backToOrderDataTable}></lightning-button>
+            <!-- <div class="heading">Create New Prescription</div> -->
+            <!-- <div class="slds-align_absolute-center"> -->
+                <!-- <lightning-button label="Cancel" onclick={handleBack} variant = "neutral" class="slds-m-left_x-small"></lightning-button> -->
+                <!-- <lightning-button label="Save" onclick={handleSave} variant="brand" class="slds-m-left_x-small"></lightning-button> -->
+            <!-- </div> -->
+
+        <div class="slds-scrollable_x">
+            <div class="record-container-product"> 
+            <div class="slds-p-around_medium">
+                <lightning-input type="search" label="Dealer Name" value={accountName} onchange={handleAccountSearch} required></lightning-input>
+                <template if:true={accounts.length}>
+                    <ul class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid lookup-popup">
+                        <template for:each={accounts} for:item="account">
+                            <li key={account.Id} class="slds-dropdown__item">
+                                <lightning-button variant="base" label={account.Name} onclick={selectAccount} data-id={account.Id}></lightning-button>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                <!-- <lightning-input label="Farmer Name" value={contactName} onchange={handleContactChange} disabled></lightning-input> -->
+                <!-- <lightning-combobox
+                    name="status"
+                    label="Status"
+                    value={selectedStatus}
+                    placeholder="Select Status"
+                    options={statusOptions}
+                    onchange={handleStatusChange}>
+                </lightning-combobox> -->
+                <!-- <lightning-input label="Status" class="slds-col" value={selectedStatus} type="text" onchange={handleStatusChange} readonly></lightning-input> -->
+                <lightning-input label="Prescription Date" class="slds-col" value={orderStart} type="date" onchange={handleOrderStartChange} required></lightning-input>
+                <lightning-input label="Comments" class="slds-col" value={Comments}  onchange={handleCommentChange} ></lightning-input>
+                <!-- <lightning-input label="End Date" class="slds-col" value={endDate} type="date" onchange={handleEndDateChange} required></lightning-input>
+                <lightning-layout>
+                    <lightning-layout-item size="12" medium-device-size="12" padding="around-medium">
+                        <lightning-input-address address-label="Shipping Address" street-label="Street" city-label="City"
+                            country-label="Country" province-label="State/Province" postal-code-label="Zip/Postal Code"
+                            onchange={addressChange} class="validate" show-address-lookup>
+                        </lightning-input-address>
+                    </lightning-layout-item>
+                </lightning-layout> -->
+             
+
+                <div class="product-list">
+                    <!-- <div class="button-container">
+                        <lightning-button class="slds-button" label="Back" variant = "neutral" onclick={backToOrderDataTable}></lightning-button>
+                        <lightning-button class="slds-button" label="Save" variant="brand" onclick={saveLineItems}></lightning-button>
+                    </div> -->
+                    <div class="search-input">
+                        <lightning-input name="enter-search" type="search" onchange={getSearchdata}></lightning-input>
+                    </div>
+                    <div class="slds-scrollable_y" style="height:22rem; width:100%" tabindex="0">
+                    <template for:each={dataTableColumns} for:item="product">
+                        <div key={product.Id} class="product-item" data-id={product.Id}>  
+                            <!-- <div class="slds-col slds-size_12-of-12">
+                                <div class="product-info">{product.Name}</div>
+                            </div>  -->
+                            
+                            <div class="slds-col slds-size_12-of-12 pad-around">
+                                <div class="slds-grid slds-wrap margin-top">
+                                    <div class="slds-col slds-size_7-of-12">
+                                        <div class="product-info">{product.Name}</div>
+                                    </div>
+                                
+                                    <div class="slds-col slds-size_5-of-12">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_3-of-12 text-align button-plus">
+                                                <lightning-button-icon icon-name="utility:add" alternative-text="Increment" data-id={product.Id} onclick={incrementCount}></lightning-button-icon>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12">
+                                                <lightning-input type="number" value={product.count} data-id={product.Id} onchange={handleCountChange}></lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-12 button-minus">
+                                                <lightning-button-icon icon-name="utility:dash" alternative-text="Decrement" data-id={product.Id} onclick={decrementCount}></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            <!-- <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_3-of-12">
+                                    <div class="product-heading">Name</div>
+                                </div>
+                                <div class="slds-col slds-size_9-of-12 text-align">
+                                    <div class="product-info">{product.Name}</div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="slds-grid slds-wrap margin-top">
+                                <div class="slds-col slds-size_7-of-12">
+                                    <div class="product-heading">Quantity</div>
+                                </div>
+                            
+                                <div class="slds-col slds-size_5-of-12">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_3-of-12 text-align button-plus">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Increment" data-id={product.Id} onclick={incrementCount}></lightning-button-icon>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input type="number" value={product.count} data-id={product.Id} onchange={handleCountChange}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 button-minus">
+                                            <lightning-button-icon icon-name="utility:dash" alternative-text="Decrement" data-id={product.Id} onclick={decrementCount}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                 <!-- <div class="slds-col slds-size_6-of-12">
+                                        <p><strong>Product Code</strong></p>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 text-align">
+                                        <p>{product.ProductCode}</p>
+                                    </div> -->
+                               
+                                <!-- <div class="slds-col slds-size_6-of-12">
+                                    <p><strong>Family</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 text-align">
+                                    <p>{product.Family}</p>
+                                </div> -->
+                                <!-- <div class="slds-col slds-size_6-of-12">
+                                    <p><strong>Unit Price</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 text-align">
+                                    <p>{product.UnitPrice}</p>
+                                </div> -->
+                                <!-- <div class="slds-col slds-size_12-of-12">
+                                    <p><strong>Description</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_12-of-12">
+                                    <p>{product.Description}</p>
+                                </div> -->                               
+                           
+                            <!-- <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_3-of-12">
+                                    <div class="product-heading">Name</div>
+                                </div>
+                                <div class="slds-col slds-size_9-of-12 text-align">
+                                    <div class="product-info">{product.Name}</div>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-wrap margin-top">
+                                <div class="slds-col slds-size_7-of-12">
+                                    <div class="product-heading">Quantity</div>
+                                </div>
+                            
+                                <div class="slds-col slds-size_5-of-12">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_3-of-12 text-align button-plus">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Increment" data-id={product.Id} onclick={incrementCount}></lightning-button-icon>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input type="number" value={product.count} data-id={product.Id} onchange={handleCountChange}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 button-minus">
+                                            <lightning-button-icon icon-name="utility:dash" alternative-text="Decrement" data-id={product.Id} onclick={decrementCount}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                 <!-- <div class="slds-col slds-size_6-of-12">
+                                        <p><strong>Product Code</strong></p>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 text-align">
+                                        <p>{product.ProductCode}</p>
+                                    </div> -->
+                               
+                                <!-- <div class="slds-col slds-size_6-of-12">
+                                    <p><strong>Family</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 text-align">
+                                    <p>{product.Family}</p>
+                                </div> -->
+                                <!-- <div class="slds-col slds-size_6-of-12">
+                                    <p><strong>Unit Price</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 text-align">
+                                    <p>{product.UnitPrice}</p>
+                                </div> -->
+                                <!-- <div class="slds-col slds-size_12-of-12">
+                                    <p><strong>Description</strong></p>
+                                </div>
+                                <div class="slds-col slds-size_12-of-12">
+                                    <p>{product.Description}</p>
+                                </div> -->
+                               
+                            </div>
+                           
+                                    <!-- <lightning-input type="checkbox" data-id={product.Id} onchange={handleCheckboxChange}></lightning-input> -->    
+                            </div>
+                    </template>
+                    </div>
+                </div>
+
+                 <div class="slds-align_absolute-center">
+                    <!-- <lightning-button label="Cancel" onclick={handleBack} variant = "neutral" class="slds-m-left_x-small"></lightning-button> -->
+                    <lightning-button label="Save" onclick={handleSave} variant="brand" class="slds-m-left_x-small"></lightning-button>                  
+                </div> 
+
+                </div>
+                </div>
+            </div>
+            
+    </template>
+
+    <!--Show Existing Products-->
+    <template if:true={showPrescriptionData}>
+        <template if:true={PrescriptionItem}>
+            <div class="heading">
+                <span>{prescriptionNumber}</span>
+                <span class="text-align">{contactName}</span>
+              </div>
+
+            <lightning-button icon-name="utility:back" onclick={handleBacktoPrescription}  class="slds-m-right_small"></lightning-button>
+                <template for:each={PrescriptionItem} for:item="orderItem">
+                    <div key={orderItem.Id} class="tile-order" data-id={orderItem.Id}>
+                        
+
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Product Name</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{orderItem.Product2.Name}</p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <p><strong>Quantity</strong></p>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 text-align">
+                                <p>{orderItem.Quantity}</p>
+                            </div>
+                        </div>
+                        </div>
+                        
+                </template>
+        </template>
+        </template>
+
+        <!-- Add Products Section -->
+
+     <template if:true={showProductData}>
+        <div class="heading">
+            <span>{addOrderNumber}</span>
+            <span class="text-align">{contactName}</span>
+        </div>
+        <lightning-button class="slds-button" icon-name="utility:back" variant = "neutral" onclick={backToOrderDataTable}></lightning-button>
+        <div class="product-list">
+           
+            <div class="search-input">
+                <lightning-input name="enter-search" type="search" onchange={getSearchdataInProduct}></lightning-input>
+            </div>
+            <div class="slds-scrollable_y" style="height:27rem; width:100%" tabindex="0">
+                <template for:each={dataTableColumns} for:item="product">
+                    <div key={product.Id} class="product-item" data-id={product.Id}>   
+
+                            <div class="slds-grid slds-wrap margin-top">
+                                <div class="slds-col slds-size_7-of-12">
+                                    <div class="product-info">{product.Name}</div>
+                                </div>
+                            
+                                <div class="slds-col slds-size_5-of-12">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_3-of-12 text-align button-plus">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Increment" data-id={product.Id} onclick={incrementCount}></lightning-button-icon>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12">
+                                            <lightning-input type="number" value={product.count} data-id={product.Id} onchange={handleCountChange}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12 button-minus">
+                                            <lightning-button-icon icon-name="utility:dash" alternative-text="Decrement" data-id={product.Id} onclick={decrementCount}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                             
+                                                                                
+                        
+                        </div>
+                </template>
+            </div>
+            <div class="button-container">
+                <lightning-button class="slds-button" label="Save" variant="brand" onclick={saveLineItems}></lightning-button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Edit Products Section -->
+    <template if:true={showEditView}>
+        <div class="order-product-table">
+            <lightning-datatable
+                    class="slds-max-medium-table_stacked-horizontal slds-table_striped slds-table_header-hidden"
+                    key-field="Id"
+                    data={productLineItems}
+                    columns={editProductColumns}
+                    draft-values={draftValues}
+                    hide-checkbox-column="true"
+                    onrowselection={handleRowEditSelection}
+                    oncellchange={handleCellChange}
+                    onsave={saveLineItems}>
+                </lightning-datatable>
+            </div>
+    </template>
+
+    <!-- Opportunity Line Items Section -->
+    <template if:true={showOpportunityLineItems}>
+        <lightning-card title="Opportunity Line Items">
+            <div class="slds-m-around_medium">
+                <lightning-datatable
+                    key-field="Id"
+                    data={opportunityLineItems}
+                    columns={opportunityLineItemColumns}>
+                </lightning-datatable>
+            </div>
+        </lightning-card>
+    </template>
+
+    <!-- Saved Items Section -->
+    <template if:true={showSavedItems}>
+        <lightning-card title="Saved Line Items">
+            <div class="slds-m-around_medium">
+                <lightning-datatable
+                    key-field="Id"
+                    data={savedLineItems}
+                    columns={savedColumns}>
+                </lightning-datatable>
+            </div>
+        </lightning-card>
+    </template>
+    </div>
+
+</template>

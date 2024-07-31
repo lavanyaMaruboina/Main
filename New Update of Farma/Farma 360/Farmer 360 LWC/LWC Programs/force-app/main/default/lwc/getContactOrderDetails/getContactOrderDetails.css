@@ -1,0 +1,105 @@
+.order-product-table table{
+	border:2px solid green;
+	padding:20px;
+
+}
+
+@media only screen and (min-width: 601px) {
+    .mobile-view {
+        display:none;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .harvest-text{
+        font-size: 14px ;
+        font-weight: 600;
+        text-align: left;
+        color:green;
+    }
+    .edit-text{
+        font-size: 14px ;
+        font-weight: 600;
+        text-align: right;
+        color:green;
+        cursor: pointer;
+    }
+    .desktop-view {
+        display:none;
+    }
+    .container{
+        margin-bottom:22%;
+    }
+	.order-class{
+
+	}
+	.tile-order{
+		font-size: 12px;
+		padding: 8px 15px;
+		margin: 3px 0px;
+		border-radius: 5px;
+		background: linear-gradient(356.31deg, #e1e3f4 17.37%, #ffffff 70.19%);
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);  
+	}
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        background-color: #6da93b;
+        font-weight: bold;
+        padding: 8px;
+        border-radius: 3px;
+        color: white;
+        padding: 10px;
+    }
+    .text-align{
+        text-align: right;
+    }
+    .text-align {
+        margin-left: auto;
+    }
+    .scroll-container {
+        overflow-y: auto;
+
+    }
+    .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* Adjust the gap as needed */
+    }
+    .product-item[c-getContactOrderDetails_getContactOrderDetails] {
+        background: linear-gradient(356.31deg, #e1e3f4 17.37%, #ffffff 70.19%);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        padding: 0px 5px 0px 5px;
+        margin: 4px;
+        border-radius: 4px;
+    }
+    .product-heading{
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .product-info{
+        margin-top: 10px;
+        font-size: 10px;
+    }
+    .margin-top{
+        margin-top: 8px;
+    }
+    .pad-around{
+        padding: 5px;
+    }
+    .container-heading{
+        display: flex;
+        align-items: center;
+    }
+    
+    .order-icon {
+        width: 24px; /* Adjust the size as needed */
+        height: 24px; /* Adjust the size as needed */
+        margin-right: 10px; /* Space between the image and text */
+    }
+	
+}

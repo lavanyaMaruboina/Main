@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Create New Sample Record" icon-name="custom:custom63">
+        <lightning-record-edit-form object-api-name="Sample__c" onsuccess={handleSuccess}>
+            <div class="slds-m-around_medium">
+                <lightning-input-field field-name="Name"></lightning-input-field>
+                <lightning-input-field field-name="Acres_Area__c"></lightning-input-field>
+                <lightning-input-field field-name="Crop_Grown__c"></lightning-input-field>
+                <lightning-input-field field-name="Equipment_Owned__c"></lightning-input-field>
+                <lightning-input-field field-name="Years_of_Experience__c"></lightning-input-field>
+                <lightning-input-field field-name="water_source__c"></lightning-input-field>
+                <lightning-input-field field-name="Local_Market_Access__c"></lightning-input-field>
+                <lightning-input-field field-name="Storage_Facilities__c"></lightning-input-field>
+                <lightning-input-field field-name="Irrigation_Methods__c"></lightning-input-field>
+                <lightning-input-field field-name="Labor_Force__c"></lightning-input-field>
+                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="save" label="Save">
+                </lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>
