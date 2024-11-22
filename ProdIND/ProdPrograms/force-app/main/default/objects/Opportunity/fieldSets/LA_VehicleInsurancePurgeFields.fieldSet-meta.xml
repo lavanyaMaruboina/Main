@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LA_VehicleInsurancePurgeFields</fullName>
+    <description>When Recall Button pressed  on LA, Stage name and Screen is loan Detail.</description>
+    <label>LA_LoanDetailsPurgeFields</label>
+</FieldSet>

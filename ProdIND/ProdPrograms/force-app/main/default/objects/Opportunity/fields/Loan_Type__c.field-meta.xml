@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_Type__c</fullName>
+    <label>Loan Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0006</fullName>
+                <default>false</default>
+                <label>Loan Against Cards  Deposits  Receipts  Receivables</label>
+            </value>
+            <value>
+                <fullName>0100</fullName>
+                <default>false</default>
+                <label>Cash Credit</label>
+            </value>
+            <value>
+                <fullName>0200</fullName>
+                <default>false</default>
+                <label>Overdraft</label>
+            </value>
+            <value>
+                <fullName>0500</fullName>
+                <default>false</default>
+                <label>Packing Credit</label>
+            </value>
+            <value>
+                <fullName>0630</fullName>
+                <default>false</default>
+                <label>Export Bills - Discounted  Purchased  Advanced Against</label>
+            </value>
+            <value>
+                <fullName>0640</fullName>
+                <default>false</default>
+                <label>Term Loans</label>
+            </value>
+            <value>
+                <fullName>0710</fullName>
+                <default>false</default>
+                <label>Inland Bills - Discounted  Purchased</label>
+            </value>
+            <value>
+                <fullName>0800</fullName>
+                <default>false</default>
+                <label>Advances Against Export Cash Incentives  Import Bills</label>
+            </value>
+            <value>
+                <fullName>0801</fullName>
+                <default>false</default>
+                <label>Working Capital Loans</label>
+            </value>
+            <value>
+                <fullName>0900</fullName>
+                <default>false</default>
+                <label>Foreign Currency Cheques  Dds  Tcs</label>
+            </value>
+            <value>
+                <fullName>1100</fullName>
+                <default>false</default>
+                <label>Hire Purchase  Lease</label>
+            </value>
+            <value>
+                <fullName>2000</fullName>
+                <default>false</default>
+                <label>Bank Guarantee</label>
+            </value>
+            <value>
+                <fullName>3000</fullName>
+                <default>false</default>
+                <label>Letters Of Credit</label>
+            </value>
+            <value>
+                <fullName>4000</fullName>
+                <default>false</default>
+                <label>Commercial Vehicle Loan</label>
+            </value>
+            <value>
+                <fullName>9999</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>cards/Deposites/receipts/receivables</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>cards/Deposites/receipts/receivables</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

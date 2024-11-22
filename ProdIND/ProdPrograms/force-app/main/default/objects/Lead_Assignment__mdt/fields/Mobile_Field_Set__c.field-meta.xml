@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile_Field_Set__c</fullName>
+    <description>This field is used to store the fields name that should be visible for mobile devices.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Please store values in this format:
+ObjectName~Field1;Field2....</inlineHelpText>
+    <label>Mobile Field Set</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

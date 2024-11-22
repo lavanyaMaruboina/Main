@@ -1,0 +1,368 @@
+<template>
+
+   <lightning-card>       
+    <div class="slds-grid slds-wrap slds-p-around--medium slds-p-around_x-small" style="background:rgb(238, 238, 238); border:1px rgb(221, 221, 221) solid;">
+
+        <div class="slds-col slds-size_1-of-1 slds-size_12-of-12 slds-p-horizontal_medium">
+            <lightning-button variant="brand" label="Report an Incident" title="Report an Incident" onclick={handleReportanIncidentClick} class="slds-float_right slds-m-left_medium slds-m-right_medium"></lightning-button>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium"> 
+            <lightning-combobox
+                data-field-name="Product_Type__c"
+                label="Product"
+                value={productValue}
+                options={productOptions}
+                onchange={handleProductOptions}>
+            </lightning-combobox>
+        </div>
+    
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+            <lightning-combobox
+                field-name="Category__c"
+                label="Category"
+                value={categoryValue}
+                options={categoryOptions}
+                onchange={handleCategoryOptions} >
+            </lightning-combobox>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+            <lightning-combobox
+                label="State"
+                value={stateValue}
+                options={stateOptions}
+                onchange={handleStateOptions} >
+            </lightning-combobox>
+        </div>
+            <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+                <lightning-combobox
+                    label="BL Code"
+                    value={BLCodeValue}
+                    options={BLCodeOptions}
+                    onchange={handleBLCodeOptions} >
+                </lightning-combobox>
+            </div>
+ 
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+            <lightning-combobox
+                field-name="Committee__c"
+                label="Committee"
+                value={committeeValue}
+                options={committeeOptions}
+                onchange={handleCommitteeOptions} >
+            </lightning-combobox>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+            <lightning-combobox
+                label="Days Pending"
+                value={daysPending}
+                options={daysPendingOptions}
+                onchange={handleDaysPendingOptions} >
+            </lightning-combobox>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+            <lightning-input
+                field-name="Name"
+                label="Lead No"
+                value={leadNo}
+                onchange={handleLeadNoOptions} ><!--CISP-7949-->
+            </lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+            <lightning-combobox
+                field-name="TeamMemberRole"
+                label="Approved By"
+                value={approvedBy}
+                options={approvedByOptionsToShow}
+                onchange={handleApprovedByOptions} >
+            </lightning-combobox>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium"><!--Start CISP-2864-->
+            <lightning-combobox
+                field-name="Pending With"
+                label="Pending With"
+                value={pendingWithValue}
+                options={pendingWithOptions}
+                onchange={handlePendingWithOptions} >
+            </lightning-combobox>
+        </div><!--End CISP-2864-->
+    </div>
+
+
+<lightning-layout> 
+    <div class="slds-var-m-top_medium" style="text-align: center;">
+        <lightning-button variant="brand" label="Search" title="Search" onclick={searchClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="brand" label="Refresh" title="Refresh" onclick={handleRefreshClick} class="slds-m-left_x-small"></lightning-button>
+    </div> 
+</lightning-layout>
+</lightning-card>
+
+<div class="slds-section slds-is-open">
+    <h3 class="slds-section__title">
+      <button data-position="1" class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn" aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+          <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+        </svg>
+        <span class="slds-truncate" title="Section Title">Proposal Pending for Approval</span>
+      </button>
+    </h3>
+    <div class="slds-modal__content slds-p-around_medium slds-scrollable_x " style="overflow-y: auto; border:2px" id="modal-content-id-1">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_row-bordered" >
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">App No</div>     
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Lead No</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Direct/Forwarded</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Applicant Name</div>
+                    </th>
+                    <th class="slds-truncate" scope="col">
+                        <div class="labelClass slds-cell-wrap">Status</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Branch Name</div>
+                    </th>
+                    <th class="" scope="col" if:true={isTwoWheeler}>
+                        <div class="labelClass slds-cell-wrap">Segment</div>
+                    </th>
+                    
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Executive Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Exposure</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Committee</div>
+                    </th>
+                    
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">CAM Intimation Date</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">CAM Intimation Time</div><!--CISP-7949-->
+                    </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">{approvedBy} Approval</div>
+                        </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">No. of Days Pending</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Hold By Others</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Variant</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={proposalList} for:item='item'>
+                    <tr class="slds-hint-parent" key={item} style={item.rowStyle}><!--CISP-2863-->
+                        <td data-label="App No">
+                            <div class="slds-ztruncate centerClass" >{item.Loan_Application__r.Application_number__c}</div>
+                        </td>
+                        <td data-label="Lead Id">
+                            <div class="slds-ztruncate centerClass" ><a href={item.URL} target="_blank">{item.Loan_Application__r.Name}</a></div><!--CISP-7949-->
+                        </td>
+                        <td data-label="Direct/Forwarded">
+                            <div class="slds-ztruncate centerClass" >{item.CAMPosition}</div>
+                        </td>
+                        <td data-label="Applicant Name">
+                            <div class="slds-ztruncate centerClass" >{item.Loan_Application__r.Applicant_Name__c}</div>
+                        </td> 
+                        <td data-status="Status">
+                            <c-approval-status approvalstatus={item.Status} no-of-days-pending={item.daysPending}></c-approval-status>
+                        </td>
+                        <td data-label="Branch Name">
+                            <div class="slds-ztruncate centerClass" >{item.branchName}</div>
+                        </td> 
+                        <td data-label="Segment" if:true={isTwoWheeler}>
+                            <div class="slds-ztruncate centerClass" >{item.segment}</div>
+                        </td>
+                        <td data-label="Executive Name">
+                            <div class="slds-ztruncate centerClass" >{item.Loan_Application__r.Owner.Name}</div>
+                        </td> 
+                        <td data-label="Exposure" >
+                            <div class="slds-ztruncate centerClass"  >{item.TotalExposure}</div>
+                        </td> 
+                        <td data-label="Committee" >
+                            <div class="slds-ztruncate centerClass" >{item.Committee__c}</div>
+                        </td>
+                       
+                       <td data-label="CAM intimation DateTime">
+                        <div class="slds-ztruncate centerClass" >
+                            <lightning-formatted-date-time value={item.Deviation_Created_Date__c} year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time></div>
+                            <!-- <div class="slds-ztruncate centerClass" >
+                                <lightning-formatted-date-time value={item.Deviation_Created_Date__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+								minute="2-digit" time-zone-name="short" hour12="false"></lightning-formatted-date-time></div> -->
+                        </td> 
+                        <td data-label="CAM intimation DateTime">
+                            <div class="slds-ztruncate centerClass" >
+                                <lightning-formatted-time  value={item.Deviation_Created_Time__c} hour="2-digit" minute="2-digit"></lightning-formatted-time></div><!--CISP-7949-->
+                            </td> 
+                        <td data-label="SCM Approval">
+                            <div class="slds-ztruncate centerClass" >{item.approvalDone}</div>
+                        </td> 
+                        <td data-label="No. of Days Pending">
+                           <div class="slds-ztruncate centerClass" >{item.daysPending}</div>
+                        </td> 
+                        <td data-label="Hold By Others">
+                            <div class="slds-ztruncate centerClass" >{item.isHoldByOthers}</div>
+                        </td> 
+                        <td data-label="Variant">
+                            <div class="slds-ztruncate centerClass" >{item.variant} </div>
+                        </td> 
+                    </tr>
+                </template>
+
+            </tbody>
+        </table>  
+    </div>
+</div>
+<!-- SFTRAC-2023 Start -->
+<template if:true={forwardProposalVisible}>
+    <div class="slds-section slds-is-open">
+        <h3 class="slds-section__title">
+        <button data-position="1" class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn" aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+            <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+            </svg>
+            <span class="slds-truncate" title="Section Title">Proposal Forwarded to You</span>
+        </button>
+        </h3>
+        <div class="slds-modal__content slds-p-around_medium slds-scrollable_x " style="overflow-y: auto; border:2px" id="modal-content-id-2">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_row-bordered" >
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">App No</div>     
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Lead No</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Direct/Forwarded</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Applicant Name</div>
+                        </th>
+                        <th class="slds-truncate" scope="col">
+                            <div class="labelClass slds-cell-wrap">Status</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Branch Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Executive Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Exposure</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Committee</div>
+                        </th>
+                        
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">CAM Intimation Date</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">CAM Intimation Time</div><!--CISP-7949-->
+                        </th>
+                            <th class="" scope="col">
+                                <div class="labelClass slds-cell-wrap">{approvedBy} Approval</div>
+                            </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">No. of Days Pending</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Hold By Others</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Variant</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={forwardedProposalLst} for:item='item'>
+                        <tr class="slds-hint-parent" key={item} style={item.rowStyle}>
+                            <td data-label="App No">
+                                <div class="slds-ztruncate centerClass" >{item.appNo}</div>
+                            </td>
+                            <td data-label="Lead Id">
+                                <div class="slds-ztruncate centerClass" ><a href={item.url} target="_blank">{item.leadNo}</a></div>
+                            </td>
+                            <td data-label="Direct/Forwarded">
+                                <div class="slds-ztruncate centerClass" >{item.directForwarded}</div>
+                            </td>
+                            <td data-label="Applicant Name">
+                                <div class="slds-ztruncate centerClass" >{item.applicantName}</div>
+                            </td> 
+                            <td data-status="Status">
+                                <c-approval-status approvalstatus={item.Status} no-of-days-pending={item.daysPending}></c-approval-status>
+                            </td>
+                            <td data-label="Branch Name">
+                                <div class="slds-ztruncate centerClass" >{item.branchName}</div>
+                            </td> 
+                            <td data-label="Executive Name">
+                                <div class="slds-ztruncate centerClass" >{item.executiveName}</div>
+                            </td> 
+                            <td data-label="Exposure" >
+                                <div class="slds-ztruncate centerClass"  >{item.exposure}</div>
+                            </td> 
+                            <td data-label="Committee" >
+                                <div class="slds-ztruncate centerClass" >{item.committee}</div>
+                            </td>
+                        
+                        <td data-label="CAM intimation DateTime">
+                            <div class="slds-ztruncate centerClass" >
+                                <lightning-formatted-date-time value={item.camIntimationDate} year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time></div>
+                            </td> 
+                            <td data-label="CAM intimation DateTime">
+                                <div class="slds-ztruncate centerClass" >
+                                    <lightning-formatted-time  value={item.camIntimationTime} hour="2-digit" minute="2-digit"></lightning-formatted-time></div>
+                                </td> 
+                            <td data-label="SCM Approval">
+                                <div class="slds-ztruncate centerClass" >{item.approvedByApproval}</div>
+                            </td> 
+                            <td data-label="No. of Days Pending">
+                            <div class="slds-ztruncate centerClass" >{item.noOfDaysPending}</div>
+                            </td> 
+                            <td data-label="Hold By Others">
+                                <div class="slds-ztruncate centerClass" >{item.holdByOthers}</div>
+                            </td> 
+                            <td data-label="Variant">
+                                <div class="slds-ztruncate centerClass" >{item.variant} </div>
+                            </td> 
+                        </tr>
+                    </template>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+</template>
+<!-- SFTRAC-2023 End -->
+<c-i-n-d-_-l-w-c-_-proposal-on-hold-by-you approved-by={approvedBy}></c-i-n-d-_-l-w-c-_-proposal-on-hold-by-you>
+<c-i-n-d-_-l-w-c-_-proposal-forward-by-you approved-by={approvedBy}></c-i-n-d-_-l-w-c-_-proposal-forward-by-you>
+<c-i-n-d-_-l-w-c-_-proposal-not-approved approved-by={approvedBy}></c-i-n-d-_-l-w-c-_-proposal-not-approved>
+
+<div class="slds-section slds-is-open">
+    <h3 class="slds-section__title">
+      <button data-position="1" class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn" aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+          <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+        </svg>
+        <span class="slds-truncate" title="Section Title">AML Approvals</span>
+      </button>
+    </h3>
+    
+    <c-i-n-d-_-l-w-c-_-aml-approvals></c-i-n-d-_-l-w-c-_-aml-approvals>
+
+    </div>
+</template>

@@ -1,0 +1,409 @@
+<template>
+    <lightning-layout class="slds-box slds-size_12-of-12 slds-text-color_default" multiple-rows="true">
+        <template if:true={isLoading}>
+            <div>
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:false={disabledACHsubmit}>
+            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+                <lightning-button label="Upload ACH Mandate" disabled={isPostReadOnly} variant="brand" onclick={handleUploadACHMandate}>
+                </lightning-button>
+            </div>
+        </template>
+        <template if:false={isPreDisbursementSubmitDisabled}>
+            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+                <lightning-button label="View ACH Mandate" variant="brand" data-name="ACHMandate"  onclick={handleViewDocHandler}>
+                </lightning-button>
+            </div>
+        </template>
+        <template if:false={isLegibilityAndRemarksDisabled}>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Is ACH Mandate Legible?</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="preDisburseField" disabled={isReadOnly} name="isAchMandateLegibleField" data-id="isAchMandateLegibleId"
+                            variant="label-hidden" options={yesNoOption} value={isAchMandateLegibleField} required
+                            onchange={handleInputFieldChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">ACH Mandate Remarks</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="preDisburseField slds-form-element__control" disabled={isReadOnly} name="achMandateRemarks" value={achMandateRemarks}
+                        label="Remarks" variant="label-hidden" type="text" data-id="remarksId" onchange={handleRemarksChange}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        </template>
+
+        <template if:false={disabledACHsubmit}>
+            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+                <lightning-button label="Upload Cancelled Cheque" disabled={isPostReadOnly} variant="brand" onclick={handleUploadCancelledCheque}>
+                </lightning-button>
+            </div>
+        </template>
+        <template if:false={isPreDisbursementSubmitDisabled}>
+            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+                <lightning-button label="View Cancelled Cheque" data-name="CancelledCheque" variant="brand" onclick={handleViewDocHandler}>
+                </lightning-button>
+            </div>
+        </template>
+        <template if:false={isLegibilityAndRemarksDisabled}>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Is Cancelled Cheque Legible</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="preDisburseField" disabled={isReadOnly} name="isCancelledChequeLegibleField" data-id="isCancelledChequeLegibleId"
+                        variant="label-hidden" options={yesNoOption} value={isCancelledChequeLegibleField} required
+                        onchange={handleInputFieldChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Cancelled Cheque Remarks</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="preDisburseField slds-form-element__control" disabled={isReadOnly} name="cancelledChequeremarksField" value={cancelledChequeremarksField}
+                        label="Remarks" variant="label-hidden" type="text" data-id="remarksId" onchange={handleRemarksChange}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </template>
+        <lightning-accordion class="slds-size_12-of-12">
+            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="ACH Checklist">
+                <div class="slds-form slds-grid slds-wrap slds-text-color_default">
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">SB (Or) CA is ticked appropriately</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="sbOrCaTickedField" data-id="sbOrCaTickedId"
+                                    variant="label-hidden" options={yesNoOption} value={sbOrCaTickedField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Bank Account No is correct and complete</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="bankAccNoIsCorrectField" data-id="bankAccNoIsCorrectId"
+                                    variant="label-hidden" options={yesNoOption} value={bankAccNoIsCorrectField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Leftside "Create/Modify" ticked</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="leftCreateModifyTickedField"
+                                    data-id="leftCreateModifyTickedId" variant="label-hidden" options={yesNoOption}
+                                    value={leftCreateModifyTickedField} required onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct bank name is filled</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctBankNameField" data-id="correctBankNameId"
+                                    variant="label-hidden" options={yesNoOption} value={correctBankNameField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct IFSC code is filled</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctIFSCCodeField" data-id="correctIFSCCodeId"
+                                    variant="label-hidden" options={yesNoOption} value={correctIFSCCodeField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct MICR code is filled</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctMICRField" data-id="correctMICRId"
+                                    variant="label-hidden" options={yesNoOption} value={correctMICRField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">EMI Amt * 1.5 times Is filled correctly in words
+                                    and figures</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="emiAmntCorrectField" data-id="emiAmntCorrectId"
+                                    variant="label-hidden" options={yesNoOption} value={emiAmntCorrectField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct EMI frequency is ticked</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctEMIFrequencyField" data-id="correctEMIFrequencyId"
+                                    variant="label-hidden" options={yesNoOption} value={correctEMIFrequencyField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Debit option type to be ticked as "Maximum
+                                    Amount"</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="debitOptnTypeMaxAmntField" data-id="debitOptnTypeMaxAmntId"
+                                    variant="label-hidden" options={yesNoOption} value={debitOptnTypeMaxAmntField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">CFD 9 digit loan no is filled correctly in
+                                    Reference I</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="cfdFilledCorrectField" data-id="cfdFilledCorrectId"
+                                    variant="label-hidden" options={yesNoOption} value={cfdFilledCorrectField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Customer code in Reference II</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="customedCodeField" data-id="customedCodeId"
+                                    variant="label-hidden" options={yesNoOption} value={customedCodeField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct mobile (or) landline no is
+                                    filled</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctMobileNoField" data-id="correctMobileNoId"
+                                    variant="label-hidden" options={yesNoOption} value={correctMobileNoField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Fill Email ID</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="fillEmailField" data-id="fillEmailId" variant="label-hidden"
+                                    options={yesNoOption} value={fillEmailField} required onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct deal date (or) PACT PR date is filled in
+                                    "Period From Date"</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctDealDateField" data-id="correctDealDateId"
+                                    variant="label-hidden" options={yesNoOption} value={correctDealDateField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Correct Last EMI date + 2 months is filled in as
+                                    "Period To Date"</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="correctLastEmiDateField" data-id="correctLastEmiDateId"
+                                    variant="label-hidden" options={yesNoOption} value={correctLastEmiDateField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Name of the A/c holder [as in passbook/as
+                                    printed in specimen cheque) is filled in CAPITAL LETTERS</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="nameOfAcHolderField" data-id="nameOfAcHolderId"
+                                    variant="label-hidden" options={yesNoOption} value={nameOfAcHolderField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Bank A/c holder has signed the ACH Mandate (as
+                                    in bank records)</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="achMandateSignedField" data-id="achMandateSignedId"
+                                    variant="label-hidden" options={yesNoOption} value={achMandateSignedField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Copy of bank P/B and/or specimen cheque is
+                                    collected, checked for ACH Mandate details</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="copySpecimenChequeField" data-id="copySpecimenChequeId"
+                                    variant="label-hidden" options={yesNoOption} value={copySpecimenChequeField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Confirm that all Mandate details are correctly
+                                    entered and I have personally checked all data</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="mandatory" name="confirmMandateDetailsField" data-id="confirmMandateDetailsId"
+                                    variant="label-hidden" options={yesNoOption} value={confirmMandateDetailsField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:false={isLegibilityAndRemarksDisabled}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">ACH Form Filled Correctly?</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="preDisburseField" name="achFilledCorrectlyField" disabled={isReadOnly} data-id="achFilledCorrectlyId"
+                                    variant="label-hidden" options={yesNoOption} value={achFilledCorrectlyField} required
+                                    onchange={handleInputFieldChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">ACH Form Remarks</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="preDisburseField slds-form-element__control" disabled={isReadOnly} name="achFormRemarksField" value={achFormRemarksField}
+                                    label="Remarks" variant="label-hidden" type="text" data-id="remarksId"
+                                    onchange={handleRemarksChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                    <!---->
+                </div>
+                <template if:true={isPostSanct}>
+                    <lightning-button class="slds-align_absolute-center" disabled={isPostReadOnly} label="Submit" variant="brand" onclick={handleSubmitACH}>
+                    </lightning-button>
+                </template>
+                <template if:true={isPreDis}>
+                    <lightning-button class="slds-align_absolute-center" label="Submit" variant="brand" onclick={handlePreDisbursementACH} disabled={isReadOnly}>
+                    </lightning-button>
+                </template>
+            </lightning-accordion-section>
+        </lightning-accordion>
+
+        <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue} currentloanapplicationid={recordId} currentapplicantid={applicantid} uploadviewdocpopup={uploadViewDocFlag} createdoconparentbutton= "false" title={title} doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehiclerecordid} onfileuploadstatus={docUploadSuccessfully} additionaldocument={additionaldocument}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+        <template if:true={viewDocFlag}>
+            <c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={recordId} currentapplicantid={applicantid}
+            uploadviewdocpopup={viewDocFlag} createdoconparentbutton= "false" title={title}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId}
+            ></c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document>
+          </template>
+    </lightning-layout>
+</template>

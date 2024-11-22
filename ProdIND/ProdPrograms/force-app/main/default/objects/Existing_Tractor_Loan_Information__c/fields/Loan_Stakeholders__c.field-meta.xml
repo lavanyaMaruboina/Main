@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_Stakeholders__c</fullName>
+    <label>Loan Stakeholders</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Borrower</fullName>
+                <default>false</default>
+                <label>Borrower</label>
+            </value>
+            <value>
+                <fullName>Co-Borrower</fullName>
+                <default>false</default>
+                <label>Co-Borrower</label>
+            </value>
+            <value>
+                <fullName>Father</fullName>
+                <default>false</default>
+                <label>Father</label>
+            </value>
+            <value>
+                <fullName>Mother</fullName>
+                <default>false</default>
+                <label>Mother</label>
+            </value>
+            <value>
+                <fullName>Unmarried Daughter</fullName>
+                <default>false</default>
+                <label>Unmarried Daughter</label>
+            </value>
+            <value>
+                <fullName>Husband</fullName>
+                <default>false</default>
+                <label>Husband</label>
+            </value>
+            <value>
+                <fullName>Wife</fullName>
+                <default>false</default>
+                <label>Wife</label>
+            </value>
+            <value>
+                <fullName>Son</fullName>
+                <default>false</default>
+                <label>Son</label>
+            </value>
+            <value>
+                <fullName>Brother</fullName>
+                <default>false</default>
+                <label>Brother</label>
+            </value>
+            <value>
+                <fullName>Unmarried Sister</fullName>
+                <default>false</default>
+                <label>Unmarried Sister</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

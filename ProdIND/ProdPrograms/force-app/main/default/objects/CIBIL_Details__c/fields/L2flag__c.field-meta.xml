@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>L2flag__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To check if CIBIL is created/updated in L2</description>
+    <label>L2flag</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

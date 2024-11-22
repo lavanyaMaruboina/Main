@@ -1,0 +1,222 @@
+<!-- Author: Haarika Chodisetti
+Company: Salesforce
+Description: Parent component for Business Executive functionality -->
+<template>
+    <div>
+      <template if:true={isLoading}>
+          <lightning-spinner
+            class="slds-is-fixed"
+            alternative-text="Loading"
+            size="large"
+            variant="brand"
+          ></lightning-spinner>
+      </template>
+    </div>
+
+  <lightning-button-icon
+    icon-name="utility:justify_text"
+    onclick={openOverlayMneu}
+    variant="brand"
+    alternative-text="Menu"
+  >
+  </lightning-button-icon>
+	
+   <template if:true={isTransferVisible}>
+		<div class="slds-m-top_small">
+      <c-l-w-c-_-l-o-s-_-lead-_-assignment-transfer
+        record-id={recordId}
+        current-stage={currentStage}
+        onrecallnavigation={refreshPage}
+        agentbl={blcode}
+        typeofproduct={productType} 
+    
+      ></c-l-w-c-_-l-o-s-_-lead-_-assignment-transfer>
+		</div>
+	</template>
+  <template if:true={isVKYCVisible}>
+    <lightning-button variant="brand" disabled={vkycDisabled} label="Download V-KYC Documents" onclick={handleVkyc} class="slds-m-left_x-small"></lightning-button>
+  </template>
+  
+  <template if:false={isLoading}> 
+  <div class="slds-m-top_large">
+    <lightning-tabset active-tab-value={activeTab}>
+      <template if:false={isPreApproved}>
+        <lightning-tab label="Pre Initial Offer" onactive={handleActiveTab} value="preInitialOffer">
+          <c-be-pre-initial-offer-screen
+            app-id={applicantId}
+          ></c-be-pre-initial-offer-screen>
+        </lightning-tab>
+        <lightning-tab label="Post Initial Offer" onactive={handleActiveTab} value="postInitialOffer">
+          <c-be-post-initial-offer-screen
+            app-id={applicantId}
+          ></c-be-post-initial-offer-screen>
+        </lightning-tab>
+      </template>
+      
+
+      <template if:true={isPreApproved}>
+        <lightning-tab label="Pre Approved Offer" onactive={handleActiveTab} value="preApprovedOffer">
+          <c-be-pre-approved-screen
+                  app-id={applicantId}
+              ></c-be-pre-approved-screen>
+        </lightning-tab>
+      </template>
+      
+      <template if:true={showOtherPages}>
+        <lightning-tab label="Vehicle Dedupe" onactive={handleActiveTab} value="vehicleDedupe">
+          <c-l-W-C_-L-O-S_-Vehicle-Dedupe 
+            recordid={recordId} 
+            applicant-id={applicantId} 
+            current-stage={currentStage}
+            onsubmitnavigation={submit}
+            >
+          </c-l-W-C_-L-O-S_-Vehicle-Dedupe>
+        </lightning-tab>
+        <lightning-tab label="Asset Details" onactive={handleActiveTab} value="assetDetails">
+          <c-l-w-c-_-l-o-s_get-asset-details 
+            onvehicleinsurance={submit}
+            active-tab="Borrower" recordid={recordId}
+            current-stage={currentStage} onsubmitnavigation={submit} is-d2c-application="true"
+            onexpirydateupdated={checkInsurance}>
+          </c-l-w-c-_-l-o-s_get-asset-details>
+        </lightning-tab>
+        <lightning-tab label="Vehicle Insurance" onactive={handleActiveTab} value="vehicleInsurance">
+          <c-l-w-c_-l-o-s_-vehicle-insurance 
+            applicant-id={applicantId} 
+            recordid={recordId} 
+            active-tab="Borrower"
+            current-stage={currentStage} 
+            onsubmitnavigation={submit} 
+            onvehiclevaleve={submit} is-d2c-application="true"
+            onexpirydateupdated={checkInsurance}>
+          </c-l-w-c_-l-o-s_-vehicle-insurance>
+        </lightning-tab>
+        <lightning-tab label="Vehicle Valuation" onactive={handleActiveTab} value="vehicleValuation">
+          <c-l-w-c_-l-o-s_-vehicle-valuation 
+            vehicle-id={vehicleDetailId} 
+            applicant-id={applicantId} 
+            recordid={recordId} 
+            onloanvaleve={submit}
+            current-stage={currentStage} 
+            onsubmitnavigation={submit} is-d2c-application="true">
+          </c-l-w-c_-l-o-s_-vehicle-valuation>
+        </lightning-tab>
+        <template if:true={showInsurance}>
+          <lightning-tab label="Insurance Details" onactive={handleActiveTab} value="insuranceDetails">
+            <c-i-n-d_-l-w-c_-d2-c-insurance-details
+              applicant-id={applicantId} 
+              record-id={recordId} 
+              onloanvaleve={submit} 
+              onsubmitnavigation={submit}>
+            </c-i-n-d_-l-w-c_-d2-c-insurance-details>
+          </lightning-tab>
+        </template>
+        
+      </template>
+      <lightning-tab label="Move to Credit Processing" value="creditProcessing" onactive={handleCreditProcessing}>
+      </lightning-tab>
+    </lightning-tabset>
+  </div>
+</template> 
+  <template if:true={showOverlayMenu}>
+      <section
+        id="modal1"
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-02"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-form slds-modal__container">
+          <header class="slds-modal__header">
+            <h2 id="modal-heading-06" class="slds-modal__title slds-hyphenate">
+              STAGES
+            </h2>
+            <button
+              class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+              title="Close"
+              onclick={closeOverlayMenu}
+            >
+              <lightning-icon
+                icon-name="utility:close"
+                class="color"
+                size="medium"
+                variant="bare"
+              >
+              </lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+          </header>
+          <lightning-card variant="base">
+            <div class="slds-grid slds-gutters">
+              <div class="slds-col slds-size_1-of-1">
+                <template if:false={isPreApproved}>
+                  <lightning-menu-item
+                  class="cssText"
+                  value="Pre Initial Offer"
+                  label="Pre Initial Offer"
+                  onclick={handlePreInitialOffer}
+                ></lightning-menu-item>
+                <lightning-menu-item
+                  value="Post Initial Offer"
+                  label="Post Initial Offer"
+                  onclick={handlePostInitialOffer}
+                ></lightning-menu-item>
+                </template>
+                <template if:true={isPreApproved}>
+                  <lightning-menu-item
+                  value="Pre approved offer"
+                  label="Pre approved offer"
+                  onclick={handlePreApprovedOffer}
+                ></lightning-menu-item>
+                </template>
+                
+                <template if:true={showOtherPages}>
+                  <lightning-menu-item
+                    value="Vehicle Dedupe"
+                    label="Vehicle Dedupe"
+                    onclick={handleVehicleDedupe}
+                  ></lightning-menu-item>
+                  <lightning-menu-item
+                    value="Asset Details"
+                    label="Asset details"
+                    onclick={handleAssetDetails}
+                  ></lightning-menu-item>
+                  <lightning-menu-item
+                    value="Vehicle Insurance"
+                    label="Vehicle Insurance"
+                    onclick={handleVehicleInsurance}
+                  ></lightning-menu-item>
+                  <lightning-menu-item
+                    value="Vehicle Valuation"
+                    label="Vehicle Valuation"
+                    onclick={handleVehicleValuation}
+                  ></lightning-menu-item>
+                  <template if:true={showInsurance}>
+                    <lightning-menu-item
+                      value="Insurance Details"
+                      label="Insurance Details"
+                      onclick={handleInsuranceDetails}
+                    ></lightning-menu-item>
+                  </template>
+                
+                </template>
+                
+                <lightning-menu-item
+                  value="Move to Credit Processing"
+                  label="Move to Credit Processing"
+                  onclick={handleCreditProcessing}
+                ></lightning-menu-item>
+              </div>
+            </div>
+          </lightning-card>
+        </div>
+      </section>
+      <div
+        class="slds-backdrop slds-backdrop_open modalBackdrops"
+        id="modalBackdrops5"
+      ></div>
+    </template>
+      
+</template>

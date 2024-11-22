@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mark_Priority__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL($User.UserType, &apos;PowerPartner&apos;), HYPERLINK(&quot;/partners/s/markpriority?c__recordId=&quot;+Id, &quot;Click to Mark Priority&quot;, &quot;_self&quot;), HYPERLINK(&quot;/lightning/cmp/c__markLoanApplicationAsPriority?c__recordId=&quot;+Id, &quot;Click to Mark Priority&quot;, &quot;_self&quot;))</formula>
+    <label>Mark Priority</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

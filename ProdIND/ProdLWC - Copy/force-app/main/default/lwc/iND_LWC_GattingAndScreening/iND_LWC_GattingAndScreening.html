@@ -1,0 +1,321 @@
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+        Gating And Screening
+        </label>
+        <lightning-layout horizontal-align={horizontalAlign}>
+        <lightning-layout-item>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <template if:false={isNonIndividual}>
+                    <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" disabled={disabledBureauPullButton} onclick={handleBureauPullClick}>
+                            Bureau Pull<span if:true={bureauPullTick}>&#x2714;</span> <span if:true={bureauPullCross}>&#10060;</span>
+                    </button>
+                </template>
+
+                <!--SFTRAC-308-->
+                <template if:true={isNonIndividual}>
+                            <!--For Non-Individual: Borrower-->
+                            <template if:true={isBorrowerTab}>
+                                <template if:false={isPropriorBusinessEntityType}>
+                                    <template if:true={isGetCRIFFButton}>
+                                        <button disabled={isDisableGetCRIFFButton}
+                                            class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" onclick={getCRIFFReport}>
+                                            Bureau Pull
+                                        </button>
+                                    </template>
+                                
+                                
+                                    <template if:false={isGetCRIFFButton}>
+                                        <button disabled={isDisableViewCRIFFButton}
+                                            class="indusPrimaryButton viewBtnClass slds-button slds-align_absolute-center slds-button_brand" onclick={viewCRIFFReport}>
+                                            View CRIFF report
+                                        </button>
+                                    </template>
+                                </template>
+                            </template>
+
+                            <!--For Non-Individual: Co-borrower or Beneficiary or Guarantor-->
+                            <template if:false={isBorrowerTab}>
+                                <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" disabled={disabledBureauPullButton} onclick={handleBureauPullClick}>
+                                    Bureau Pull<span if:true={bureauPullTick}>&#x2714;</span> <span if:true={bureauPullCross}>&#10060;</span>
+                                </button>
+                            </template>
+                </template>
+                <!--SFTRAC-308-->
+                
+            </div>
+        </div>
+
+        <template if:true={gattingAndScreeningForBorrower}>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" disabled={disableAddCoBorrower} onclick={handleAddCoBorrower}>
+                            Add Co-Borrower<span if:true={addCoBorrowerTick}>&#x2714;</span>
+                </button>
+            </div>
+        </div>
+        <!--SFTRAC-502 Start-->
+        <!--<template if:true={isTractor}>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" onclick={handleRemoveCoBorrower}>
+                            Remove Co-Borrower
+                </button>
+            </div>
+        </div>
+        </template>-->
+        </template>
+
+        <template if:true={gattingAndScreeningForBorrower}>
+            <template if:true={isTractor}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" disabled={disableAddGuarantor} onclick={handleAddGuarantor}>
+                                    Add Guarantor<span if:true={addCoBorrowerTick}>&#x2714;</span>
+                        </button>
+                    </div>
+                </div>
+                <template if:true={isNonIndividual}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" disabled={disableAddBeneficiary} onclick={handleAddBeneficiary}>
+                                        Add Beneficiary<span if:true={addBenificiaryTick}>&#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" onclick={handleRemoveCoBorrower} disabled={disableRemoveApp}>
+                                    Remove Applicants
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </template>
+
+    </lightning-layout-item>
+    <lightning-layout-item>
+        <template if:true={getReportVisibility}>
+            <template if:false={isNonIndividual}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <button disabled={disableViewCibilBtnBrw}
+                        class="indusPrimaryButton viewBtnClass slds-button slds-button_brand" onclick={viewCibilReport}>
+                        View CIBIL report
+                    </button>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <button disabled={disableViewEquifaxBtnBrw} name="equifax"
+                            class="indusPrimaryButton viewBtnClass slds-button slds-button_brand" onclick={viewEquifaxReport}>
+                            View Equifax report
+                        </button>
+                    </div>
+                </div>
+            </template>
+            <template if:true={isNonIndividual}>
+                <template if:false={isBorrowerTab}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <button disabled={disableViewCibilBtnBrw}
+                            class="indusPrimaryButton viewBtnClass slds-button slds-button_brand" onclick={viewCibilReport}>
+                            View CIBIL report
+                        </button>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <button disabled={disableViewEquifaxBtnBrw} name="equifax"
+                                class="indusPrimaryButton viewBtnClass slds-button slds-button_brand" onclick={viewEquifaxReport}>
+                                View Equifax report
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </template>
+        </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <template if:true={gattingAndScreeningForBorrower}>
+    <div class="slds-col slds-size_3-of-3">
+        <div class="slds-p-top_x-large slds-float_right slds-p-bottom_small slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+            <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" onclick={handleCheckEligibility} disabled={disableCheckEligibilityButtonVal}>
+                Check Eligibility<span if:true={checkEligibilityTick}>&#x2714;</span><span if:true={checkEligibilityCross}>&#10060;</span>
+            </button>
+        </div>
+    </div>
+    </template>
+
+    <!-- <template if:true={showSubmitButton}> -->
+        <!-- <div class="slds-col slds-size_3-of-3">
+            <div class="slds-p-top_x-large slds-align_absolute-center slds-p-bottom_small slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" onclick={handleSubmit}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div> -->
+    <!-- </template> -->
+
+    <!-- <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+            <button class="indusPrimaryButton slds-button slds-align_absolute-center slds-button_brand" disabled={addAddtionalDetail} onclick={handleAddDetails}>
+                        Additional Details
+            </button>
+        </div>
+    </div> -->
+   
+
+
+    <template if:true={retrypopup}>
+        <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                        Kindly Retry
+                    </h2>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button
+                                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                onclick={handleRetry} variant="brand" label="OK"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+        </div>
+    </template>
+
+    <template if:true={journeyStopPopUp}>
+        <section id="modal2" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+                        {checkEligibilityMessage}
+                    </h2>
+                </header>
+                <!-- //CISP-113/CISP-2425 -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p style="font-size: 1.1rem;"><b>Reason :</b> {reasonPopupMessage}</p>
+                </div>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center" onclick={handleJourneyStopPopUp} variant="brand" label="OK">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops2">
+            </div>
+    </template>
+
+
+    <template if:true={coborrowerPopup}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-03" class="slds-modal__title slds-hyphenate">
+                        {coborrowerPopupMessage}
+                    </h2>
+                </header>
+                <!-- //CISP-113/CISP-2425 -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p style="font-size: 1.1rem;"><b>Reason :</b> {reasonPopupMessage}</p>
+                </div>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button
+                                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                onclick={handleChangeOrAddCoborrower} variant="brand" label="OK"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops11">
+        </div>
+    </template>
+
+    <!-- //CISP-113/CISP-2425 -->
+    <template if:true={journeyModal}>
+        <section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-05" class="slds-modal__title slds-hyphenate">
+                        {checkEligibilityMessage}
+                    </h2>
+                </header>
+                <!-- //CISP-113/CISP-2425 -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-10">
+                    <p style="font-size: 1.1rem;"><b>Reason :</b> {reasonPopupMessage}</p>
+                </div>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center" onclick={handleJourneyModal} variant="brand" label="OK">
+                            </lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops3">
+            </div>
+    </template>
+    <!-- //CISP-113/CISP-2425 -->
+    <!--SFTRAC-502 Start-->
+    <template if:true={removeApplicant}>
+        <section id="modal4" role="dialog" tabindex="-1" aria-labelledby="modal-heading-04" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-form slds-modal__container">   
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-04" class="slds-modal__title slds-hyphenate">
+                    Remove Applicants
+                </h2>
+            </header> 
+            <lightning-card>
+             <div class="slds-card__body_inner">
+                            <lightning-datatable
+                            key-field="id"
+                            data={tableData}
+                            columns={columns}
+                            onrowselection={handleRowSelection}>
+                        </lightning-datatable>
+                    </br>
+             <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+                        <button class=" slds-button slds-button_brand " onclick={closeModal}>
+                            Close 
+                        </button>
+                        <button class=" slds-button slds-button_brand " onclick={removeApp}>
+                            Remove 
+                        </button>
+                    </div>
+                </div>
+                </div>
+         </lightning-card>
+         </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops4"></div>
+</template>
+    <!--SFTRAC-502 End-->
+</template>

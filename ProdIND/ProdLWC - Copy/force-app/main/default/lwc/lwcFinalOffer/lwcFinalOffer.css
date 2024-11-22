@@ -1,0 +1,14 @@
+.slds-box{
+    background-color: lightgrey;
+    
+}
+
+.yellowworld{
+    --sds-c-icon-color-foreground: white;
+    --sds-c-icon-color-background: yellow;
+}
+
+.greenworld{
+    --sds-c-icon-color-foreground: white;
+    --sds-c-icon-color-background: green;
+}

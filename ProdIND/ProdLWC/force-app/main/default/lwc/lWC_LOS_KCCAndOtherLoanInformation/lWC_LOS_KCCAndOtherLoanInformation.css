@@ -1,0 +1,7 @@
+caption, th, td {
+    text-align: center;
+    padding: 5px;
+}
+thead > tr > th {
+    min-width: 100px;
+}

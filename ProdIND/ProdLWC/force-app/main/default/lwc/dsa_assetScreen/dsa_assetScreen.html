@@ -1,0 +1,288 @@
+<template>
+  <template if:true={showSpinner}>
+    <lightning-spinner
+      alternative-text="Loading"
+      size="medium"
+    ></lightning-spinner>
+  </template>
+  <c-dsa_-b-r-e_engines
+    oncheckeligibility={handleScreening}
+    onbrecomplete={handleBREComplete}
+  ></c-dsa_-b-r-e_engines>
+   <!--CISP-13870 : Start-->
+     <template if:true={withdrawn}>
+  
+      <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+        <span class="slds-assistive-text">warning</span>
+         <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+              title="Description of icon when needed">
+              <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning">
+              </lightning-icon>
+          </span>
+          <h2>This loan application has been withdrawn, you are no more allowed to edit this application.</h2>
+      </div>
+  </template>
+  <!--CISP-13870 : END-->
+  <template if:false={withdrawn}> <!--added outer template for CISP-13870 Start-->
+  <!--Modal for journeyStopPopUp-->
+  <template if:true={journeyStopPopUp}>
+    <section role="dialog" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <!-- modal header start -->
+        <!--  <header class="slds-modal__header">
+                <button
+                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    title="Close"
+                    onclick={handleCancel}
+                >
+                    <lightning-icon
+                        icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small"
+                    ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">
+                    Journey Stop
+                </h2>
+            </header> -->
+
+        <!-- modal body start -->
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          style="text-align: center"
+        >
+          <p>{journeyStopMessage}</p>
+          <div style="display: flex; width: 100%; justify-content: center">
+            <button
+              title="Okay"
+              name="okay"
+              onclick={handleCancel}
+              class="ibl-btn-red responsive-btn"
+            >
+              Okay
+            </button>
+          </div>
+        </div>
+
+        <!-- modal footer start-->
+        <!-- <footer class="slds-modal__footer lli-flex-center">
+            </footer> -->
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+
+  <!--Modal for co-borrower-->
+  <template if:true={coborrowerPopup}>
+    <section role="dialog" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+            title="Close"
+            onclick={handleCancel}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close"
+              variant="inverse"
+              size="small"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-text-heading_medium slds-hyphenate">{modalHeader}</h2>
+        </header>
+
+        <!-- modal body start -->
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          style="text-align: center"
+        >
+          <lightning-input
+            type="number"
+            label="Annual Income(in-hand)"
+            name="annual-income"
+            data-id="annualIncome"
+            variant="label-inline"
+            onchange={handleChangeCoborrower}
+            maxlength="8"
+            value={CoborrowerIncome}
+            required
+          ></lightning-input>
+        </div>
+
+        <!-- modal footer start-->
+        <footer class="slds-modal__footer lli-flex-center">
+          <div style="display: flex; width: 100%; justify-content: center">
+            <button
+              title="Cancel"
+              name="cancel"
+              onclick={handleCancel}
+              class="ibl-btn-red responsive-btn"
+            >
+              Cancel
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button
+              title="Confirm"
+              name="Confirm"
+              onclick={saveCoborrower}
+              class="ibl-btn-red responsive-btn"
+            >
+              Submit
+            </button>
+          </div>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+  <template if:true={isShowModal}>
+    <c-dsa-_ibl-modal
+      onconfirm={handleModalConfirm}
+      oncancel={handleModalCancel}
+      header="Confirmation"
+      message={modalMessage}
+    ></c-dsa-_ibl-modal>
+  </template>
+  <lightning-card class="slds-text-align_center">
+    <div class="slds-var-p-around_small">
+      <lightning-layout class="ltngLayout" multiple-rows>
+        <lightning-layout-item
+          size="12"
+          class="lli-flex-center slds-p-top_large slds-p-bottom_large"
+        >
+          <div class="container-div">
+           <!--Added Withdraw button for CISP-13870 start-->
+            <lightning-layout-item class="slds-float_left">
+              <div class="slds-p-top_small"> 
+              <template if:false={withdrawn}> 
+                <c-i-n-d-_-l-w-c-_-application-_-withdrwal record-id = {recordId} ></c-i-n-d-_-l-w-c-_-application-_-withdrwal>
+                </template>
+              </div>
+          </lightning-layout-item>
+          <!--Added Withdraw button for CISP-13870 end-->
+            <div class="page-header">
+              <p>Vehicle Information Page</p>
+            </div>
+            <div style="width: 100%">
+              <lightning-combobox
+                label="Make"
+                name="make"
+                data-id="make"
+                variant="label-inline"
+                options={makeOptions}
+                onchange={handleChange}
+                value={makecode}
+                disabled={getDisableMake}
+                required
+              ></lightning-combobox>
+
+              <lightning-combobox
+                label="Model"
+                name="model"
+                data-id="model"
+                variant="label-inline"
+                options={modelOptions}
+                onchange={handleChange}
+                value={modelcode}
+                disabled={getDisableModel}
+                required
+              ></lightning-combobox>
+
+              <lightning-combobox
+                label="Variant"
+                name="variant"
+                data-id="variant"
+                variant="label-inline"
+                options={variantOptions}
+                onchange={handleChange}
+                value={variantcode}
+                disabled={getDisableVariant}
+                required
+              ></lightning-combobox>
+
+              <!-- <template if:true={profileList.data}>
+                    <lightning-combobox
+                        label="Make"
+                        name="make"
+                        data-id="make"
+                        variant="label-inline"
+                        options={profileList.data.values}
+                    ></lightning-combobox>
+                </template> -->
+
+              <lightning-input
+                type="number"
+                label="Estimated Asset Value (Rs)"
+                name="estimatedAssetValue"
+                data-id="estimatedAssetValue"
+                variant="label-inline"
+                onchange={handleChange}
+                maxlength="8"
+                onblur={validateAmountChange}
+                value={estimatedAssetValue}
+                min-length="10"
+                required
+              ></lightning-input>
+
+              <lightning-input
+                type="number"
+                label="Required Loan Amount (Rs)"
+                name="requiredLoanAmount"
+                data-id="requiredLoanAmount"
+                variant="label-inline"
+                maxlength="8"
+                onchange={handleChange}
+                onblur={validateAmountChange}
+                value={requiredLoanAmount}
+                required
+              ></lightning-input>
+              <div
+                class="slds-p-around_small"
+                style="float: left; color: #832625"
+              >
+                <strong>* Mandatory field</strong>
+              </div>
+            </div>
+          </div></lightning-layout-item
+        >
+      </lightning-layout>
+
+      <lightning-layout class="ltngLayout">
+        <lightning-layout-item
+          padding="around-small"
+          size="12"
+          class="lli-flex-center"
+        >
+          <div style="display: flex">
+            <button
+              title="Check Eligibility"
+              name="Confirm Details"
+              onclick={showModalBox}
+              class={checkEligbilutyClass}
+              style="width: 150px"
+              disabled={disableCheckEligibilityButton}
+            >
+              Check Eligibility
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button
+              title="Save & Exit"
+              name="saveandexitbtn"
+              onclick={handleSaveExitClick}
+              class="ibl-btn-red_secondary responsive-btn"
+              style="width: 150px"
+            >
+              Save & Exit
+            </button>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+</template> <!--added outer template for CISP-13870 End-->
+</template>

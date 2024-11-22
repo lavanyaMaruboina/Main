@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Loan_Applications_DSA</fullName>
+    <columns>Customer_Name__c</columns>
+    <columns>DSA_Loan_Application_Name__c</columns>
+    <columns>DSA_Sub_Stage__c</columns>
+    <columns>Lead_Creation_Date__c</columns>
+    <columns>Lead_Modified_Date__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>DSA</value>
+    </filters>
+    <filters>
+        <field>Customer_Name__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>DSA_Stage__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>DSA_Is_Created_By__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Loan Applications</label>
+    <sharedTo>
+        <allPartnerUsers></allPartnerUsers>
+    </sharedTo>
+</ListView>

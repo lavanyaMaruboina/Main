@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Previous_Record_Owner__c</fullName>
+    <description>As SF does not allow custom polymorphic lookup fields and a lookup to the group is also not allowed, this field is created as a text field to store the ID of the user/group who was the previous owner of the record</description>
+    <externalId>false</externalId>
+    <inlineHelpText>ID of user/group who was the previous owner of the record</inlineHelpText>
+    <label>Previous Record Owner</label>
+    <length>20</length>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

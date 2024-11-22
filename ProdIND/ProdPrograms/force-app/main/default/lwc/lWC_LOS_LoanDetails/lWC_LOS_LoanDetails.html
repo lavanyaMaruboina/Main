@@ -1,0 +1,749 @@
+<!--
+    
+Screen created By : Raj Gupta
+Screen Name: 'LWC_LOS_LoanDetails.html'
+Description : All the loan details will capture here.
+created on: 10 DEC 2021
+
+-->
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center slds">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+        </lightning-spinner>
+    </template>
+
+    <!-- <div class="slds-m-bottom_small slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Loan
+            Details</label>
+        <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+            class=" slds-float_right ">
+        </lightning-button-icon>
+    </div> -->
+    <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+            class=" slds-float_right ">
+        </lightning-button-icon>
+
+    <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Loan
+            Details</label>
+            <template if:true={isEnableUploadViewDoc}>
+                <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+                    alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton" disabled={isUploadViewDisabled}>
+                </lightning-button>
+            </template>
+    </div>
+
+    <template if:true={isTractor}>
+        <!-- Tractor Flow -->
+        <lightning-accordion active-section-name="1">
+            <template for:each={tractorVehicleList} for:item="vehicle" for:index="i">
+        
+                <lightning-accordion-section name={i} label={vehicle.sectionLabel} key={vehicle.sectionLabel}>
+                    <div class="slds-form slds-grid slds-wrap" >
+                        </br>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{label.RequiredLoanAmountField}<abbr
+                                            title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input data-id={vehicle.requiredLoanAmountId} onchange={handleRequiredLoan}
+                                        value={vehicle.requiredLoanAmount} variant="label-hidden" data-index={i}
+                                        pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                                        disabled={vehicle.disableRequiredLoanAmount} required>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{label.RequiredTenureField}<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control"
+                                        variant="label-hidden" name="requiredTenure" label="Required Tenured"
+                                        onchange={onRequiredTenuredChange} message-when-value-missing="Complete this field"
+                                        options={vehicle.requiredTenureOptionsList} value={vehicle.requiredTenure}
+                                        required data-index={i}  data-id={vehicle.requiredTenureId}
+                                        disabled={vehicle.disableRequiredTenure}>
+                                    </lightning-combobox>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{label.RequiredROIField}<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input pattern={label.Regex_DecimalNo} value={vehicle.requiredCRMIRRTW}
+                                        message-when-pattern-mismatch={label.validValue} variant="label-hidden" data-index={i}
+                                        onchange={handleRequiredRoi} data-id="reqRoi" required
+                                        disabled={vehicle.disableRequiredROIField}>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={vehicle.showCostInfo}>
+                        <div class="slds-form slds-grid slds-wrap">
+                            </br>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{label.costOfBody}<abbr title="required"
+                                                class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input onchange={handleInput} name="costOfBody" value={vehicle.costOfBody}
+                                            variant="label-hidden" data-index={i} pattern={label.Regex_NumberOnly}
+                                            message-when-pattern-mismatch={label.validValue} disabled={vehicle.disableCostOfBody} required>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{label.costOfChassis}<abbr title="required"
+                                                class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="costOfChassis"
+                                            onchange={handleInput} message-when-value-missing="Complete this field"
+                                            value={vehicle.costOfChassis} required data-index={i} disabled={vehicle.disableCostOfChassis}>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{label.FundingBasedOnField}<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Invoice Amount" name="invoiceAmt"
+                                        value={vehicle.fundingInvoiceAmount} checked={vehicle.fundingInvoiceAmount}
+                                        disabled></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox"
+                                        label="Is customer interested in a motor insurance from IndusInd"
+                                        name="Is customer interested in a motor insurance from IndusInd"
+                                        onchange={handleMotorInsurance} data-index={i}
+                                        checked={vehicle.isCustomerInterested} disabled={vehicle.isLoanDetailsSubmited}
+                                        data-id="custInterestedInInsuranceId"></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{label.FundedNonFundedField}<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-1">
+                                <lightning-input class="slds-form-element__control" type="checkbox" onchange={handleFunded} data-index={i}
+                                    label="Funded" name="Funded" checked={vehicle.funded} data-id="fundedId" disabled={vehicle.disabledFunded}></lightning-input>
+                                <!-- D2C Change-->
+                            </div>
+                            <div class="slds-col slds-size_2-of-1">
+                                <lightning-input class="slds-form-element__control" type="checkbox" label="Non-Funded" data-index={i}
+                                    data-id="nonFundedId" onchange={handleNonFunded} name="Non-Funded" disabled={vehicle.disabledNonFunded}
+                                    checked={vehicle.nonFunded}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{label.YrInsurancePremiumField}
+                                            <template if:true={vehicle.firstYearInsuranceRequired}>
+                                                <abbr
+                                                title="required" class="slds-required">*</abbr>
+                                            </template></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input variant="label-hidden" value={vehicle.firstYrInsurancePremium}
+                                            pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                                            data-id="InsPrem" onchange={handleInsurancePremium} data-index={i}
+                                            required={vehicle.firstYearInsuranceRequired}
+                                            disabled={vehicle.disabledFirstYrInsurancePremium}></lightning-input><!-- //Ola Integration changes -->
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        <template if:true={vehicle.showBasicPrice}><!--SFTRAC-1794-->
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{label.BasicPriceField}<abbr title="required"
+                                                class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input pattern={label.Regex_NumberOnly} value={vehicle.basicPrice}
+                                            message-when-pattern-mismatch={label.validValue} data-id="basicPrice" data-index={i}
+                                            variant="label-hidden" disabled={vehicle.isLoanDetailsSubmited} required
+                                            onchange={handlebasicPrice}>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{label.GSTAmountField}<abbr title="required"
+                                                class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input variant="label-hidden" value={vehicle.gstAmount} data-index={i} onchange={handlegstAmount} required
+                                            pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue} disabled={vehicle.isLoanDetailsSubmited}
+                                            data-id={vehicle.gstAmountId}>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            </template>
+                        </div>
+                        <template if:true={vehicle.showBasicPrice}><!--SFTRAC-1794-->
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{label.InvoicePrice}<abbr
+                                                title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input type="number" data-id="exshowpriceTWNew" variant="label-hidden" data-index={i} disabled={vehicle.isLoanDetailsSubmited}
+                                            value={vehicle.invoicePrice} onchange={handleExshowPriceChange} required>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+        
+    </template>
+
+
+    <template if:false={isTractor}>
+    <div class="slds-form slds-grid slds-wrap">
+        </br>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">{label.RequiredLoanAmountField}<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input data-id="reqLoan" onchange={handleRequiredLoan} value={requiredLoanAmount}
+                        variant="label-hidden" pattern={label.Regex_NumberOnly}
+                        message-when-pattern-mismatch={label.validValue} disabled={disableRequiredLoanAmount}
+                            required>
+                    </lightning-input>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+        <template if:true={displayMaximumAvailableTenure}>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.MaximumAvailableTenureField}<abbr
+                                title="required" class="slds-required"></abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" value={maximumAvailableTenure}
+                            disabled={disabledMaximumAvailableTenure} data-id="MaxAvaTen"></lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">{label.RequiredTenureField}<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control agentCss reqten" variant="label-hidden"
+                        name="agentBLCodeId" label="Required Tenured" onchange={onRequiredTenuredChange}
+                        message-when-value-missing="Complete this field" options={requiredTenureOptionsList}
+                        value={requiredTenureValue} id="agentBLCodeId" required disabled={disableRequiredTenure}><!-- //Ola Integration changes -->
+                    </lightning-combobox>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">{label.RequiredROIField}<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input pattern={label.Regex_DecimalNo} value={requiredRoi}
+                        message-when-pattern-mismatch={label.validValue} variant="label-hidden"
+                        onchange={handleRequiredRoi} data-id="reqRoi" required disabled={disableRequiredROIField}> <!--Enhancement for INDI-4682--> 
+                    </lightning-input>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={displayFundingBasedOn}>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">{label.FundingBasedOnField}<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-1">
+                    <lightning-input class="slds-form-element__control" type="checkbox" label="Ex-Showroom"
+                        value={fundingOnExShowroom} checked={fundingOnExShowroom} name="Ex-Showroom" data-id="fundingBasedOnExShowroomId" onchange={handleExshowroom}
+                        disabled={disableFundingBasedOnExShowroom}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_2-of-1">
+                    <lightning-input class="slds-form-element__control" type="checkbox" label="ORP" name="ORP"
+                        onchange={handleOrp} value={orp} checked={orp} data-id="orp" disabled={disabledOrp}></lightning-input>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_2-of-1">
+                    <lightning-input class="slds-form-element__control" type="checkbox"
+                        label="Is customer interested in a motor insurance from IndusInd"
+                        name="Is customer interested in a motor insurance from IndusInd" onchange={handleMotorInsurance}
+                        disabled={disableMotorInsurance} data-id="custInterestedInInsuranceId"></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label">{label.FundedNonFundedField}<abbr title="required"
+                        class="slds-required">*</abbr></label>
+            </div>
+            <div class="slds-col slds-size_2-of-1">
+                <lightning-input class="slds-form-element__control" type="checkbox" onchange={handleFunded}
+                    label="Funded" name="Funded" data-id="fundedId" disabled={disabledFunded}></lightning-input> <!-- D2C Change-->
+            </div>
+            <div class="slds-col slds-size_2-of-1">
+                <lightning-input class="slds-form-element__control" type="checkbox" label="Non-Funded"
+                    data-id="nonFundedId" onchange={handleNonFunded} name="Non-Funded" disabled={disabledNonFunded}
+                    checked={checkNoFunded}></lightning-input>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={newLoanDetailsFields}>
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.YrInsurancePremiumField}<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" value={firstYrInsurancePremium}
+                            pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                            onfocusout={calculateCarwalePrices} data-id="InsPrem" onchange={handleInsurancePremium} required disabled={disabledFirstYrInsurancePremium}></lightning-input><!-- //Ola Integration changes -->
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <template if:false={isTWNew}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.BasicPriceField}<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input pattern={label.Regex_NumberOnly} value={basicPrice}
+                                message-when-pattern-mismatch={label.validValue} data-id="basicPrice" variant="label-hidden"
+                                onfocusout={calculateCarwalePrices} onchange={handlebasicPrice} required>
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.GSTAmountField}<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" value={gstAmount} pattern={label.Regex_NumberOnly}
+                            message-when-pattern-mismatch={label.validValue} data-id="gstAmount"
+                            onfocusout={calculateCarwalePrices} onchange={handlegstAmount} required>
+                        </lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            </template>
+            <template if:true={isTWNew}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.BasicPriceField}<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input pattern={label.Regex_NumberOnly} value={basicPrice}
+                                message-when-pattern-mismatch={label.validValue} data-id="basicPrice" variant="label-hidden"
+                                onfocusout={calculateCarwalePrices} onchange={handlebasicPrice} disabled>
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+            </div>           
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.GSTAmountField}<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" value={gstAmount} pattern={label.Regex_NumberOnly}
+                            message-when-pattern-mismatch={label.validValue} data-id="gstAmount"
+                             disabled>
+                        </lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </template>
+        </div>
+    </template>
+
+    <template if:true={motorInsurancePremiumTemp}>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class=" slds-form-element__label">{label.MotorInsurancePremiumField}<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input variant="label-hidden" value={motorInsurancePremium}
+                        pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                        onchange={handleMotorInsurancePremium} data-id="motInsPrem" required></lightning-input>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template if:true={showNewLoanDetailsFields}>
+        <div class="slds-form slds-grid slds-wrap">
+            <template if:false={isTWNew}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.DiscountOnBasicPriceField}<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" value={discountOnBasicPrice}
+                                pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                                data-id="disAmount" onfocusout={calculateCarwalePrices}
+                                onchange={handlediscountOnBasicPrice} required></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.ExShowroomPriceField}<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="exshowprice" variant="label-hidden"
+                                disabled={disabledExShowPrice} value={exShowroomPrice} required>
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={isTWNew}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.DiscountOnBasicPriceField}<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" value={discountOnBasicPrice}
+                                pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                                data-id="disAmount" 
+                                onchange={handlediscountOnBasicPrice} disabled></lightning-input><!--CISP-240-->
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.ExShowroomPriceField}<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="exshowpriceTWNew" variant="label-hidden"
+                                 value={exShowroomPrice} onchange={handleExshowPriceChange} required>
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={orp}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{label.OtherChargesField}<abbr title="required"
+                                    class="slds-required"></abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" value={otherCharges}
+                                pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                                onfocusout={calculateCarwalePrices} data-id="otherchar" onchange={handleOtherCharges} required>
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+    <!-- //Ola Integration changes -->
+    <template if:true={isLeadSourceOla}>
+        <div class="slds-form-element  slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Fame Subsidy<abbr title="required"
+                                class="slds-required"></abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" value={fameSubsidy}
+                            pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                            onfocusout={calculateCarwalePrices} disabled>
+                        </lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Performance Upgrade<abbr title="required"
+                                class="slds-required"></abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" value={performanceUpgrade}
+                            pattern={label.Regex_NumberOnly} message-when-pattern-mismatch={label.validValue}
+                            onfocusout={calculateCarwalePrices}  disabled>
+                        </lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- //Ola Integration changes -->
+
+
+    <template if:true={showGetGrid}>
+    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+        <div
+            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleGetPriceDetails}
+                disabled={disableGetPrice}>{label.GetPriceDetailsField} <span
+                    if:true={iconAPISuccess}>&#x2714;</span><span if:true={iconAPIFailed}>&#10060;</span></button>
+        </div>
+    </div>
+    </template>
+    <template if:true={retryPopUp}>
+        <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                        {label.KindlyRetryField}
+                    </h2>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button
+                                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                onclick={handleRetry} variant="brand" label="OK"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1"></div>
+    </template>
+
+
+    <template if:true={displayGetPricefields}>
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class=" slds-form-element__label">{label.ExShowroomPriceCarwaleField}<abbr
+                                title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="number" data-id="exshowpricecar" variant="label-hidden"
+                            value={exShowroomPricecarwale} required disabled>
+                        </lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.RTORoadTaxField}<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <!-- CISP-2346 -->
+                    <template if:false={isRtoRoadTaxFieldEnable}>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal" value={rtoRoadTax} onchange={handleRTOChangeCar} onfocusout={calculateCarwalePrices}><!-- CISP-6540 -->
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isRtoRoadTaxFieldEnable}>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="rtoRoaTaxVal" value={rtoRoaTaxVal} required onchange={handleRTOChange} onfocusout={calculateCarwalePrices}
+                                ></lightning-input>
+                            </div>
+                        </div>
+                    </template>
+                    <!-- CISP-2346-END -->
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.OnRoadPriceField}<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="number" data-id="onRoaPric" value={onRoadPrice}
+                            onchange={handleOnRoadPrice} variant="label-hidden" required disabled></lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{label.OnRoadPriceCarwaleField}<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" data-id="onRoaPricar" value={onRoadPricecarwale}
+                            required disabled></lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <template if:true={showIsThisCsdfields}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-1">
+                            <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a CSD case?"
+                                name="Is this a CSD case?" onchange={handleCsd} disabled={disableCsd} data-id="idCsd">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>
+
+
+
+
+
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleSubmit}
+                    disabled={disabledSubmit}>
+                    {label.SubmitField}
+                </button>
+            </div>
+        </div>
+    </div>
+    <template if:true={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinish}>
+            Next
+        </button>
+    </template>
+    <template if:true={showFileUploadAndView}>
+        <c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordid} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+      </template>
+</template>

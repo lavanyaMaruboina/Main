@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>House_Type__c</fullName>
+    <label>House Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PUCCA WITH RCC ROOF</fullName>
+                <default>false</default>
+                <label>PUCCA WITH RCC ROOF</label>
+            </value>
+            <value>
+                <fullName>PUCCA WITHOUT RCC ROOF</fullName>
+                <default>false</default>
+                <label>PUCCA WITHOUT RCC ROOF</label>
+            </value>
+            <value>
+                <fullName>KACHHA HOUSE</fullName>
+                <default>false</default>
+                <label>KACHHA HOUSE</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

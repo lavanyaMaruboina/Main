@@ -1,0 +1,1031 @@
+<template>
+<div class="fiWrapper">
+    <!-- <div lwc:if={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center"> -->
+        <lightning-spinner lwc:if={isSpinnerMoving} alternative-text="Loading" size="large" variant="brand" style="height: 150vh !important;"></lightning-spinner>
+    <!-- </div> -->
+    <template if:true={fiRecord}>
+        <lightning-record-edit-form record-id={fiRecordId} object-api-name="Field_Investigation__c">
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+            <lightning-accordion-section name="Loan Information" label="Loan Information">
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.schmType.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={schemeType.data}>
+                              <lightning-combobox variant="label-hidden" name="schmType" value={inputWrapper.schmType.value} options={schemeType.data.values} onchange={handleInputChange} required class="loanInformationDetails">
+                              </lightning-combobox>
+                            </template>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.subschmType.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={subSchemeType.data}>
+                              <lightning-combobox variant="label-hidden" name="subschmType" class="subschmTypeClass loanInformationDetails" required  value={inputWrapper.subschmType.value} options={subSchemeType.data.values} onchange={handleInputChange}
+                              disabled={disbaledLandHoldingType}>
+                              </lightning-combobox>
+                            </template>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.entityType.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={ENTITYTYPE.data}>
+                                <lightning-combobox variant="label-hidden" name="entityType" class="entityTypeClass loanInformationDetails" required  value={inputWrapper.entityType.value} options={ENTITYTYPE.data.values} onchange={handleInputChange}>
+                                </lightning-combobox>
+                              </template>
+                          </div>
+                        </div>
+                      </div>
+
+                       <!-- Field 7: What is the source of margin money (New & Used) -->
+                       <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.sourceOfMarginMoney.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={sourceOfMarginMoneyUsed.data}>
+                              <lightning-combobox variant="label-hidden" name="sourceOfMarginMoney" value={inputWrapper.sourceOfMarginMoney.value} options={sourceOfMarginMoneyUsed.data.values} class="validate loanInformationDetails" required onchange={handleInputChange}>
+                              </lightning-combobox>
+                            </template>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Field 8: if the source of margin money is CASH -->
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.sourceOfMarginMoneyCash.label}</label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={sourceOfMarginMoneyCashType.data}>
+                              <lightning-combobox variant="label-hidden" name="sourceOfMarginMoneyCash" value={inputWrapper.sourceOfMarginMoneyCash.value} options={sourceOfMarginMoneyCashType.data.values} class="validate sourceOfMarginMoneyCashClass" onchange={handleInputChange}>
+                              </lightning-combobox>
+                            </template>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.assetModel.label} </label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" disabled={exchangeofAssetValid} name="assetModel" class="assetModelClass exchangeOfAssetClass"  value={inputWrapper.assetModel.value} onchange={handleInputChange}>
+                            </lightning-input>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.financeFree.label}</label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={financeFreeType.data}>
+                                <lightning-combobox variant="label-hidden" disabled={exchangeofAssetValid} name="financeFree" class="financeFreeClass exchangeOfAssetClass"  value={inputWrapper.financeFree.value} options={financeFreeType.data.values} onchange={handleInputChange}>
+                                </lightning-combobox>
+                              </template>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.financierName.label}</label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" disabled={exchangeofAssetValid} name="financierName" class="financierNameClass exchangeOfAssetClass" value={inputWrapper.financierName.value} onchange={handleInputChange}>
+                            </lightning-input>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.whowillCloseLoan.label}</label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={whowillCloseLoanType.data}>
+                                <lightning-combobox variant="label-hidden" disabled={exchangeofAssetValid} name="whowillCloseLoan" class="whowillCloseLoanClass exchangeOfAssetClass" value={inputWrapper.whowillCloseLoan.value} options={whowillCloseLoanType.data.values} onchange={handleInputChange}>
+                                </lightning-combobox>
+                              </template>
+                          </div>
+                        </div>
+                      </div>
+
+                       <!-- Field 13: As per your observation any Margin money pending with Dealer/DSA, if Yes, what is the amount? -->
+                       <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.marginMoneyPending.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" class="loanInformationDetails" name="marginMoneyPending" type="number" value={inputWrapper.marginMoneyPending.value} onchange={handleInputChange}>
+                            </lightning-input>
+                          </div>
+                        </div>
+                      </div>
+
+                       <!-- Field 18: IS customer HAVING ANY EXISTING IMPLEMENT -->
+                       <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.existingImplement.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                            <template if:true={customerHavingExistingImplementType.data}>
+                              <lightning-dual-listbox name="existingImplement" class="existingImplementClass loanInformationDetails multipicklistClass" required variant="label-hidden" source-label="Available" selected-label="Selected" options={customerHavingExistingImplementType.data.values} value={inputWrapper.existingImplement.value} onchange={handleInputChange}></lightning-dual-listbox>
+                            </template>
+                          </div>
+                        </div>
+                      </div>
+
+                       <!-- Field 19: HOW HE WILL DEPLOY THE ASSET without implement -->
+                       <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.deployAssetWithoutImplement.label}</label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" name="deployAssetWithoutImplement" class="deployAssetWithoutImplementClass" value={inputWrapper.deployAssetWithoutImplement.value} onchange={handleInputChange}>
+                            </lightning-input>
+                          </div>
+                        </div>
+                      </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={guarantorFlag}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.borrowerKnownToGurantorSince.label}</label>
+                              </div>
+                              <div class="slds-col slds-size_2-of-3">
+                                  <lightning-input variant="label-hidden" name="borrowerKnownToGurantorSince" class="borrowerKnownToGurantorSince" value={inputWrapper.borrowerKnownToGurantorSince.value} onchange={handleInputChange}>
+                                  </lightning-input>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Field: Are you ready to guarntee  this loan -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={guarantorFlag}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.readyForGuarantee.label} <abbr title="required" class="slds-required">*</abbr> </label>
+                              </div>
+                              <div class="slds-col slds-size_2-of-3">
+                                <template if:true={areYouReadyToGuarnteeLoanType.data}>
+                                    <lightning-combobox variant="label-hidden" name="readyForGuarantee" class="readyForGuarantee loanInformationDetails" required value={inputWrapper.readyForGuarantee.value} options={areYouReadyToGuarnteeLoanType.data.values} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                              </div>
+                            </div>
+                          </div>
+
+                </div>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1" lwc:if={borrowerFlag}>
+                        <c-l-w-c_-l-o-s_-loan-informationfi-details record-id={recordId} fi-record-id={fiRecordId} onvehicleinfoevt={vehicleInfoHandler} is-disabled={loanInfoTableDisabled}></c-l-w-c_-l-o-s_-loan-informationfi-details>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Borrower Information" label="Borrower Information">
+                <div class="slds-form slds-grid slds-wrap" lwc:if={borrowerFlag}>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label"  for="officeAddressLine1">Office Address Line 1</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input-field id="officeAddressLine1" variant="label-hidden" field-name="Address_Line_1__c" value={addLine1} disabled="true"></lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label" for="officeAddressLine2">Office Address Line 2</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input-field id="officeAddressLine2" variant="label-hidden" field-name="Address_Line_2__c" value={addLine2} disabled="true"></lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label" for="officeCity">Office City</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input-field id="officeCity" variant="label-hidden" field-name="City__c" value={cty} disabled="true" ></lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label" for="officePinCode">Office Pin code</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input-field id="officePinCode" variant="label-hidden" field-name="Pin_Code__c" value={pincde} disabled="true">
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label" for="officeState">Office State</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input-field id="officeState" variant="label-hidden" field-name="State__c" value={state} disabled="true" ></lightning-input-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form slds-grid slds-wrap">
+                    <template lwc:if={permanentAddr}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.permaddrLine1.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="permaddrLine1" value={inputWrapper.permaddrLine1.value} onchange={handleInputChange}
+                                        disabled>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.permaddrLine2.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="permaddrLine2" value={inputWrapper.permaddrLine2.value} onchange={handleInputChange}
+                                        disabled>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.permcity.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="permcity" value={inputWrapper.permcity.value} onchange={handleInputChange} disabled>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.permpinCode.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="permpinCode" value={inputWrapper.permpinCode.value} onchange={handleInputChange} disabled>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.permstate.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="permstate" value={inputWrapper.permstate.value} onchange={handleInputChange} disabled>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.currentAddrisDiffKycAddr.label} <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={isCurrentAddrDiffKycAddr.data}>
+                                    <lightning-combobox variant="label-hidden" name="currentAddrisDiffKycAddr"
+                                        value={inputWrapper.currentAddrisDiffKycAddr.value} options={isCurrentAddrDiffKycAddr.data.values}
+                                        class="validate borrowerInformationDetails" required onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.numberOfYearsInCity.label} <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={isCurrentAddrDiffKycAddr.data}>
+                                    <lightning-input variant="label-hidden" name="numberOfYearsInCity"
+                                        value={inputWrapper.numberOfYearsInCity.value}
+                                        class="validate borrowerInformationDetails" required onchange={handleInputChange}>
+                                    </lightning-input>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <template lwc:if={showAddrifCurretAddrisDiff}>
+                        <!-- Field: FI_Address_Line_1__c -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.FIAddressLine1.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="FIAddressLine1" class="CurrentaddressDiffClass"
+                                    value={inputWrapper.FIAddressLine1.value} onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field: FI_Address_Line_2__c -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.FIAddressLine2.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="FIAddressLine2" class="CurrentaddressDiffClass"
+                                    value={inputWrapper.FIAddressLine2.value} onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field: FI_State__c -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.FIState.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="FIState" class="CurrentaddressDiffClass"
+                                    value={inputWrapper.FIState.value} onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field: FI_District__c -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.FIDistrict.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="FIDistrict" class="CurrentaddressDiffClass"
+                                    value={inputWrapper.FIDistrict.value} onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field: FI_City__c -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.FICity.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="FICity" class="CurrentaddressDiffClass"
+                                    value={inputWrapper.FICity.value} onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field: FI_Pin_Code__c -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.FIPinCode.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="FIPinCode" class="CurrentaddressDiffClass"
+                                    value={inputWrapper.FIPinCode.value} onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Field 2: Original KYC verified -->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.originalKYCVerified.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="checkbox" variant="label-hidden" name="originalKYCVerified" class="borrowerInformationDetails"
+                                    value={inputWrapper.originalKYCVerified.value} onchange={handleCheckboxChange}
+                                    checked={inputWrapper.originalKYCVerified.value}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.officeType.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={officeType.data}>
+                                <lightning-combobox variant="label-hidden" name="officeType" class="officeTypeClass borrowerInformationDetails" required  value={inputWrapper.officeType.value} options={officeType.data.values} onchange={handleInputChange}>
+                                </lightning-combobox>
+                              </template>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.officeOwnerShip.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={officeOwnership.data}>
+                                <lightning-combobox variant="label-hidden" name="officeOwnerShip" class="officeOwnerShipClass borrowerInformationDetails" required  value={inputWrapper.officeOwnerShip.value} options={officeOwnership.data.values} onchange={handleInputChange}>
+                                </lightning-combobox>
+                              </template>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.howManyEmployeeinOffice.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" variant="label-hidden" name="howManyEmployeeinOffice" class="borrowerInformationDetails"
+                                    value={inputWrapper.howManyEmployeeinOffice.value} onchange={handleInputChange} required><!--SFTRAC-478 - Sahil -->
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.natureOfBusinessMajor.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={natureofBusinessMajorType.data}>
+                                    <lightning-combobox variant="label-hidden" name="natureOfBusinessMajor" class="natureOfBusinessMajorClass borrowerInformationDetails" required  value={inputWrapper.natureOfBusinessMajor.value} options={natureofBusinessMajorType.data.values} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                  </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.natureOfBusinessMinor.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="text" variant="label-hidden" name="natureOfBusinessMinor" class="borrowerInformationDetails"
+                                    value={inputWrapper.natureOfBusinessMinor.value} onchange={handleInputChange} required><!--SFTRAC-478 - Sahil -->
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.contactPersonNameandPhone.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-textarea variant="label-hidden" name="contactPersonNameandPhone" class="borrowerInformationDetails textAreaBody" required
+                                    value={inputWrapper.contactPersonNameandPhone.value} onchange={handleInputChange}></lightning-textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.contactPersonDesingnation.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="contactPersonDesingnation" class="borrowerInformationDetails"
+                                    value={inputWrapper.contactPersonDesingnation.value} onchange={handleInputChange} required> <!--SFTRAC-478 - Sahil -->
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Field 3: Land Irrigation source -->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.landIrrigationSource.label} <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                                <template if:true={landIrrigationSourceValues.data}>
+                                    <lightning-dual-listbox name="landIrrigationSource" variant="label-hidden" class="borrowerInformationDetails landIrrigationSourceClass multipicklistClass" required
+                                        source-label="Available" selected-label="Selected" options={landIrrigationSourceValues.data.values} value={inputWrapper.landIrrigationSource.value}
+                                        onchange={handleInputChange}></lightning-dual-listbox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Land, Crop, Cattle Information" label="Land, Crop, Cattle Information" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <!-- Field 11: Agri Commercial -->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.agriCommercial.label} <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                                <template if:true={agriCommercialValues.data}>
+                                    <lightning-dual-listbox name="agriCommercial" class="agriCommercialClass landInformationDetails multipicklistClass" required
+                                        variant="label-hidden" source-label="Available" selected-label="Selected" options={agriCommercialValues.data.values} value={inputWrapper.agriCommercial.value}
+                                        onchange={handleInputChange}></lightning-dual-listbox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+
+            <lightning-accordion-section name="Land Holding Details - Loan Holders & Family" label="Land Holding Details - Loan Holders & Family" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <c-l-w-c_-l-o-s_-land-holding-details field-investigation-record-id={fiRecordId} is-disabled={isDisabled} onrefreshchildcomponents={refreshchildComponents}></c-l-w-c_-l-o-s_-land-holding-details>
+                </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Crop Details - Last Year & Current Year" label="Crop Details - Last Year & Current Year" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                        <c-l-w-c_-l-o-s_-crop-details field-investigation-record-id={fiRecordId} year-of-crop-cultivation="Current Year" is-disabled={isDisabled}></c-l-w-c_-l-o-s_-crop-details>
+                    </div>
+                </div>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                        <c-l-w-c_-l-o-s_-crop-details field-investigation-record-id={fiRecordId} year-of-crop-cultivation="Last year" is-disabled={isDisabled}></c-l-w-c_-l-o-s_-crop-details>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Cattle Information" label="Cattle Information" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <c-l-w-c_-l-o-s_-cattle-information field-investigation-record-id={fiRecordId} is-disabled={isDisabled}></c-l-w-c_-l-o-s_-cattle-information>
+                </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Finanacial Liability Information" label="Finanacial Liability Information" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <!-- Field 1: Work Order Details SFTRAC-1183-->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.workOrderDetails.label} <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={workOrderDetail.data}>
+                                    <lightning-combobox variant="label-hidden" name="workOrderDetails"
+                                        value={inputWrapper.workOrderDetails.value} class="financialLiabilityInformation" required
+                                        options={workOrderDetail.data.values} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Field 2: Other source of Income -->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.otherSourceOfIncome.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="otherSourceOfIncome"
+                                    value={inputWrapper.otherSourceOfIncome.value} onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.itr1.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="itr1" type="number"
+                                    value={inputWrapper.itr1.value} onchange={handleInputChange}>
+                                </lightning-input>
+<!-- SFTRAC-478 - Sahil - type="number" -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.itr2.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="itr2" type="number"
+                                    value={inputWrapper.itr2.value} onchange={handleInputChange}>
+                                </lightning-input>
+<!-- SFTRAC-478 - Sahil - type="number" -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.itr3.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="itr3"  type="number"
+                                    value={inputWrapper.itr3.value} onchange={handleInputChange}>
+                                </lightning-input>
+<!-- SFTRAC-478 - Sahil - type="number" -->
+                            </div>
+                        </div>
+                    </div>
+               </div> 
+               <c-l-w-c_-l-o-s_-viability-of-existing-and-proposed-tractor field-investigation-record-id={fiRecordId} is-disabled={isDisabled}></c-l-w-c_-l-o-s_-viability-of-existing-and-proposed-tractor>
+
+               <c-lwc_-l-o-s_-work-order-details fi-record-id={fiRecordId} is-disabled={isDisabled} applicant-id={applicantId} application-id={applicationId} record-id={recordId}></c-lwc_-l-o-s_-work-order-details>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Non Agri Income" label="Non Agri Income" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <c-l-w-c_-l-o-s_-non-agri-income field-investigation-record-id={fiRecordId} is-disabled={isDisabled}></c-l-w-c_-l-o-s_-non-agri-income>
+                </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Existing Tractor Loan Information" label="Existing Tractor Loan Information" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <c-l-w-c_-l-o-s_-existing-tractor-loan-information field-investigation-record-id={fiRecordId} is-disabled={isDisabled}></c-l-w-c_-l-o-s_-existing-tractor-loan-information>
+                </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Fleet List" label="Fleet Information" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                        <c-lwc_-l-o-s_-fleet-details fi-record-id={fiRecordId} is-disabled={isDisabled}></c-lwc_-l-o-s_-fleet-details>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Total Expenses and Investments" label="Total Expenses and Investments" lwc:if={borrowerFlag}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <c-l-w-c_-l-o-s_-total-expense-investment-details fi-record-id={fiRecordId} onexpenseinvstmentevt={expInvHandler} is-disabled={isDisabled}></c-l-w-c_-l-o-s_-total-expense-investment-details>
+                </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Fi Information" label="Fi Information">
+                <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label
+                                        class="slds-form-element__label">{inputWrapper.distanceBranchtoCustomer.label} <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="distanceBranchtoCustomer" type="number" pattern="[0-9]+"
+                                        value={inputWrapper.distanceBranchtoCustomer.value} class="fiInformationDetails" required
+                                        onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field 5: ANY NEGATIVE OR CAUTION PROFILE -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={coborrowerAndGuarantor}> 
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.negativeProfile.label} <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={anyNeagativeorCautionProfileType.data}>
+                                        <lightning-combobox variant="label-hidden" name="negativeProfile"
+                                            value={inputWrapper.negativeProfile.value}
+                                            options={anyNeagativeorCautionProfileType.data.values} class="fiInformationDetails" required
+                                            onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field 6: NEGATIVE OR CAUTION Profile details -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={coborrowerAndGuarantor}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.negativeProfileDetails.label}
+                                        <lightning-helptext content="Mention the profile"></lightning-helptext>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="negativeProfileDetails" class="negativeProfileDetailsClass"
+                                        value={inputWrapper.negativeProfileDetails.value} onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field 8: VILLAGE/ AREA DOMINATED WITH ANY COMMUNITY -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label
+                                        class="slds-form-element__label">{inputWrapper.communityDominance.label}  <abbr title="required" class="slds-required">*</abbr> </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={villageDominatedwithAnyCommunityType.data}>
+                                        <lightning-combobox variant="label-hidden" name="communityDominance"
+                                            value={inputWrapper.communityDominance.value}
+                                            options={villageDominatedwithAnyCommunityType.data.values} class="fiInformationDetails" required
+                                            onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field 21: IF YES ANY MAJOR IMPACT OF OUR RECOVERY -->
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerFlag}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.majorImpact.label} <abbr title="required" class="slds-required">*</abbr></label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                            <template if:true={ifYesAnyImpactofOurRecoveryType.data}>
+                              <lightning-combobox variant="label-hidden" name="majorImpact" class="loanInformationDetails" required value={inputWrapper.majorImpact.value} options={ifYesAnyImpactofOurRecoveryType.data.values} onchange={handleInputChange}>
+                              </lightning-combobox>
+                            </template>
+                          </div>
+                        </div>
+                      </div>
+                        <!-- Field 9: FI OBSERVATION -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <label class="slds-form-element__label">{inputWrapper.fiObservation.label}  <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning-textarea variant="label-hidden" name="fiObservation" class="fiInformationDetails textAreaBody" required
+                                    value={inputWrapper.fiObservation.value} onchange={handleInputChange}></lightning-textarea>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium" lwc:if={borrowerFlag}>
+                            <lightning-button class="slds-align_absolute-center" variant="brand" label={getPhotoLabel} onclick={handleCaptureFrontViewUplaod} data-name="btn"></lightning-button>
+                        </div>
+                        <!-- Field 11: Profile to Product Match -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerAndCoborrower}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label
+                                        class="slds-form-element__label">{inputWrapper.profileToProductMatch.label} <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={profileToProductMatchType.data}>
+                                        <lightning-combobox variant="label-hidden" name="profileToProductMatch"
+                                            value={inputWrapper.profileToProductMatch.value}
+                                            options={profileToProductMatchType.data.values} class="fiInformationDetails" required
+                                            onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field 12: FI RESULT -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerAndCoborrower}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.fiResult.label} <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={fiResultType.data}>
+                                        <lightning-combobox variant="label-hidden" name="fiResult" required
+                                            value={inputWrapper.fiResult.value} options={fiResultType.data.values}
+                                            class="validate fiResultClass fiInformationDetails" onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field 13: IF NEGATIVE THEN REASON FOR NEGATIVE -->
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerAndCoborrower}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.negativeReason.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="negativeReason" class="negativeReasonClass"
+                                        value={inputWrapper.negativeReason.value} onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Field 14: FI date and time to be captured -->
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerAndCoborrower}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.fiDateTime.label} <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="fiDateTime" type="datetime" value={inputWrapper.fiDateTime.value} onchange={handleInputChange}
+                                    disabled>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Field 15: KYC location -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerAndCoborrower}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.kycLocation.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input-location variant="label-hidden" latitude={inputWrapper.kycLocation.latitude} longitude={inputWrapper.kycLocation.longitude} read-only>
+                                    </lightning-input-location>
+                                    <!-- <lightning-input-field field-name="KYC_Location__c"  variant="label-hidden"> </lightning-input-field> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                         <!-- Field 15: Fi location -->
+                         <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={borrowerAndCoborrower}>
+                         <div class="slds-form-element slds-grid slds-wrap">
+                             <div class="slds-col slds-size_1-of-3">
+                                 <label class="slds-form-element__label">{inputWrapper.FiLocation.label}</label>
+                             </div>
+                             <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input-location variant="label-hidden" latitude={inputWrapper.FiLocation.latitude} longitude={inputWrapper.FiLocation.longitude} read-only>
+                                    </lightning-input-location>
+                             </div>
+                         </div>
+                     </div>
+                        <!-- Field 16: Coordinates verify -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium" lwc:if={borrowerAndCoborrower}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label
+                                        class="slds-form-element__label">{inputWrapper.coordinatesVerfied.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-progress-ring name="coordinatesVerfied" variant={inputWrapper.coordinatesVerfied.value} value="100">
+                                    </lightning-progress-ring>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field 17: Existing no of vehicles -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium" lwc:if={borrowerFlag}>
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.existingNoofVehicle.label} <abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={existingNoofVehicleType.data}>
+                                        <lightning-combobox variant="label-hidden" name="existingNoofVehicle" required
+                                            value={inputWrapper.existingNoofVehicle.value} options={existingNoofVehicleType.data.values}
+                                            class="validate existingNoofVehicle fiInformationDetails" onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Field 28: ANY POLITICAL RELATION -->
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                          <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{inputWrapper.coborrowerPoliticalRelation.label}</label>
+                          </div>
+                          <div class="slds-col slds-size_2-of-3">
+                              <template if:true={isCoBorrowerHaveAnyPoliticalRelationType.data}>
+                                  <lightning-combobox variant="label-hidden" name="coborrowerPoliticalRelation" class="coborrowerPoliticalRelation" value={inputWrapper.coborrowerPoliticalRelation.value} options={isCoBorrowerHaveAnyPoliticalRelationType.data.values} onchange={handleInputChange}>
+                                  </lightning-combobox>
+                              </template>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                          <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                              <label class="slds-form-element__label">{inputWrapper.politicalRelationRemarks.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="politicalRelationRemarks" class="politicalRelationRemarks" value={inputWrapper.politicalRelationRemarks.value} onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+
+            </lightning-accordion-section>
+
+            <template if:false={disableRemarksField}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={callingFromFIScreen}>
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Remarks</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input name="Remarks" variant="label-hidden" value={inputWrapper.Remarks.value}
+                            disabled required> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                </template>
+            <div class="slds-grid slds-wrap slds-p-around_x-small" if:false={callingFromFIScreen}>
+                <div class="slds-col  slds-p-horizontal_medium slds-align_absolute-center">
+                    <button class="indusPrimaryButton slds-button slds-button_brand fiButton" onclick={saveFI} disabled={saveDisabled}>
+                        Save
+                    </button>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap" if:false={callingFromFIScreen}>
+                <div class="slds-col  slds-p-horizontal_medium slds-align_absolute-center">
+                    <!-- <button class="indusPrimaryButton slds-button slds-button_brand fiButton" onclick={saveFI} disabled={isSubmitDisabled}>
+                        Submit
+                    </button> -->
+                    <lightning-button
+                        data-id="MainSubmit"
+                        class="indusPrimaryButton"
+                        label="Submit"
+                        onclick={handleSubmitClicked}
+                        variant="brand"
+                        disabled={isSubmitDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+        </lightning-accordion>
+        </lightning-record-edit-form>
+         <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={applicationId} currentapplicantid={applicantId}
+            uploadviewdocpopup={uploadViewDocFlag} doctype={documentType} showdocview={showDocView}
+            showupload={showUpload}  alldocs={isAllDocType} vehicledocs={isVehicleDoc} functionality={functionality}
+            documentrecordidfromparent={documentId} ondocdelete={docDeleted} recordtypename = {sendingRecordTypeName}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+        <template lwc:if={viewDocFlag}>
+            <c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document onchangeflagvalue={changeflagvalue} currentloanapplicationid={applicationId} currentapplicantid={applicantId} uploadviewdocpopup={viewDocFlag} doctype={documentType} showdocview={showDocView} showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentId}>
+            </c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document>
+        </template>
+        <!-- <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={applicationId} currentapplicantid={applicantId}
+            uploadviewdocpopup={uploadViewDocFlag} doctype={documentType} showdocview={showDocView}
+            showupload={showUpload}  alldocs={isAllDocType} vehicledocs={isVehicleDoc} 
+            document-record-id={documentId} documentrecordidfromparent={documentId} ondocdelete={docDeleted} recordtypename = {sendingRecordTypeName}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+           
+        </template> --> 
+    </template>
+</div>
+
+</template>

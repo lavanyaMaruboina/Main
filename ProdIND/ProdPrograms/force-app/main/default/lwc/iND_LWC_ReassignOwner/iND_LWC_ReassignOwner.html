@@ -1,0 +1,202 @@
+<template>
+	<template if:true={isSpinnerMoving} class="slds-align_absolute-center slds">
+		<lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+		</lightning-spinner>
+	</template>
+	<div>
+		<div class="slds-page-header slds-page-header_vertical slds-box">
+			<div class="slds-media slds-m-bottom_small">
+				<div class="slds-media__figure">
+					<lightning-icon icon-name="utility:change_owner" class="my-icon"></lightning-icon>
+				</div>
+				<div class="slds-media__body">
+					<lightning-layout>
+						<lightning-layout-item size="6">
+							<template if:false={showLandingOptions}>
+								<div class="slds-breadcrumb slds-list_horizontal slds-wrap">
+									<div class="slds-breadcrumb__item slds-line-height--reset">
+										<span class="slds-var-p-right_x-small">{selectedOption}</span>
+									</div>
+								</div>
+							</template>
+							<div class="slds-page-header__name">
+								<div class="slds-page-header__name-title slds-m-top_none">
+									<h1>
+										<span class="slds-page-header__title slds-hyphenate"
+											title="Burlington Textile Weaving Plant Generator">Reassign Owner</span>
+									</h1>
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="6">
+							<template if:false={showLandingOptions}>
+								<div class="slds-float_right">
+									<button class="slds-button slds-button_icon" title="Home" onclick={handleHome}>
+										<lightning-icon icon-name="standard:home"
+											alternative-text="Home"></lightning-icon>
+										<span class="slds-assistive-text">Home</span>
+									</button>
+								</div>
+							</template>
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+			</div>
+			<template lwc:if={showLandingOptions}>
+				<div class="c-container">
+					<lightning-layout multiple-rows>
+						<template lwc:if={hasApproverRole}>
+							<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+								medium-device-size="6" large-device-size="6">
+								<lightning-combobox label="Select an Action" value={selectedAction}
+									placeholder="Select an action" options={actionList} onchange={handleActionChange}
+									disabled={isSelectedActionInputDisabled} required>
+								</lightning-combobox>
+							</lightning-layout-item>
+							<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+								medium-device-size="6" large-device-size="6">
+								<lightning-combobox label="Please select an option" value={selectedOption}
+									placeholder="Select an option" options={options} onchange={handleOptionChange}
+									lwc:ref="selectedOptionInput" disabled={isSelectedOptionInputDisabled} required>
+								</lightning-combobox>
+							</lightning-layout-item>
+						</template>
+						<template lwc:else>
+							<lightning-layout-item padding="around-small" size="12" small-device-size="12"
+								medium-device-size="12" large-device-size="12">
+								<lightning-combobox label="Please select an option" value={selectedOption}
+									placeholder="Select an option" options={options} onchange={handleOptionChange}
+									lwc:ref="selectedOptionInput" disabled={isSelectedOptionInputDisabled} required>
+								</lightning-combobox>
+							</lightning-layout-item>
+						</template>
+					</lightning-layout>
+
+					<lightning-layout class="slds-p-vertical_small slds-align_absolute-center">
+						<lightning-layout-item>
+							<lightning-button variant="brand" type="button" label="Proceed" onclick={handleProceed}
+								disabled={isProceedButtonDisabled}>
+							</lightning-button>
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+			</template>
+
+			<template lwc:if={showModal}>
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+								title="Close" onclick={closeModal}>
+								<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+									size="small"></lightning-icon>
+								<span class="slds-assistive-text">Close</span>
+							</button>
+							<h2 id="modal-heading-01" class="slds-text-heading--medium slds-hyphenate">Change Owner
+							</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"
+							style="min-height:350px;">
+							<template lwc:if={isMorethanOneRecordSelected}>
+								<p class="slds-m-vertical_small">You've selected {selectedRows.length} records.</p>
+							</template>
+							<template lwc:else>
+								<p class="slds-m-vertical_small">You've selected {selectedRows.length} record.</p>
+							</template>
+							<c-generic-custom-lookup is-value-selected={isUserSelected} selected-name={selectedUserName}
+								icon-name='standard:avatar' is-called-from-reassign-owner="true"
+								parent-data={reassignOwnerData} onclearvalue={clearUserSelection}
+								onlookupselected={handleUserSelection}
+								is-custom-lookup-field-disabled={isUserLookupDisabled} select-field-name='Ben Code'
+								small-input="true">
+							</c-generic-custom-lookup>
+						</div>
+						<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_neutral" onclick={closeModal}
+								title="Cancel">Cancel</button>
+							<button class="slds-button slds-button_brand" onclick={handleSubmit} title="Submit"
+								disabled={isSubmitButtonDisabled}>Submit</button>
+						</footer>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+			</template>
+
+			<template lwc:if={showSearchOptions}>
+				<div class="c-container">
+					<lightning-layout multiple-rows>
+						<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-combobox label="Branch Name" value={blCodeValue}
+								message-when-value-missing="Complete this field" onchange={handleBranchNameChange}
+								options={blCodeOptions} disabled={isBlCodeDisabled} required>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-combobox label="Lead Source" value={leadSourceValue}
+								message-when-value-missing="Complete this field" onchange={handleLeadSourceChange}
+								options={leadSourceOptions} lwc:ref="leadSourceInput" disabled required>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-combobox label="Team Role" value={roleValue}
+								message-when-value-missing="Complete this field" onchange={handleRoleChange}
+								options={roleOptions} lwc:ref="teamRoleInput" disabled required>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input type="text" label="Lead Number" placeholder="Enter Lead Number here..."
+								value={leadNumberValue} onchange={handleLeadNumberChange} minlength="3" disabled={isLeadNumberDisabled}
+								max-length="30"></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input type="text" label="Ben Code" placeholder="Enter Ben Code here..."
+								value={benCodeValue} onchange={handleBenCodeChange} minlength="3" max-length="30" disabled={isBenCodeDisabled}>
+							</lightning-input>
+						</lightning-layout-item>
+					</lightning-layout>
+					<lightning-layout class="slds-p-vertical_small slds-align_absolute-center">
+						<lightning-layout-item>
+							<lightning-button variant="brand" type="button" label="Search" onclick={handleSearch}
+								disabled={isSearchButtonDisabled}>
+							</lightning-button>
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+			</template>
+			<template lwc:if={showSearchResults}>
+				<lightning-card title="Search Results" icon-name="action:record">
+					<template lwc:if={isApproverScreen}>
+						<lightning-button class="slds-m-right_x-small" variant="neutral" type="button" label="Reject"
+							slot="actions" onclick={handleReassignRequest} data-action="Reject"
+							disabled={isChangeOwnerDisabled}>
+						</lightning-button>
+						<lightning-button class="slds-m-right_x-small" variant="brand" type="button" label="Approve"
+							slot="actions" onclick={handleReassignRequest} data-action="Approve"
+							disabled={isChangeOwnerDisabled}>
+						</lightning-button>
+					</template>
+					<template lwc:else>
+						<lightning-button class="slds-m-right_x-small" variant="brand" type="button"
+							label="Change Owner" slot="actions" onclick={openModal} disabled={isChangeOwnerDisabled}>
+						</lightning-button>
+					</template>
+					<c-i-n-d_-l-w-c_-datatable-with-pagination columns={columns} table-data={tableData}
+						onupdateselectedrowvalues={handleUpdateSelectedRowValues}
+						page-size={pageSize}></c-i-n-d_-l-w-c_-datatable-with-pagination>
+				</lightning-card>
+			</template>
+			<template lwc:if={showNoRecordError}>
+				<div class="slds-align_absolute-center slds-text-heading_small slds-p-around_xx-small slds-text-color_inverse"
+					style="background:#ba0517;border-radius: 0.25rem;">
+					{noRecordError}
+				</div>
+			</template>
+		</div>
+	</div>
+</template>

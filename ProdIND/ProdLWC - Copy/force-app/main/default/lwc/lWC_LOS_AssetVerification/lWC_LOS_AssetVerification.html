@@ -1,0 +1,746 @@
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+        <template if:true={avRecIdList}>
+        <lightning-card >
+            <h2 slot="title" style="color: #8e030f;">Asset Verification</h2>
+            <lightning-accordion onsectiontoggle={handleToggleSection} active-section-name="0">
+                <template for:each={avRecIdList} for:item="av" for:index="index">
+                    <lightning-accordion-section name={index} label={av.avLabel} key={av}>
+                        <template if:false={psdStage}>
+                        <lightning-record-edit-form  data-id={av.avId} record-id={av.avId} object-api-name="Asset_Verification__c"
+                            onsuccess={handleSuccess} onsubmit ={handleSubmit}>
+                            <lightning-messages>
+                            </lightning-messages>
+                            <div class="slds-grid slds-wrap slds-grid_align-spread ">
+                                <template if:true={isTypeNew}>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-output-field field-name="Asset_MMV__c">
+                                        </lightning-output-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Serial_No__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div> 
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Date_of_Delivery__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div>
+                                </template>
+
+                                <template if:true={isTypeNewUsedRef}></template>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Engine_No__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Chasis_No__c" disabled>
+                                        </lightning-input-field>
+                                    </div> 
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Engine_and_Chassis_Number_Matches__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div> 
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="HMR__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div>
+                                
+
+                                <template if:true={isTypeUsedRef}>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Hypothetation_available__c" disabled={av.isCompleted} required>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="RC_No__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="RC_in_the_name_of__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="Insurance_Validity_Date__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div> 
+                                </template>
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                    <lightning-output-field field-name="Case__c">
+                                    </lightning-output-field>
+                                </div> 
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                    <lightning-output-field field-name="Vehicle_Detail__c">
+                                    </lightning-output-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                    <lightning-input-field field-name="Status__c" value={av.Status__c} onchange={handleStatusChange} data-record-id={av.avId} disabled={av.isCompleted}>
+                                    </lightning-input-field>
+                                </div> 
+
+                                <!--SFTRAC-147 Starts-->
+                                <template if:true={isPSStage}>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="PDAV_Status__c" onchange={handleStatusChange} data-record-id={av.avId} disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                        <lightning-input-field field-name="PDAV_Remarks__c" disabled={av.isCompleted}>
+                                        </lightning-input-field>
+                                    </div>
+                                </template>
+                                <!--SFTRAC-147 Ends-->
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                    <lightning-input-field field-name="Date_of_submission__c" value={av.dateOfSubmission} data-record-id={av.avId} disabled>
+                                    </lightning-input-field>
+                                </div>                            
+                            </div>
+                            <div class="slds-grid">
+                                <template if:false={av.avStatus}>
+                                    <div>
+                                        <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save"
+                                                            data-record-id={av.avId} >
+                                        </lightning-button>
+                                    </div>
+                                    <div class="slds-p-left_large">
+                                        <lightning-button class="slds-m-top_small" variant="brand"  name="upload" label="Document Upload"
+                                                          onclick={handleUploadButtonClick} data-record-id={av.avId}>
+                                        </lightning-button>
+                                    </div> 
+                                </template>
+                                
+                                <!--<template if:true={isTypeNewUsedRef}></template>-->
+                                    
+                                    <!--SFTRAC-99-->
+                                    <template if:true={psdStage}>
+                                    <div class="slds-col slds-size_6-of-12 slds-align-bottom slds-p-horizontal_small">
+                                        <lightning-button label="Initiate Asset Verification" title="Initiate Asset Verification" type="button" icon-position="left" variant="brand" class="button-3 " onclick={handleInitiateAV} disabled ={av.avStatus} value={av.avId} >
+                                        </lightning-button>
+                                    </div>
+                                </template>
+                            </div>
+                                    <div class="slds-table slds-table_cell-buffer slds-p-around_medium slds-scrollable_x" style="width: 100vw;">
+                                            <table class="slds-table slds-table_bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <template if:false={av.isImplement}>
+                                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                           Engine Document
+                                                        </th>
+                                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                           Chassis Document
+                                                        </th>
+                                                        </template>                                                 
+                                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Self with Vehicle Document
+                                                         </th>
+                                                         <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Vehicle Front Document
+                                                         </th>
+                                                         <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Vehicle Back Document
+                                                         </th>
+                                                         <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Capture Vehicle Right Side
+                                                         </th>
+                                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Capture Vehicle Left Side
+                                                        </th>
+                                                        <!--SFTRAC-1785 Start-->
+                                                        <template if:true={av.isImplement}>
+                                                            <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                                Capture Serial Number
+                                                            </th>
+                                                        </template>
+                                                        <!--SFTRAC-1785 End-->
+                                                        <template if:false={av.isImplement}>
+                                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Capture Chassis plate
+                                                        </th>
+                                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                            Capture HMR
+                                                        </th>
+                                                        </template>                           
+                                                    </tr>
+                                                </thead>
+                                                        <tbody>
+                                                           <tr >
+                                                            <template if:false={av.isImplement}>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.engineImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.engineImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.engineImgUploaded} >
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="engine"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.chassisImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.chassisImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.chassisImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="chassisNumber"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            </template>
+                                                            
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.selfieWithVehImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.selfieWithVehImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.selfieWithVehImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="selfiewithVeh"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.vehFrontImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.vehFrontImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.vehFrontImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehFront"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.vehBackImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.vehBackImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.vehBackImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehBack"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.vehRightImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.vehRightImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.vehRightImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehRight"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.vehLeftImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.vehLeftImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.vehLeftImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehLeft"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <!--SFTRAC-1785 Start-->
+                                                            <template if:true={av.isImplement}>
+                                                                <td class="slds-cell-wrap cell-border">
+                                                                    <div class="slds-truncate">
+                                                                        <span class="slds-p-left_xx-small" if:true={av.serialNoUploaded}>&#x2714;</span>
+                                                                        <span class="slds-p-left_xx-small" if:false={av.serialNoUploaded}>&#10060;</span>
+                                                                        <template if:true={av.serialNoUploaded}>
+                                                                            <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="serialNo"> </lightning-icon>
+                                                                        </template>
+                                                                    </div>
+                                                                </td>
+                                                            </template>
+                                                            <!--SFTRAC-1785 End-->
+    
+                                                            <template if:false={av.isImplement}>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.chassisPlateImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.chassisPlateImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.chassisPlateImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="chassisPlate"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            <td class="slds-cell-wrap cell-border">
+                                                                <div class="slds-truncate">
+                                                                    <span class="slds-p-left_xx-small" if:true={av.hmrImgUploaded}>&#x2714;</span>
+                                                                    <span class="slds-p-left_xx-small" if:false={av.hmrImgUploaded}>&#10060;</span>
+                                                                    <template if:true={av.hmrImgUploaded}>
+                                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="hmrImg"> </lightning-icon>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                            </template>                                                
+                                                           </tr>
+                                                        </tbody>
+                                            </table>
+                                        <!--</div>-->
+                                        
+                                    </div>
+                        </lightning-record-edit-form>
+                        </template>
+                        <template if:true={psdStage}> 
+                        <lightning-record-view-form  data-id={av.avId} record-id={av.avId} object-api-name="Asset_Verification__c">
+                    
+                            <div class="slds-grid slds-wrap slds-grid_align-spread ">
+                             <template if:true={isTypeNew}>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Asset_MMV__c">
+                                     </lightning-output-field>
+                                 </div>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Serial_No__c">
+                                     </lightning-output-field>
+                                 </div> 
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Date_of_Delivery__c">
+                                     </lightning-output-field>
+                                 </div>
+                             </template>
+
+                             <template if:true={isTypeNewUsedRef}></template>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Engine_No__c">
+                                     </lightning-output-field>
+                                 </div>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Chasis_No__c">
+                                     </lightning-output-field>
+                                 </div> 
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="HMR__c">
+                                     </lightning-output-field>
+                                 </div>
+                                 <template if:true={isTypeUsedRef}>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Hypothetation_available__c">
+                                     </lightning-output-field>
+                                 </div>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="RC_No__c">
+                                    </lightning-output-field>
+                                 </div>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                    <lightning-output-field field-name="RC_in_the_name_of__c">
+                                     </lightning-output-field>
+                                 </div>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="Insurance_Validity_Date__c">
+                                     </lightning-output-field>
+                                 </div> 
+                             </template>
+                             
+                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                 <lightning-output-field field-name="Case__c">
+                                 </lightning-output-field>
+                             </div> 
+                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                 <lightning-output-field field-name="Vehicle_Detail__c">
+                                 </lightning-output-field>
+                             </div>
+                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                 <lightning-output-field field-name="Status__c">
+                                 </lightning-output-field>
+                             </div> 
+
+                             <!--SFTRAC-147 Starts-->
+                             <template if:true={isPSStage}>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="PDAV_Status__c">
+                                     </lightning-output-field>
+                                 </div>
+                                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                     <lightning-output-field field-name="PDAV_Remarks__c">
+                                     </lightning-output-field>
+                                 </div>
+                             </template>
+                             <!--SFTRAC-147 Ends-->
+                             
+                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-p-right_x-large slds-p-top_x-small">
+                                 <lightning-output-field field-name="Date_of_submission__c">
+                                 </lightning-output-field>
+                             </div>                            
+                         </div>
+                         <div class="slds-table slds-table_cell-buffer slds-p-around_medium">
+                            <table class="slds-table slds-table_bordered">
+                                <thead>
+                                    <tr>
+                                        <template if:false={av.isImplement}>
+                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                           Engine Document
+                                        </th>
+                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                           Chassis Document
+                                        </th>
+                                        </template>
+                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Self with Vehicle Document
+                                         </th>
+                                         <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Vehicle Front Document
+                                         </th>
+                                         <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Vehicle Back Document
+                                         </th>
+                                         <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Capture Vehicle Right Side
+                                         </th>
+                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Capture Vehicle Left Side
+                                        </th>
+                                        <!--SFTRAC-1785 Start-->
+                                        <template if:true={av.isImplement}>
+                                            <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                                Capture Serial Number
+                                            </th>
+                                        </template>
+                                        <!--SFTRAC-1785 End-->
+                                        <template if:false={av.isImplement}>
+                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Capture Chassis plate
+                                        </th>
+                                        <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                            Capture HMR
+                                        </th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                        <tbody>
+                                           <tr >
+                                            <template if:false={av.isImplement}>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.engineImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.engineImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.engineImgUploaded} >
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="engine"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.chassisImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.chassisImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.chassisImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="chassisNumber"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            </template>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.selfieWithVehImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.selfieWithVehImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.selfieWithVehImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="selfiewithVeh"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.vehFrontImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.vehFrontImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.vehFrontImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehFront"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.vehBackImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.vehBackImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.vehBackImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehBack"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.vehRightImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.vehRightImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.vehRightImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehRight"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.vehLeftImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.vehLeftImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.vehLeftImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="vehLeft"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <!--SFTRAC-1785 Start-->
+                                            <template if:true={av.isImplement}>
+                                                <td class="slds-cell-wrap cell-border">
+                                                    <div class="slds-truncate">
+                                                        <span class="slds-p-left_xx-small" if:true={av.serialNoUploaded}>&#x2714;</span>
+                                                        <span class="slds-p-left_xx-small" if:false={av.serialNoUploaded}>&#10060;</span>
+                                                        <template if:true={av.serialNoUploaded}>
+                                                            <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="serialNo"> </lightning-icon>
+                                                        </template>
+                                                    </div>
+                                                </td>
+                                            </template>
+                                            <!--SFTRAC-1785 End-->
+                                            <template if:false={av.isImplement}>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.chassisPlateImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.chassisPlateImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.chassisPlateImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="chassisPlate"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-cell-wrap cell-border">
+                                                <div class="slds-truncate">
+                                                    <span class="slds-p-left_xx-small" if:true={av.hmrImgUploaded}>&#x2714;</span>
+                                                    <span class="slds-p-left_xx-small" if:false={av.hmrImgUploaded}>&#10060;</span>
+                                                    <template if:true={av.hmrImgUploaded}>
+                                                        <lightning-icon icon-name="utility:preview" size="x-small" alternative-text="Preview Document" onclick={previewDocument} data-id={av.avId} data-type="hmrImg"> </lightning-icon>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            </template>
+                                           </tr>
+                                        </tbody>
+                            </table>
+                        </div>
+                         <div class="slds-grid">
+                   
+                                 <!--SFTRAC-99-->
+                                 <div class="slds-col slds-size_6-of-12 slds-align-bottom slds-p-horizontal_small">
+                                     <lightning-button label="Notify User to Verify" title="Notify User to Verify" type="button" icon-position="left" variant="brand" class="button-3 " onclick={handleInitiateAV} disabled ={av.avStatus} value={av.avId} >
+                                     </lightning-button>
+                                 </div>
+                         </div>
+                           
+                     </lightning-record-view-form>
+                    
+                </template>
+                    </lightning-accordion-section>
+                </template>
+            </lightning-accordion>
+            
+            
+
+            <template if:true={isModalOpen}>
+                <!-- Modal/Popup Box LWC starts here -->
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- Modal/Popup Box LWC header here -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Upload Asset Verification Documents</h2>
+                        </header>
+                        <lightning-card>
+                            <!-- Modal/Popup Box LWC body starts here -->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <h2>Select Document Type</h2>
+                            <lightning-combobox class="slds-form-element__control" variant="label-hidden" 
+                                        options={filteredOptions} value={documentType} disabled={documentTypeDisabled} onchange={handleChange}></lightning-combobox>          
+                        </div>
+                        <template if:true={uploadViewDocFlag}>
+                            <template lwc:if={isWebApp}>
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">   
+                                        <lightning-file-upload label="Upload File" variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader" accept={acceptedFormats} record-id={documentId}
+                                            onuploadfinished={handleFileUpload} multiple disabled={disabledFileUpload} ></lightning-file-upload>
+                                    
+                                </div>
+                            </div>
+                            </template>
+                            <template lwc:else>
+                                <div class="slds-clearfix">
+                                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                        <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                            type="button" label="Upload File" onclick={navigateToIntegratorApp}></lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!--<c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+                            currentloanapplicationid={applicationId} currentapplicantid={applicantId}
+                            uploadviewdocpopup={uploadViewDocFlag} doctype={documentType} showdocview={showDocView}
+                            showupload={showUpload}  alldocs={isAllDocType} vehicledocs={isVehicleDoc}
+                            documentrecordidfromparent={documentId} ondocdelete={docDeleted} recordtypename = {sendingRecordTypeName}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+                            CISP-2975-->
+                        </template>
+                        <!-- Modal/Popup Box LWC footer starts here -->
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                        </footer>
+                        </lightning-card>
+                        
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" style="height: 220vh !important;"></div>
+            </template>
+        </lightning-card>
+ 
+  
+   <!-- <lightning-accordion onsectiontoggle={handleToggleSection} active-section-name="0">
+        <template for:each={vehicleDetails} for:item="vd" for:index="index">
+            <lightning-accordion-section name={index} label={vd.accordianLabel} key={vd.vdId}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label"> Vehicle type<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.vehicleType} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={isTypeNew}>
+                        Add Asset MMV, Serial No, Date of Delivery
+                    </template>
+
+                    <template if:true={isTypeNewUsedRef}>
+                        Add Engine No, Chasis No, HMR, Upload Button, Date of submission, Status
+                    </template>
+
+                    <template if:true={isTypeUsedRef}>
+                        Add RC no, Insurance Validity Date, RC in the name of, Hypothetation available
+                    </template>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label"> Asset MMV</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.vehicleType} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label"> Engine No.</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.engineNoValue} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label"> Chasis No.</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.chassisNoValue} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Serial No.</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.serialNoValue} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">HMR</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.hMR} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Date of Delivery</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.dateofDelivery} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Insurance Validity Date</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.insuranceValidityDate} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">RC in the name of</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.vehicleType} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Hypothetation available</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.hypothetationavailable} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Status</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" 
+                                        options={aVStatus} value={vd.status} ></lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Date of submission</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" value={vd.dateofSubmission} variant="label-hidden" type="text" 
+                                disabled required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>-->
+</template>
+</template>

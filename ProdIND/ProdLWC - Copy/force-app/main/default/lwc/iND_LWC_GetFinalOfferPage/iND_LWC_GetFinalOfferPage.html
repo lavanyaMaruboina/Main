@@ -1,0 +1,363 @@
+<template>
+  <!-- Spinner -->
+  <template if:false={getFinalOfferDetailflag}>
+    <div class="demo-only demo-only" style="height:6rem;position:relative">
+      <div class="slds-spinner_container">
+        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+          <span class="slds-assistive-text">Loading</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </div>
+    <br />
+  </template>
+  <!--End Spinner -->
+
+  <div if:true={getFinalOfferDetailflag} class="slds-p-around_xx-small"
+    style="background-color: white; border-radius: 0.4rem;">
+    <div class="slds-m-top_small slds-text-align_center">
+      <p>
+        <lightning-icon style="background-color: #77D353 !important;" icon-name="action:approval"
+          alternative-text="Approved" title="Approved"></lightning-icon>
+      </p>
+      <p class="slds-text-title_bold slds-m-top_small">Congratulations <b>{getFinalOfferDetails.loanApplicationName}!!</b> Your Loan has been sanctioned by Induslnd
+        bank!!
+      </p>
+    </div>
+
+    <br>
+
+<template lwc:if={isTractor}>
+    <div>
+      <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Name" type="text" label="Name"
+                value={getFinalOfferDetails.loanApplicationName}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Lead_Number__c" type="text"
+                label="Application No" value={getFinalOfferDetails.loanApplicationNumber}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Contact_number__c" type="text"
+                label="Contact No" value={getFinalOfferDetails.loanApplicationContactNumber}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1"> 
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="Application form consent" value={consentDetails.applicationformconsent}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12"> 
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="Insurance form consent" value={consentDetails.insuranceformconsent}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <lightning-accordion allow-multiple-sections-open 
+      active-section-name='MMV Records'>
+    
+      <template for:each={getFinalOfferDetails.MMVDetailsList} for:item="item">
+        <lightning-accordion-section label={item.makeModelVariant} key={item}>
+          <div>
+          <div class="slds-grid slds-wrap slds-box slds-box_small">
+
+          <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <span>
+              <div class="slds-p-around_medium lgc-bg">
+                <lightning-input data-name="offer_input" readonly="true" data-label="Loan_Amount__c" type="text"
+                  label="Loan Amount" value={item.offerLoanAmount}>
+                </lightning-input>
+              </div>
+            </span>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <span>
+              <div class="slds-p-around_medium lgc-bg">
+                <lightning-input data-name="offer_input" readonly="true" data-label="Tenure__c" type="text" label="Tenure"
+                  value={item.offerTenure}>
+                </lightning-input>
+              </div>
+            </span>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <span>
+              <div class="slds-p-around_medium lgc-bg">
+                <lightning-input data-name="offer_input" readonly="true" data-label="CRM_IRR__c" type="text"
+                  label="Required CRM IRR" value={item.offerIrr}>
+                </lightning-input>
+              </div>
+            </span>
+          </div>
+          <!-- SFTRAC-2301 Start -->
+          <template if:true={isTractor}>
+            <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+              <span>
+                <div class="slds-p-around_medium lgc-bg">
+                  <lightning-input data-name="derived_offer_input" readonly="true" data-label="DERIVED_CRM_IRR__c" type="text"
+                    label="Derived CRM IRR" value={item.offerDerivedIrr}>
+                  </lightning-input>
+                </div>
+              </span>
+            </div>
+          </template>
+          <!-- SFTRAC-2301 End -->
+          <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <span>
+              <div class="slds-p-around_medium lgc-bg">
+                <lightning-input data-name="offer_input" readonly="true" data-label="EMI_Amount__c" type="text"
+                  label="EMI Amount" value={item.offerEmi}>
+                </lightning-input>
+              </div>
+            </span>
+          </div>
+          <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <span>
+              <div class="slds-p-around_medium lgc-bg">
+                <lightning-input data-name="offer_input" readonly="true" type="text"
+                  label="No of Instalments" value={item.numberOfInstallmentValue}>
+                </lightning-input>
+              </div>
+            </span>
+          </div>
+          <template if:true={isTractor}>
+            <div class="slds-col slds-size_1-of-1 slds-text-align_center">
+            <span>
+                <div class="slds-p-around_medium lgc-bg slds-align_absolute-center">
+                    <button type="button" value={item.vehicleObjId} class="slds-button slds-button_brand" onclick={handleInstallmentScheduleForTractor}>Installment Schedule</button>
+                </div>
+            </span>
+            </div>
+          </template>
+          </div>
+          </div>
+        </lightning-accordion-section>
+      </template>
+
+      </lightning-accordion>
+
+
+    </div>
+
+  </template>
+
+  <template lwc:else>
+    <div>
+      <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Name" type="text" label="Name"
+                value={getFinalOfferDetails.loanApplicationName}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Lead_Number__c" type="text"
+                label="Application No" value={getFinalOfferDetails.loanApplicationNumber}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Contact_number__c" type="text"
+                label="Contact No" value={getFinalOfferDetails.loanApplicationContactNumber}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="textarea-id-01">MMV</label>
+                <div class="slds-form-element__control">
+                  <textarea disabled id="textarea-id-01" class="slds-textarea">{getMMVDetails}</textarea>
+                </div>
+              </div>
+              <!-- <lightning-textarea data-name="offer_input" readonly="true" data-label="Make__c, Model__c, Variant__c"
+                label="MMV" value={getMMVDetails} style="border: none !important;">
+              </lightning-textarea> -->
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Loan_Amount__c" type="text"
+                label="Loan Amount" value={getFinalOfferDetails.offerLoanAmount}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="Tenure__c" type="text" label="Tenure"
+                value={getFinalOfferDetails.offerTenure}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="CRM_IRR__c" type="text"
+                label="CRM IRR" value={getFinalOfferDetails.offerIrr}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" data-label="EMI_Amount__c" type="text"
+                label="EMI Amount" value={getFinalOfferDetails.offerEmi}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="No of Instalments" value={getFinalOfferDetails.numberOfInstallmentValue}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12" if:true={getFinalOfferDetails.isProductTypePV}>
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="Net IRR" value={getFinalOfferDetails.netIRRValue}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12" if:true={getFinalOfferDetails.isProductTypePV}>
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="Gross IRR" value={getFinalOfferDetails.grossIRRValue}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12"> <!--CISP-7415 Removed visibility filter to show this field for both PV and TW-->
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="Application form consent" value={consentDetails.applicationformconsent}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12"> <!--CISP-7415 Removed visibility filter to show this field for both PV and TW-->
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" readonly="true" type="text"
+                label="Insurance form consent" value={consentDetails.insuranceformconsent}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+</template>
+
+
+    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-bottom_small">
+      <div style="display: flex; justify-content:center; align-items:center;">
+        <button class="slds-button slds-button_brand" title="Trigger Application Form Consent" type="button"
+          disabled={disabledAppConsentBtn} onclick={triggerApplicationFormConsentHandler}>Trigger Application Form
+          Consent</button>
+        <button class="slds-button slds-button_brand" title="Trigger Insurance Consent" type="button"
+          disabled={disabledInsuranceConsentBtn} onclick={triggerInsuranceConsentHandler}>Trigger Insurance Consent</button>
+
+        <template if:false={isTractor}>
+          <button type="button" class="slds-button slds-button_brand" onclick={handleInstallmentSchedule} disabled={disableInsSchedule}>Installment Schedule</button>
+        </template>
+          <button class="slds-button slds-button_brand" title="Trigger Sanction Communication" type="button"
+            disabled={getDisableTriggerBtn} onclick={triggerSanctionCommunicationBtnHandler}>Trigger Sanction
+            Communication</button>
+      </div>
+    </div>
+
+    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+      <div style="display: flex; justify-content:center; align-items:center;">
+        <button class="slds-button slds-button_brand" title="Submit Action" type="button" disabled={getDisabledSubmitBtn}
+          onclick={handleSubmit}>Submit</button>
+      </div>
+    </div>
+
+  </div>
+  <template lwc:if={isModalOpen}>
+    <c-i-n-d-_-l-w-c-_-installment-schedule record-id={recordId} show-installment-model={isModalOpen} onclose={handleCloseModal} onsubmit={handleInsSubmit}></c-i-n-d-_-l-w-c-_-installment-schedule>
+  </template>
+    <template lwc:if={isModalOpenForTractor}>
+        <section role="dialog" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header" style="background: #8C3137;">
+                    <button style="background-color: grey"
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closebtn" title="Close"
+                        onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <div>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"
+                            style="color: white;">
+                            Installment Schedule
+                        </h2>
+                    </div>
+                </header>
+                <!-- <div class="slds-modal__content slds-p-around_medium slds-scrollable_x slds-grid"
+                    style="overflow-y: auto;" id="modal-content-id-12"> -->
+                <div class="slds-modal__content slds-p-around_medium"
+                    style="overflow-y: auto;" id="modal-content-id-12">
+                    <c-lwc_tf_emi-details
+                        record-id={recordId}
+                        asset-id={vehicleObjId}
+                        show-installment-model={isModalOpenForTractor}
+                        onclosemodal={closeModal}>
+                    </c-lwc_tf_emi-details>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </template>
+
+</template>

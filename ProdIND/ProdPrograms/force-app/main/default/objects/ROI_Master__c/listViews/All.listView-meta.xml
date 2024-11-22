@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Description__c</columns>
+    <columns>Product__c</columns>
+    <columns>Max_Value__c</columns>
+    <columns>Min_Value__c</columns>
+    <columns>Tenure_Max__c</columns>
+    <columns>Tenure_Min__c</columns>
+    <columns>Vehicle_Category__c</columns>
+    <columns>Product_Segment__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Description__c</field>
+        <operation>equals</operation>
+        <value>CRM_IRR</value>
+    </filters>
+    <label>All</label>
+</ListView>

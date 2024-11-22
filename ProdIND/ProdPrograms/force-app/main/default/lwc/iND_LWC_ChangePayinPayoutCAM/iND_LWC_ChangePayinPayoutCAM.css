@@ -1,0 +1,26 @@
+.indusPrimaryButton{
+    padding: .27rem 1rem !important;
+    /* padding-top: 0.50rem !important; */
+    line-height: 1.5 !important;
+    background-color: #832625;
+    color: white;
+    border-radius : 5px;
+    border-width: 1px;
+    border-color: #832625;
+    cursor: pointer;
+    min-width: 155Px;
+    text-transform: uppercase;
+    margin-bottom: 5px !important;
+}
+.indusPrimaryButton:hover{
+    background-color:white !important;
+    color: #832625!important;
+    border-width: 1px;
+    border-color: #832625;
+    border-radius: 5px;
+}
+
+.indusPrimaryButton:disabled{
+    pointer-events: none;
+    opacity: 0.9;
+}

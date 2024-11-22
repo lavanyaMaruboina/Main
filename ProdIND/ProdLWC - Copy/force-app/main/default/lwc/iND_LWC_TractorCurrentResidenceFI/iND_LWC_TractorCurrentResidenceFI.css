@@ -1,0 +1,20 @@
+.textAreaBody {
+    --sds-c-textarea-sizing-min-height:135px;
+}
+/* For mobile devices */
+@media only screen and (max-width: 600px) {
+    .multipicklistClass {
+        font-size: 0.575rem;
+        max-width: 100%;
+        overflow-x: auto; /* Make it scrollable horizontally on mobile */
+    }
+}
+
+/* @media only screen and (max-width: 600px) { */
+    .fiWrapper {
+        width: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        /* adjust the z-index as needed */
+    }
+/* } */

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pre_Initial_Address__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is to identify whether this document is created to capture the address which is filled on D2C app in pre initial offer journey.</description>
+    <label>Pre Initial Address</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

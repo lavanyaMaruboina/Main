@@ -1,0 +1,191 @@
+:host{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    --slds-c-input-color-border-focus: #832625;
+    --slds-c-input-shadow-focus: #832625 0 0 3px;
+}
+
+.cardTitle {
+    width: 100%;
+    font-size: 2em;
+}
+
+.ltngLayout{
+    border: 1px solid lightgray;
+}
+
+.page-header{
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    font-size: 2em;
+    color: #832625;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.dsa-checkboxgroup{
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.lli-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ibl-btn-red{
+    background-color: #832625;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-ochre{
+    background-color: #F7A31E;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-red_secondary{
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #832625;
+    color: #832625;
+    font-weight: bold;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-red_disabled{
+    background-color: #c9c7c5;
+    border-color: #c9c7c5;
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.field-maxwidth-100px{
+    max-width: 100px;
+}
+
+.prefix {
+    font-weight: 300;
+    font-size: 14px;
+    color: #999;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.inputphone{
+    flex-grow: 1;
+    font-size: 14px;
+    background: #fff;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+}
+
+.inputphone:focus-within {
+    border-color: #777;
+}
+
+.cblabel{
+    font-size: 0.75rem;
+    color: #5a5a5a;
+}
+
+.spins::after {
+    position: absolute;
+    content: 'Please wait while loading';
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    font-weight: bold;
+}
+
+.slds-form-element__label{
+    float: left;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .padding-left-100px{
+        justify-content: center;
+    }
+    
+    .padding-left-90px{
+        justify-content: center;
+    }
+
+    .dob-div{
+        display: flex;
+        justify-content: center;
+    }
+
+    .responsive-btn{
+        width: 50%;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .padding-left-100px{
+        padding-left: 100px;
+    }
+    
+    .padding-left-90px{
+        padding-left: 90px;
+    }
+
+    .dob-div{
+        display: flex;
+        padding-left: 20%;
+    }
+
+    .responsive-btn{
+        width: 12%;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .padding-left-100px{
+        padding-left: 100px;
+    }
+    
+    .padding-left-90px{
+        padding-left: 90px;
+    }
+
+    .dob-div{
+        display: flex;
+        padding-left: 120px;
+    }
+
+    .responsive-btn{
+        width: 12%;
+    }
+}

@@ -1,0 +1,114 @@
+<template>
+ 
+    <div style="height: 80px;text-align: center;vertical-align: middle;padding: 1%;">
+    <p style="font-size: 20px; color: rgba(140, 49, 55, 1);">Insurance Details</p>
+    </div>
+    
+    <template if:true={isSecondSpinnerMoving} class="slds-align_absolute-center">
+        <div class="slds-grid slds-gutters">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>                           
+        </div>
+    </template>
+
+
+    <div class="slds-border_top slds-m-vertical_large"></div>
+
+    <!-- Motor Insurance Section : Start-->
+    <template if:false={disableMotorInsuranceSection}>
+        
+        
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_3-of-3">
+                        <lightning-input id={tab} 
+                            type="checkbox" 
+                            data-id="motorInsuranceField" 
+                            label="MOTOR"
+                            disabled={isMotorDisabled} 
+                            checked={isMotorChecked} 
+                            onchange={motorChangeHandler}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Plan</label>
+                </div>
+
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox data-id="motorInsuranceField"
+                        class="slds-form-element__control healthInsurancePlanComboField healthInsuranceDetailsField"
+                        name="Motor Insurance Plan" variant="label-hidden" onchange={handlePlanChange}
+                        options={motorPlanOptions} value={selectedMotorInsurancePlan} required
+                        disabled={motorInsurancePlanComboboxDisabled}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Amount</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input type="number" 
+                    formatter="currency" 
+                    step="0.01" 
+                    value={motorInsuranceAmountValue} 
+                    data-id="motorInsuranceField"
+                    class="slds-form-element__control motorAmountField motorInsuranceDetailsField"
+                    variant="label-hidden" 
+                    name="motorAmount" 
+                    onblur={hanldeAmountValueChange} 
+                    disabled={isMotorInsuranceAmountFieldDisabled}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Is Funded</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" id={tab} data-id="motorInsuranceField"
+                            class="motorInsuranceDetailsField isFundedCheckbox" name="motorInsurance"
+                            value={fundingTypeValueForMotorPlans} checked={fundingTypeValueForMotorPlans} 
+                            onchange={handleIsFundedToggle} disabled={motorfunDisab}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-border_top slds-m-vertical_large"></div>
+    </template>
+    <!-- Motor Insurance Section : End-->
+
+
+    <!-- <template if:true={showSubmitButton}> -->
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                <div style="display: flex; justify-content:center; align-items:center;">
+                    <div style="width:220px; box-sizing:border-box; margin:0px;">
+                        <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleSubmit} disabled={isSubmitButtonDisabled}>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- </template> -->
+
+</template>

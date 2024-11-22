@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CMU_Rejection_Reason_selected</fullName>
+    <active>true</active>
+    <description>if CMU Rejection Reason selected as “Incorrect Field”, Rejection fields field should not be empty.</description>
+    <errorConditionFormula>AND((INCLUDES( CMU_Rejection_Reason__c, &quot;Incorrect fields&quot;)),
+ISBLANK(Rejection_Fields__c))</errorConditionFormula>
+    <errorDisplayField>Rejection_Fields__c</errorDisplayField>
+    <errorMessage>Rejection Field is Empty/Incorrect, Please select the fields you want to reject.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_Type__c</fullName>
+    <label>Asset Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tractor</fullName>
+                <default>false</default>
+                <label>Tractor</label>
+            </value>
+            <value>
+                <fullName>Car</fullName>
+                <default>false</default>
+                <label>Car</label>
+            </value>
+            <value>
+                <fullName>Commercial Vehicle</fullName>
+                <default>false</default>
+                <label>Commercial Vehicle</label>
+            </value>
+            <value>
+                <fullName>Construction Equipment</fullName>
+                <default>false</default>
+                <label>Construction Equipment</label>
+            </value>
+            <value>
+                <fullName>LCV</fullName>
+                <default>false</default>
+                <label>LCV</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

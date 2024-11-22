@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Who_will_be_the_end_user_of_the_product__c</fullName>
+    <label>Who will be the end user of the product?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Applicant</fullName>
+                <default>false</default>
+                <label>Applicant</label>
+            </value>
+            <value>
+                <fullName>others</fullName>
+                <default>false</default>
+                <label>others</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,75 @@
+<template>
+
+    <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium"><b></b></label>
+    </div>
+    <!--<lightning-icon icon-name="action:approval"   variant="success" title="Approved"></lightning-icon> -->
+    
+    <!--<lightning-icon icon-name="action:approval" class="red-world"  variant="success" title="Approved"></lightning-icon>--> 
+
+    
+    
+    <div class="slds-align_absolute-center "> 
+        <lightning-icon 
+            icon-name={iconname}
+            class={isloanstatus} 
+            alternative-text="Utility image">
+        </lightning-icon>
+    </div>
+
+    <!--<div class="slds-align_absolute-center slds-hide" >        
+        <lightning-icon icon-name="action:reject" alternative-text="Utility image">
+
+        </lightning-icon>
+    </div>-->
+    
+    <div>
+        <p> Congratulations {appname} lstRecords{lstRecords}!! Your loan has been sanctioned by IndusInd bank!!</p>       
+        <p>Please find below details related to the loan–</p>
+        <br>
+    </div>
+    <!--
+      lstRecords  
+    
+    <template for:each={lstRecords} for:item="item">
+        <div key={item} class="slds-box" aria-label="value div">  
+            {item.value}
+            
+        </div>
+    </template>
+-->
+
+<table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+        
+    <tbody>
+        <template for:each={lstRecords} for:item="keyValue"> 
+            <tr key={keyValue.key}>
+                <th scope="col" height="35">
+                <!--<li key={keyValue.key}>-->         
+                    <div ><b>{keyValue.key}</b></div>
+                </th>
+                <th scope="col" height="35"  >
+                    <div class="slds-box">{keyValue.value}</div>
+                <!--</li>-->
+                </th>
+            </tr>
+        </template>
+    </tbody>   
+</table>   
+<br>
+
+<div class="slds-align_absolute-center "> 
+    <lightning-button title="Resend SMS Action" type="button" label="Resend SMS1"  onclick={handleSms}></lightning-button>      
+</div>
+<br>
+<div class="slds-align_absolute-center "> 
+    <lightning-button title="Submit Action" type="button" label="Submit" onclick={handleSubmit}></lightning-button>      
+</div>
+
+<template if:true={isEnableNext}>
+    <button class="slds-button slds-button_brand next"
+       onclick={handleOnfinish}>
+       Next
+    </button>
+</template>
+</template>

@@ -1,0 +1,263 @@
+* {box-sizing:border-box}
+
+.iconImg{
+    height: auto;
+    min-width: 40px;
+    max-width: 30px;
+    max-height: 35px
+}
+img{
+  width: 100%;
+  height: 100%;
+}
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.slds-modal__container{
+  width: 100% !important;
+  max-width: 98% !important; 
+  position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+.img{
+  width: 1000px;
+  height: 1000px;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: fixed;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.button-group-class{
+  position: fixed;
+  bottom: 20%;
+  margin: 0 auto;
+  margin-left: 6%;
+  left: 40%;
+}
+
+/* Position the "next button" to the right */
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: white;
+}
+
+/* Caption text */
+.text {
+  color: red;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: fixed;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+  background-color: white;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  position: fixed; 
+  z-index: 9999; 
+  padding: 1em 1.5em;
+  background-color: white;
+}
+
+.textalign {
+  position: fixed; 
+  z-index: 0; 
+  padding: 1em 1.5em;
+  background-color: white;
+  padding-top: 1em;
+  color: black;
+  word-wrap: break-word;
+  width: 500px;
+  margin-left: -8%;
+  left: 40%;
+  text-align: center;
+}
+
+.textalignMobile {
+  position: fixed;
+  word-wrap: break-word;
+  z-index:9999;
+  margin:auto;
+  color: black;
+  width: 400px;
+  margin-top: 3%;
+  top: 8%;
+  text-align: center;
+}
+
+.rotateLeft{
+  right: 104px;
+  position: fixed;
+  z-index:9999;
+  margin:auto;
+  color: black;
+  padding: 1em 1.5em;
+  background-color: white;
+}
+
+.rotateRight{
+  right: 6px;
+  position: fixed;
+  z-index:9999;
+  margin:auto;
+  color: black;
+  padding: 1em 1.5em;
+  background-color: white;
+}
+
+.rotateLeftMobile{
+  right: 120px;
+  position: fixed;
+  z-index:9999;
+  margin:auto;
+  color: black;
+  margin-top: 25px;
+  background-color: white;
+}
+
+.rotateRightMobile{
+  right: 15px;
+  position: fixed;
+  z-index:9999;
+  margin:auto;
+  color: black;
+  margin-top: 25px;
+  background-color: white;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+.rotate90{
+  transform:translateY(-100%) rotate(90deg);
+  transform-origin: left bottom;
+  margin-left: 20%;
+}
+.rotate180{
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+.rotate270{
+  transform:translateX(-100%) rotate(-90deg);
+  transform-origin: top right;
+  margin-left: 20%;
+}
+.rotate0{
+  transform: rotate(0deg);
+  transform-origin: center;
+}
+
+/*.deviceWidth {
+  min-width: fit-content;
+} 
+@media screen and (max-width: 849px) {
+  .deviceWidth {
+    min-width: fit-content;
+    min-height: fit-content;
+    padding: 1rem;
+  }    
+}*/
+.mobile-device {
+  display: none;
+}
+.desktop-device {
+  display: block;
+}
+@media screen and (max-width: 849px) {
+
+  .desktop-device {
+      display:none
+  }
+
+  .mobile-device {
+      display: block;
+  }
+}
+
+.vertical-center {
+  top: 40%;
+  -ms-transform: translateY(50%);
+  transform: translateY(50%);
+  margin:auto;
+  position: relative;
+}
+
+.button-group-class-mobile{
+  position: fixed;
+  bottom: 10%;
+  left: 40%
+}
+
+.applyWidth{
+  max-width:max-content;
+}
+.zoomClass{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}

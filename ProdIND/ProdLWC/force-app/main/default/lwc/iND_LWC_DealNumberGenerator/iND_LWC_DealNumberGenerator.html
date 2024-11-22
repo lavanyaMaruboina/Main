@@ -1,0 +1,439 @@
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+<!-- <lightning-layout pull-to-boundary="medium" multiple-rows="true" horizontal-align="center"> -->
+    <template lwc:if={isCmpRendered}>
+    <div class="slds-size_5-of-12 slds-container_center">
+        <template if:true={isTractor}>
+            <div class="slds-clearfix">
+                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Deal Number Creation</label>
+            </div>
+            <template for:each={assetDetailsList} for:item="item">
+            <div key={item.key} class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+            <lightning-accordion allow-multiple-sections-open="true" label="Deal Number" active-section-name={activeSectionsList} class= "slds-size_12-of-12">
+                <lightning-accordion-section class= "slds-accordion__summary-heading " name ="Deal Number" label={item.title}>
+                    <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                    <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                <!--<lightning-input type="string" disabled="true" class="dealinputs" value={DealNumbers} name="Deal umber" label="Deal Number"></lightning-input>-->
+                <lightning-input type="string" disabled="true" class="dealinputs" value={item.dealnumber} name="Deal number" label="Deal Number"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-align-bottom slds-p-horizontal_small">
+                <lightning-button label="Generate Deal Number" title="Deal action" type="button" icon-position="left" variant="brand" class="button-3 " onclick={handleGenerateDealNumberTractor} disabled={item.dealnumber} value={item.key} >
+                </lightning-button>
+            </div>
+            </div>
+            </lightning-accordion-section>
+            </lightning-accordion>
+            </div>
+            </template>
+            <div class="slds-clearfix">
+                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Customer Code Details</label>
+                </div>
+                <lightning-accordion allow-multiple-sections-open="true" label="Applicant" active-section-name={activeApplicantSections} class= "slds-size_12-of-12">
+                    <template if:true={borrowerButtonVisible}>
+                    <lightning-accordion-section class= "slds-accordion__summary-heading " name ="Borrower" label=Borrower>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                     <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-input type="string" disabled="true" class="dealinputs" value={borrCutomerCode} name="Borrower Customer Code" label="Borrower Customer Code"></lightning-input>
+            </div>
+                    </div>
+                </lightning-accordion-section>
+                </template>
+                <template if:true={coBorrowerButtonVisible}>
+                <lightning-accordion-section class= "slds-accordion__summary-heading " name ="Co-Borrower" label=Co-Borrower>
+                <template for:each={coBorrowerApplicantMap} for:item="item">
+                        <div key = {item.key} class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                          <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small ">
+                            <lightning-input type="string " disabled="true " class="dealinputs " value={item.customerCode}
+                              name="Co-Borrower Customer Code " label={item.key}></lightning-input>
+                          </div>
+                          </div>
+                      </template>
+                    </lightning-accordion-section>
+                </template>
+                    <template if:true={isBeneExists}>
+                    <lightning-accordion-section class= "slds-accordion__summary-heading " name ="Beneficiary" label=Beneficiary>
+                        <template for:each={beneApplicantMap} for:item="item">
+                                <div key = {item.key} class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                                  <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small ">
+                                    <lightning-input type="string " disabled="true " class="dealinputs " value={item.customerCode}
+                                      name="Beneficiary Customer Code " label={item.key}></lightning-input>
+                                  </div>
+                                </div>
+                              </template>
+                    </lightning-accordion-section>
+                    </template>
+                    <template if:true={guarantorButtonVisible}>
+                    <lightning-accordion-section class= "slds-accordion__summary-heading " name ="Guarantor" label=Guarantor>
+                      <template for:each={guarantorApplicantList} for:item="item">
+                      <div key = {item.key} class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                        <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small ">
+                          <lightning-input type="string " disabled="true" class="dealinputs " value={item.customerCode}
+                            name="Guarantor Customer Code " label={item.key}></lightning-input>
+                        </div>
+                      </div>
+                    </template>
+                </lightning-accordion-section>
+            </template>
+            </lightning-accordion>
+            </template>
+        <!--Regarding CISP-2522 ticket Referrer Name is not required on this CMP--> 
+        <!-- <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small"> 
+           
+            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small" > 
+                <lightning-combobox name="referrerName" data-id="referrerName" 
+                    value={referrerNameValue} placeholder="Select Referrer Name" options={referrerNameOptions}
+                     onchange={handleReferrerNameChange}  label="Referrer Name">
+                </lightning-combobox>
+            </div>
+        </div> -->
+        <template if:false={isTractor}>
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-input type="string" disabled="true" class="dealinputs" value={DealNumbers} name="Deal umber" label="Deal Number"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-align-bottom">
+                    <lightning-button label="Generate Deal Number" title="Deal action" icon-position="left" type="button" variant="brand" class="button-1" onclick={handleGenerateDealNumber} disabled={dealNumberDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+        <template if:true={borrowerButtonVisible}>
+            <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-combobox class="slds-form-element__control" label="Religion (borrower)" required="true" name="borrowReligion" value={borrowReligion} onchange={handleInputFieldChange} data-id="borrowReligion" placeholder="-- Select --" options={religionOptions}
+                        disabled={borrowerLoanApplicantDisabled}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning-combobox class="slds-form-element__control" label="Caste (borrower)" required="true" name="borrowCaste" value={borrowCaste} onchange={handleInputFieldChange} data-id="borrowCaste" placeholder="-- Select --" options={casteOptions} disabled={borrowerLoanApplicantDisabled}>
+                    </lightning-combobox>
+                </div>
+            </div>
+            <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-combobox class="slds-form-element__control" label="District (borrower)" required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleInputFieldChange} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}
+                        disabled={borrowerLoanApplicantDisabled}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-input type="string" disabled="true" class="dealinputs" value={borrCutomerCode} name="Borrower Customer Code" label="Borrower Customer Code"></lightning-input>
+                </div>
+            </div>
+            </template>
+            <template if:true={isPassengerVehicle}>
+                <lightning-accordion allow-multiple-sections-open>
+                    <lightning-accordion-section name="A" label="NOMINEE DETAILS (Borrower)">   
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" disabled class="dealinputs" value={nomineeSAAccountOpening} name="SA account opening form No" label="SA account opening form No"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" disabled class="dealinputs" value={nomineeSAAccountOpenedFor} name="SA account opened for" label="SA account opened for"></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="slds-form-element__control" label="Current Residential Address City " required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Current Residential Address City</label><br/>
+                                <template if:true={isNomineeforBorrower}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={residenceCityFinacleValue}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "residenceCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:false={isNomineeforBorrower}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={residenceCityFinacleValue} name="residenceCityFinacle" label="Current Residential Address City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="slds-form-element__control" label="Permanent Residential Address City" required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Permanent Residential Address City</label><br/>
+                                <template if:true={isNomineeforBorrower}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={permanentFinacleValue}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "permanentCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:false={isNomineeforBorrower}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={permanentFinacleValue} name="permanentFinacle" label="Permanent Residential Address City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="slds-form-element__control" label="Office Address City" required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Office Address City</label><br/>
+                                <template if:true={isNomineeforBorrower}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={officeCityFinacleValue}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "officeCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:false={isNomineeforBorrower}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={officeCityFinacleValue} name="officeCityFinacle" label="Office Address City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_3-of-3">
+                                        <label class="slds-form-element__label">Nominee Available</label><br/>
+                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                            name="nomineeAvailable" data-id={index} checked={nomineeAvailable} type="checkbox" onchange={handleCheck} disabled={disableBoNomineeAvailable}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" class="boNomineeField" value={nomineeName} name="nomineeName" label="Nominee Name" max-length="30" min-length="3" onchange={handleCheck} disabled={nomineeAvailableChecked}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="date" class="boNomineeField" value={nomineeDOB} name="nomineeDOB" label="Nominee DOB" onchange={handleCheck} disabled={nomineeAvailableChecked}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" class="boNomineeField" value={nomineeAddress} pattern={label.Address_Pattern} name="nomineeAddress" max-length="80" min-length="5" label="Nominee Address" onchange={handleCheck} disabled={nomineeAvailableChecked}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" class="boNomineeField" pattern={label.Pin_code_Pattern} value={nomineePinCode} name="nomineePinCode" label="Nominee Pin Code" max-length="6" min-length="6" onchange={handleCheck} disabled={nomineeAvailableChecked}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="nomineeAvailable slds-form-element__control" label="Nominee City" name="nomineeCity" value={nomineeCity} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={handleCheck} disabled={nomineeAvailableChecked}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Nominee City</label><br/>
+                                <template if:false={nomineeAvailableChecked}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={nomineeCity}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}  
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "nomineeCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:true={nomineeAvailableChecked}>
+                                    <lightning-input type="text" class="boNomineeField" value={nomineeCity} name="nomineeCity" label="Nominee City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="nomineeAvailable slds-form-element__control" label="Nominee State" name="nomineeState" value={nomineeState} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions} disabled={nomineeAvailableChecked}>
+                                </lightning-combobox> -->
+                                <lightning-input type="string" class="boNomineeField" value={nomineeState} name="nomineeState" label="Nominee State" onchange={handleCheck}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-combobox type="text" name="nomineeRelationshipBorrower"
+                                    label="Relationship with borrower" data-id="relationWithBorrower" class="boNomineeField slds-form-element__control"
+                                    value={nomineeRelationshipBorrower} placeholder="-- Select --"
+                                    options={relationshipOptions} onchange={handleCheck}
+                                    disabled={nomineeAvailableChecked}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </template>
+            <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                <div class="slds-col slds-size_12-of-12 slds-align-bottom slds-p-horizontal_small slds-align_absolute-center">
+                    <lightning-button label={generateBorrower} title="Code action" icon-position="left" type="button" variant="brand" class="button-2" onclick={handleGenerateBorrowerCode} disabled={borrowerLoanApplicantDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+      
+        <template if:true={coBorrowerButtonVisible}>
+            <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-combobox class="slds-form-element__control" label="Religion (co-borrower)" required="true" name="coBorrowReligion" value={coBorrowReligion} onchange={handleInputFieldChange} data-id="coBorrowReligion" placeholder="-- Select -- " options={religionOptions}
+                        disabled={coBorrowerLoanApplicantDisabled}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_6-of-12 ">
+                    <lightning-combobox class="slds-form-element__control " label="Caste (co-borrower) " required="true " name="coBorrowCaste " value={coBorrowCaste} onchange={handleInputFieldChange} data-id="coBorrowCaste" placeholder="-- Select -- " options={casteOptions}
+                        disabled={coBorrowerLoanApplicantDisabled}>
+                    </lightning-combobox>
+                </div>
+            </div>
+            <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                    <lightning-combobox class="slds-form-element__control" label="District (co-borrower)" required="true" name="coborrowDistrict" value={coborrowerdistrict} onchange={handleInputFieldChange} data-id="coborrowDistrict" placeholder="-- Select --" options={coborrowerDistrictOptions}
+                        disabled={coborrowerLoanApplicantDisabled}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small ">
+                    <lightning-input type="string " disabled="true " class="dealinputs " value={coBorrCutomerCode} name="Co-Borrower Customer Code " label="Co-Borrower Customer Code "></lightning-input>
+                </div>
+            </div>
+            <template if:true={isPassengerVehicle}>
+                <lightning-accordion allow-multiple-sections-open>
+                    <lightning-accordion-section name="A" label="NOMINEE DETAILS (Co-borrower)">   
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" disabled value={CBnomineeSAAccountOpening} name="CB_nomineeSAAccountOpening" label="SA account opening form No"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" disabled value={CBnomineeSAAccountOpenedFor} name="CB_nomineeSAAccountOpenedFor" label="SA account opened for"></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="slds-form-element__control" label="Current Residential Address City " required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Current Residential Address City</label><br/>
+                                <template if:true={isNomineeforCoborrower}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={CBresidenceCityFinacleValue}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "CBresidenceCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:false={isNomineeforCoborrower}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={CBresidenceCityFinacleValue} name="CBresidenceCityFinacle" label="Current Residential Address City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="slds-form-element__control" label="Permanent Residential Address City" required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Permanent Residential Address City</label><br/>
+                                <template if:true={isNomineeforCoborrower}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={CBpermanentFinacleValue}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "CBpermanentCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:false={isNomineeforCoborrower}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={CBpermanentFinacleValue} name="CBpermanentFinacle" label="Permanent Residential Address City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="slds-form-element__control" label="Office Address City" required="true" name="borrowDistrict" value={borrowerdistrict} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={borrowerDistrictOptions}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Office Address City</label><br/>
+                                <template if:true={isNomineeforCoborrower}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={CBofficeCityFinacleValue}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "CBofficeCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:false={isNomineeforCoborrower}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={CBofficeCityFinacleValue} name="CBofficeCityFinacle" label="Office Address City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_3-of-3">
+                                        <label class="slds-form-element__label">Nominee Available</label><br/>
+                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                            name="CB_nomineeAvailable" data-id={index} type="checkbox"  checked={CBnomineeAvailable} onchange={handleCheck} disabled={disableCBNomineeAvailable}>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="string" class="cbNomineeField" value={CBnomineeName} name="CB_nomineeName" label="Nominee Name" onchange={handleCheck} max-length="30" min-length="3" disabled={CBnomineeAvailableChecked}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="date" class="cbNomineeField" value={CBnomineeDOB} name="CB_nomineeDOB" label="Nominee DOB" onchange={handleCheck} disabled={CBnomineeAvailableChecked}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" class="cbNomineeField" value={CBnomineeAddress} pattern={label.Address_Pattern} name="CB_nomineeAddress" label="Nominee Address"  max-length="80" min-length="5" onchange={handleCheck} disabled={CBnomineeAvailableChecked}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="text" pattern={label.Pin_code_Pattern} class="cbNomineeField" value={CBnomineePinCode} name="CB_nomineePinCode" label="Nominee Pin Code" onchange={handleCheck}  max-length="6" min-length="6" disabled={CBnomineeAvailableChecked}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <!-- <lightning-combobox class="nomineeAvailable slds-form-element__control" label="Nominee City" name="nomineeCity" value={nomineeCity} onchange={handleCheck} data-id="borrowDistrict" placeholder="-- Select --" options={handleCheck} disabled={CBnomineeAvailableChecked}>
+                                </lightning-combobox> -->
+                                <label class="slds-form-element__label">Nominee City</label><br/>
+                                <template if:false={CBnomineeAvailableChecked}>
+                                    <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected="True" selected-name={CBnomineeCity}
+                                        object-name="Finacle_City__c" fetch-field="City_Code__c" search-field="City_Code__c"
+                                        filter-field="City_Code__c" filter-term="" onlookupselected={CBnomineeCitylookupHandler}  
+                                        onclearvalue={CBnomineeCityClearvaluelookupHandler} select-field-name="City_Code__c"
+                                        index = "CBnomineeCityIn" is-custom-class-not-applicable="true">
+                                    </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                </template>
+                                <template if:true={CBnomineeAvailableChecked}>
+                                    <lightning-input type="text" class="nomineeAvailable" value={CBnomineeCity} name="nomineePinCode" label="Nominee City" variant="label-hidden" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-input type="string" class="cbNomineeField" value={CBnomineeState} name="nomineeState" label="Nominee State" onchange={handleCheck}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_small">
+                                <lightning-combobox type="text" name="CB_nomineeRelationshipBorrower"
+                                    label="Relationship with Co-Borrower" data-id="relationWithBorrower" class="cbNomineeField slds-form-element__control"
+                                    value={CBnomineeRelationshipBorrower} placeholder="-- Select --"
+                                    options={relationshipOptions} onchange={handleCheck}
+                                    disabled={CBnomineeAvailableChecked}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </template>
+            <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+                <div class="slds-col slds-size_12-of-12 slds-align-bottom slds-p-horizontal_small slds-align_absolute-center">
+                    <lightning-button label={generateCoBorrower} title="Customer action " icon-position="left " type="button " variant="brand " class="button-3 " onclick={handleGenerateCoBorrowerCode} disabled={coBorrowerLoanApplicantDisabled}></lightning-button>
+                </div>
+            </div>
+        </template>
+    </template>
+        <!--CISP-9052 start-->
+        
+        <template if:true ={isPVorTractor}>
+        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+            <div class="slds-col slds-size_12-of-12 slds-align_absolute-center">
+                <lightning-button label="Update Reference Details" title="Update Reference Details" icon-position="left " type="button " variant="brand " class="button-4" onclick={handleReferenceDetails} disabled ={isRefrenceAndRelEnabled}></lightning-button>
+            </div>
+        </div><!--CISP-9052 end-->
+        </template> 
+        <div class="slds-form-element slds-grid slds-wrap slds-p-vertical_x-small">
+            <div class="slds-col slds-size_12-of-12 slds-align_absolute-center">
+                <lightning-button label="Submit " title="Submit action " icon-position="left " type="button " variant="brand " class="button-4 " onclick={handleSubmit} disabled={disableFields}></lightning-button>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <template if:true={toggleSpinner}>
+                <div class="slds-spinner_container ">
+                    <div role="status " class="slds-spinner slds-spinner_large ">
+                        <span class="slds-assistive-text ">Loading</span>
+                        <div class="slds-spinner__dot-a "></div>
+                        <div class="slds-spinner__dot-b "></div>
+                    </div>
+                </div>
+            </template>
+    </div>
+<!-- </lightning-layout> -->
+    </template>
+</template>

@@ -1,0 +1,420 @@
+<template>
+    <template if:true={isSecondSpinnerMoving}>
+        <div class="slds-grid slds-gutters">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>                           
+        </div>
+    </template>
+    
+    <!-- Spinner :Start -->
+    <template if:true={isSpinnerMoving}>
+        <section id="modal123" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <div id="modal-heading-011" class="slds-modal__title slds-hyphenate">
+                        We are customizing the insurance plans for you.
+                    </div>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>                           
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops123">
+        </div>        
+    </template>
+    <!-- Spinner :End -->
+    <template if:true={SpinnerMoving}>
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+        </lightning-spinner>
+    </template>
+    <template if:true={haveNoInsData}>
+            <!-- Motor Insurance Section : Start-->
+            <template if:false={disableMotorInsuranceSection}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                        <label class="slds-form-element__label">MOTOR</label>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                        <lightning-input type="checkbox" name="MOTOR" disabled>
+                        </lightning-input>                            
+                    </div>                    
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-combobox label="Plan" disabled>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-input label="Amount" type="number" formatter="currency" disabled>
+                            </lightning-input>
+                            <br />
+                        </div>
+                   </div>
+                </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                    <label class="slds-form-element__label">Is Funded</label>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                    <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" 
+                         disabled>
+                    </lightning-input>
+                </div>
+            </div>
+            <div class="slds-border_top slds-m-vertical_large"></div>
+            </template>
+            <!-- Motor Insurance Section : End-->
+        <!-- Flexi Insurance Section :Start -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                <label class="slds-form-element__label">FLEXI</label>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                <lightning-input type="checkbox" name="FLEXI" disabled>
+                </lightning-input>                            
+            </div>                    
+        </div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <lightning-combobox label="Plan" disabled>
+                    </lightning-combobox>
+                    <br />
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <lightning-input label="Amount" type="number" formatter="currency" disabled>
+                    </lightning-input>
+                    <br />
+                </div>
+           </div>
+        </div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+            <label class="slds-form-element__label">Is Funded</label>
+        </div>
+        <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+            <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" 
+                 disabled>
+            </lightning-input>
+        </div>
+    </div>
+    <div class="slds-border_top slds-m-vertical_large"></div>
+            <!-- LI + EMI Section :Start -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                    <label class="slds-form-element__label">LI_EMI</label>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                    <lightning-input type="checkbox" name="LI_EMI" disabled>
+                    </lightning-input>                            
+                </div>                    
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <lightning-combobox label="Plan" disabled>
+                        </lightning-combobox>
+                        <br />
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <lightning-input label="Amount" type="number" formatter="currency" disabled>
+                        </lightning-input>
+                        <br />
+                    </div>
+               </div>
+            </div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                <label class="slds-form-element__label">Is Funded</label>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" 
+                     disabled>
+                </lightning-input>
+            </div>
+        </div>
+        <div class="slds-border_top slds-m-vertical_large"></div>
+            <!-- TATA EMI Insurance Section :Start -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                    <label class="slds-form-element__label">TATA_EMI</label>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                    <lightning-input type="checkbox" name="TATA_EMI" disabled>
+                    </lightning-input>                            
+                </div>                    
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <lightning-combobox label="Plan" disabled>
+                        </lightning-combobox>
+                        <br />
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <lightning-input label="Amount" type="number" formatter="currency" disabled>
+                        </lightning-input>
+                        <br />
+                    </div>
+               </div>
+            </div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                <label class="slds-form-element__label">Is Funded</label>
+            </div>
+            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" 
+                     disabled>
+                </lightning-input>
+            </div>
+        </div>
+        <div class="slds-border_top slds-m-vertical_large"></div>
+    </template>
+
+    
+        <!-- Insurance Product Section :Start -->
+        <table>
+            <template for:each={insuranceDetailsList} for:item='item'>
+                <tr class="slds-hint-parent" key={item}>
+                    <td>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                                    <label class="slds-form-element__label">{item.insProductName}</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                                    <lightning-input type="checkbox" name={item.insProductName}
+                                    disabled={item.isPlanCheckDisabled} checked={item.isPlanChecked} value={item.isPlanChecked} 
+                                    onchange={planCheckChangeHandler}>
+                                    </lightning-input>                            
+                                </div>                    
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-combobox label="Plan" name={item.insProductName} onchange={handlePlanChange}  options={item.insPlanOptions}
+                                        value={item.insPlanCode} disabled={item.isPlanCodeDisabled}>
+                                        </lightning-combobox>
+                                        <br />
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <lightning-input label="Amount" type="number" formatter="currency" step="0.01" value={item.insAmount} 
+                                        onblur={hanldeAmountValueChange} name={item.insProductName} disabled={item.isAmountFieldDisabled}>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                               </div>
+                            </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                                <label class="slds-form-element__label">Is Funded</label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12 slds-p-around_small">
+                                <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" 
+                                    id={item.insPlanCode} name={item.insProductName} value={item.isFundedChecked} 
+                                    checked={item.isFundedChecked} onchange={handleIsFundedToggle} disabled={item.isFundedDisabled}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-border_top slds-m-vertical_large"></div>
+                    </td>
+                </tr>
+            </template>
+        </table>
+        <!-- height and weight  -->
+        <div class="slds-grid slds-wrap" if:true={showheightAndWeight}>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <lightning-input label="Height (in CM)" type="text" name="height" 
+                    value={applicantHeight} onchange={handleHeightAndWeight} disabled={disabledHeightAndWeight}>
+                    </lightning-input>
+                    <br />
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <lightning-input label="Weight (in KG)" type="text" name="weight" value={applicantWeight} 
+                    onchange={handleHeightAndWeight} disabled={disabledHeightAndWeight} >
+                    </lightning-input>
+                    <br />
+                </div>
+           </div>
+        </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <lightning-input type="number" label="Loan Amount"
+                        value={loanAmount} disabled>
+                    </lightning-input>
+                    <br />
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <lightning-input type="number" label="Loan Amount + Funded Insurance"
+                                    value={loanAmountPlusFundedPremium} disabled>
+                                </lightning-input>
+                                <br />
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <lightning-input label="Funded Premium"
+                        value={fundedPremiumValue} disabled>
+                    </lightning-input>
+                    <br />
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <lightning-input type="number" label="Approving authority agreed Loan Amount + Funded Premium"
+                                    value={approvingAuthorityLoanAmount} disabled>
+                                </lightning-input>
+                                <br />
+                </div>
+            </div>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top_medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand" 
+                            onclick={handleRerunOffer} disabled={disableRerunOfferbtn}>
+                                Rerun Offer Engine
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-clearfix"><!--Start CISP-3194-->
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top_medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand" 
+                            onclick={handleComputePremium} disabled={disableComputePremium}>
+                                Compute Premium
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--End CISP-3194-->
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top_medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand "
+                                onclick={handleFundingAvailability} disabled={fundisabled}>
+                                Funding Availability
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="slds-border_top slds-m-vertical_large"></div>
+        <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-input type="number" label="Total Insurance Payable"
+                                value={totalInsurancePayable} formatter="decimal" disabled>
+                            </lightning-input>
+                            <br />
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-input label="LTV With Insurance"
+                                value={ltvWithInsurancePercentage} disabled>
+                            </lightning-input>
+                            <br />
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-input label="LTV Without Insurance"
+                                value={ltvWithoutInsurancePercentage} disabled>
+                            </lightning-input>
+                            <br />
+            </div>
+        </div>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleInsuranceConsent}
+                                disabled={isConsentButtonDisabled}>
+                                Consent
+                                <span if:true={iconButton}>&#x2714;</span></button>
+                                <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                                    variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                                </lightning-button-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleSubmit}
+                                disabled={isSubmitButtonDisabled}>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Popup Start -->
+        <template if:true={showPopup}>
+            <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-form slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                            Please change the plan or funding requirement in non-motor insurance products.
+                        </h2>
+                    </header>
+                    <lightning-card variant="base">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1">
+                                <lightning-button
+                                    class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                    onclick={handleClosePopup} variant="brand" label="OK"></lightning-button>
+                            </div>
+                        </div>
+                    </lightning-card>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+            </div>
+        </template>
+        <!-- Popup End -->
+        <!-- Popup Start -->
+        <template if:true={showPopupForAmount}>
+            <section id="modal11" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-form slds-modal__container">
+                    <lightning-card variant="base">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-p-around_medium">
+                                <lightning-input type="checkbox"
+                                    label="I have checked the premium amount and entered premium amount is equal to the output of insurance premium amount calculator "
+                                    checked={popupCheckbox} onchange={hanldeAmountPopupCheckbox}>
+                                </lightning-input>
+    
+                                <lightning-button
+                                    class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                    onclick={handlePopupSubmit} variant="brand" label="Submit"
+                                    disabled={popupCheckboxChecked}></lightning-button>
+                            </div>
+                        </div>
+                    </lightning-card>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops11">
+            </div>
+        </template>
+</template>

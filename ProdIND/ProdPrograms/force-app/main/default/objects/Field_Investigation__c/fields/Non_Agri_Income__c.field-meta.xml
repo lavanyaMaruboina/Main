@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Agri_Income__c</fullName>
+    <label>Non-Agri Income</label>
+    <summarizedField>Non_Agri_Income__c.Total_Income__c</summarizedField>
+    <summaryForeignKey>Non_Agri_Income__c.Field_Investigation__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

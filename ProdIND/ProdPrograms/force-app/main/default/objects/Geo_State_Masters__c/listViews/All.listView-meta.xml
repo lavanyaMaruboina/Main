@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>State_Code__c</columns>
+    <columns>NAME</columns>
+    <columns>NeSL_State_Code__c</columns>
+    <columns>Pincode__c</columns>
+    <columns>Pincode_Starting_Max__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>startsWith</operation>
+        <value>KERALA</value>
+    </filters>
+    <label>All</label>
+</ListView>

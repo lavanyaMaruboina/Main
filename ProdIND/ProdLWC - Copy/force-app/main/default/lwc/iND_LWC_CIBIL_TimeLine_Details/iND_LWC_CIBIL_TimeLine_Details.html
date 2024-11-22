@@ -1,0 +1,45 @@
+<template>
+    <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium slds-p-around_medium"><strong>CIBIL TIME LINE DETAILS</strong>
+    </div>
+    <template if:false={showCIBILTimeline}>
+        <div class="slds-box">
+            <div class="slds-required">{errorMsg}</div>
+        </div>
+   </template>
+    <template if:true={showCIBILTimeline}>
+        <div class="slds-box slds-m-vertical_medium">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table" border="1">
+                <thead>
+                    <tr>
+                        <th>App No</th>
+                        <th>Date Processed</th>
+                        <th>CIC No</th>
+                        <th>Cibil Version</th>
+                        <th>Score</th>
+                        <th>Trend</th>
+                        <th>CIBIL Detect Decision</th>
+                        <th>Customer Role</th>
+                        <th>Inprinciple Decision</th>
+                        <th>Final Decision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={cIBILTimelineContent} for:item="timelineObj" for:index="i">
+                        <tr class="slds-hint-parent" key={timelineObj.App_No__c}>
+                            <td height=25px><div class="slds-truncate">{timelineObj.App_No__c}</div></td>
+                            <td height=25px><div class="slds-truncate">{timelineObj.Date_Of_Enquiry__c}</div></td>  
+                            <td height=25px><div class="slds-truncate">{timelineObj.CIC_No__c}</div></td>  
+                            <td height=25px><div class="slds-truncate">{timelineObj.CIBIL_Version__c}</div></td>  
+                            <td height=25px><div class="slds-truncate">{timelineObj.CIBIL_Score__c}</div></td>  
+                            <td><div class="slds-truncate">{timelineObj.Trend_Type__c}</div></td>  
+                            <td><div class="slds-truncate">{timelineObj.CIBIL_Detect_Decision__c}</div></td>  
+                            <td><div class="slds-truncate">{timelineObj.Customer_Type__c}</div></td>  
+                            <td><div class="slds-truncate">{timelineObj.Inprinciple_Decision__c}</div></td>  
+                            <td><div class="slds-truncate">{timelineObj.Final_Decision__c}</div></td>  
+                        </tr>
+                    </template>
+                </tbody>
+        </table>
+        </div>
+    </template>
+</template>

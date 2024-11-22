@@ -1,0 +1,200 @@
+<template>
+
+    <div>
+        <template if:true={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
+
+<lightning-accordion class="example-accordion" active-section-name="A">
+    <lightning-accordion-section name="A" label={label.NewUsed_Vehicles}>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Delivery (Y/N)<template if:true={requiredFields}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-radio-group class="slds-form-element__control" variant="label-hidden" data-id="deliveryRadioGroupField" name="deliveryRadioGroupField" label="" options={deliveryRadioOptions} value={deliveryOptions} required={requiredFields} onchange={handleInputFieldChange}>
+                        </lightning-radio-group>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Reg. Type</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-radio-group class="slds-form-element__control" variant="label-hidden" data-id="regTypeRadioGroupField" name="regTypeRadioGroupField" label="" options={regTypeRadioOptions} disabled={isVehRegNoTypeDisable} value={regTypeOptions}
+                            onchange={handleInputFieldChange}>
+                        </lightning-radio-group>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Reg. No.<template if:true={requiredRegNo}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="regNoField" data-id="regNoField" message-when-bad-input="Enter a Registration Number" pattern={vehicleRegistrationPattern} placeholder={vehicleRegistrationPatternPlaceholder}
+                            message-when-pattern-mismatch="Enter a Valid Registration Number" onchange={handleInputFieldChange} value={regNumber} disabled={isVehRegNoTypeDisable} required={requiredRegNo}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Name Transferred<template if:true={requiredFields}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-id="nameTransferedField" name="nameTransferedField" value={nameTransferred} onchange={handleInputFieldChange} placeholder="-- Select --" options={nameTransferredOptions}
+                            disabled={isNewVehicle} required={requiredFields}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Current Vehicle Owner<template if:true={requiredFields}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="currentVehicleOwnerField" data-id="currentVehicleOwnerField" onchange={handleInputFieldChange} value={currentVehicleOwner} disabled={isNewVehicle} required={requiredFields}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Lien marked - IBL ?<template if:true={requiredFields}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-id="lienMarkedField" name="lienMarkedField" value={lienMarked} onchange={handleInputFieldChange} placeholder="-- Select --" options={lienMarkedOptions} disabled={isNewVehicle}
+                            required={requiredFields}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Marked On<template if:true={requiredMarkedOn}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="markedOnDateField" data-id="markedOnDateField" onchange={handleInputFieldChange} type="date" value={markedOnDate} disabled={IsMarkedOnDisable} required={requiredMarkedOn}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Now Lien in the Name of<template if:true={requiredLienInTheName}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="nowLienInTheNameOfField" data-id="nowLienInTheNameOfField" onchange={handleInputFieldChange} value={nowLienInTheNameOf} disabled={isLienInTheNameOfDisable} required={requiredLienInTheName}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={isNotImplementVehicleType}>
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Engine No.<template if:true={requiredDeliveryDetails}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="engineNumberField" data-id="engineNumberField" required={requiredDeliveryDetails} onchange={handleInputFieldChange} value={engineNumber} disabled={isVehEngineNoDisable}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+        <!-- </div>
+
+        <div class="slds-form slds-grid slds-wrap"> -->
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={isNotImplementVehicleType}>
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Chassis No.<template if:true={requiredDeliveryDetails}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="chassisNumberField" data-id="chassisNumberField" required={requiredDeliveryDetails} onchange={handleInputFieldChange} value={chassisNumber} disabled={isVehChassisNoDisable}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">RTA Taxes Remitted Upto<template if:true={requiredFields}><abbr title="required" class="slds-required">*</abbr></template></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="rtaTaxRemittedUptoField" data-id="rtaTaxRemittedUptoField" onchange={handleInputFieldChange} type="date" max={todayDate} value={rtaTaxRemittedUpto} required={requiredFields}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+<template if:true={isTractor}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Serial Number<template if:true={requiredSerailNumber}><abbr title="required" class="slds-required">*</abbr></template></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" variant="label-hidden" name="serailNumber" data-id="serailNumber" value={serailNumber} required={requiredSerailNumber} disabled>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+
+    </lightning-accordion-section>
+</lightning-accordion>
+
+<div class="slds-clearfix">
+    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <button class="indusPrimaryVehicleButton slds-button slds-button_brand" name="newUsedVehicleSubmit" disabled={disablefields} onclick={handleSubmit}>
+                    Submit
+                </button>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<template if:true={uploadViewDocFlag}>
+        <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={recordid} currentapplicantid={applicantId}
+            uploadviewdocpopup={uploadViewDocFlag}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+    </template>
+</template>

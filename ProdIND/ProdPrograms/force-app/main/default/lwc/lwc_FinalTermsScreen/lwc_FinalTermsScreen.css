@@ -1,0 +1,17 @@
+.indusbutton{
+    min-width: 150px !important;
+}
+.indusPrimaryButton{
+    min-width: 180px !important;
+}
+.font_design{
+    font-family: 'Lucida Sans';
+    font-weight: bold;
+    font-size: '19px';
+    color: #84181F;
+}
+.font_design_note{
+    font-family: 'Lucida Sans';
+    font-size: '19px';
+    color: #000000;
+}

@@ -1,0 +1,18 @@
+.note{
+    font-family: 'Lucida Sans';
+    font-weight: bold;
+}
+.color{
+    background-color: green;
+}
+.slds-button{
+    background-color: #4CAF50 !important;
+    min-width: 120px !important;
+    }
+.ErrorButton{
+        background-color: red !important;
+}
+.sidepadding{
+    padding-left: 400px;
+    padding-right: 400px;
+}

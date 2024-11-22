@@ -1,0 +1,138 @@
+<template>
+    <template if:true={isAppEnabled}>
+        <lightning-card title="Assignment WebApplication">
+
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Employee Name
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <c-generic-custom-lookup selected-name={selectedAppEmpName} object-name="AccountTeamMember"
+                        switch-code='empName' is-custom-lookup-field-disabled={webAppNameOptionEnabled}
+                        fetch-field={emp_Fetch_Field} search-field={emp_Search_Field} filter-field={empApp_Filter_Field}
+                        filter-term={empApp_Filter_term} onlookupselected={selectedEmpAppHandler}
+                        onclearvalue={clearEmpAppHandler} select-field-name="Employee name">
+                    </c-generic-custom-lookup>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Employee Code
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <c-generic-custom-lookup selected-name={selectedAppEmCode} object-name="AccountTeamMember"
+                        switch-code='empCode' is-custom-lookup-field-disabled={webAppCodeOptionEnabled}
+                        fetch-field={emp_Fetch_Field} search-field={empCode_Search_Field}
+                        filter-field={empApp_Filter_Field} filter-term={empApp_Filter_term}
+                        onlookupselected={selectedEmpCodeAppHandler} onclearvalue={clearEmpCodeAppHandler}
+                        select-field-name="Employee code">
+                    </c-generic-custom-lookup>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:false={isAppEnabled}>
+        <lightning-card title="Assignment FI">
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="state">State </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form ">
+                    
+                    <c-generic-custom-lookup selected-name={state} object-name='CFD_State_Master__c' is-value-selected={isStateSelected}
+                    fetch-field={state_fetch_Field} search-field='Name' filter-field={state_Filter_Field}
+                        filter-term={state_Filter_Field} onlookupselected={selectedStateHandler}
+                        onclearvalue={clearStateHandler} select-field-name="State">
+                    </c-generic-custom-lookup>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="BlCode">Bl Code
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <c-generic-custom-lookup selected-name={BlCodeValue} object-name="Account"
+                        is-custom-lookup-field-disabled={blOptionEnabled} fetch-field={blcode_Fetch_Field}
+                        search-field={blcode_Search_Field} filter-field={blcode_Filter_Field}
+                        filter-term={blcode_Filter_term} onlookupselected={selectedBlCodeHandler}
+                        onclearvalue={clearBlCodeHandler} select-field-name="BL Code">
+                    </c-generic-custom-lookup>
+                </div>
+            </div>
+
+        <template if:true={serachEmpName}>
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="EmployeeName">Employee Name
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <c-generic-custom-lookup selected-name={selectedEmpName}
+                        is-custom-lookup-field-disabled={empOptionEnabled} object-name="AccountTeamMember"
+                        switch-code='empName' fetch-field={emp_Fetch_Field} search-field={emp_Search_Field}
+                        filter-field={emp_Filter_Field} filter-term={emp_Filter_term}
+                        onlookupselected={selectedEmpHandler} onclearvalue={clearEmpHandler}
+                        select-field-name="Employee Name" case-current-owner-id={caseCurrentOwnerId}></c-generic-custom-lookup>
+                    </c-generic-custom-lookup>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={serachEmpName}>
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="EmployeName">Employee Name
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <lightning-input type="text" value={selectedEmpName} disabled></lightning-input>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={serachEmpCode}>
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="EmployeeCode">Employee Code
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <c-generic-custom-lookup selected-name={selectedEmCode}
+                        is-custom-lookup-field-disabled={empCodeOptionEnabled} object-name="AccountTeamMember"
+                        switch-code='empCode' fetch-field={emp_Fetch_Field} search-field={empCode_Search_Field}
+                        filter-field={emp_Filter_Field} filter-term={emp_Filter_term}
+                        onlookupselected={selectedEmpCodeHandler} onclearvalue={clearEmpCodeHandler}
+                        select-field-name="Employee Name" case-current-owner-id={caseCurrentOwnerId}></c-generic-custom-lookup>
+                    </c-generic-custom-lookup>
+                </div>
+            </div>
+        </template>
+        <template if:false={serachEmpCode}>
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="EmployeCode">Employee Code
+                    </label>
+                </div>
+                <div class="slds-size_2-of-3 slds-form">
+                    <lightning-input type="text" value={selectedEmCode} disabled></lightning-input>
+                </div>
+            </div>
+        </template>
+            <!-- <div class="slds-size_2-of-3 slds-p-horizontal_medium slds-align_absolute-center">
+                    <lightning-button type="submit" variant="brand" onclick={UpdateData} label="Submit"></lightning-button>
+                </div> -->
+
+        </lightning-card>
+    </template>
+
+
+    <div class="slds-size_2-of-3 slds-p-horizontal_medium slds-align_absolute-center">
+        <lightning-button type="submit" variant="brand" onclick={UpdateData} label="Submit"></lightning-button>
+    </div>
+</template>

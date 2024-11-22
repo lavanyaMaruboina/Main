@@ -1,0 +1,19 @@
+.button{
+    --sds-c-button-shadow:rgb(32, 204, 83);
+    --sds-c-button-shadow-focus:blue;
+    --sds-c-button-inverse-shadow-focus:rgb(148, 72, 114);
+    --sds-c-button-neutral-color-background:rgb(255, 123, 0);
+    --sds-c-button-neutral-color-border-hover:rgb(216, 119, 27);
+}
+
+.my-radio-group {
+    --sds-c-button-line-height: 2.875rem;
+  }
+
+.textInput{
+    color: rgb(7, 248, 59);
+}
+.imgClass{
+    max-width: 50%;
+    height: auto;
+}

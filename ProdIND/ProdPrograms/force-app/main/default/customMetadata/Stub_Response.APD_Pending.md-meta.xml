@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>APD Pending</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;response&quot;: {
+        &quot;status&quot;: &quot;SUCCESS&quot;,
+        &quot;respDesc&quot;: &quot;APD Pending&quot;,
+        &quot;content&quot;: [
+            {
+                &quot;User_APD_Pending&quot;: {
+                    &quot;UserRCPendings&quot;: [
+                        {
+                            &quot;Name&quot;: &quot;ANOOP S&quot;,
+                            &quot;Segment_Code&quot;: &quot;TWO_WHEELER&quot;,
+                            &quot;Deal_Count&quot;: &quot;12&quot;,
+                            &quot;Count_1_30&quot;: &quot;3&quot;,
+                            &quot;Count_31_60&quot;: &quot;0&quot;,
+                            &quot;Count_61_90&quot;: &quot;2&quot;,
+                            &quot;Count_Above_90&quot;: &quot;0&quot;,
+                            &quot;Total_Count&quot;: &quot;5&quot;,
+                            &quot;Doc_Type&quot;: &quot;RC Pending&quot;
+                        }
+                    ],
+                    &quot;UserInsurancePending&quot;: [
+                        {
+                            &quot;Name&quot;: &quot;ANOOP S&quot;,
+                            &quot;Segment_Code&quot;: &quot;&quot;,
+                            &quot;Deposit_Avl&quot;: &quot;NON-DEPOSIT&quot;,
+                            &quot;Count_1_30&quot;: &quot;27&quot;,
+                            &quot;SOH_1_30&quot;: &quot;7611241.9500&quot;,
+                            &quot;Count_31_60&quot;: &quot;31&quot;,
+                            &quot;SOH_31_60&quot;: &quot;9162863.1300&quot;,
+                            &quot;Count_61_90&quot;: &quot;28&quot;,
+                            &quot;SOH_61_90&quot;: &quot;5379053.8800&quot;,
+                            &quot;Count_Above_90&quot;: &quot;231&quot;,
+                            &quot;SOH_Above_90&quot;: &quot;60793192.9200&quot;,
+                            &quot;Total_Count&quot;: &quot;317&quot;,
+                            &quot;Doc_Type&quot;: &quot;Insurance Pending&quot;
+                        }
+                    ]
+                },
+                &quot;Dealer_APD_Pending&quot;: {
+                    &quot;DealerRCPending&quot;: [
+                        {
+                            &quot;Name&quot;: &quot;INDUS MOTOR CO PVT LTD&quot;,
+                            &quot;Deal_Count&quot;: &quot;447&quot;,
+                            &quot;Count_1_30&quot;: &quot;84&quot;,
+                            &quot;Count_31_60&quot;: &quot;5&quot;,
+                            &quot;Count_61_90&quot;: &quot;1&quot;,
+                            &quot;Count_Above_90&quot;: &quot;4&quot;,
+                            &quot;Total_Count&quot;: &quot;94&quot;,
+                            &quot;Doc_Type&quot;: &quot;RC Pending&quot;
+                        },
+                        {
+                            &quot;Name&quot;: &quot;INDUS MOTOR CO PVT LTD&quot;,
+                            &quot;Deal_Count&quot;: &quot;235&quot;,
+                            &quot;Count_1_30&quot;: &quot;201&quot;,
+                            &quot;Count_31_60&quot;: &quot;30&quot;,
+                            &quot;Count_61_90&quot;: &quot;2&quot;,
+                            &quot;Count_Above_90&quot;: &quot;2&quot;,
+                            &quot;Total_Count&quot;: &quot;235&quot;,
+                            &quot;Doc_Type&quot;: &quot;Invoice Pending&quot;
+                        }
+                    ],
+                    &quot;DealerInsurancePending&quot;: [
+                        {
+                            &quot;Name&quot;: &quot;INDUS MOTOR CO PVT LTD&quot;,
+                            &quot;Deposit_Avl&quot;: &quot;DEPOSIT&quot;,
+                            &quot;Count_1_30&quot;: &quot;1&quot;,
+                            &quot;SOH_1_30&quot;: &quot;107582.4900&quot;,
+                            &quot;Count_31_60&quot;: &quot;0&quot;,
+                            &quot;SOH_31_60&quot;: &quot;0.0000&quot;,
+                            &quot;Count_61_90&quot;: &quot;2&quot;,
+                            &quot;SOH_61_90&quot;: &quot;196973.3500&quot;,
+                            &quot;Count_Above_90&quot;: &quot;8&quot;,
+                            &quot;SOH_Above_90&quot;: &quot;1680122.5100&quot;,
+                            &quot;Total_Count&quot;: &quot;11&quot;,
+                            &quot;Doc_Type&quot;: &quot;Insurance Pending&quot;
+                        },
+                        {
+                            &quot;Name&quot;: &quot;INDUS MOTOR CO PVT LTD&quot;,
+                            &quot;Deposit_Avl&quot;: &quot;NON-DEPOSIT&quot;,
+                            &quot;Count_1_30&quot;: &quot;1647&quot;,
+                            &quot;SOH_1_30&quot;: &quot;660208085.5100&quot;,
+                            &quot;Count_31_60&quot;: &quot;1498&quot;,
+                            &quot;SOH_31_60&quot;: &quot;549788486.0700&quot;,
+                            &quot;Count_61_90&quot;: &quot;1446&quot;,
+                            &quot;SOH_61_90&quot;: &quot;471674532.7800&quot;,
+                            &quot;Count_Above_90&quot;: &quot;10461&quot;,
+                            &quot;SOH_Above_90&quot;: &quot;2915809035.1000&quot;,
+                            &quot;Total_Count&quot;: &quot;15052&quot;,
+                            &quot;Doc_Type&quot;: &quot;Insurance Pending&quot;
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">APD Pending</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,807 @@
+<template>
+
+    <div>
+        <template if:true={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
+
+<lightning-accordion class="example-accordion" active-section-name="A">
+
+    <lightning-accordion-section name="A" label="Insurance Details">
+
+        <lightning-accordion class="example-accordion slds-p-vertical_small" active-section-name="A1" allow-multiple-sections-open="true">
+
+            <lightning-accordion-section name="A1" label="Insurance">
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Insurance Application Number<template if:true ={insuAppNumberRequired}><abbr title="required" class="slds-required">*</abbr></template></label><!--CISP-3111-->
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden" value={InsuranceApplicationNumber} name="insuranceApplicationNoField" type="text" onchange={handleInputFieldChange} required={insuAppNumberRequired} message-when-value-missing="Complete this field"
+                                    data-id="RequiredLoanId" data-name="insuranceField">
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element buttons slds-text-align_center">
+                    <div class="slds-clearfix">
+                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                <template if:true={isEnableUploadInsuranceApplication}>
+                                            <lightning-button onclick={handleUploadVInsuranceApplication} variant="brand" label="Upload Insurance Application Document"
+                                                alternative-text="Upload Insurance application document" class=" slds-float_right indusPrimaryVehicleButton" disabled={disablefields}>
+                                            </lightning-button>
+                                            
+                                        </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st Yr Insurance premium paid by<template if:true={firstyrInsurance}><abbr title="required" class="slds-required">*</abbr></template></label><!--CISP-3111-->
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" label="1st Yr Insurance premium paid by" name="installmentsField" value={Installments} onchange={handleInputFieldChange} options={InstallmentsOptions}
+                                    disabled={disableInstallments} required={firstyrInsurance}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="A12" label="Long Term Policy Details">
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Long Term Policy available
+                                    <template if:true={insuranceFieldIsRequired}>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                    </template>
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" name="longTermPolicyAvailableField" value={longtermpolicyavailable} onchange={handleInputFieldChange} placeholder="-- Select --" options={longtermpolicyavailableOptions}
+                                    required={insuranceFieldIsRequired} disabled={disableLongTermPolicyField}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Long term policy Own Damage Yrs		
+                                            <template if:true={requiredLongTermPolicyFieldGetter}>
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                            </template>
+                                        </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" name="longTermPolicyOwnDamageYrsField" value={longtermpolicyowndamageyrs} onchange={handleInputFieldChange} disabled={disablelongTermPolicy} placeholder="-- Select --"
+                                    options={longtermpolicyowndamageyrsOptions} required={requiredLongTermPolicyFieldGetter}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Policy available
+                                            <template if:true={requiredLongTermPolicyFieldGetter}>
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                            </template>
+                                        </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" name="policyAvailableField" value={policyAvailable} onchange={handleInputFieldChange} disabled={disablelongTermPolicy} placeholder="-- Select --"
+                                    options={policyavailableOptions} required={requiredLongTermPolicyFieldGetter}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Insurer<template if:true={requiredPolicyFieldGetter}><abbr title="required" class="slds-required">*</abbr></template></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" name="insurerField" value={Insurer} onchange={handleInputFieldChange} placeholder="-- Select --" options={InsurerOptions} required={requiredPolicyFieldGetter}
+                                    disabled={disablePolicyField}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">RSD<template if:true={requiredPolicyFieldGetter}><abbr title="required" class="slds-required">*</abbr></template></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" name="rsdField" type="date" onchange={handleInputFieldChange} value={RSD} required={requiredPolicyFieldGetter} disabled={disablePolicyField}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Own Damage Premium + Add ons<template if:true={requiredPolicyFieldGetter}><abbr title="required" class="slds-required">*</abbr></template></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden" type="number" step=".01" data-name="insuranceField" name="FieldOwnDamagePremiumAddons" onchange={handleInputFieldChange} value={FieldOwnDamagePremiumAddons} required={requiredPolicyFieldGetter} disabled={disablePolicyField}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Third Party Premiums + PA Cover<template if:true={requiredPolicyFieldGetter}><abbr title="required" class="slds-required">*</abbr></template></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden" type="number" step=".01" data-name="insuranceField" name="ThirdPartyPremiumsPACover" onchange={handleInputFieldChange} value={ThirdPartyPremiumsPACover} required={requiredPolicyFieldGetter} disabled={disablePolicyField}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">GST<template if:true={requiredPolicyFieldGetter}><abbr title="required" class="slds-required">*</abbr></template></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden" type="number" step=".01" data-name="insuranceField" name="gstField" onchange={handleInputFieldChange} value={GST} required={requiredPolicyFieldGetter} disabled={disablePolicyField}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table" border="1">
+                    <thead>
+                        <tr class="slds-hint-parent">
+                            <th>Year</th>
+                            <th>IDV</th>
+                            <th>Own Damage Premium</th>
+                            <th>Third Party Premium</th>
+                        </tr>
+                    </thead>
+                    <tr class="slds-hint-parent">
+                        <td>1st Year</td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="1stYearIDV" name="IDVinput" value={IDV} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="Own Damage Premium" name="OwnDamagePremiuminput" value={OwnDamagePremium} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="ThirdPartyPremium" name="ThirdPartyPremiuminput" value={ThirdPartyPremium} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                    </tr>
+                    <tr class="slds-hint-parent">
+                        <td>2nd Year</td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="2ndYearIDV" name="IDVinput2" value={IDV2} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="2ndYearOwnDamagePremium" name="OwnDamagePremiuminput2" value={OwnDamagePremium2} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="ThirdPartyPremium" name="ThirdPartyPremiuminput2" value={ThirdPartyPremium2} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                    </tr>
+                    <tr class="slds-hint-parent">
+                        <td>3rd Year</td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="3rddYearIDV" name="IDVinput3" value={IDV3} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="3rdYearOwnDamagePremium" name="OwnDamagePremiuminput3" value={OwnDamagePremium3} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="ThirdPartyPremium" name="ThirdPartyPremiuminput3" value={ThirdPartyPremium3} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                    </tr>
+                    <tr class="slds-hint-parent">
+                        <td>4th Year</td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="4thYearIDV" name="IDVinput4" value={IDV4} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="4thYearOwnDamagePremium" name="OwnDamagePremiuminput4" value={OwnDamagePremium4} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="ThirdPartyPremium" name="ThirdPartyPremiuminput4" value={ThirdPartyPremium4} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                    </tr>
+                    <tr class="slds-hint-parent">
+                        <td>5th Year</td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="5thYearIDV" name="IDVinput5" value={IDV5} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="5thYearOwnDamagePremium" name="OwnDamagePremiuminput5" value={OwnDamagePremium5} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+
+                        <td>
+                            <lightning-input variant="label-hidden" class="slds-form-element__control" type="number" step=".01" data-id="ThirdPartyPremium" name="ThirdPartyPremiuminput5" value={ThirdPartyPremium5} onchange={handleInputFieldChange} disabled={disablePolicyField}></lightning-input>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </lightning-accordion-section>
+
+<template if:false={isTractor}>
+            <!-- <template if:true={isCoBorrowerPresent}> -->
+                <!-- CISP-2548 -->
+
+                <lightning-accordion-section name="A13" label="Nominee Details - Borrower">
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control"  variant="label-hidden" value={borrowerName} name="borrowerNameInput" data-name="borrowerFields" type="text" onchange={handleInputFieldChange} message-when-value-missing="Complete this field" required={isBoNomineeRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DOB</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerDOBInput" data-name="borrowerFields" type="date" onchange={handleInputFieldChange} value={borrowerDOB} required={isBoNomineeRequired} message-when-value-missing="Complete this field">
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Relationship</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="Relationship" name="borrowerRelationshipInput" data-name="insuranceFieldValidation" value={borrowerRelationship} onchange={handleInputFieldChange} options={nomineeRelationshipOptions}
+                                required={isBoNomineeRequired} message-when-value-missing="Complete this field">
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Address</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden"  value={borrowerAddress} name="borrowerAddressInput" data-name="borrowerFields" type="text" onchange={handleInputFieldChange} required={isBoNomineeRequired} message-when-value-missing="Complete this field"
+                                data-id="borrowerAddressInput">
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                </lightning-accordion-section>
+    
+            <template if:true={isCoBorrowerPresent}>
+                <!-- CISP-2548 -->
+                <lightning-accordion-section name="A14" label="Nominee Details - CoBorrower">
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  value={coBorrowerName} name="coBorrowerNameInput" data-name="coborrowerFields" type="text" onchange={handleInputFieldChange} required={isCoNomineeRequired} message-when-value-missing="Complete this field">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerDOBInput" data-name="coborrowerFields" type="date" onchange={handleInputFieldChange} value={coBorrowerDOB} required={isCoNomineeRequired} message-when-value-missing="Complete this field">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Relationship</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="Relationship" name="coBorrowerRelationshipInput" data-name="insuranceFieldValidationCoborrower" value={coBorrowerRelationship} onchange={handleInputFieldChange} options={nomineeRelationshipOptions}
+                                    required={isCoNomineeRequired} message-when-value-missing="Complete this field">
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Address</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={coBorrowerAddress}  name="coBorrowerAddressInput" data-name="coborrowerFields" type="text" onchange={handleInputFieldChange} required={isCoNomineeRequired} message-when-value-missing="Complete this field"
+                                    data-id="borrowerAddressInput">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </lightning-accordion-section>
+            </template>
+            <!-- CISP-2548 -->
+
+                <lightning-accordion-section name="A15" label="Family Details - Borrower">
+					<div class="slds-text-color_error">Please enter necessary fields.</div>
+					</br>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Spouse Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="Spouse Gender" name="borrowerSpouseGenderInput" value={borrowerSpouseGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Spouse DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerSpouseDOBInput" type="date" onchange={handleInputFieldChange} value={borrowerSpouseDOB} required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">1st Child Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={borrowerFirstChildName}  name="borrowerFirstChildNameInput" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                    data-id="borrowerAddressInput" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">1st Child Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="1st Child Gender" name="borrowerFirstChildGenderInput" value={borrowerFirstChildGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">1st Child DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerFirstChildDOBInput" type="date" onchange={handleInputFieldChange} value={borrowerFirstChildDOB} required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">2nd Child Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={borrowerSecondChildName}  name="borrowerSecondChildNameInput" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                    data-id="borrowerAddressInput" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">2nd Child Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="2nd Child Gender" name="borrowerSecondChildGenderInput" value={borrowerSecondChildGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">2nd Child DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerSecondChildDOBInput" type="date" onchange={handleInputFieldChange} value={borrowerSecondChildDOB} required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">3rd Child Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={borrowerThirdChildName}  name="borrowerThirdChildNameInput" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                    data-id="borrowerAddressInput" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">3rd Child Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="3rd Child Gender" name="borrowerThirdChildGenderInput" value={borrowerThirdChildGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">3rd Child DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerThirdChildDOBInput" type="date" onchange={handleInputFieldChange} value={borrowerThirdChildDOB} required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Father DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerFatherDOBInput" type="date" onchange={handleInputFieldChange} value={borrowerFatherDOB} required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Mother DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerMotherDOBInput" type="date" onchange={handleInputFieldChange} value={borrowerMotherDOB} required message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Insurance business done by<abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" label="Insurance business done by" name="borrowerInsuDoneByInput" value={borrowerInsuDoneBy} onchange={handleInputFieldChange} options={nomineeInsDoneByOptions}
+                                        required={insuBusiDoneByBorroRequired} message-when-value-missing="Complete this field" disabled={isBofamilyRequired}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </lightning-accordion-section>
+
+            <template if:true={isCoBorrowerPresent}>
+                <!-- CISP-2548 -->
+                <lightning-accordion-section name="A16" label="Family Details - CoBorrower">
+					<div class="slds-text-color_error">Please enter necessary fields.</div>
+					</br>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Spouse Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="Spouse Gender" name="coBorrowerSpouseGenderInput" value={coBorrowerSpouseGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Spouse DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerSpouseDOBInput" type="date" onchange={handleInputFieldChange} value={coBorrowerSpouseDOB} required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">1st Child Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={coBorrowerFirstChildName}  name="coBorrowerFirstChildNameInput" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                    data-id="coBorrowerAddressInput" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">1st Child Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="1st Child Gender" name="coBorrowerFirstChildGenderInput" value={coBorrowerFirstChildGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">1st Child DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerFirstChildDOBInput" type="date" onchange={handleInputFieldChange} value={coBorrowerFirstChildDOB} required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">2nd Child Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  value={coBorrowerSecondChildName} name="coBorrowerSecondChildNameInput" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                    data-id="coBorrowerAddressInput" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">2nd Child Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="2nd Child Gender" name="coBorrowerSecondChildGenderInput" value={coBorrowerSecondChildGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">2nd Child DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerSecondChildDOBInput" type="date" onchange={handleInputFieldChange} value={coBorrowerSecondChildDOB} required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">3rd Child Name</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  value={coBorrowerThirdChildName} name="coBorrowerThirdChildNameInput" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                    data-id="coBorrowerAddressInput" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">3rd Child Gender</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="3rd Child Gender" name="coBorrowerThirdChildGenderInput" value={coBorrowerThirdChildGender} onchange={handleInputFieldChange} options={nomineeGenderOptions}
+                                    required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">3rd Child DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerThirdChildDOBInput" type="date" onchange={handleInputFieldChange} value={coBorrowerThirdChildDOB} required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Father DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerFatherDOBInput" type="date" onchange={handleInputFieldChange} value={coBorrowerFatherDOB} required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Mother DOB</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"  name="coBorrowerMotherDOBInput" type="date" onchange={handleInputFieldChange} value={coBorrowerMotherDOB} required message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Insurance business done by<abbr title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden" data-name="insuranceField" label="Insurance business done by" name="coBorrowerInsuDoneByInput" value={coBorrowerInsuDoneBy} onchange={handleInputFieldChange} options={nomineeInsDoneByOptionsCob}
+                                        required={insuBusiDoneByCoBorRequired} message-when-value-missing="Complete this field" disabled={isCofamilyRequired}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </lightning-accordion-section>
+            
+            </template>
+            
+            <!-- </template> -->
+            <!-- CISP-2548 -->
+        </template>
+            
+            
+        </lightning-accordion>
+
+    </lightning-accordion-section>
+
+</lightning-accordion>
+
+<div class="slds-clearfix">
+    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <button class="indusPrimaryVehicleButton slds-button slds-button_brand " disabled={disablefields} onclick={handleSubmit}>
+                        Submit
+                    </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<template if:true={uploadViewDocFlag}>
+        <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={recordid} currentapplicantid={applicantid}
+            uploadviewdocpopup={uploadViewDocFlag}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+    </template>
+<template if:true={showUpload}>
+        <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeUploadInsuranceDocument}
+                currentloanapplicationid={recordid} currentapplicantid={applicantid}
+                uploadviewdocpopup={uploadInsuranceDocFlag} createdoconparentbutton="true" title={uploadTitle}
+                doctype={docType} isphotocopy={showPhotoCopy}
+                currentvehiclerecordid={vehiclerecordid}
+                showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}>
+        </c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+    </template>
+
+</template>

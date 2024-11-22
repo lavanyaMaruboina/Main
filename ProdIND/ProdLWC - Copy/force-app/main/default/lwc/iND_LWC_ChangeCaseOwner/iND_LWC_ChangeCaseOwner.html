@@ -1,0 +1,53 @@
+<template>
+	<div>
+		<div class="slds-page-header slds-page-header_vertical slds-box">
+			<template lwc:if={msg}>
+				<div class="slds-m-vertical_x-small">
+					<div class={msgTheme}>
+						<h2 class="slds-align_absolute-center slds-p-around_xx-small">{msg}</h2>
+					</div>
+				</div>
+			</template>
+			<div class="slds-media">
+				<div class="slds-media__figure">
+					<lightning-icon icon-name="standard:user"></lightning-icon>
+				</div>
+				<div class="slds-media__body">
+					<div class="slds-page-header__name">
+						<div class="slds-page-header__name-title">
+							<h1>
+								<span class="slds-page-header__title slds-hyphenate"
+									title="Burlington Textile Weaving Plant Generator">Change Case Owner</span>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="c-container">
+				<template lwc:if={isMorethanOneCaseSelected}>
+					<p class="slds-m-vertical_small">You've selected {total} records.</p>
+				</template>
+				<template lwc:else>
+					<p class="slds-m-vertical_small">You've selected {total} record.</p>
+				</template>
+				<c-generic-custom-lookup is-value-selected={isUserSelected} selected-name={selectedUserName}
+					queue-id={cmuQueueId} is-get-users-from-queue="true" search-field={USER_NAME_FIELD}
+					icon-name='standard:user' onlookupselected={selectedStateHandler} onclearvalue={clearStateHandler}
+					is-custom-lookup-field-disabled={isCustomLookupDisabled} select-field-name='User'
+					small-input="true">
+				</c-generic-custom-lookup>
+				<lightning-layout class="slds-p-vertical_small">
+					<lightning-layout-item>
+						<lightning-button class="slds-m-right_small cancel-button" variant="neutral" label="Cancel"
+							onclick={close}></lightning-button>
+					</lightning-layout-item>
+					<lightning-layout-item>
+						<lightning-button class="submit-button" variant="brand" type="submit" label="Submit"
+							onclick={updateCaseOwner} disabled={isSubmitButtonDisabled}>
+						</lightning-button>
+					</lightning-layout-item>
+				</lightning-layout>
+			</div>
+		</div>
+	</div>
+</template>

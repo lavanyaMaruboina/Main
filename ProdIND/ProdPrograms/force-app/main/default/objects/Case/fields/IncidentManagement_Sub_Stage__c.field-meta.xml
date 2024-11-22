@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IncidentManagement_Sub_Stage__c</fullName>
+    <label>Sub Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>User Details</fullName>
+                <default>false</default>
+                <label>User Details</label>
+            </value>
+            <value>
+                <fullName>Capture current residential address</fullName>
+                <default>false</default>
+                <label>Capture current residential address</label>
+            </value>
+            <value>
+                <fullName>Capture permanent residential address</fullName>
+                <default>false</default>
+                <label>Capture permanent residential address</label>
+            </value>
+            <value>
+                <fullName>Capture PAN or Other KYC</fullName>
+                <default>false</default>
+                <label>Capture PAN or Other KYC</label>
+            </value>
+            <value>
+                <fullName>Capture Dedupe</fullName>
+                <default>false</default>
+                <label>Capture Dedupe</label>
+            </value>
+            <value>
+                <fullName>Vehicle Dedupe</fullName>
+                <default>false</default>
+                <label>Vehicle Dedupe</label>
+            </value>
+            <value>
+                <fullName>Declared Income/Required Loan Amount</fullName>
+                <default>false</default>
+                <label>Declared Income/Required Loan Amount</label>
+            </value>
+            <value>
+                <fullName>Bank Account Check</fullName>
+                <default>false</default>
+                <label>Bank Account Check</label>
+            </value>
+            <value>
+                <fullName>View Application Details</fullName>
+                <default>false</default>
+                <label>View Application Details</label>
+            </value>
+            <value>
+                <fullName>CIBIL</fullName>
+                <default>false</default>
+                <label>CIBIL</label>
+            </value>
+            <value>
+                <fullName>Field Investigation</fullName>
+                <default>false</default>
+                <label>Field Investigation</label>
+            </value>
+            <value>
+                <fullName>Credit Assessment</fullName>
+                <default>false</default>
+                <label>Credit Assessment</label>
+            </value>
+            <value>
+                <fullName>Income Details</fullName>
+                <default>false</default>
+                <label>Income Details</label>
+            </value>
+            <value>
+                <fullName>Valuation IDV</fullName>
+                <default>false</default>
+                <label>Valuation IDV</label>
+            </value>
+            <value>
+                <fullName>Final Terms</fullName>
+                <default>false</default>
+                <label>Final Terms</label>
+            </value>
+            <value>
+                <fullName>Insurance Details</fullName>
+                <default>false</default>
+                <label>Insurance Details</label>
+            </value>
+            <value>
+                <fullName>Exposure Analysis</fullName>
+                <default>false</default>
+                <label>Exposure Analysis</label>
+            </value>
+            <value>
+                <fullName>Income</fullName>
+                <default>false</default>
+                <label>Income</label>
+            </value>
+            <value>
+                <fullName>CAM and Approval Log</fullName>
+                <default>false</default>
+                <label>CAM and Approval Log</label>
+            </value>
+            <value>
+                <fullName>Risk Summary</fullName>
+                <default>false</default>
+                <label>Risk Summary</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Tele-verification &lt;Post Sanction&gt;</fullName>
+                <default>false</default>
+                <label>Tele-verification &lt;Post Sanction&gt;</label>
+            </value>
+            <value>
+                <fullName>Vehicle Inspection and RC Check</fullName>
+                <default>false</default>
+                <label>Vehicle Inspection and RC Check</label>
+            </value>
+            <value>
+                <fullName>Structured EMI</fullName>
+                <default>false</default>
+                <label>Structured EMI</label>
+            </value>
+            <value>
+                <fullName>Security Mandate</fullName>
+                <default>false</default>
+                <label>Security Mandate</label>
+            </value>
+            <value>
+                <fullName>Additional Documents</fullName>
+                <default>false</default>
+                <label>Additional Documents</label>
+            </value>
+            <value>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+                <label>Invoice</label>
+            </value>
+            <value>
+                <fullName>IHM</fullName>
+                <default>false</default>
+                <label>IHM</label>
+            </value>
+            <value>
+                <fullName>Loan Agreement</fullName>
+                <default>false</default>
+                <label>Loan Agreement</label>
+            </value>
+            <value>
+                <fullName>Signing the e-Agreement</fullName>
+                <default>false</default>
+                <label>Signing the e-Agreement</label>
+            </value>
+            <value>
+                <fullName>Repayment Mandate</fullName>
+                <default>false</default>
+                <label>Repayment Mandate</label>
+            </value>
+            <value>
+                <fullName>RTO, DPN, POA Documents Upload</fullName>
+                <default>false</default>
+                <label>RTO, DPN, POA Documents Upload</label>
+            </value>
+            <value>
+                <fullName>Pre-Disbursement Check</fullName>
+                <default>false</default>
+                <label>Pre-Disbursement Check</label>
+            </value>
+            <value>
+                <fullName>Initiate RCU</fullName>
+                <default>false</default>
+                <label>Initiate RCU</label>
+            </value>
+            <value>
+                <fullName>RCU Manager</fullName>
+                <default>false</default>
+                <label>RCU Manager</label>
+            </value>
+            <value>
+                <fullName>Payment Request</fullName>
+                <default>false</default>
+                <label>Payment Request</label>
+            </value>
+            <value>
+                <fullName>RC Upload</fullName>
+                <default>false</default>
+                <label>RC Upload</label>
+            </value>
+            <value>
+                <fullName>Business Payment Details</fullName>
+                <default>false</default>
+                <label>Business Payment Details</label>
+            </value>
+            <value>
+                <fullName>New/Used Vehicle Details</fullName>
+                <default>false</default>
+                <label>New/Used Vehicle Details</label>
+            </value>
+            <value>
+                <fullName>Beneficiary Details</fullName>
+                <default>false</default>
+                <label>Beneficiary Details</label>
+            </value>
+            <value>
+                <fullName>Sanction of Application</fullName>
+                <default>false</default>
+                <label>Sanction of Application</label>
+            </value>
+            <value>
+                <fullName>Deal Number &amp; Customer Code Generation</fullName>
+                <default>false</default>
+                <label>Deal Number &amp; Customer Code Generation</label>
+            </value>
+            <value>
+                <fullName>Agreement Docs Upload</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Agreement Docs Upload</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

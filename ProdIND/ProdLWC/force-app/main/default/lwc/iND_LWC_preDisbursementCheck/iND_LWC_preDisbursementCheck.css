@@ -1,0 +1,26 @@
+.section-btn {
+    line-height: 100%;
+    padding: 4px;
+    background-color: #8c3137;
+    color:white;
+}
+.slds-accordion__summary-content, .accordion_Header{
+    background-color:#84181f;
+} 
+:host{
+    /* --sds-c-accordion-summary-color-background: #84181F; */
+    --sds-c-accordion-heading-text-color-hover: black;
+}
+
+.THIS .slds-accordion__summary-heading{
+    font-weight: bold;
+    color: white;
+}
+
+.THIS.slds-border {
+    border: 4px solid black;
+}
+
+.THIS.headingtext{
+    color: white;
+}

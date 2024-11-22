@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Applicant_Recognized__c</fullName>
+    <label>Applicant Recognized</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>By asking colleague/ watchman etc.; Yes</fullName>
+                <default>false</default>
+                <label>By asking colleague/ watchman etc.; Yes</label>
+            </value>
+            <value>
+                <fullName>By asking colleague/ watchman etc.; No</fullName>
+                <default>false</default>
+                <label>By asking colleague/ watchman etc.; No</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

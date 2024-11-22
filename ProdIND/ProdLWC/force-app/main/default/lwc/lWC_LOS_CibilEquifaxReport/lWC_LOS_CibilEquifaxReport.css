@@ -1,0 +1,15 @@
+.section-btn {
+    line-height: 100%;
+    padding: 4px;
+    /* background-color: #8c3137; */
+    /* color:white; */
+}
+
+.iframe-style {
+    overflow:hidden;
+}
+
+.icon-style {
+    background-color: green;
+    margin-left: 1%;
+}

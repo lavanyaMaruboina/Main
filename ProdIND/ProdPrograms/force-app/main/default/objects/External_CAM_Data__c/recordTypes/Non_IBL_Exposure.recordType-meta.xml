@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_IBL_Exposure</fullName>
+    <active>true</active>
+    <label>Non IBL Exposure</label>
+    <picklistValues>
+        <picklist>Log_Type__c</picklist>
+        <values>
+            <fullName>Dealer Insurance APD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dealer RC APD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Insurance APD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User RC APD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

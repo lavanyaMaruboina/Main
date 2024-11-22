@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Incidents</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>Loan_Application__c</columns>
+    <columns>LOB_formulae__c</columns>
+    <columns>Agent_BL_Code__c</columns>
+    <columns>IncidentManagement_State__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CASES.CLOSED_DATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Case_Owner_Custom__c</field>
+        <operation>equals</operation>
+        <value>KARTHICK M</value>
+    </filters>
+    <filters>
+        <field>IncidentManagement_State__c</field>
+        <operation>equals</operation>
+        <value>,MAHARASHTRA,UTTAR_PRADESH,ANDHRA_COASTAL,NORTH EAST,ODISHA</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <label>My Incidents</label>
+</ListView>

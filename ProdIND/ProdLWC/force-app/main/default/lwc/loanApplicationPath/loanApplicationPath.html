@@ -1,0 +1,17 @@
+<template>
+  <template if:false={isPathHidden}>
+    <lightning-progress-indicator class="slds-p-vertical_large" current-step={currentStep} type="path" variant="base">
+      <template if:true={showPrePostInitialStep}>
+        <lightning-progress-step label="Pre Initial Offer" value="pre-initial-offer" onclick={handleStageChange}></lightning-progress-step>
+        <lightning-progress-step label="Post Initial Offer" value="post-initial-offer" onclick={handleStageChange}></lightning-progress-step>
+      </template>
+      <template if:true={showPreapprovedStep}>
+        <lightning-progress-step label="Pre Approved Offer" value="pre-approved-offer" onclick={handleStageChange}></lightning-progress-step>
+      </template>
+      <lightning-progress-step label="Credit Verification" value="credit-verification" onclick={handleStageChange}></lightning-progress-step>
+      <lightning-progress-step label="Post Sanction" value="post-sanction" onclick={handleStageChange}></lightning-progress-step>
+      <lightning-progress-step label="Pre Disbursement" value="pre-disbursement" onclick={handleStageChange}></lightning-progress-step>
+      <lightning-progress-step label="Payment Requests" value="payment-requests" onclick={handleStageChange}></lightning-progress-step>
+    </lightning-progress-indicator>
+  </template>
+</template>

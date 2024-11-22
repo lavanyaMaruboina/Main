@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CMU_AML_Cases_Case</fullName>
+    <filterScope>Queue</filterScope>
+    <label>CMU AML Cases</label>
+    <queue>CMU_AML_Cases</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

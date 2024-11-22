@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Integration_Name__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Integration Name</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ADAuthentication</fullName>
+                <default>false</default>
+                <label>ADAuthentication</label>
+            </value>
+            <value>
+                <fullName>Agreement Booklet</fullName>
+                <default>false</default>
+                <label>Agreement Booklet</label>
+            </value>
+            <value>
+                <fullName>AML Check</fullName>
+                <default>false</default>
+                <label>AML Check</label>
+            </value>
+            <value>
+                <fullName>APD Pending</fullName>
+                <default>false</default>
+                <label>APD Pending</label>
+            </value>
+            <value>
+                <fullName>Biometric Verification</fullName>
+                <default>false</default>
+                <label>Biometric Verification</label>
+            </value>
+            <value>
+                <fullName>BREscorecardAPI</fullName>
+                <default>false</default>
+                <label>BREscorecardAPI</label>
+            </value>
+            <value>
+                <fullName>CAM Portfolio</fullName>
+                <default>false</default>
+                <label>CAM Portfolio</label>
+            </value>
+            <value>
+                <fullName>CarWale Prices</fullName>
+                <default>false</default>
+                <label>CarWale Prices</label>
+            </value>
+            <value>
+                <fullName>Cibil Match</fullName>
+                <default>false</default>
+                <label>Cibil Match</label>
+            </value>
+            <value>
+                <fullName>Create Applicant</fullName>
+                <default>false</default>
+                <label>Create Applicant</label>
+            </value>
+            <value>
+                <fullName>CSR Vahan</fullName>
+                <default>false</default>
+                <label>CSR Vahan</label>
+            </value>
+            <value>
+                <fullName>CSR Vahan FI Waiver</fullName>
+                <default>false</default>
+                <label>CSR Vahan FI Waiver</label>
+            </value>
+            <value>
+                <fullName>Customer API</fullName>
+                <default>false</default>
+                <label>Customer API</label>
+            </value>
+            <value>
+                <fullName>Customer Dedupe</fullName>
+                <default>false</default>
+                <label>Customer Dedupe</label>
+            </value>
+            <value>
+                <fullName>CustomerExposure</fullName>
+                <default>false</default>
+                <label>CustomerExposure</label>
+            </value>
+            <value>
+                <fullName>Customer Master Creation</fullName>
+                <default>false</default>
+                <label>Customer Master Creation</label>
+            </value>
+            <value>
+                <fullName>Customer Master Updation</fullName>
+                <default>false</default>
+                <label>Customer Master Updation</label>
+            </value>
+            <value>
+                <fullName>Customer Name Search</fullName>
+                <default>false</default>
+                <label>Customer Name Search</label>
+            </value>
+            <value>
+                <fullName>DealEligibleRefinance</fullName>
+                <default>false</default>
+                <label>DealEligibleRefinance</label>
+            </value>
+            <value>
+                <fullName>Deal Master</fullName>
+                <default>false</default>
+                <label>Deal Master</label>
+            </value>
+            <value>
+                <fullName>DemoAuth</fullName>
+                <default>false</default>
+                <label>DemoAuth</label>
+            </value>
+            <value>
+                <fullName>DMSUpload</fullName>
+                <default>false</default>
+                <label>DMSUpload</label>
+            </value>
+            <value>
+                <fullName>DocAuth</fullName>
+                <default>false</default>
+                <label>DocAuth</label>
+            </value>
+            <value>
+                <fullName>Document Report</fullName>
+                <default>false</default>
+                <label>Document Report</label>
+            </value>
+            <value>
+                <fullName>Driving License</fullName>
+                <default>false</default>
+                <label>Driving License</label>
+            </value>
+            <value>
+                <fullName>Email Check</fullName>
+                <default>false</default>
+                <label>Email Check</label>
+            </value>
+            <value>
+                <fullName>Email Service</fullName>
+                <default>false</default>
+                <label>Email Service</label>
+            </value>
+            <value>
+                <fullName>ENACH Registration Journey</fullName>
+                <default>false</default>
+                <label>ENACH Registration Journey</label>
+            </value>
+            <value>
+                <fullName>ENACH Registration Status</fullName>
+                <default>false</default>
+                <label>ENACH Registration Status</label>
+            </value>
+            <value>
+                <fullName>EPFO Auth</fullName>
+                <default>false</default>
+                <label>EPFO Auth</label>
+            </value>
+            <value>
+                <fullName>EPF UAN Lookup</fullName>
+                <default>false</default>
+                <label>EPF UAN Lookup</label>
+            </value>
+            <value>
+                <fullName>Form60</fullName>
+                <default>false</default>
+                <label>Form60</label>
+            </value>
+            <value>
+                <fullName>Fetch Customer Details</fullName>
+                <default>false</default>
+                <label>Fetch Customer Details</label>
+            </value>
+            <value>
+                <fullName>Fico Deviations</fullName>
+                <default>false</default>
+                <label>Fico Deviations</label>
+            </value>
+            <value>
+                <fullName>GeoCoder</fullName>
+                <default>false</default>
+                <label>GeoCoder</label>
+            </value>
+            <value>
+                <fullName>GetCIBILReport</fullName>
+                <default>false</default>
+                <label>GetCIBILReport</label>
+            </value>
+            <value>
+                <fullName>Golden Source</fullName>
+                <default>false</default>
+                <label>Golden Source</label>
+            </value>
+            <value>
+                <fullName>GST Online</fullName>
+                <default>false</default>
+                <label>GST Online</label>
+            </value>
+            <value>
+                <fullName>GST Report</fullName>
+                <default>false</default>
+                <label>GST Report</label>
+            </value>
+            <value>
+                <fullName>GST Status</fullName>
+                <default>false</default>
+                <label>GST Status</label>
+            </value>
+            <value>
+                <fullName>IBB Master</fullName>
+                <default>false</default>
+                <label>IBB Master</label>
+            </value>
+            <value>
+                <fullName>IBL BRE</fullName>
+                <default>false</default>
+                <label>IBL BRE</label>
+            </value>
+            <value>
+                <fullName>IBL BRE Check Eligibility</fullName>
+                <default>false</default>
+                <label>IBL BRE Check Eligibility</label>
+            </value>
+            <value>
+                <fullName>IBL Customer Dedupe</fullName>
+                <default>false</default>
+                <label>IBL Customer Dedupe</label>
+            </value>
+            <value>
+                <fullName>IBL Vehicle Dedupe</fullName>
+                <default>false</default>
+                <label>IBL Vehicle Dedupe</label>
+            </value>
+            <value>
+                <fullName>IHMReceipt</fullName>
+                <default>false</default>
+                <label>IHMReceipt</label>
+            </value>
+            <value>
+                <fullName>Image API</fullName>
+                <default>false</default>
+                <label>Image API</label>
+            </value>
+            <value>
+                <fullName>InitiateNeSL</fullName>
+                <default>false</default>
+                <label>InitiateNeSL</label>
+            </value>
+            <value>
+                <fullName>Insurance Premium</fullName>
+                <default>false</default>
+                <label>Insurance Premium</label>
+            </value>
+            <value>
+                <fullName>Insurance Recommendation</fullName>
+                <default>false</default>
+                <label>Insurance Recommendation</label>
+            </value>
+            <value>
+                <fullName>Internal Dedupe</fullName>
+                <default>false</default>
+                <label>Internal Dedupe</label>
+            </value>
+            <value>
+                <fullName>ITR Online</fullName>
+                <default>false</default>
+                <label>ITR Online</label>
+            </value>
+            <value>
+                <fullName>ITR Report</fullName>
+                <default>false</default>
+                <label>ITR Report</label>
+            </value>
+            <value>
+                <fullName>ITR Scan Document Upload</fullName>
+                <default>false</default>
+                <label>ITR Scan Document Upload</label>
+            </value>
+            <value>
+                <fullName>ITR Scan Upload Complete Transaction</fullName>
+                <default>false</default>
+                <label>ITR Scan Upload Complete Transaction</label>
+            </value>
+            <value>
+                <fullName>ITR Scan Upload Initiate</fullName>
+                <default>false</default>
+                <label>ITR Scan Upload Initiate</label>
+            </value>
+            <value>
+                <fullName>ITRScanUploadProcessDocument</fullName>
+                <default>false</default>
+                <label>ITRScanUploadProcessDocument</label>
+            </value>
+            <value>
+                <fullName>ITRScanUploadRetrieveReport</fullName>
+                <default>false</default>
+                <label>ITRScanUploadRetrieveReport</label>
+            </value>
+            <value>
+                <fullName>ITR Status</fullName>
+                <default>false</default>
+                <label>ITR Status</label>
+            </value>
+            <value>
+                <fullName>LTV Engine</fullName>
+                <default>false</default>
+                <label>LTV Engine</label>
+            </value>
+            <value>
+                <fullName>Membership</fullName>
+                <default>false</default>
+                <label>Membership</label>
+            </value>
+            <value>
+                <fullName>MFCFetchValuationReport</fullName>
+                <default>false</default>
+                <label>MFCFetchValuationReport</label>
+            </value>
+            <value>
+                <fullName>MFC Valuation</fullName>
+                <default>false</default>
+                <label>MFC Valuation</label>
+            </value>
+            <value>
+                <fullName>NeSL Agreement Status</fullName>
+                <default>false</default>
+                <label>NeSL Agreement Status</label>
+            </value>
+            <value>
+                <fullName>NeSL EAgreement</fullName>
+                <default>false</default>
+                <label>NeSL EAgreement</label>
+            </value>
+            <value>
+                <fullName>OCR Back</fullName>
+                <default>false</default>
+                <label>OCR Back</label>
+            </value>
+            <value>
+                <fullName>OCR Front</fullName>
+                <default>false</default>
+                <label>OCR Front</label>
+            </value>
+            <value>
+                <fullName>Offer Engine</fullName>
+                <default>false</default>
+                <label>Offer Engine</label>
+            </value>
+            <value>
+                <fullName>PACT/LMS</fullName>
+                <default>false</default>
+                <label>PACT/LMS</label>
+            </value>
+            <value>
+                <fullName>PAN Verification</fullName>
+                <default>false</default>
+                <label>PAN Verification</label>
+            </value>
+            <value>
+                <fullName>Passport</fullName>
+                <default>false</default>
+                <label>Passport</label>
+            </value>
+            <value>
+                <fullName>Perfios BS Generate Link</fullName>
+                <default>false</default>
+                <label>Perfios BS Generate Link</label>
+            </value>
+            <value>
+                <fullName>Perfios BS Report</fullName>
+                <default>false</default>
+                <label>Perfios BS Report</label>
+            </value>
+            <value>
+                <fullName>Perfios BS Transaction Status</fullName>
+                <default>false</default>
+                <label>Perfios BS Transaction Status</label>
+            </value>
+            <value>
+                <fullName>Pricing Engine</fullName>
+                <default>false</default>
+                <label>Pricing Engine</label>
+            </value>
+            <value>
+                <fullName>RCLimitCheck</fullName>
+                <default>false</default>
+                <label>RCLimitCheck</label>
+            </value>
+            <value>
+                <fullName>Run EMI Engine</fullName>
+                <default>false</default>
+                <label>Run EMI Engine</label>
+            </value>
+            <value>
+                <fullName>ScanDocumentUpload</fullName>
+                <default>false</default>
+                <label>ScanDocumentUpload</label>
+            </value>
+            <value>
+                <fullName>ScanUploadInitiate</fullName>
+                <default>false</default>
+                <label>ScanUploadInitiate</label>
+            </value>
+            <value>
+                <fullName>ScanUploadProcess</fullName>
+                <default>false</default>
+                <label>ScanUploadProcess</label>
+            </value>
+            <value>
+                <fullName>ScanUploadReportGeneration</fullName>
+                <default>false</default>
+                <label>ScanUploadReportGeneration</label>
+            </value>
+            <value>
+                <fullName>ScanUploadRetrieveReport</fullName>
+                <default>false</default>
+                <label>ScanUploadRetrieveReport</label>
+            </value>
+            <value>
+                <fullName>Selfie_Report</fullName>
+                <default>false</default>
+                <label>Selfie_Report</label>
+            </value>
+            <value>
+                <fullName>SIStatus</fullName>
+                <default>false</default>
+                <label>SIStatus</label>
+            </value>
+            <value>
+                <fullName>SMS Gateway</fullName>
+                <default>false</default>
+                <label>SMS Gateway</label>
+            </value>
+            <value>
+                <fullName>SSO</fullName>
+                <default>false</default>
+                <label>SSO</label>
+            </value>
+            <value>
+                <fullName>Stamping Details</fullName>
+                <default>false</default>
+                <label>Stamping Details</label>
+            </value>
+            <value>
+                <fullName>Text Match</fullName>
+                <default>false</default>
+                <label>Text Match</label>
+            </value>
+            <value>
+                <fullName>UIDAI Biometric</fullName>
+                <default>false</default>
+                <label>UIDAI Biometric</label>
+            </value>
+            <value>
+                <fullName>UIDAI OTP</fullName>
+                <default>true</default>
+                <label>UIDAI OTP</label>
+            </value>
+            <value>
+                <fullName>UIDAI OTP Verify</fullName>
+                <default>false</default>
+                <label>UIDAI OTP Verify</label>
+            </value>
+            <value>
+                <fullName>Vahan Report</fullName>
+                <default>false</default>
+                <label>Vahan Report</label>
+            </value>
+            <value>
+                <fullName>Validate Recent Lead</fullName>
+                <default>false</default>
+                <label>Validate Recent Lead</label>
+            </value>
+            <value>
+                <fullName>Vehicle Dedupe</fullName>
+                <default>false</default>
+                <label>Vehicle Dedupe</label>
+            </value>
+            <value>
+                <fullName>Voter Id – Golden source</fullName>
+                <default>false</default>
+                <label>Voter Id – Golden source</label>
+            </value>
+            <value>
+                <fullName>Web_Session_Authorize_Token</fullName>
+                <default>false</default>
+                <label>Web_Session_Authorize_Token</label>
+            </value>
+            <value>
+                <fullName>Sanction of Application</fullName>
+                <default>false</default>
+                <label>Sanction of Application</label>
+            </value>
+            <value>
+                <fullName>IBL BRE Check Eligibility DSA</fullName>
+                <default>false</default>
+                <label>IBL BRE Check Eligibility DSA</label>
+            </value>
+            <value>
+                <fullName>LTV Engine DSA</fullName>
+                <default>false</default>
+                <label>LTV Engine DSA</label>
+            </value>
+            <value>
+                <fullName>BREscorecardAPIDSA</fullName>
+                <default>false</default>
+                <label>BREscorecardAPIDSA</label>
+            </value>
+            <value>
+                <fullName>Pricing Engine DSA</fullName>
+                <default>false</default>
+                <label>Pricing Engine DSA</label>
+            </value>
+            <value>
+                <fullName>Offer Engine DSA</fullName>
+                <default>false</default>
+                <label>Offer Engine DSA</label>
+            </value>
+            <value>
+                <fullName>Reverse Status</fullName>
+                <default>false</default>
+                <label>Reverse Status</label>
+            </value>
+            <value>
+                <fullName>BikeWale Prices</fullName>
+                <default>false</default>
+                <label>BikeWale Prices</label>
+            </value>
+            <value>
+                <fullName>AadhaarVault</fullName>
+                <default>false</default>
+                <label>AadhaarVault</label>
+            </value>
+            <value>
+                <fullName>D2C Vehicle Valuation</fullName>
+                <default>false</default>
+                <label>D2C Vehicle Valuation</label>
+            </value>
+            <value>
+                <fullName>D2C Vehicle Dedupe</fullName>
+                <default>false</default>
+                <label>D2C Vehicle Dedupe</label>
+            </value>
+            <value>
+                <fullName>D2C Sanction</fullName>
+                <default>false</default>
+                <label>D2C Sanction</label>
+            </value>
+            <value>
+                <fullName>D2C Disbursement</fullName>
+                <default>false</default>
+                <label>D2C Disbursement</label>
+            </value>
+            <value>
+                <fullName>Get_Pincode_Based_Search_SF_Tractor</fullName>
+                <default>false</default>
+                <label>Get Pincode Based Search SF Tractor</label>
+            </value>
+            <value>
+                <fullName>PennyDrop_API</fullName>
+                <default>false</default>
+                <label>PennyDrop API</label>
+            </value>
+            <value>
+                <fullName>Tractor Check Eligibility</fullName>
+                <default>false</default>
+                <label>Tractor Check Eligibility</label>
+            </value>
+            <value>
+                <fullName>CRIFF Report API</fullName>
+                <default>false</default>
+                <label>CRIFF Report API</label>
+            </value>
+            <value>
+                <fullName>Crosscore</fullName>
+                <default>false</default>
+                <label>Crosscore</label>
+            </value>
+            <value>
+                <fullName>Combine BRE</fullName>
+                <default>false</default>
+                <label>Combine BRE</label>
+            </value>
+            <value>
+                <fullName>TF Offer Engine</fullName>
+                <default>false</default>
+                <label>TF Offer Engine</label>
+            </value>
+            <value>
+                <fullName>Run EMI Engine DSA</fullName>
+                <default>false</default>
+                <label>Run EMI Engine DSA</label>
+            </value>
+            <value>
+                <fullName>VKYC Document Download</fullName>
+                <default>false</default>
+                <label>VKYC Document Download</label>
+            </value>
+            <value>
+                <fullName>ReferenceAndRelationMasterCreation</fullName>
+                <default>false</default>
+                <label>ReferenceAndRelationMasterCreation</label>
+            </value>
+            <value>
+                <fullName>Productivity</fullName>
+                <default>false</default>
+                <label>Productivity</label>
+            </value>
+            <value>
+                <fullName>Weighted_IRR</fullName>
+                <default>false</default>
+                <label>Weighted_IRR</label>
+            </value>
+            <value>
+                <fullName>Tractor Vehicle Dedupe</fullName>
+                <default>false</default>
+                <label>Tractor Vehicle Dedupe</label>
+            </value>
+            <value>
+                <fullName>SchemeValidation</fullName>
+                <default>false</default>
+                <label>SchemeValidation</label>
+            </value>
+            <value>
+                <fullName>Save Customer Relation</fullName>
+                <default>false</default>
+                <label>Save Customer Relation</label>
+            </value>
+            <value>
+                <fullName>Mahindra Reverse Status</fullName>
+                <default>false</default>
+                <label>Mahindra Reverse Status</label>
+            </value>
+            <value>
+                <fullName>Payment Request API</fullName>
+                <default>false</default>
+                <label>Payment Request API</label>
+            </value>
+            <value>
+                <fullName>TAFEReverseStatusSRWAPI</fullName>
+                <default>false</default>
+                <label>TAFEReverseStatusSRWAPI</label>
+            </value>
+            <value>
+                <fullName>TAFEReverseStatusDisbursAPI</fullName>
+                <default>false</default>
+                <label>TAFEReverseStatusDisbursAPI</label>
+            </value>
+            <value>
+                <fullName>TAFEStatusAccessTokenAPI</fullName>
+                <default>false</default>
+                <label>TAFEStatusAccessTokenAPI</label>
+            </value>
+            <value>
+                <fullName>KfsStatement</fullName>
+                <default>false</default>
+                <label>KfsStatement</label>
+            </value>
+            <value>
+                <fullName>KfsStatementQueueable</fullName>
+                <default>false</default>
+                <label>KfsStatementQueueable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

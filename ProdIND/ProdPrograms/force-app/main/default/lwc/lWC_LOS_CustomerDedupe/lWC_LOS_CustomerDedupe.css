@@ -1,0 +1,12 @@
+.spinner{
+    position: relative;
+    display: inline-block;
+}
+
+.indbtn {
+    margin: 5px;
+}
+
+.indusPrimaryButton{
+    min-width: 180px !important;
+}

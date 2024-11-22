@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>VKYC</label>
+    <protected>false</protected>
+    <values>
+        <field>Client_Id__c</field>
+        <value xsi:type="xsd:string">101</value>
+    </values>
+    <values>
+        <field>Client_Secret__c</field>
+        <value xsi:type="xsd:string">d809bb2fsc446s4ea2sb830sea9868e51f5c</value>
+    </values>
+    <values>
+        <field>IV_Key__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Private_Key__c</field>
+        <value xsi:type="xsd:string">e4c59afds5b64s4c11s8c6ese42808e78b8c</value>
+    </values>
+</CustomMetadata>

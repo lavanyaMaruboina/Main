@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Class_of_Activity__c</fullName>
+    <label>Class of Activity</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Agriculture and Forestry</fullName>
+                <default>false</default>
+                <label>Agriculture and Forestry</label>
+            </value>
+            <value>
+                <fullName>Construction</fullName>
+                <default>false</default>
+                <label>Construction</label>
+            </value>
+            <value>
+                <fullName>Education</fullName>
+                <default>false</default>
+                <label>Education</label>
+            </value>
+            <value>
+                <fullName>Electricy,Gas &amp; water supply</fullName>
+                <default>false</default>
+                <label>Electricy,Gas &amp; water supply</label>
+            </value>
+            <value>
+                <fullName>Financial inter mediation</fullName>
+                <default>false</default>
+                <label>Financial inter mediation</label>
+            </value>
+            <value>
+                <fullName>Fishing</fullName>
+                <default>false</default>
+                <label>Fishing</label>
+            </value>
+            <value>
+                <fullName>Health and social work</fullName>
+                <default>false</default>
+                <label>Health and social work</label>
+            </value>
+            <value>
+                <fullName>Hotels and restaurants</fullName>
+                <default>false</default>
+                <label>Hotels and restaurants</label>
+            </value>
+            <value>
+                <fullName>Manufacturing</fullName>
+                <default>false</default>
+                <label>Manufacturing</label>
+            </value>
+            <value>
+                <fullName>Mining and quearrying</fullName>
+                <default>false</default>
+                <label>Mining and quearrying</label>
+            </value>
+            <value>
+                <fullName>Other comminity,social &amp; Personal</fullName>
+                <default>false</default>
+                <label>Other comminity,social &amp; Personal</label>
+            </value>
+            <value>
+                <fullName>service activities</fullName>
+                <default>false</default>
+                <label>service activities</label>
+            </value>
+            <value>
+                <fullName>Public administration and defence</fullName>
+                <default>false</default>
+                <label>Public administration and defence</label>
+            </value>
+            <value>
+                <fullName>Realestate,renting and business actities</fullName>
+                <default>false</default>
+                <label>Realestate,renting and business actities</label>
+            </value>
+            <value>
+                <fullName>Transport</fullName>
+                <default>false</default>
+                <label>Transport</label>
+            </value>
+            <value>
+                <fullName>Whole sales and retail trade</fullName>
+                <default>false</default>
+                <label>Whole sales and retail trade</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

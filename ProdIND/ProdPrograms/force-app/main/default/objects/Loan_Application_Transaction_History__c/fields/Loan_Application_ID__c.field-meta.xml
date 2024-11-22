@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_Application_ID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Loan Application</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Loan Application Transactions History</relationshipLabel>
+    <relationshipName>Loan_Application_Transactions_History</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

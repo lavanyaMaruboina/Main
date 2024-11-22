@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>incident_Priority_change_restriction</fullName>
+    <active>true</active>
+    <errorConditionFormula>(Owner:Queue.DeveloperName=&quot;L1_Support&quot; ||Owner:Queue.DeveloperName=&quot;L2_Support&quot;) &amp;&amp; (RecordType.DeveloperName = &quot;Incident&quot;)&amp;&amp; NOT(ISNEW()) &amp;&amp; ISCHANGED( Priority )</errorConditionFormula>
+    <errorMessage>You cannot change a priority when an incident is in the queue. Please accept the incident and then try.</errorMessage>
+</ValidationRule>

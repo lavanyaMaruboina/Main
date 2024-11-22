@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_of_app_sourced_by_off_roll_emp__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Design Document field full name - Approval of application sourced by off roll employee</description>
+    <label>Approval of app sourced by off roll emp</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

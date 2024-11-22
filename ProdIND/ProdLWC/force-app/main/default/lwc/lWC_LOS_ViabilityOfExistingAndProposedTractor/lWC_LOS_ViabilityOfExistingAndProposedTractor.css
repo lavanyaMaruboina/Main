@@ -1,0 +1,11 @@
+caption, th, td {
+    text-align: left;
+    padding: 5px;
+}
+.slds-accordion__content{
+    overflow: initial;
+}
+
+thead > tr > th {
+    min-width: 100px;
+}

@@ -1,0 +1,18 @@
+/*
+.datatable-full-size {
+  width: 500% !important;
+  }
+  */
+  .this.button-1{
+    margin-right: 10px!important;
+  }
+  .this.button-2{
+    margin-right: 10px!important;
+  }
+  .this.button-3{
+    margin-right: 10px!important;
+  }
+  .uploadButton{
+    display: table-cell;
+    vertical-align: bottom;
+  }

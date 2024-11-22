@@ -1,0 +1,496 @@
+<template>
+    <template if:true={isTractor}>
+        <template if:true={caseId}>
+            <template if:true={dealId}>
+    <c-l-W-C_-L-O-S_-Asset-Verification record-id={caseId} deal-id={dealId} psd-stage="true"></c-l-W-C_-L-O-S_-Asset-Verification>
+</template>
+</template>
+</template>
+    <template if:true={loadComponent}>
+        
+    <lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+        <!-- allow-multiple-sections-open active-section-name={activeSections} -->
+        <lightning-accordion allow-multiple-sections-open="true" label="Vehicle Inspection &amp; RC Limit Check" active-section-name={activeSections} class="slds-size_12-of-12">
+            <lightning-accordion-section class= "slds-accordion__summary-heading " name ="Vehicle Inspection" label="Vehicle Inspection">
+                <div class="slds-form slds-grid slds-wrap slds-m-top_large">
+                    <template if:false={isTractor}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-4">
+                                    <label class="slds-form-element__label ">Engine number</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-4" style="width:120px">
+                                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                        name="engineNumberField" value={engineNumber} label="Engine number" variant="label-hidden"
+                                        type="text" data-id="engineNumberId" disabled={disabledPostSantionButton} required></lightning-input>
+                                        <!-- <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                            <lightning-input-field field-name="Engine_Number_during_Inspection__c" value ={engineNumber} onchange={handleInputFieldChange} name ="engineNumberField" variant="label-hidden"></lightning-input-field>
+                                        </lightning-record-edit-form> -->
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3" >
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Engine number captured Initially</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-clearfix" style="width:120px">
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Engine_number__c" value ={engineNumberCaptured} name ="engineNumberFieldCapturedIntially" variant="label-hidden" disabled></lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isStagePreDisbursement}>
+                            <div class="slds-clearfix">
+                                <div class="slds-m-bottom_large slds-m-top_small slds-large-size_4-of-12 slds-float_right"> 
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-var-m-left_medium" variant="Brand"
+                                    onclick={handleViewDocument}  value="Engine Number uploaded during Verification" disabled={disabledPreDisField}>
+                                    View Engine Number </button>
+                               </div>
+                            </div>
+                        </template>
+                        <template if:true={isStagePostSantion}>
+                        <div class="slds-clearfix">
+                            <div class="slds-m-bottom_large slds-m-top_small slds-large-size_4-of-12 slds-float_right"> 
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-var-m-left_medium" variant="Brand"
+                                onclick={handleUploadDocument}  value="Engine Number uploaded during Verification" disabled ={disabledPostSantionButton}>
+                                Capture Engine Number </button>
+                           </div>
+                        </div>
+                        </template>
+                       
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-4">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Chassis number</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-4" style="width:120px">
+                                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                        name="chassisNumberField" value={chassisNumber} label="Chassis number" variant="label-hidden"
+                                        type="text" disabled={disabledPostSantionButton} data-id="chassisNumberId" required></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Chassis number captured Initially</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-clearfix" style="width:120px">
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Chassis_number__c" value ={chassisNumberCaptured} name ="chassisNumberFieldCapturedIntially" variant="label-hidden" disabled></lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isStagePreDisbursement}>
+                            <div class="slds-clearfix">
+                                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-float_right">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-var-m-left_medium" variant="Brand"
+                                    onclick={handleViewDocument}  value="Chassis Number uploaded during verification" disabled={disabledPreDisField}>
+                                    View Chassis Number </button>
+                            </div>
+                            </div>
+                        </template>
+                        <template if:true={isStagePostSantion}>
+                            <div class="slds-clearfix">
+                                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-float_right">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-var-m-left_medium" variant="Brand"
+                                    onclick={handleUploadDocument}  value="Chassis Number uploaded during verification" disabled ={disabledPostSantionButton}>
+                                    Capture Chassis Number </button>
+                            </div>
+                            </div>
+                        </template>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-4">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Vehicle registration number</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-4" style="width:120px">
+                                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                        name="VehicleRegNumberField" value={vehicleRegNumber} label="Vehicle registration number" variant="label-hidden"
+                                        type="text" data-id="vehicleRegNumberId" disabled={disabledPostSantionButton} required></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Vehicle registration Number Captured Initially</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-clearfix" style="width:120px">
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Vehicle_Registration_number__c" value ={vehicleRegNumberCaptured} name ="VehicleRegNumberFieldCapturedIntially" variant="label-hidden" disabled></lightning-input-field>
+                                    </lightning-record-edit-form>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-4">
+                                    <label class="slds-form-element__label slds-var-m-right_small slds-var-m-left_small">Location of Vehicle Inspection</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-4" style="width:150px">
+                                    <!--Added By Poonam to take dynamic location picklist values-->
+                                    <template if:true={vehicleLocation.data}>
+                                        <lightning-combobox name="locationOfVehicleField" data-id="locationOfVehicleId" variant="label-hidden"
+                                        value={locationOfVehicle} placeholder="Select location of Vehicle Inspection" options={vehicleLocation.data.values}
+                                        required onchange={handlevehiclelocationChange} disabled={disabledPostSantionButton}>
+                                    </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isStagePostSantion}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" variant="Brand"
+                                onclick={handleUploadDocument}  value="Selfie with Vehicle-uploaded during verification" disabled ={disabledPostSantionButton}>
+                                Selfie With Vehicle </button>
+                            </div>
+    
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" variant="Brand"
+                                onclick={handleUploadDocument} value="Vehicle Front-uploaded during verification" disabled ={disabledPostSantionButton}>
+                                Capture Vehicle Front </button>
+                            </div>
+    
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" variant="Brand"
+                                onclick={handleUploadDocument} value="Vehicle Back-uploaded during verification" disabled ={disabledPostSantionButton}>
+                                Capture Vehicle Back </button>
+                            </div>    
+                        </template>
+                        <template if:true={isStagePreDisbursement}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" variant="Brand"
+                                onclick={handleViewDocument} value="Selfie with Vehicle-uploaded during verification" disabled={disabledPreDisField}>
+                                View With Vehicle </button>
+                            </div>
+    
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" variant="Brand"
+                                onclick={handleViewDocument}  value="Vehicle Front-uploaded during verification" disabled={disabledPreDisField}>
+                                View Vehicle Front </button>
+                            </div>
+    
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" variant="Brand"
+                                onclick={handleViewDocument}  value="Vehicle Back-uploaded during verification" disabled={disabledPreDisField}>
+                                View Vehicle Back </button>
+                            </div>    
+                        </template>
+                    </template>
+                    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:150px">
+                                <!-- <lightning-textarea class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="remarksField" value={remarksvalue} label="Remarks" variant="label-hidden"
+                                    type="text" data-id="remarksvalueId" ></lightning-textarea> -->
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Remarks__c" value ={remarksvalue} onchange={handleInputFieldChange} name ="remarksField" variant="label-hidden" disabled ={disabledPostSantionButton}></lightning-input-field>
+                                    </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label slds-var-m-right_medium">{vehicleInspectionapprovalLabel}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:150px">
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Vehicle_inspection_approved_by_CVO__c" value ={vehicleInspectionApprovedbyCVO} name ="vehicleInspectionApprovedbyCVOField" variant="label-hidden" onchange={vehicleInspectionApprovedbyCVOHandle}
+                                        disabled={disabledPreDisField}></lightning-input-field>
+                                    </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label slds-var-m-right_medium">{remarkLabel}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:150px">
+                                <lightning-input class="slds-form-element__control"  data-id="CVORemarksField"
+                                name="CVORemarksField" value={CVORemarksFieldValue} label="Remarks" variant="label-hidden"
+                                type="text"  required disabled={disabledPreDisField}></lightning-input>
+                                    <!--lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field data-id="CVORemarksField" field-name="CVO_remarks__c" value ={CVORemarks} name ="CVORemarksField" variant="label-hidden"  required></lightning-input-field>
+                                    </lightning-record-edit-form-->
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                        onclick={handleSubmitVehicleInspection} disabled={disableSubmitVehicleInspectionButton}>
+                        Submit Vehicle Inspection </button>
+                    </div>
+
+                    </div>
+            </lightning-accordion-section>         
+            <lightning-accordion-section class= "slds-accordion__summary-heading" name ="RC Limit Check" label="RC Limit Check" if:true={isRCLimitSectionEnable}>
+                <div class="slds-form slds-grid slds-wrap slds-m-top_large">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Dealer Name</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                                <!-- <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="Engine number" variant="label-hidden"
+                                    type="text" data-id="engineNumberId" required></lightning-input> -->
+                                <!-- <lightning-formatted-text class="slds-align_absolute-center slds-form-element__control" value={dealerName}></lightning-formatted-text> -->
+                                <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                    <lightning-input-field field-name="Dealer_Sub_dealer_name__c" value ={dealerName} name ="dealerNameField" variant="label-hidden" disabled></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <template if:true={isReadOnly}>
+                        <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                            onclick={oncheckRCLimitButton} disabled ={isReadOnly}>
+                            Check RC Limit parameters</button>
+                        </div>
+                    </template>
+                    <template if:false={isReadOnly}>
+                        <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                            onclick={oncheckRCLimitButton} disabled ={disableRCLimitCheckButton}>
+                            Check RC Limit parameters</button>
+                        </div>
+                    </template>
+                   
+
+
+                    <!--<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-6">
+                                <lightning-input class="slds-form-element__control slds-var-m-left_small" style="height:30px;width:30px" onchange={handleInputFieldChange}
+                                    name="engineNumberField"  label="Engine number" variant="label-hidden"
+                                    type="checkbox" data-id="engineNumberId" ></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_5-of-6">
+                                <label class="slds-form-element__label ">Is this a RC limit dealer/DSA</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">No. of proposals</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:120px">
+                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="No. of proposals" variant="label-hidden"
+                                    type="number" data-id="engineNumberId" required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">No. of proposals pending</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:120px">
+                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="No. of proposals pending" variant="label-hidden"
+                                    type="number" data-id="engineNumberId" required></lightning-input>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">No. of proposals available</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                                <!-- <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="No. of proposals available" variant="label-hidden"
+                                    type="number" data-id="engineNumberId" required></lightning-input> -->
+                                <!-- <lightning-formatted-text class="slds-align_absolute-center slds-form-element__control" value={noOfProposalsAvailable}></lightning-formatted-text> -->
+                                <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                    <lightning-input-field field-name="No_of_proposals_available__c" value ={noOfProposalsAvailable} name ="noOfProposalsAvailableField" variant="label-hidden" disabled></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Total disbursal amount</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:120px">
+                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="Total disbursal amount" variant="label-hidden"
+                                    type="number" data-id="engineNumberId" required></lightning-input>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Available disbursal amount</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                                <!-- <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="Available disbursal amount" variant="label-hidden"
+                                    type="number" data-id="engineNumberId" required></lightning-input> -->
+                                <!-- <lightning-formatted-text class="slds-align_absolute-center slds-form-element__control" value={availableDisbursalAmount}></lightning-formatted-text> -->
+                                <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                    <lightning-input-field field-name="Available_disbursal_amount__c" value ={availableDisbursalAmount} name ="availableDisbursalAmountField" variant="label-hidden" disabled></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">No. of days pending for RC submission for earlier applications</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                                <!-- <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="engineNumberField" value={engineNumber} label="No. of days pending for RC submission for earlier applications" variant="label-hidden"
+                                    type="number" data-id="engineNumberId" required></lightning-input> -->
+                                <!-- <lightning-formatted-text class="slds-align_absolute-center slds-form-element__control" value={noOfDaysRCPending}></lightning-formatted-text> -->
+                                <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                    <lightning-input-field field-name="No_of_days_RC_Pending__c" value ={noOfDaysRCPending} name ="noOfDaysRCPendingField" variant="label-hidden" disabled></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-6">
+                                <!-- <lightning-input class="slds-form-element__control slds-var-m-left_small" style="height:30px;width:30px" onchange={handlecanWeContinueWithRCLimit}
+                                    name="canWeContinueWithRCLimitField"  value ={canWeContinueWithRCLimit} label="Can we continue with the above RC limit ?" variant="label-hidden"
+                                    type="checkbox" data-id="canWeContinueWithRCLimitId" disabled></lightning-input> -->
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Can_we_continue_with_above_RC_limit__c" value ={continueWithRCLimit} name ="canWeContinueWithRCLimitField" variant="label-hidden" disabled></lightning-input-field>
+                                    </lightning-record-edit-form>
+                            </div>
+                            <div class="slds-col slds-size_5-of-6">
+                                <label class="slds-form-element__label ">Can we continue with the above RC limit ?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={isStagePreDisbursement}>
+                        <div class="slds-m-bottom_small  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                            onclick={handleViewDocument}  value="Branch In-charge Approval Email" disabled={disabledPreDisField}>
+                            View Branch Incharge approval </button>
+                        </div>
+                    </template>
+                    <template if:true={isStagePostSantion}>
+                        <div class="slds-m-bottom_small  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                            onclick={handleUploadDocument}  value="Branch In-charge Approval Email" disabled ={disabledUploadBranchApproval}>
+                            Upload Branch Incharge approval </button>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label slds-var-m-right_medium">Is RC Limit Check correctly captured?</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:150px">
+                                    <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="Is_RC_Limit_Check_correctly_captured__c" value ={isRCLimitCorrectlyCapturedValue} name ="isRCLimitCorrectlyCaptured" variant="label-hidden" onchange={handleisRCLimitCorrectlyCaptured}
+                                        disabled={disabledPreDisField}></lightning-input-field>
+                                    </lightning-record-edit-form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label slds-var-m-right_medium">{remarkLabel}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:150px">
+                                <lightning-input class="slds-form-element__control"  data-id="CVORemarksForRcLimit"
+                                name="CVORemarksForRcLimit" value={CVORemarksForRcLimitValue} label="Remarks" variant="label-hidden"
+                                type="text"  required disabled={disabledPreDisField}></lightning-input>
+                                    <!--lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                        <lightning-input-field field-name="CVO_Remarks_for_RC_Limit__c" value ={CVORemarksForRcLimitValue} name ="CVORemarksForRcLimit" variant="label-hidden" ></lightning-input-field>
+                                    </lightning-record-edit-form-->
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <template if:false={isStagePreDisbursement}>
+                        <div class="slds-m-bottom_medium  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                            onclick={onFinalSubmitButton} disabled={disableFinalSubmitButton}>
+                            Submit </button>
+                        </div>
+                    </template>
+                    </div>
+            </lightning-accordion-section>  
+            <template if:true={isBEUserEnabled}>
+                <template if:true={isStagePreDisbursement}>
+                    <div class="slds-m-bottom_medium  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                        onclick={onFinalSubmitButtonPreDis} disabled={isEnabledButtonOnPreDis}>
+                        Submit </button>
+                    </div>
+                </template>
+            </template>
+        </lightning-accordion>
+
+        <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalueForViewDoc}
+                currentloanapplicationid={recordId} currentapplicantid={applicantId}
+                uploadviewdocpopup={uploadViewDocFlag} createdoconparentbutton="false" title="View Vehicle Document"
+                doctype={docType} isphotocopy={showPhotoCopy} showdocview={showDocView}
+                showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} isviewinvoice ={isView}
+                documentrecordidfromparent={documentRecordId} onfileuploadstatus={docUploadSuccessfully} additionaldocument = "true" iscommunityuser = {isCommunityUser}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+        <template if:true={uploadVehicleDocument}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValue}
+                currentloanapplicationid={recordId} currentapplicantid={applicantId}
+                uploadviewdocpopup={uploadVehicleDocument} createdoconparentbutton= "false" title="Upload Document"
+                doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+                docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+                documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehicleRecordId}
+                onfileuploadstatus={docUploadSuccessfully} additionaldocument = "true" iscommunityuser = {isCommunityUser}
+                 ></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+    </template>
+
+    </lightning-layout>
+    </template>
+    <template if:false={isLoading}>
+        <template if:false={loadComponent}>
+            <p>
+                This Loan Application is not Eligible for Vehicle Inspection and RC Limit Check.
+            </p>
+        </template>
+    </template>
+    <template if:true={isLoading}>
+        <div class="slds-var-p-around_x-large">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+    </template>
+</template>

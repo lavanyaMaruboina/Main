@@ -1,0 +1,460 @@
+<template>
+	<template if:true={enableAML}>
+	<div class="slds-scrollable" style="height: 50vh;">
+		<template if:true={showAssignBack}>
+			<div style="float: right;">
+				<lightning-button onclick={handleAssignBack} variant="brand" label="Assign Back"
+										alternative-text="Assign Back" class=" slds-float_right slds-p-bottom_xx-small">
+									</lightning-button>
+			</div>
+		</template>
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered"
+			aria-labelledby="element-with-table-label other-element-with-table-label">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Sr.No">Sr.No</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Matched Base">Matched Base</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="List Name">List Name</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Name">Name</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Applicant Number">Applicant Number</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Name Score">Name Score</div>
+					</th>
+					<!--<th class="" scope="col">
+						<div class="slds-truncate" title="ML Id">ML Id</div>
+					</th>-->
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Nationality">Nationality </div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Nationality">Nationality Score </div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML City">ML City</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Address">ML Address</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Date Of Birth">ML Date Of Birth</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Description">ML Description</div>
+					</th>
+
+					<template if:true={isCVO}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="BE CVO Decision">BE CVO Decision</div>
+						</th>
+					</template>
+<template if:true={isCmu}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="CMU Decision">CMU Decision </div>
+						</th>
+					</template>
+<template if:true={isCa}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title={decisionTitleCAZCMSCM}>{decisionTitleCAZCMSCM}</div>
+						</th>
+					</template>
+
+					<template if:true={isCh}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="CH Decision">CH Decision</div>
+						</th>
+					</template>
+
+					<template if:true={isCVO}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks BE CVO">Remarks BE CVO</div>
+							<div style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+								<lightning-button style="width: 200px;" label="Copy Remarks" onclick={handleCopyRemarksBECVO} disabled={bEcVOFieldsDisabled} ></lightning-button>
+							</div>
+						</th>
+					</template>
+<template if:true={isCmu}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks CMU">Remarks CMU</div>
+							<div style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+								<lightning-button style="width: 200px;" label="Copy Remarks" onclick={handleCopyRemarksCMU} disabled={cmuFieldsDisabled} ></lightning-button>
+							</div>
+						</th>
+					</template>
+<template if:true={isCa}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title={remarkTitleCAZCMSCM}>{remarkTitleCAZCMSCM}
+							</div>
+							<div style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+								<lightning-button style="width: 200px;" label="Copy Remarks" onclick={handleCopyRemarksCA}></lightning-button>
+							</div>
+						</th>
+					</template>
+					<template if:true={isCh}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks Credit Head">Remarks Credit Head
+							</div>
+							<div style="display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;">
+								<lightning-button style="width: 200px;" label="Copy Remarks" onclick={handleCopyRemarksCH}></lightning-button>
+							</div>
+						</th>
+					</template>
+<template if:true={isCa}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Upload">Upload</div>
+						</th>
+					</template>
+
+</tr>
+</thead>
+<tbody>
+
+    <template for:each={amlrecordList} for:item="logRecord" for:index="index">
+					<tr class={logRecord.recordCSS} key={logRecord.Id}>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{logRecord.serialNo}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Matched_base__c}>{logRecord.ML_Id__c}
+							</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.List_Name__c}>{logRecord.List_Name__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Name__c}>{logRecord.Name__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Applicant_Number__c}>{logRecord.Applicant_Number__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Name_Score__c}>{logRecord.Name_Score__c}</div>
+						</td>
+						<!--<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Id__c}>{logRecord.ML_Id__c}</div>
+						</td>-->
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Nationality__c}>{logRecord.Nationality__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Nationality_Score__c}>
+								{logRecord.Nationality_Score__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_City__c}>{logRecord.ML_City__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Address__c}>{logRecord.ML_Address__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Date_Of_Birth__c}>
+								{logRecord.ML_Date_Of_Birth__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Description__c}>{logRecord.ML_Description__c}
+							</div>
+						</td>
+						<template if:true={isCVO}>
+							<td height="55">
+								<lightning-combobox disabled={bEcVOFieldsDisabled} required="true" class="inputBECVODecision"
+									message-when-value-missing="BE/CVO Decision is Required !!"
+									data-field-name="BE_CVO_Decision__c" data-name={index}
+									value={logRecord.BE_CVO_Decision__c} options={pickListBeCvo} onchange={handleBeCvo}>
+								</lightning-combobox>
+							</td>
+						</template>
+    <template if:true={isCmu}>
+							<td height="55">
+								<lightning-combobox disabled={cmuFieldsDisabled} required="true" class="inputCMUDecision"
+									message-when-value-missing="CMU Decision is Required !!"
+									data-field-name="CMU_Decision__c" data-name={index}
+									value={logRecord.CMU_Decision__c} options={pickListCMU} onchange={handleCMU}>
+								</lightning-combobox>
+							</td>
+						</template>
+    <template if:true={isCa}>
+							<td height="55">
+								<lightning-combobox disabled={logRecord.Credit_Analyst__c} required="true" class="inputCADecision"
+									message-when-value-missing="CA Decision is Required !!"
+									data-field-name="CA_Decision__c" data-name={index} value={logRecord.CA_Decision__c}
+									options={pickListCA} onchange={handleCA}>
+								</lightning-combobox>
+							</td>
+						</template>
+						<template if:true={isCh}>
+							<td height="55">
+								<lightning-combobox disabled={logRecord.Credit_Head__c} required="true" class="inputCHDecision"
+									message-when-value-missing="CH Decision is Required !!"
+									data-field-name="CH_Decision__c" data-name={index} value={logRecord.CH_Decision__c}
+									options={pickListCH} onchange={handleCH}>
+								</lightning-combobox>
+							</td>
+						</template>
+
+    <template if:true={isCVO}>
+							<td height="55">
+								<lightning-input type="text" disabled={bEcVOFieldsDisabled} data-name={index} onchange={handleCvoRemark}
+									value={logRecord.Remarks_BE_CVO__c}></lightning-input>
+							</td>
+						</template>
+    <template if:true={isCmu}>
+							<td height="55">
+								<lightning-input disabled={cmuFieldsDisabled} type="text" data-name={index} onchange={handleCmuRemark}
+									value={logRecord.Remarks_CMU__c}></lightning-input>
+							</td>
+						</template>
+    <template if:true={isCa}>
+							<td height="55">
+								<lightning-input disabled={logRecord.Credit_Analyst__c} type="text" data-name={index} onchange={handleCaRemark}
+									value={logRecord.Remarks_Credit_Analyst__c}></lightning-input>
+							</td>
+						</template>
+						<template if:true={isCh}>
+							<td height="55">
+								<lightning-input disabled={logRecord.Credit_Head__c} type="text" data-name={index} onchange={handleChRemark}
+									value={logRecord.Remarks_Credit_Head__c}></lightning-input>
+							</td>
+						</template>
+    <template if:true={isCa}>
+							<td height="55" class="uploadButton">
+								<lightning-button onclick={handleUploadAMLDocument} data-id={logRecord.Id}
+									data-mlid={logRecord.ML_Id__c} variant="brand" label="Upload"
+									alternative-text="Upload" class=" slds-float_right slds-p-bottom_xx-small">
+								</lightning-button>
+							</td>
+						</template>
+
+					 
+    </tr>
+    </template>
+		<!-- //CISP-7506 -->
+		<tr>
+			<td height="55" colspan=12>
+	
+			</td>
+			<td height="55">
+				<lightning-radio-group name="BE-CVO" label="Decision for all" disabled={bEcVOFieldsDisabled} options={options} type="radio"
+					value={value} onchange={handleChange}></lightning-radio-group>
+			</td>
+			<template if:true={isCmuCaCh}>
+			<td height="55">
+				<lightning-radio-group name="CMU" label="Decision for all" disabled={cmuFieldsDisabled} options={options} type="radio"
+					value={value} onchange={handleChange}></lightning-radio-group>
+			</td>
+			</template>
+			<template if:true={isCaCh}>
+			<td height="55">
+				<lightning-radio-group name="CA" label="Decision for all" options={options} type="radio"
+					value={value} onchange={handleChange}></lightning-radio-group>
+			</td>
+			</template>
+			<template if:true={isCh}>
+			<td height="55">
+				<lightning-radio-group name="CH" label="Decision for all" options={options} type="radio"
+					value={value} onchange={handleChange}></lightning-radio-group>
+			</td>
+			</template>
+	
+		</tr>
+		<!-- //CISP-7506 -->
+</tbody>
+</table>
+</div>
+	<div class="slds-scrollable" style="height: 50vh;">
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered"
+			aria-labelledby="element-with-table-label other-element-with-table-label">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Name">Name</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Type">Applicant Type</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="DOB">DOB</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Residential Address">Residential Address</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Official Address">Office Address</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Permanent Address">Permanent Address</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Pan">Pan</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Aadhar">Aadhar</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="VoterId">VoterId</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Passport">Passport</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Driving License">Driving License</div>
+					</th>
+					<!-- CISP-7506-->
+					<template if:true={isTwoWheeler}>
+						<template if:false={isCmuProfile}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Cibil">CIBIL</div>
+						</th>
+					</template>
+					</template>
+					<!-- CISP-7506-->
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={applicantDetailsWrapperList} for:item="applicantObj" for:index="index">
+					<tr class={applicantObj.Id} key={applicantObj.Id}>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.applicantName}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.applicantType}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.dob}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.residentialAddress}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.officialAddress}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.permanentAddress}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.pan}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.aadhar}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.voterId}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.passport}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{applicantObj.drivingLicense}</div>
+						</td>
+						<!-- CISP-7506-->
+						<template if:true={isTwoWheeler}>
+							<template if:false={isCmuProfile}>
+							<td height="55">
+								<button 
+									class="indusPrimaryVehicleButton slds-button slds-button_brand" data-url={applicantObj.cibilUrl} onclick={viewCibilReport}>
+									View Report
+								</button>
+							</td>
+						</template>
+						</template>
+						
+						<!-- CISP-7506-->
+					</tr>
+				</template>
+			</tbody>
+	</table>
+</div>
+
+<div class="slds-m-top_small slds-m-bottom_medium">
+    <div class="slds-grid slds-grid_align-spread">
+        <div class="slds-col">
+            <span>
+					{response}
+				</span>
+        </div>
+
+        <div class="slds-col">
+            <span>
+					<template if:true={isCabtn}>
+						<lightning-button label="Submit" disabled={caFieldsDisabled}
+							title="Submit" icon-position="left" type="button"
+							variant="brand" class="button-1" onclick={handleSumit}>
+						</lightning-button>
+						<!-- CISP-3248 -->
+					</template>
+					<template if:true={isOtbtn}>
+						<lightning-button label="Submit" title="Submit" icon-position="left" type="button" disabled={submitDisabled}
+							variant="brand" class="button-4" onclick={handleSumit}>
+						</lightning-button>
+					</template>
+
+				</span>
+        </div>
+
+    </div>
+    <template if:true={toggleSpinner}>
+			<div class="slds-spinner_container">
+				<div role="status" class="slds-spinner slds-spinner_large">
+					<span class="slds-assistive-text">Loading</span>
+					<div class="slds-spinner__dot-a"></div>
+					<div class="slds-spinner__dot-b"></div>
+				</div>
+			</div>
+		</template>
+
+</div>
+<template if:true={uploadAMLCheckDocument}>
+	<section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		<template if:true={isLoading}><lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner></template>
+		<div class="slds-form slds-modal__container">
+			<header class="slds-modal__header">
+				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={uploadDone}>
+					<lightning-icon icon-name="utility:close" size="medium" variant="bare">
+					</lightning-icon>
+					<span class="slds-assistive-text">Close</span>
+				</button>
+				<h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+					Upload AML Check
+				</h2>
+			</header>
+			<lightning-card>
+				<div class="slds-card__body_inner">
+					<div class="slds-clearfix">
+						<div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+							<div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">	
+									<lightning-file-upload label="Upload File" variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader" accept={acceptedFormats} record-id={selectedAMLCheckId} onuploadfinished={handleFileUpload} multiple="false"></lightning-file-upload>
+							</div>
+						</div>
+					</div>
+					</br>
+					<div class="slds-clearfix">
+						<div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+							<div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+								<button class=" slds-button slds-button_brand " onclick={uploadDone}>
+									Done 
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</lightning-card>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+	</div>
+</template>
+	</template>
+
+	<template if:false={enableAML}>
+		AML Case is Closed.
+	</template>
+</template>

@@ -1,0 +1,49 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item size="12" class="slds-scrollable_x">
+            <table class="slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr>
+                        <th scope="col" class="slds-cell-wrap cell-border table_header">Applicant Name</th>
+                        <th scope="col" class="slds-cell-wrap cell-border table_header">Applicant Type</th>
+                        <th scope="col" class="slds-cell-wrap cell-border table_header">Document Type</th>
+                        <th scope="col" class="slds-cell-wrap cell-border table_header">RCU Agency Verification Status</th>
+                        <th scope="col" class="slds-cell-wrap cell-border table_header">RCU Agency Verification Sub Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={documents} for:item="document">
+                        <tr key={document.id}>
+                            <td class="slds-cell-wrap cell-border">
+                                <div class="slds-truncate slds-truncate slds-text-heading_small slds-text-title_bold">
+                                    {document.Applicant__r.Name}
+                                </div>
+                            </td>
+                            <td class="slds-cell-wrap cell-border">
+                                <div class="slds-truncate slds-truncate slds-text-heading_small slds-text-title_bold">
+                                    {document.applicant_Type__c}
+                                </div>
+                            </td>
+                            <td class="slds-cell-wrap cell-border">
+                                <div class="slds-truncate slds-truncate slds-text-heading_small slds-text-title_bold">
+                                    {document.Document_Type__c}
+                                </div>
+                            </td>
+                            <td class="slds-cell-wrap cell-border">
+                                <div class="slds-truncate slds-truncate slds-text-heading_small slds-text-title_bold">
+                                    {document.RCU_Agency_Verification_Status__c}
+                                </div>
+                            </td>
+                            <td class="slds-cell-wrap cell-border">
+                                <div class="slds-truncate slds-truncate slds-text-heading_small slds-text-title_bold">
+                                    {document.RCU_Agency_Verification_Sub_Status__c}
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

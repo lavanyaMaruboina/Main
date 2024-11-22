@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FICases</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>Agent_BL_Code__c</columns>
+    <columns>Loan_Application_No__c</columns>
+    <columns>IncidentManagement_State__c</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>Case_Owner_Custom__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.FI</value>
+    </filters>
+    <label>FI Cases</label>
+    <sharedTo>
+        <role>BE</role>
+    </sharedTo>
+</ListView>

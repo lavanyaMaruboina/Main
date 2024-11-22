@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CATTLE_NAME__c</fullName>
+    <label>CATTLE NAME</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>COW</fullName>
+                <default>false</default>
+                <label>COW</label>
+            </value>
+            <value>
+                <fullName>BUFFALO</fullName>
+                <default>false</default>
+                <label>BUFFALO</label>
+            </value>
+            <value>
+                <fullName>BULL</fullName>
+                <default>false</default>
+                <label>BULL</label>
+            </value>
+            <value>
+                <fullName>GOAT</fullName>
+                <default>false</default>
+                <label>GOAT</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

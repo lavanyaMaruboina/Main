@@ -1,0 +1,13 @@
+<template>
+    <lightning-card>
+        <lightning-input type="checkbox" label="Do you have a bank account" 
+        name="input1"
+        onchange={selectDeselectBankAccount}></lightning-input>
+        <lightning-input type="checkbox" 
+        label="Would you like to open a bank account with IIB?" 
+        name="input1"
+        onchange={selectDeselectOpenAccount}></lightning-input>
+        <lightning-button variant="brand" label="Submit"  onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+
+    </lightning-card>
+</template>

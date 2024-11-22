@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_sourced_by_off_role_emp__c</fullName>
+    <label>Approval sourced by off role emp</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Verified Original KYC</fullName>
+                <default>false</default>
+                <label>Verified Original KYC</label>
+            </value>
+            <value>
+                <fullName>Self-Attested KYC copy collected</fullName>
+                <default>false</default>
+                <label>Self-Attested KYC copy collected</label>
+            </value>
+            <value>
+                <fullName>Met the applicant in person</fullName>
+                <default>false</default>
+                <label>Met the applicant in person</label>
+            </value>
+            <value>
+                <fullName>Current Residence FI has been done</fullName>
+                <default>false</default>
+                <label>Current Residence FI has been done</label>
+            </value>
+            <value>
+                <fullName>Record confirmations and approve</fullName>
+                <default>false</default>
+                <label>Record confirmations and approve</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

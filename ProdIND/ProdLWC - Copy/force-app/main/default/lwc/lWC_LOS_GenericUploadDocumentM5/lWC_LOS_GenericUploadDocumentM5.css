@@ -1,0 +1,66 @@
+.slds-modal__header,
+.slds-modal__footer {
+    flex-shrink: 0;
+}
+
+.slds-modal__close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: rgb(160, 157, 157); /* Set background color to black */
+    border-radius: 50%; /* Make it a circle */
+    padding: 5px; /* Adjust padding to center the icon */
+}
+
+.custom-container-class{
+    width: 50%;
+    margin: auto;
+    padding-top: 10rem;
+}
+
+@media (max-height: 768px) {
+    .custom-container-class{
+        width: 55%;
+        margin: auto;
+        padding-top: 2rem;
+    }
+}
+
+@media (max-height: 480px) {
+    .custom-container-class{
+        width: 60%;
+        margin: auto;
+        padding-top: 1rem;
+    }
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .slds-modal__container {
+        max-width: 95%;
+        max-height: 95%;
+    }
+    .custom-container-class{
+        width: 80%;
+        margin: auto;
+        padding-top: 6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .slds-modal__container {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+
+    .slds-modal__close {
+        top: 5px;
+        right: 5px;
+    }
+    .custom-container-class{
+        width: 90%;
+        margin: auto;
+        padding-top: 3rem;
+    }
+}

@@ -1,0 +1,463 @@
+<template>
+  <lightning-button-icon icon-name="utility:justify_text" onclick={openOverlayMneu} variant="brand" alternative-text="Menu" class="slds-float_left">
+  </lightning-button-icon>
+  <template if:true={isLoading}  class="slds-spinner">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template if:false={journeyrestarted}>
+  <c-loan-application-path record-id={recordId} current-step={stepName} onupdatestep={handleStepUpdate}></c-loan-application-path>
+    <br/>
+    <template if:false={withdrawn}>
+        <div>
+        <c-i-N-D-_-l-w-c-_-Application-_-Withdrwal record-id={recordId} 
+        checkleadaccess={checkLeadAccess} current-stage={currentStage} current-step={stepName} show-revoke-btn={showRevokeBtn}>
+        <!-- CISP-3255 -->
+        </c-i-N-D-_-l-w-c-_-Application-_-Withdrwal>
+      </div>
+      <br />
+  
+      <template if:true={isTransferVisible}>
+        <div>
+          <c-l-w-c-_-l-o-s-_-lead-_-assignment-transfer
+            record-id={recordId}
+            current-stage={currentStage}
+            onrecallnavigation={refreshPage}
+            checkleadaccess={checkLeadAccess}
+            agentbl={ischeckBL}
+            typeofproduct={productType} 
+          ><!--CISP-3497 product type -->
+        </c-l-w-c-_-l-o-s-_-lead-_-assignment-transfer>
+      </div>
+  </template>
+  
+    <!--START D2C Changes Swapnil-->
+    <template if:true={showPreInitialOffer}>
+        <c-be-pre-initial-offer-screen
+            app-id={applicantId}
+        ></c-be-pre-initial-offer-screen>
+    </template>
+
+    <template if:true={showPostInitialOffer}>
+        <c-be-post-initial-offer-screen
+            app-id={applicantId}
+        ></c-be-post-initial-offer-screen>
+    </template>
+
+    <!--START D2C Changes Aman-->
+    <template if:true ={showPreApprovedOffer}>
+      <c-be-pre-approved-screen
+      	app-id={applicantId}
+      ></c-be-pre-approved-screen>
+      <!--END D2C Changes Aman-->
+    </template>
+    <!--END D2C Changes Swapnil-->
+  <template if:false={isPrePostInitialOffer}><!--D2C Changes Swapnil Added template block-->
+  <template if:true={preDisbursementCheck}>
+  <lightning-layout multiple-rows="true" horizontal-align="end">
+  <lightning-layout-item alignment-bump="left" size="3">
+  <div class="slds-button_container" style="display: flex;">
+  <lightning-button variant="brand" label="View RCU Report" title="View RCU Report" onclick={opneRCUReportModal} style="margin-right: 2px;" lwc:if={isPELead}></lightning-button>
+  <lightning-button variant="brand" label="Upload &amp; View Document" title="Primary action" onclick={viewUploadViewFloater} disabled={isUploadViewDisabled}></lightning-button>
+  </div>
+  </lightning-layout-item>
+  </lightning-layout>
+  <c-i-N-D-_-L-W-C-_-P-D-Checks-And-Doc
+    opp-id={recordId}  current-step={stepName}
+    is-revoked-loan-application={isRevokeApplication}></c-i-N-D-_-L-W-C-_-P-D-Checks-And-Doc>
+    <!-- CISP-2735 -->
+  </template>
+  
+  <template if:true={showPaymentRequest}>
+  <lightning-layout multiple-rows="true" horizontal-align="end">
+  <lightning-layout-item alignment-bump="left" size="3">
+  <div class="slds-button_container" style="display: flex;">
+  <lightning-button variant="brand" label="View RCU Report" title="View RCU Report" onclick={opneRCUReportModal} style="margin-right: 2px;" lwc:if={isPELead}></lightning-button>
+  <lightning-button variant="brand" label="Upload &amp; View Document" title="Primary action" onclick={viewUploadViewFloater} disabled={isUploadViewDisabled}></lightning-button>
+  </div>
+  </lightning-layout-item>
+  </lightning-layout>
+  <c-i-N-D-_-L-W-C-_-Loan-Disbursement
+    recordid={recordId}
+  ></c-i-N-D-_-L-W-C-_-Loan-Disbursement>
+  </template>
+  
+  <template if:false={preDisbursementCheck}>
+  <template if:true={postSanctionChecks}>
+    <lightning-layout multiple-rows="true" horizontal-align="end">
+      <lightning-layout-item alignment-bump="left" size="3">
+        <div class="slds-button_container" style="display: flex;">
+        <lightning-button variant="brand" label="View RCU Documents" title="View RCU Documents" onclick={openRCUDocModal} style="margin-right: 2px;" lwc:if={isCVOLead}></lightning-button>
+        <lightning-button variant="brand" label="Upload &amp; View Document" title="Primary action" onclick={viewUploadViewFloater} disabled={isUploadViewDisabled}></lightning-button>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+    
+    <c-i-N-D-_-L-W-C-_-P-S-Checks-And-Doc
+      opp-id={recordId} current-step={stepName} is-revoked-loan-application={isRevokeApplication}
+    ></c-i-N-D-_-L-W-C-_-P-S-Checks-And-Doc>
+    <!-- CISP-2735 -->
+  </template>
+  
+  <template if:false={postSanctionChecks}>
+      <template if:true={creditProcFlag}>
+        <lightning-layout multiple-rows="true" horizontal-align="end">
+          <lightning-layout-item alignment-bump="left" size="3">
+            <div class="slds-button_container" style="display: flex;">
+              <lightning-button variant="brand" label="View RCU Documents" title="View RCU Documents" onclick={openRCUDocModal} style="margin-right: 2px;" lwc:if={isCVOLead}></lightning-button>
+            <lightning-button variant="brand" label="Upload &amp; View Document" title="Primary action" onclick={viewUploadViewFloater} disabled={isUploadViewDisabled}></lightning-button>
+            </div>
+          </lightning-layout-item>
+        </lightning-layout>
+        
+        <div class="slds-m-left_small slds-m-right_small">
+                <c-i-N-D-_-L-W-C-_-View-Application-Data record-id={recordId} credit-proc-flag={creditProcFlag} tab-list={tabList}
+                checkleadaccess={checkLeadAccess} currentoppstage={currentStage} is-revoked-loan-application={isRevokeApplication}>
+                <!-- CISP-2735 -->
+        </c-i-N-D-_-L-W-C-_-View-Application-Data>
+              </div>
+            </template>
+  <template if:false={showPaymentRequest}>
+  <template if:false={creditProcFlag}>
+              <lightning-tabset data-id="applicantTabSet" active-tab-value={activeTabId}>
+                <!-- CISP-2384 Added data-id -->
+                <template for:each={tabList} for:item="tab">
+                  <lightning-tab label={tab.applicantType} value={tab.applicantId} key={tab.applicantId} onactive={handleActive}>
+                    <template if:true={loanAppilication}>
+                        <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-w-c-_-l-o-s-_-loan-application
+                          isborrowerincomeavailable={borroweIncomeSource}
+                          recordid={recordId}
+                          currenttab={tab.applicantType}
+                          current-tab-id={tab.applicantId}
+                          onchangetocoborrower={toCoborrower}
+                          onchangetoguarantor={toGuarantor}
+                          onchangetobeneficiary={toBeneficiary}
+                          onnewapplicantevent={modifyTabList}
+                          ondeletecoborrower={deletePreviousCoborrower}
+                          onsubmitnavigation={switchScreen}
+                          onaddnewcoborrower={addNewCoborrower}
+                          onborrowerincomesource={handleBorrowerIncomeSource}
+                          is-captur-image-success={isCapturImageSuccess}
+                          onaddscreendata={switchScreen}
+                          oncheckagentbranchcode={CheckAgentBLCode}
+                          onadditionaldetails={submit}
+                          tab-count={tabListCount}
+                          checkleadaccess={checkLeadAccess}
+                          onincreaseretrycount={increaseRetryCountHandler}
+                          clearretrycount={clearRetryCountOfEligibility}
+                          current-applicant-stage={currentApplicantStage}
+                          >
+                          <!-- CISP-2966 -->
+                        </c-l-w-c-_-l-o-s-_-loan-application>
+                        <!-- //CISP-2457 /CISP-2506  onincreaseretrycount and clearretrycount Added-->
+                      </div>
+                      <!-- CISP-1196 onadditionaldetails={submit}-->
+                    </template>
+  <template if:true={additionalDetail}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-current-residential-address
+                          all-applicant-list={activeApplicantList}
+                          is-tractor = {isTractor}
+                          tab-data={tab.applicantType}
+                          recordid={recordId}
+                          current-tab-id={tab.applicantId}
+                          onsubmitnavigation={switchScreen}
+                          ontabload={getTabListFunction}
+                          checkleadaccess={checkLeadAccess}
+                          current-applicant-stage={currentApplicantStage}
+                          onshowcardmsg={showCardMsgHandler}
+                          show-card-msg={showCardMsg}
+                          card-msg={cardMsg}
+                        >
+                        <!-- CISP-2966 -->
+                        </c-current-residential-address>
+                        
+                      </div>
+                    </template>
+  <template if:true={AssetDetails}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-W-C-_-L-O-S-_get-Asset-Details
+                          active-tab={activeTab}
+                          recordid={recordId}
+                          onsubmitnavigation={switchScreen}
+                          checkleadaccess={checkLeadAccess}
+                          is-revoked-loan-application={isRevokeApplication}
+                        ></c-l-W-C-_-L-O-S-_get-Asset-Details>
+                      </div>
+                    </template>
+  <template if:true={vehicleInsurance}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-W-C-_-L-O-S-_-Vehicle-Insurance
+                          active-tab={activeTab}
+                          recordid={recordId}
+                          onsubmitnavigation={switchScreen}
+                          checkleadaccess={checkLeadAccess}
+                          is-revoked-loan-application={isRevokeApplication}
+                        >
+                        </c-l-W-C-_-L-O-S-_-Vehicle-Insurance>
+                      </div>
+                    </template>
+  <template if:true={vehicleValuation}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-W-C-_-L-O-S-_-Parent-Vehicle-Valuation
+                        active-tab={activeTab}
+                        recordid={recordId}
+                        checkleadaccess={checkLeadAccess}
+                        is-revoked-loan-application={isRevokeApplication}
+                      >
+                      </c-l-W-C-_-L-O-S-_-Parent-Vehicle-Valuation>
+                      </div>
+                    </template>
+  <template if:true={loanDetails}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-W-C-_-L-O-S-_-Loan-Details
+                          active-tab={activeTab}
+                          recordid={recordId}
+                          onsubmitnavigation={switchScreen}
+                          oncoborrowernavigation={navigateLoanCoborrower}
+                          checkleadaccess={checkLeadAccess}
+                          is-revoked-loan-application={isRevokeApplication}
+                        >
+                        </c-l-W-C-_-L-O-S-_-Loan-Details>
+                      </div>
+                    </template>
+  <template if:true={insuranceDetails}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <template if:false={isTractor}>
+                          <c-l-W-C-_-Insurance-Details
+                            active-tab={tab.applicantType}
+                            applicant-id={tab.applicantId}
+                            record-id={recordId}
+                            onsubmitnavigation={switchScreen}
+                            tablength = {tabListCount}
+                            oncoborrower = {navigateCoborrower}
+                            checkleadaccess={checkLeadAccess}
+                            onupdatetablist = {insuranceUpdateTabList}>
+                          </c-l-W-C-_-Insurance-Details>
+                        </template>
+                        <template if:true={isTractor}>
+                          <c-l-w-c_-t-f_-insurance-details
+                            active-tab={tab.applicantType}
+                            applicant-id={tab.applicantId}
+                            record-id={recordId}
+                            tablength = {tabListCount}
+                            is-called-from-l1="true"
+                            is-revoked-loan-application={isRevokeApplication}
+                          >
+                          </c-l-w-c_-t-f_-insurance-details>
+                        </template>
+                      </div>
+                    </template>
+  <template if:true={finalOffer}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-i-N-D_-L-W-C_-final-offer-page
+                          active-tab={activeTab}
+                          record-id={recordId}
+                          onsubmitnavigation={switchScreen}
+                          checkleadaccess={checkLeadAccess}
+                          is-revoked-loan-application={isRevokeApplication}
+                        >
+                        </c-i-N-D_-L-W-C_-final-offer-page>
+                      </div>
+                    </template>
+  <template if:true={incomeDetails}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-W-C-_-L-O-S-_-Income-Detail
+                          tab-value={tab.applicantType}
+                          applicant-id={tab.applicantId}
+                          tab-list={tabList}
+                          active-tab={activeTab}
+                          is-revoked-loan-application={isRevokeApplication}
+                          recordid={recordId}
+                          onborrowersubmit={switchincomedetailstab}
+                          onchangetocoborrower={navigateCoborrower}
+                          onchangetoguarantor={toGuarantor}
+                          onnewapplicantevent={modifyTabList}
+                          onsubmitnavigation={switchScreen}
+                          checkleadaccess={checkLeadAccess}
+                          current-applicant-stage={currentApplicantStage}
+                        >
+                        <!-- CISP-2966 -->
+                        <!-- CISP-2752 -->
+                        </c-l-W-C-_-L-O-S-_-Income-Detail>
+                      </div>
+                    </template>
+                    <!-- sftrac-84 start -->
+                    <template lwc:if={isTracFinalTerm}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-lwc_-T-F-_-Final-Terms-Screen tab-value={tab.applicantType} 
+                          active-tab={activeTab}
+                          recordid={recordId}
+                          onsubmitnavigation={switchScreen}
+                          checkleadaccess={checkLeadAccess}
+                          is-revoked-loan-application={isRevokeApplication}
+                        >
+                        </c-lwc_-T-F-_-Final-Terms-Screen >
+                      </div>
+                    </template>
+                    <template lwc:elseif={finalTerms}>
+                                        <div class="slds-m-left_small slds-m-right_small">
+                                          <c-Lwc_-Final-Terms-Screen tab-value={tab.applicantType} 
+                                            active-tab={activeTab}
+                                            recordid={recordId}
+                                            onsubmitnavigation={switchScreen}
+                                            checkleadaccess={checkLeadAccess}
+                                            is-revoked-loan-application={isRevokeApplication}
+                                          >
+                                          </c-Lwc_-Final-Terms-Screen>
+                                        </div>
+                                      </template>
+                  <!-- sftrac-84-end -->
+                    <template if:true={showOfferScreen}>
+                                        <div class="slds-m-left_small slds-m-right_small">
+
+                                          <template lwc:if={isTractor}>
+                                            <c-Lwc_-T-F_-Offer-Screen_-Parent recordid={recordId} onsubmitnavigation={switchScreen} checkleadaccess={checkLeadAccess}
+                                            is-revoked-loan-application={isRevokeApplication}></c-Lwc_-T-F_-Offer-Screen_-Parent></template>
+                                          <template lwc:else>
+                                          <c-Lwc_offer-Screen
+                                            recordid={recordId}
+                                            onsubmitnavigation={switchScreen}
+                                            checkleadaccess={checkLeadAccess}
+                                          >
+                                          </c-Lwc_offer-Screen>
+                                          </template>
+                                        </div>
+                                      </template>
+  <template if:true={customerCode}>
+                      <div class="slds-m-left_small slds-m-right_small">
+                        <c-lwc_addition-Customer-Code
+                          active-tab={activeTab}
+                          recordid={recordId}
+                          onsubmitnavigation={switchScreen}
+                          checkleadaccess={checkLeadAccess}
+                          is-revoked-loan-application={isRevokeApplication}
+                        >
+                        </c-lwc_addition-Customer-Code>
+                      </div>
+                    </template>
+  
+  
+  </lightning-tab>
+  
+  </template>
+  </lightning-tabset>
+  </template>
+  </template>
+  </template>
+  </template>
+  
+  
+  </template>
+  </template>
+  
+  <template if:true={withdrawn}>
+  
+      <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+        <span class="slds-assistive-text">warning</span>
+         <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+              title="Description of icon when needed">
+              <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning">
+              </lightning-icon>
+          </span>
+          <h2>This loan application has been withdrawn, you are no more allowed to edit this application.</h2>
+      </div>
+  </template>
+    <template if:true={showFileUploadAndView}>
+      <c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordId} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+    </template>
+  <!-- 1714 start -->
+  <template if:true={showOverlayMenu}>
+    <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-form slds-modal__container slds-modal__container_class">
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-06" class="slds-modal__title slds-hyphenate">
+                    STAGES
+                </h2>
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeOverlayMenu}>
+                            <lightning-icon icon-name="utility:close" class="color" size="medium" variant="bare">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                    </button>
+            </header>
+            <lightning-card variant="base">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-menu-item class="cssText" value="Lead/KYC Details" label="Lead/KYC Details" onclick={handleLeadDetail}></lightning-menu-item>
+                        <lightning-menu-item value="Additional Customer Details" label="Additional Customer Details" onclick={handleAdditionalDetail}></lightning-menu-item>
+                        <lightning-menu-item value="Asset Details" label="Asset Details" onclick={handleAssetDetail}></lightning-menu-item>
+                        <lightning-menu-item value="Vehicle Insurance" label="Vehicle Insurance" onclick={handleVehicleInsurance}></lightning-menu-item>
+                        <lightning-menu-item value="Vehicle Valuation" label="Vehicle Valuation" onclick={handleVehicleValuation}></lightning-menu-item>
+                        <lightning-menu-item value="Loan Details" label="Loan Details" onclick={handleLoanDetails}></lightning-menu-item>
+                        <lightning-menu-item value="Income Details" label="Income Details" onclick={handleIncomeDetails}></lightning-menu-item>
+                        <lightning-menu-item value="Final Terms" label="Final Terms" onclick={handleFinalTerms}></lightning-menu-item>
+                        <lightning-menu-item value="Offer Screen" label="Offer Screen" onclick={handleOfferScreen}></lightning-menu-item>
+                        <lightning-menu-item value="Customer Code Addition" label="Customer Code Addition" onclick={handleCustCodeAddtition}></lightning-menu-item>
+                        <lightning-menu-item value="Insurance Details" label="Insurance Details" onclick={handleInsuranceDetails}></lightning-menu-item>
+                        <lightning-menu-item value="Final Offer" label="Final Offer" onclick={handleFinalOffer}></lightning-menu-item>
+                        <lightning-menu-item value="Credit Processing" label="Credit Processing" onclick={handleCreditProcessing}></lightning-menu-item>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open modalBackdrops" id="modalBackdrops5">
+    </div>
+  </template>
+  </template>
+  <!-- 1714 end -->
+  <template if:true={journeyrestarted}>
+    <lightning-card>
+      <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">
+        <span>{customMessage}</span>
+      </div>
+  </lightning-card>
+  </template>
+
+    <template if:true={showRCUReport}>
+      <section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-form slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeRCUReportModal}>
+                    <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate" style="text-align: center;">
+                    RCU Report
+                </h2>
+            </header>
+            <lightning-card>
+                <div class="slds-card__body_inner slds-scrollable" style="height: 25rem; padding: 1rem;">
+                  <c-i-n-d_-l-w-c_-r-c-u-summary-report record-id={rcuCaseId} hide-pdf-btn={hidePdfBtn}></c-i-n-d_-l-w-c_-r-c-u-summary-report>
+                </div>
+            </lightning-card>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1"></div>
+    </template>
+    <template if:true={showRCUDocuments}>
+      <section id="modal4" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-form slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeRCUDocModal}>
+                    <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-03" class="slds-modal__title slds-hyphenate" style="text-align: center;">
+                    RCU Documents
+                </h2>
+            </header>
+            <lightning-card>
+                <div class="slds-card__body_inner slds-scrollable" style="height: 25rem; padding: 1rem;">
+                  <c-i-n-d_-l-w-c_-tractor-r-c-u-documents record-id={recordId}></c-i-n-d_-l-w-c_-tractor-r-c-u-documents>
+                </div>
+            </lightning-card>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops2"></div>
+    </template>
+  </template>

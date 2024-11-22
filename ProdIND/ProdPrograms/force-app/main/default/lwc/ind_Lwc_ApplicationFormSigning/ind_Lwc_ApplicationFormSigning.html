@@ -1,0 +1,453 @@
+<template>  
+
+  <img src={imageUrl} width="200" height="200">
+
+    <div class="slds-p-around--medium">
+      <h3 class="slds-text-heading_medium"><strong style="color:#861b00;">Application Form Signing</strong></h3> 
+      <lightning-accordion allow-multiple-sections-open
+                           onsectiontoggle={toggleSectionHandle}
+                           active-section-name={activeSections}>
+          <lightning-accordion-section name="leadDetails" label="Lead Details" >
+              <div class="tabContent">
+                <lightning-card>
+                   <div >
+                    
+                        <lightning-record-view-form record-id={lonlist} object-api-name="Opportunity">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-output-field field-name="Lead_Name__c"></lightning-output-field>
+                                    <lightning-output-field field-name="Lead_number__c"></lightning-output-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-output-field field-name="Lead_Number_Sequence__c"></lightning-output-field>
+                                    <lightning-output-field field-name="LeadSource"></lightning-output-field>
+                                </div>
+                            </div>
+                            </lightning-record-view-form>
+                        </div>  
+                        </lightning-card>
+              </div>
+          </lightning-accordion-section>
+  
+          <lightning-accordion-section name="Loandetails" label="Loan details"  onclick={handleToggleSectionLonD}>
+              <div class="tabContent">
+                <lightning-card>
+                    <div >
+                        <lightning-record-view-form record-id={lonlist} object-api-name="Opportunity">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-output-field field-name="Required_Loan_amount__c"></lightning-output-field>
+                                    <lightning-output-field field-name="Loan_Application_Number__c"></lightning-output-field>
+                                    <lightning-output-field field-name="Required_ROI__c"></lightning-output-field>
+                                    
+                                    
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                   
+                                    <lightning-output-field field-name="Required_Tenure__c"></lightning-output-field>
+                                    <lightning-output-field field-name="X1st_yr_Insurance_Premium__c"></lightning-output-field>
+                                    <lightning-output-field field-name="Is_customer_interested_in_a_motor_insura__c"></lightning-output-field>
+                                </div>
+                            </div>
+                            </lightning-record-view-form>
+                        </div> 
+                         
+                    </lightning-card>
+               
+              </div>
+          </lightning-accordion-section>
+  
+          <lightning-accordion-section name="AdditionalCustomerDetails" label="Additional customer details">
+              <div class="tabContent">
+                <lightning-card>
+                    <div >
+                        <lightning-record-view-form record-id={lonlist} object-api-name="Opportunity">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-output-field field-name="Application_number__c"></lightning-output-field>
+                                    <lightning-output-field field-name="Address__c"></lightning-output-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-output-field field-name="Customer_Last_Name__c"></lightning-output-field>
+                                   
+                                </div>
+                            </div>
+                            </lightning-record-view-form>
+                        </div>
+                        </lightning-card>
+              </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section name="Vehicledetails " label="Vehicle details"  onclick={handleToggleSectionvehicle}>
+            <div class="tabContent">
+              <lightning-card>
+                <template if:true={vehiclelist}>
+                    <lightning-datatable
+                            key-field="id"
+                            columns={vehiclecolumns}
+                            data={vehiclelist}
+                            hide-checkbox-column
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={onHandleSort}>
+                    </lightning-datatable>
+                </template>
+                      </lightning-card>
+            </div>
+        </lightning-accordion-section>       
+        <lightning-accordion-section name="Vehicleinsuranceandvaluation " label="Vehicle insurance and valuation"  onclick={handleToggleSectionInsur}>
+            <div class="tabContent">
+              <lightning-card>
+                <!--  <div >
+                      <lightning-record-view-form record-id={recordId} object-api-name="Applicant__c">
+                          <div class="slds-grid">
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-output-field field-name="Base_Price__c"></lightning-output-field>
+                                  <lightning-output-field field-name="Customer_Deal_No__c"></lightning-output-field>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-output-field field-name="Customer_Last_Name__c"></lightning-output-field>
+                                 
+                              </div>
+                          </div>
+                          </lightning-record-view-form>
+                      </div>   -->
+                  
+                      <template if:true={inslist}>
+                        <lightning-datatable
+                                key-field="id"
+                                columns={columnsins}
+                                data={inslist}
+                                hide-checkbox-column
+                                default-sort-direction={defaultSortDirection}
+                                sorted-direction={sortDirection}
+                                sorted-by={sortedBy}
+                                onsort={onHandleSort}>
+                        </lightning-datatable>
+                    </template>
+
+                      </lightning-card>
+            </div>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="DetailsofKYCcaptured " label="Details of KYC captured "  onclick={handleToggleSectionKyc}>
+            <div class="tabContent">
+              <lightning-card>
+                <template if:true={kyclist}>
+                    <lightning-datatable
+                            key-field="id"
+                            columns={kycColumns}
+                            data={kyclist}
+                            hide-checkbox-column
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={onHandleSort}>
+                    </lightning-datatable>
+                </template>
+              </lightning-card>
+            </div>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Incomedetails " label="Income details"  onclick={handleToggleSection}>
+            <div class="tabContent">
+              <lightning-card>
+              <!--  <template if:true={accList}>
+        <lightning-datatable data={accList} columns={columns} key-field="Id">
+        </lightning-datatable>
+    </template>
+    <template if:true={error}>
+        {error}
+                </template> -->
+                <template if:true={inclist}>
+                    <lightning-datatable
+                            key-field="id"
+                            columns={columns}
+                            data={inclist}
+                            hide-checkbox-column
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={onHandleSort}>
+                    </lightning-datatable>
+                </template>
+                      </lightning-card>
+            </div>
+        </lightning-accordion-section>    
+        <lightning-accordion-section name="FinalTerm " label="Final Term"  onclick={handleToggleSectionFinalTerm}>
+            <div class="tabContent">
+
+              <lightning-card>
+              <!--  <template if:true={accList}>
+        <lightning-datatable data={accList} columns={columns} key-field="Id">
+        </lightning-datatable>
+    </template>
+    <template if:true={error}>
+        {error}
+                </template> -->
+                <template if:true={finTerlist}>
+                    <lightning-datatable
+                            key-field="id"
+                            columns={finTercolumns}
+                            data={finTerlist}
+                            hide-checkbox-column
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={onHandleSort}>
+                    </lightning-datatable>
+                </template>
+                      </lightning-card>
+            </div>
+        </lightning-accordion-section> 
+        <lightning-accordion-section name="Insurancedetails " label="Insurancedetails"  onclick={handleToggleSectionInsurance}>
+            <div class="tabContent">
+              <lightning-card>
+                <template if:true={Insurancelist}>
+                    <lightning-datatable
+                            key-field="id"
+                            columns={Insurancecolumns}
+                            data={Insurancelist}
+                            hide-checkbox-column
+                            default-sort-direction={defaultSortDirection}
+                            sorted-direction={sortDirection}
+                            sorted-by={sortedBy}
+                            onsort={onHandleSort}>
+                    </lightning-datatable>
+                </template>
+                      </lightning-card>
+            </div>
+        </lightning-accordion-section>       
+      </lightning-accordion>
+  <br/><br/>
+
+  <template if:true={DocuColumns}>
+  <lightning-datatable
+  key-field="id"
+  columns={DocuColumns}
+  data={Doculist}
+  hide-checkbox-column>
+</lightning-datatable>
+</template>
+<br/>
+<br/>
+ 
+  <div class="slds-grid">
+  <div class="slds-col">  
+    <h1><b>IMPORTANT NOTE : </b></h1>
+        <ul>
+       <li>Kindly ensure to properly check and self-attest all documents submitted with date.</li>
+      <li><p>Kindly do not make any payment in cash, bearer cheque or kind to the Executive in 
+        connection with this loan application.</p></li>
+    </p>
+    </ul>
+        
+            <p><b>Note that :</b></p>
+            <ul>
+                <li>3  &nbsp;&nbsp;  The receipt of your application form for the loan does not imply automatic approval of</li>
+                  <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; your loan by IBL.</li>
+                <li>3  &nbsp;&nbsp;  Incomplete / defective application will not be processed and IBL shall not be</li>
+                  <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; responsible in any manner for the resulting delay or otherwise.</li>
+                <li>3  &nbsp;&nbsp;  IBL may request for additional documents other than those collected in connection</li>
+                   <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with the application. </li>
+                   <li>3  &nbsp;&nbsp;  IBL shall not be liable for loss or delay in the receipt of documents.</li>
+                <li>3  &nbsp;&nbsp;  IBL reserves the right to reject any application without assigning any reasons</li>
+              </ul>
+  </div>
+
+  <div class="slds-col">
+      <ul>     
+   <li> 3 &nbsp;&nbsp;  IBL reserves the right to retain the photograph and documents submitted along with</li>
+   <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the application form and shall not return the same to applicant.</li>
+    <li>3  &nbsp;&nbsp;  IndusInd Bank (IBL) will decide quantum of the loan at its sole discretion</li>
+    <li>3  &nbsp;&nbsp;  The  Monthly  Installments  (EMI)  in  connection  with  the  loan  will  be  due  on</li>
+       <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__________ of every month.</li>
+    <li>3  &nbsp;&nbsp; All repayment instruments / mandates are to be issued favoring "Indusind Bank</li>
+      <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Limited" and duly filled in as required </li>
+        <li>3  &nbsp;&nbsp;&nbsp;The loan is sanctioned on fixed rate of interest basis and the said ROI is arrived at by</li>
+         <li>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; adding/adjusting tenor premium, Credit Risk Premium and Business Strategy spread</li>
+         <li>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; on currently declared Marginal cost of funds based Leading Rate (MCLR) as the case</li>
+          <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; may be. The applicable ROI would stand revised subject to the terms as specified in</li>
+          <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the final loan sanction Letter/Loan agreement. The loan being fixed in nature, ROI</li>
+          <li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; would not be reset periodically. </li>
+</ul>
+
+</div>
+  </div>
+  <div class="slds-grid">
+   <div class="slds-col">
+       <ul>
+        &nbsp;&nbsp;
+    <p><b>I / WE CONFIRM THAT THE EXECUTIVE COLLECTING THE APPLICATION / DOCUMENTS HAS / HAVE INFORMED ME / US:</b></p>
+    
+<li>3 &nbsp;&nbsp; The applicable rate of effective ROI (Customer IRR) and the equivalent rate of interest on IRR (simple rate of interest) terms.</li>
+<li>3 &nbsp;&nbsp; The interest on this loan would be calculated on monthly diminishing basis.</li>
+<li>3 &nbsp;&nbsp; Processing Fees, Admin Fees, Documentation Charges, Stamping Charges, Trade Certificate Charges (at actuals), NeSL Regn. Charges, etc. (non refundable) that will be </li>
+    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;charged towards loan application.$</li>
+<li>3  &nbsp;&nbsp;The other applicable charges such as : Repayment Dishonour / Rejection Charges; Collection Charges; Repayment Mode Change Charges; Repayment Swapping </li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Charges (within the mode); Consecutive (two or more) Repayment Dishonour / Rejection and Related Pullout Charges; Closure of Bank account (without intiation)</li>
+<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from which Repayment instruments/ECS has been issued; Loan Cancellation/Re-booking  Charges,CIBIL/other  CIB Credit Information Report (CIR), SMS/Telecalling</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chages, Collection charges, Cash Handling charges, Travel & Collection follow-up charges etc. (Refer to latest Schedule of Charges for further details).$</li>
+<li>3  &nbsp;&nbsp;The Inclusive/Exclusive of GST+Cess+Other levies that if any, may be applicable from time to time that will be charged in connection with various categories of fees / charges collected.</li>
+<p><b>THAT:</b></p>
+<li>3 &nbsp;&nbsp; Incomplete / defective application will not be processed and IBL shall not be responsible in any manner for the resulting delay or otherwise.</li>
+<li>3 &nbsp;&nbsp; IBL will not be liable for any loss or delay in receipt of documents.</li>
+<li>3 &nbsp;&nbsp; Documents / Photographs will not be returned under any circumstances, once submitted to IBL.</li>
+<li>3 &nbsp;&nbsp; Approval of the application is at the sole discretion of IBL and the quantum of the loan will be finally decided by IBL.</li>
+<li>3 &nbsp;&nbsp; In case of used / refinance / top-up loans, the finance amount / decision to finance would depend on valuation of asset & Bank’s internal valuation grid/guidelines and norms.</li>
+<li>3 &nbsp;&nbsp; Equated Monthly Installment (EMI) will be due on ___________ of every month.</li>
+<li>3 &nbsp;&nbsp; The Loan foreclosure charges are as per the Loan agreement and currently the same is at 3%.</li>
+<li>3 &nbsp;&nbsp; The Foreclosure charges are levied / calculated on the balance principal outstanding of the loan.  (Subject to clauses governing part prepayments)</li>
+<li>3 &nbsp;&nbsp; The loan terms as sanctioned are applicable for the specified product as indicated in the loan application and are valid for a period of 7 days only. Where for some </li>
+<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reasons, there is a delay in concluding the loan, IBL reserves the right to revise the loan terms as may be applicable at the time of actual loan availment.</li>
+<p><b>I / We also confirm that,</b></p>
+<li>a)&nbsp; The executive has not made any commitments to me / us regarding the loan quantum / sanction process (or) promised any deviation / waivers</li>
+<li>b)&nbsp; The executive has collected self attested copies of the documents mentioned on the front side and verified the same with originals produced by me / us</li>
+<li>c)&nbsp; We have not given / made any payment in cash, bearer cheque or kind along with or in connection with this loan application to the said executive (or) to any other</li>
+<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;employee of the bank (or) to any other third party</li>
+d)&nbsp; No cash/blank instruments has been given by me/us alongwith the application, nor have I/We been promised any free gifts/inducements to apply for this loan facility. e)  
+<p><b>The details of loan terms / conditions inclusive of all charges have been read by me / us in full / read out to me / us (in vernacular) and understood by me /
+    us.</b></p>
+<li>f) &nbsp; The copy of applicable Schedule of Charges  and BCSBI code of Bank's commitment to customers has been collected by me / us; I / We further note that the latest</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SOC & copy of code is hosted in Bank's website www.indusind.com</li>
+<li>I voluntarily give my consent to IndusInd Bank to use my Aadhaar Details to authenticate me from UIDAI and link the Aadhaar Number to all my existing / new / future loan</li>
+<li> accounts and customer profile (CIF) with your bank and use my Mobile number for sending all SMS Alerts to me.</li>
+<!-- Box  -->
+ --------------- Box ----------------
+<li>** &nbsp; Original Verified: Executive representing IBL should verify & certify all copies of documents submitted by applicant (with originals) in his presence and sign with date.</li>
+<li>$   &nbsp;&nbsp;     During the currency of the loan, the Bank reserves the right to modify any / all the charges / fees applicable, from time to time, with a formal communication addressed to you</li>
+&nbsp;&nbsp;(sent to your registered address).
+</ul>
+   </div>
+  </div>
+  <template if:true={isTwoWheeler}>
+  <div class="slds-grid">
+    <div class="slds-col">
+   <h1><b>DECLARATION BY THE APPLICANT</b></h1>
+   <br>
+    <ul>
+    
+        <li><b>I THE PROPOSED APPLICANT IS ASSESSED</b></li>
+        <li>For Income Tax  ___No  ___Yes PAN __________ As per ITR:.............. A.Y.20...... - 20......`.........</li>
+    <p><b>• Form 60 information (if applicable)</b> I do hereby declare that what is stated is true to best of my knowledge and belief. I further declare that I do not have Permanent
+        Account Number and my estimated total income (including income of spouse, minor child etc. as per section of 64 of Income tax Act 1961) computed in accordance with
+        the provision of Income Tax Act. 1961 for financial year in which the above transaction is held will be less than the maximum amount not chargeable to tax. I confirm that, 
+        all information furnished in Form 60 is true, complete in all respects. I note that, for any false declaration, I shall be liable to prosecution under sec. 277 of the Income Tax
+        Act 1961. I note that, the Bank has accepted Form 60 basis my information and declaration given. • I further declare that I have read and understood all the data 
+         requirements as sought in the form / declaration and confirm that all the particulars and information given in this application form are true, correct and complete and
+          upto date in all respects and I have not withheld any information. • I confirm that I had no insolvency proceedings initiated against me nor have I ever been adjudicated 
+          insolvent. • I hereby give consent to share my information to CKYCR CERSAI, NeSL etc. and create necessary identified tags for me and also give specific consent to 
+          receive information from Bank / Registry through SMS/e-mail on the above registered contact number/email address relating to registration of my data in any Registry. 
+         • I authorise Bank or its agent to make references and deduping / verification / validation / checking / enquiries relating to information in this application/related  
+         documents my finance details, and repayment information which Bank considers necessary. • I have read the application form and brouchers and am aware of all the  
+          terms and conditions of availing finance from IndusInd Bank Ltd. (IBL). • I also authorise IndusInd Bank to exchange, share, part with all and necessary information 
+          relating to my finance details and repayment history information to other FIs/Credit bureaus/agencies/Banks/CERSAI (CKYCR) to Insurance companies (where  
+         insurance products are chosen by me) (or) any other downloaded data from entities like NSDL, UIDAI, CKYCR CERSAI, NeSL, GST portal etc., with other 
+          branches/subsidiaries/associates/affiliates or to any third parties as may be required for KYC information verification, credit risk analysis or other related purposes that, 
+         the Bank may deem fit. • I shall not hold IndusInd Bank liable for use any of this information. • I also waive the privilege of privacy and privity of contract. • I hold myself  
+         liable for any mis statement wrongful assertion. •It correctly states my true and real condition on the data hereof and I have not knowingly withheld any information that 
+          might affect the acceptance of my proposal. • I expressly agree to notify immediately to you in writing of any material change that may occur in my financial and other </p>
+      <p><b>
+        • I voluntarily give my consent to IndusInd Bank to use my Aadhaar Details to authenticate me from UIDAI and link it to all my existing / new / future loan accounts and customer profile (CIF) with your
+        Bank and to use my Mobile Number for sending all SMS Alerts to me. I have consented to do eKYC checking vide Biometric / OTP route. Please update my current address (as mentioned in the 1st 
+        page under "Present address" of this Form (As my address as recorded in UIDAI is old) as the address for communication. All correspondence pertaining to my account should be sent to this 
+        address and I hereby declare that address furnished by me is true, correct and complete. In the event of any change in the same, I would keep the Bank informed within two weeks and submit 
+        necessary documents.
+    </b></p>
+    <br>
+    <p><b>
+        •I agree and acknowledge that only direct telephone numbers (not board / general telephone numbers of offices / corporates / employers) will be accepted for registration of "Do not call". I note that, 
+        I may receive call(s) from the Bank to verify the correctness of the request for registration. I also note that, the Bank may use my contact details to contact me and offer carefully selected products 
+        and services from time to time either directly or through its agents or authorised representatives.</b>I hereby authorize IBL / its tele marketer to make calls / send sms / write to me on / for informing / soliciting 
+        insurance products (or) any other third party products / services distributed by the Bank and this may be construed as my enquiry and I hereby agree to abide with all the processes connected with this activity notwithstanding any registration made by me in National Do Not Call Registry.
+    </p>
+    <br>
+    <p>
+       <b> I __consent / __do not consent to receive information on product / services etc for Marketing purpose through Telephone / Mobile / SMS / Email by the Bank / its agents.</b> I confirm that : 
+<b>NO SIGNATURE PROOF:</b>my proof of identity submitted to the Bank does not contain my signature(s) and have requested the Bank to treat my signature as signed by me herein as valid and accept it for all 
+transactions which I may have with the Bank in future. <b>SIGNATURE DIFFERENCE:</b> my present signature differs from my old signature as appearing in proof of identity submitted to the Bank and have 
+requested the Bank to treat the signature as signed by me herein as valid and accept it for all transactions which I may have with the Bank in future. <b>VERNACULAR SIGNATURE:</b> I have signed in a 
+Vernacular language and that, contents of this form, loan sanction letter, agreement etc, were explained to me in my language and further that I have understood and/accepted the same in its entirety.
+<b>THUMB IMPRESSION:</b> I being illiterate(s) have affixed my thumb impression(s) in the form/agreement, DPN etc. and that, contents of this form, loan 
+sanction letter, agreement etc. were explained in my language and further that, I have understood and accepted the same in its entirety.
+    </p>
+    <br>
+    <p>
+        •I also agree and confirm that the said vehicle will be insured comprehensively including riot/civil commotion and unlimited third party risks until all dues on the 
+contract are paid and the vehicle is released to me/us. •I further state that I aware and agree that the Bank shall be entitled to repossess the Assets/Vehicle in 
+case of default without notice and I agree to surrender the Asset / Vehicle in case of default. • I agree specifically agree not to transfer, pledge or otherwise the 
+Vehicle/Asset and further declare that the Bank shall have the direct charge on the vehicle.
+    </p>
+
+    <li>PLACE : __________________________ DATE :___________________   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIGNATURE :____________________ </li>
+    
+    </ul>
+
+    </div> 
+  </div>
+  </template>
+  <br>
+  <template if:true={isPassengerVehicle}>
+  <div class="slds-grid">
+    <div class="slds-col">
+        <h2><b>DECLARATION</b></h2>
+           <ul>
+            <li><b>I/WE THE PROPOSED BORROWER/CO-BORROWER/GUARANTORS IS/AREASSESSED</b></li>
+            <li>For Income Tax [ ]No [ ]Yes PAN __________ As per ITR:.............. A.Y.20...... - 20......`.........</li>
+            <li><b>►FORM 60 INFORMATION (If Applicable)</b></li>
+            <p>I/We do hereby declare that what is stated is true to best of my/our knowledge and belief. I/We further declare that I/We do not have
+                 Permanent Account Number and my/our estimated total income (including income of spouse, minor child etc. as per section of 64 of income tax Act 1961) computed in accordance 
+                 with the provision of Income Tax Act, 1961 for financial year in which the above transaction is held will be less than the maximum amount not chargeable to tax. I/We confirm that,
+                  all information furnished in Form 60 is true, complete in all respects. I/We note that, for any false declaration. I/We shall be liable to prosecution under section 277 of the Income Tax Act 1961. I/
+                We note that the Bank has accepted Form60 basis my/our information and declaration given.</p>
+                <li>►I/We also certify that the vehicle will be operated under our direct supervision and control and that I/We shall utilise the asset/funds only for the purpose(s) mentioned/declared in the loan application/agreement.</li>
+                <li>► The vehicle/asset will be registered as a Private/Public carrier with the Regional Transport Authority at.......................</li>
+                <li> ►I/We also agree and confirm that the said vehicle will be registered in the state of .............
+                    .............. and will be kept so registered until all the dues under the contract are paid to you and the vehicle is released to me/us</li>
+                <li>►I/We also agree and confirm that the said vehicle will be insured comprehensively including riot/civil commotion and unlimited third party risks until all dues on the contract are paid and the vehicle is released to me/us.</li>
+                <li>►I/We agree specifically agree not to transfer, pledge or otherwise the Vehicle/Asset and further declare that the Bank shall have the direct charge on the vehicle.</li>
+                <li> ►I/We warrant that the properties mentioned herein are our exclusive properties and will not in any way be transferred or alienated until the obligations arising out of the agreement are fulfilled and</li>
+                <li>►I/We further state that I/We are aware and agree that the Bank shall be entitled to repossess the Assets/Vehicle in case of default without notice and I/We agree to surrender the Asset/Vehicle in case of default.</li>
+                <li>►In submitting the above application, I/We the undersigned, solemnly affirm that the information above set forth are in all respects true, correct and accurate and upto date in all respects and the same may be relied upon by the Bank</li>
+                <li>►I/We hold ourselves liable for any mis-statement wrongful assertion.</li>
+                <li>►I/We have not knowingly withheld any information that might affect the acceptance of my/our proposal.</li>
+                <li>►I/We expressly agree to notify immediately the Bank in writing of any material change that may occur in my/our financial and other condition.</li>
+                <li> ►I/We confirm that I/We had no insolvency proceedings initiated against me/us nor have I/We ever been adjudicated Insolvent. I/We have read the application form and brochures and am/are aware of all the terms and conditions of availing finance from Indusind Bank Ltd.</li>
+                <li> ►I/We undertake to inform the Bank regarding any change in my/our residence/employment and to provide any further information that the Bank may require.</li>
+                <li>►I/We agree that this proposal shall be the basis of the contract between us.</li>
+                <li>►I/We authorise Bank or its agent to make references and deduping/verification/validation/checking enquiries relating to information in this application which Bank considers necessary.</li>
+                <li>►I/We further agree that my/our finance shall be governed by the rules of IBL which may be in force from time to time and note that the Bank reserves the right to reject an application basis valid reason.</li>
+                <li><p>► I/We also authorise Bank to exchange, share, part with all and necessary information relating to my/our finance details and repayment history information to other Fis/Credit bureaus/agencies/Banks/CERSAI(CKYCR) to Insurance companies
+                    (where insurance products are chosen by me/us) (or) any other downloaded data from entities like NSDL, UIDAI, CKYCR CERSAI, NeSL, GST portal ect., with other branches/subsidiaries/associates/affiliates or to any third parties as may be required 
+                    for KYC Information verification, credit risk analysis or other related purposes that, the Bank may deem fit, 1/We hereby give consent to share my/our information to CKYCR, CERSAI, NeSL etc., to create necessary identifier tags for me/us and also 
+                    give specific consent to receive information from Bank any Registry through sms/email on the above registered contact number/ email address relating to registration of my/our data in any registry. I/
+                    We shall not hold the Bank liable for use any of this information.</p></li>
+                    <li>►I/We also walve the privilege of privacy and privity of contract.</li>
+                    <li><p><b>►I/We voluntarily give my/our consent to IndusInd Bank to use my/our Aadhar Details to authenticate me/us from UIDAI and link it to all my/our existing/new/future loan accounts and customer profile(CIF) with the bank and to use my Mobile Number for sending all SMS Alerts to me/us. 
+                        I/We have consented to do eKYC checking vide Biometric/OTP route. Please update my/our current address (as mentioned in the 1st & 5th page under “present address” of the form (As my/our address as recorded in UIDAI is old) as the address for communication. All correspondence pertaining 
+                        to my/our account should be sent to this address and I/we hereby declare that address furnished by me/us is true, correct and complete. In the event of any change is the same, I/we would keep the Bank informed within two weeks and submit necessary documents.</b></p></li>
+                        <li><p><b>I/We agree and acknowledge that only direct telephone numbers (not board/general telephone numbers of offices/corporates/employers) will be accepted for registration of “Do not call”. I/We note that, I/We may receive call(s) from the Bank to verify the correctness of the request
+                             for registration and also note that, the Bank may use my/our contact details to contact me/us and offer carefully selected products and services from time to time either directly or through any of its agents or authorized representatives.
+                           </b></p></li>
+                           <li><b> I/We [ ] consent / [ ] do not consent to receive information on product/services etc. for Marketing purpose through Telephone/Mobile/SMS/Email by the Bank/its agents</b></li>
+                           <li>I/We confirm that:</li>
+                           <li><b> [ ] NO SIGNATURE PROOF:</b>my/our proof of identity submitted to the Bank does not contain my/our signature(s) and have requested the Bank to treat my/our signature as signed by me/us herein as valid and accept it for all transactions which I/We may have with the Bank in future.</li>
+                           <li><b> [ ] SIGNATURE DIFFERENCE : </b>my/our present signature differs from my/our old signature as appearing in proof of identity submitted to the Bank and have requested the Bank to treat the signature as signed by me/us herein as valid and accept it for all transactions which I/We may have with the Bank in future.</li>
+                           <li><b>[ ] VERNACULAR SIGNATURE :</b> I/We have signed in a vernacular language and that, contents of this form, loan sanction letter, agreement etc, were explained to me/our language and further that I/We have understood and/accepted the same in its entirety.</li>
+                           <li><b>[ ] THUMB IMPRESSION :</b>I/We being illiterate(s) have affixed my/our thumb impression(s) in the form/agreement, DPN etc. and that, contents of this form, loan sanction letter, agreement etc. were explained in my/our language and further that, I/We have understood and accepted the same in its entirety.</li>
+           </ul>
+    </div>
+  </div>
+   </template> 
+  
+
+  <lightning-button label="Accept" ></lightning-button>
+  </div> 
+ <template if:true={uploadViewDocFlag}>
+    <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+        onvehicledocuploadsuccess={vehicleDocUploadDone} onvehicledocuploadcancel={vehicleDocUploadcancel}
+        currentloanapplicationid={oppId} currentapplicantid={applicantId} currentvehiclerecordid={vehicleRecordId}
+        uploadviewdocpopup={uploadViewDocFlag} doctype={docType} showdocview={showDocView}
+        isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+        documentrecordidfromparent={documentRecordId}>
+    </c-l-W-C_-L-O-S_-Upload-And-View-Document>
+</template>
+  </template>

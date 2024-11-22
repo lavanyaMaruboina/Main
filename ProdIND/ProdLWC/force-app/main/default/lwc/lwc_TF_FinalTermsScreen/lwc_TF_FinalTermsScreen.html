@@ -1,0 +1,49 @@
+<template>
+  <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Final Terms</label>
+  </div>
+  <template lwc:if={isNotCreditProcessing}>
+      <div class="slds-m-bottom_large slds-clearfix">
+        <lightning-button-icon icon-name="utility:home" onclick={handleSaveAndExit} variant="brand"
+            alternative-text="Home" class=" slds-float_right slds-m-left_medium slds-m-right_medium">
+        </lightning-button-icon>
+        <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+            alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton">
+        </lightning-button>
+      </div>
+  </template>
+    <lightning-accordion active-section-name={activeVehicle} >
+    <template if:true={vehicleDetails} for:each={vehicleDetails} for:item="vd" for:index="index">
+        <lightning-accordion-section name={vd.Id} label={vd.Variant__c} key={vd.Id}>
+            <div class="slds-m-left_small slds-m-right_small">
+                <c-Lwc_-Final-Terms-Screen tab-value={tabValue}  
+                  activetab={activetab}
+                  recordid={recordid}
+                  onsubmitnavigation={switchScreen}
+                  checkleadaccess={checkLeadAccess}
+                  vehicle-sub-type ={vd.Vehicle_SubType__c}
+                  vehicle-id={vd.Id}
+                  number-of-vehicles ={numberOfVehicles}
+                  onfinaltermsuccess={handleFinaltermAllApiSucess}
+                  current-stage={currentStage}
+                  oninsurancevaleve={handleInsurancevaleve}
+                  onfinaltermsevent ={handleOnfinishNext}
+                  is-revoked-loan-application={isRevokedLoanApplication}
+                >
+                </c-Lwc_-Final-Terms-Screen>
+              </div>
+        </lightning-accordion-section>
+    </template>
+    </lightning-accordion>
+    <template lwc:if={isCreditProcessing}>
+      <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinishNext}>
+        Next
+      </button>
+    </template>
+      
+    <!--SFTRAC-2243 Start-->
+    <template lwc:if={showFileUploadAndView}><c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordid} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+    </template>
+    <!--SFTRAC-2243 End-->
+      
+</template>

@@ -1,0 +1,116 @@
+<template>
+    <template if:true={isLoading}>
+        <div>
+           <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+     </template>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element  slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">Same as Borrower's Office Address</label>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-input type="checkbox" class="borroweroffadd" label="borroweroffadd" data-id="borroweroffaddId" 
+                    checked={borrowerOffice} onchange={handlecheckborrower} disabled={isCheckDisabled}
+                    variant="label-hidden">
+                 </lightning-input>
+              </div>
+           </div>
+        </div>
+        </div>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element  slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">Address Line 1</label>
+                 <abbr title="required" class="slds-required">*</abbr>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-input type="text" class="beneficiaryField1" label="beneAddressLine1" data-id="beneAddressLine1" required
+                    value={beneAddressLine1value} disabled={isDisabled}
+                    pattern={label.KycAddress1Pattern} variant="label-hidden" onblur={handleBeneficiaryAddress}>
+                 </lightning-input>
+              </div>
+           </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element  slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">Address Line 2</label>
+                 <abbr title="required" class="slds-required">*</abbr>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-input type="text" class="beneficiaryField2" label="beneAddressLine2" data-id="beneAddressLine2" required 
+                    disabled={isDisabled}
+                    variant="label-hidden" value={beneAddressLine2value}
+                    onblur={handleBeneficiaryAddress}
+                    pattern={label.KycAddress2Pattern}>
+                 </lightning-input>
+              </div>
+           </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">State</label>
+                 <abbr title="required" class="slds-required">*</abbr>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-combobox name="progress" class="beneState" label="beneState" variant="label-hidden"
+                    value={beneStateValue} data-id="beneStateId" required disabled={isDisabled}
+                    onchange={handleBeneficiaryAddress} placeholder="Select State"
+                    options={allStateData}></lightning-combobox>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">District</label>
+                 <abbr title="required" class="slds-required">*</abbr>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-combobox name="District Value" class="beneDistrict" label="beneDistrict" variant="label-hidden" required
+                    value={beneDistrictValue} data-id="beneDistrictId" disabled={isDisabled}
+                    onchange={handleBeneficiaryAddress} placeholder="Select District"
+                    options={districtValue}>
+                 </lightning-combobox>
+              </div>
+           </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">City</label>
+                 <abbr title="required" class="slds-required">*</abbr>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-combobox name="progress" class="beneCity" label="beneCity" variant="label-hidden"
+                    value={beneCityValue} data-id="beneCityId" disabled={isDisabled}
+                    onchange={handleBeneficiaryAddress} placeholder="Select City" options={cityValue} required>
+                </lightning-combobox>
+              </div>
+           </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+           <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label">Pin Code</label>
+                 <abbr title="required" class="slds-required">*</abbr>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                 <lightning-input type="text" class="benePinCode" label="benePinCode" data-id="benePinCodeId"
+                    variant="label-hidden" value={benePinCodeValue}
+                    onblur={handleBeneficiaryAddress} required
+                    pattern={label.Pin_code_Pattern} disabled={isDisabled}
+                    message-when-pattern-mismatch={label.KYC_Pin_Code_ErrorMessage}>
+                 </lightning-input>
+              </div>
+           </div>
+        </div>
+     </div>
+</template>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Existing_Tractor_Loan_details__c</fullName>
+    <inlineHelpText>LOAN TYPE
+MODEL NAME
+BANK NAME
+WHEN YOU HAVE AVAILED
+LOAN EMI
+HOW MANY EMI PAID
+MODEL NAME
+PURCHASE DATE
+LOAN FREE OR FINANCED FROM
+BANK NAME LOAN AMOUNT
+IF SECOND HAND PURCHASED
+Name transferred or not
+purchsed from 
+what was the purchased price
+when you have purchsed the same</inlineHelpText>
+    <label>Existing Tractor Loan details</label>
+    <length>5000</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

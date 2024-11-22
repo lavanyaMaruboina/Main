@@ -1,0 +1,146 @@
+<template>
+       <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+      
+       <lightning-layout>
+        <lightning-layout-item size="12" class={className}>
+            <lightning-button class="slds-float_right slds-var-m-around_small" variant="brand" label="Add Row"
+                onclick={handleAddRow} disabled={disableAddRows}>
+             </lightning-button>
+             <lightning-button class="slds-float_right slds-var-m-around_small" variant="brand" label="Save"
+                onclick={saveRows} disabled={disableSave}>
+             </lightning-button>
+             <table class="slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                   <tr>
+                      <th>Sr No.</th>
+                      <th>Type</th>
+                      <th>Expense and investment type</th>
+                      <th>Amount</th>
+                      <th></th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <template for:each={filterList} for:item="filterData" for:index="index">
+                     <template if:false = {filterData.isValid}>
+                      <tr key={filterData}>
+                        <td>
+                            {filterData.srNo} 
+                         </td>
+                         <td>
+                           <template if:true={isDesktop}>
+                              <lightning-combobox name="Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                              placeholder="" onchange={handleChange} value={filterData.Type}
+                              options={typeOption} required>
+                           </lightning-combobox>
+                           </template>
+
+                          
+                           <template if:false={isDesktop}>
+                              <div class="slds-form-element">
+                                 <div class="slds-form-element__control">
+                                   <div class="slds-select_container">
+                                    <select name="Type__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.Type} required>
+                                       <option value="">-None-</option>
+                                       <template for:each={typeOption} for:item="item">
+         
+                                          <option key={item.value} value={item.value}>{item.label}</option>
+         
+                                       </template>
+                                    </select>
+                                   </div>
+                                 </div>
+                               </div>
+                           </template>
+                            
+                         </td>
+                         <td>
+                           <template if:true={isDesktop}>
+                              <lightning-combobox name="Expenses_and_Investment_Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                               placeholder="" onchange={handleChange} value={filterData.ExpenseType}
+                               options={filterData.ExpenseTypeOptions} required>
+                            </lightning-combobox>
+                           </template>
+                           
+                            <template if:false={isDesktop}>
+                              <div class="slds-form-element">
+                                 <div class="slds-form-element__control">
+                                   <div class="slds-select_container">
+                                    <select name="Expenses_and_Investment_Type__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.ExpenseType} required>
+                                       <option value="">-None-</option>
+                                       <template for:each={filterData.ExpenseTypeOptions} for:item="item">
+         
+                                          <option key={item.value} value={item.value}>{item.label}</option>
+         
+                                       </template>
+                                    </select>
+                                   </div>
+                                 </div>
+                               </div>
+                           </template>
+                         </td>
+                         <td>
+                            <lightning-input type="number" name="Amount__c" data-index={index} data-id={filterData.id}
+                               value={filterData.Amount} variant="label-hidden" onchange={handleChange} required>
+                            </lightning-input>
+                         </td>
+                         <td>
+                            <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                               icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                         </td>
+                      </tr>
+                      </template>
+                      <template if:true={filterData.isValid}>
+                        <tr key={filterData}>
+                           <td>
+                                {filterData.srNo} 
+                            </td>
+                            <td>
+                              {filterData.Type}
+                            </td>
+                            <td>
+                              {filterData.ExpenseType}
+                            </td>
+                            <td>
+                              {filterData.Amount}
+                            </td>
+                            <td>
+                                 <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                    icon-name="action:delete" onclick={handleDeleteRow}>
+                                 </lightning-button-icon> 
+                                 <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:edit" onclick={handleEditRow}>
+                                    </lightning-button-icon>
+                            </td>
+                         </tr>
+                     </template>
+                   </template>
+                </tbody>
+             </table>
+       </lightning-layout-item>
+       </lightning-layout>
+       <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Total Expenses:</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    {totalExpenses}
+                </div>
+                </div>
+          </div>
+          <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label">Total Investment:</label>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                {totalInvestment}
+              </div>
+            </div>
+          </div>
+       </div>
+         
+    <!-- </lightning-card> -->
+ </template>

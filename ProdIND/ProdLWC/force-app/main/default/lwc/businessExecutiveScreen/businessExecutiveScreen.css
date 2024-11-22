@@ -1,0 +1,31 @@
+.button{
+    --sds-c-button-shadow:rgb(32, 204, 83);
+    --sds-c-button-shadow-focus:blue;
+    --sds-c-button-inverse-shadow-focus:rgb(148, 72, 114);
+    --sds-c-button-neutral-color-background:rgb(255, 123, 0);
+    --sds-c-button-neutral-color-border-hover:rgb(216, 119, 27);
+}
+.indusbutton{
+    min-width: 150px !important;
+}
+.float-button {
+    border-radius: 30%;
+    position: fixed;
+    top: 250px;
+    right: 45px;
+    cursor: pointer;
+    }
+.slds-modal__container {
+    position: inherit !important;
+    width: 0% !important;
+    min-width: 14rem !important;
+    margin-top: 2rem !important;
+    margin-left: 0% !important;
+}
+.slds-col {
+    color: #832625;
+}
+.slds-modal .slds-modal__title {
+    color: #832625;
+    text-align: left;
+}

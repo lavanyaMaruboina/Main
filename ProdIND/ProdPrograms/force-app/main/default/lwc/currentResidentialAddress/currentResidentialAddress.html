@@ -1,0 +1,1431 @@
+<template>
+   <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+      <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+  </template>
+   <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+   <template if:true={modalPopUpCaptureImage}>
+      <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+         <div class="slds-form slds-modal__container">
+            <header class="slds-modal__header">
+               <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                  onclick={captureCustomerImageClose}>
+                  <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                  </lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+               </button>
+
+               <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+                  {uploadDocumentType}
+               </h2>
+            </header>
+            <lightning-card>
+               <div class="slds-card__body_inner">
+                  <br>
+                  <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                     <div class="slds-col slds-size_1-of-8 slds-m-left">
+                        Doc Type
+                     </div>
+                     <div class="slds-col slds-size_1-of-10">
+                        <lightning-input type="text" variant="label-hidden" value={uploadDocumentType}
+                           label="Document Type" disabled></lightning-input>
+                        <br />
+                     </div>
+                  </div>
+                  <template if:true={largeFactorUpload}>
+                     <template if:true={isNonIndividual}>
+                        <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                           <div class="slds-col slds-size_1-of-8 slds-m-left">
+                              Document Number
+                           </div>
+                           <div class="slds-col slds-size_1-of-10">
+                              <lightning-input class="custom-input" variant="label-hidden" value={documentNumber} onchange={handleDocNumber} required></lightning-input>
+                              <br/>
+                           </div>
+                        </div>
+                    </template>
+                     <lightning-file-upload variant="brand" class="slds-theme_brand slds-align_absolute-center"
+                        name="fileUploader" accept={acceptedFormats} record-id={currentAddressFileId}
+                        file-field-name="Guest_Record_fileupload__c" file-field-value="Front"
+                        onuploadfinished={handleUploadFinished} multiple>
+                     </lightning-file-upload>
+                  </template>
+                  <template if:true={smallFactorUpload}>
+                     <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                        <div class="slds-button-group-item">
+                           <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button"
+                              label="Upload" onclick={openIntegratorApp} disabled={uploadDisable}></lightning-button>
+                        </div>
+                     </lightning-button-group>
+                  </template>
+                  <br>
+                  <br>
+                  <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                     <div class="slds-button-group-item">
+                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button"
+                           label="Done" onclick={captureImageDone} disabled={isDone}></lightning-button>
+                     </div>
+                     <div class="slds-button-group-item">
+                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button"
+                           label="Cancel" onclick={captureCustomerImageClose} disabled={isCancel}>
+                        </lightning-button>
+                     </div>
+                  </lightning-button-group>
+                  <br>
+               </div>
+            </lightning-card>
+         </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 400vh !important;" id="modalBackdrops1">
+      </div>
+   </template>
+   <template if:true={isError}>
+      <section id="modal2" role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true"
+         aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+         <div class="slds-form slds-modal__container">
+            <header class="slds-modal__header">
+               <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                  onclick={closeErrorModel}>
+                  <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                  </lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+               </button>
+               <h2 id="modal-heading-03" class="slds-modal__title slds-hyphenate">
+                  Error In Component
+               </h2>
+            </header>
+            <lightning-card>
+               <div class="slds-card__body_inner">
+                  <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                     <div class="slds-button-group-item">
+                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button"
+                           label="Cancel" onclick={closeErrorModel}>
+                        </lightning-button>
+                     </div>
+                  </lightning-button-group>
+                  <br>
+               </div>
+            </lightning-card>
+         </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 400vh !important;" id="modalBackdrops2">
+      </div>
+   </template>
+   <template if:false={noApplicantFound}>
+      <template if:true={isLoading}>
+         <div>
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+         </div>
+      </template>
+      <lightning-accordion class="example-accordion" active-section-name="A">
+         <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+            class=" slds-float_right ">
+         </lightning-button-icon>
+         <br />
+         <div class="slds-m-bottom_large slds-clearfix">
+            <template if:true={isEnableUploadViewDoc}>
+               <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium"> </label>
+               <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+                  alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton" disabled={isUploadViewDisabled}>
+               </lightning-button>
+            </template>
+         </div>
+         <lightning-accordion-section name="A" label={label.Current_Residential_Address} if:true={isNotNonIndividualTractorBorrower}>
+
+            <div class="slds-clearfix">
+               <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Current
+                  Residential Address</label>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Application number
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" variant="label-hidden" data-id="applicationDataId"
+                           label="Application number" value={applicantNumber} disabled> </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Name
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" label="Name" data-id="nameDataId" value={name} disabled
+                           min-length=3 pattern={label.RegEx_Alphabets_Only}
+                           message-when-pattern-mismatch={label.lastNameError} variant="label-hidden"
+                           onchange={nameHandler}>
+                        </lightning-input>
+                        <!-- CISP-3062 -->
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Address proof
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="currentAddress" name="progress" label="Address proof"
+                           value={currentdocumentType} placeholder="Select Document Type"
+                           options={currentDocTypeOptions} required disabled={disableCurrentAddressProof}
+                           onchange={currentDocumentTypeHandler} variant="label-hidden"
+                           data-id="addressDataId"></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Address Line1
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="currentAddress" label="KYC Address Line1" required
+                           data-id="kycAddressOneDataId" value={currentAddressData.KYC_Address_Line_1__c}
+                           disabled={currentAddressDisable} pattern={label.KycAddress1Pattern} variant="label-hidden"
+                           onchange={handleBarrowerAddress}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Address Line2
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="currentAddress" label="KYC Address Line2" required
+                           data-id="kycAdressTwoDataId" variant="label-hidden"
+                           value={currentAddressData.KYC_Address_Line_2__c} disabled={currentAddressDisable}
+                           onchange={handleBarrowerAddress2} pattern={label.KycAddress2Pattern}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">State
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="progress" class="currentAddress" label="State" variant="label-hidden"
+                           value={currentAddressData.KYC_State__c} data-id="kycStateDataId"
+                           onchange={handleBarrowerAddressState} placeholder="Select State" required
+                           options={allStateData} disabled={currentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">District
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="District Value" class="currentAddress" label="District"
+                           variant="label-hidden" value={currentAddressData.KYC_District__c} data-id="kycDistrictDataId"
+                           onchange={handleBarrowerAddressDistrict} placeholder="Select District" required
+                           options={districtValue} disabled={currentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" id="customerLastNameLbl">City
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="progress" class="currentAddress" label="City" variant="label-hidden"
+                           value={currentAddressData.KYC_City__c} data-id="kycCityDataId"
+                           onchange={handleBarrowerAddressCity} placeholder="Select City" required options={cityValue}
+                           disabled={currentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" id="customerFirstNameLbl"> KYC Pin Code
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="currentAddress" label="KYC Pin Code" required
+                           data-id="KycPinCodeDataId" variant="label-hidden" value={currentAddressData.KYC_Pin_Code__c}
+                           disabled={currentAddressDisable} onchange={handleBarrowerAddressPin}
+                           pattern={label.Pin_code_Pattern}
+                           message-when-pattern-mismatch={label.KYC_Pin_Code_ErrorMessage}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <template if:true={isTractorFinance}>
+               <div class="slds-form slds-grid slds-wrap">
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label">Village
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input type="text" class="currentAddress" label="Village" required
+                              data-id="CurrentVillageDataId" variant="label-hidden" value={currentVillage}
+                              onchange={onChangeHandler} disabled={getCurrentTractorFieldDisable}>
+                           </lightning-input></div></div></div>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label" id="TalukaForCur">Taluka <abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <template if:true={isTalukaCurValueSelected}><lightning-input autocomplete="off" class="slds-form-element__control" variant="label-hidden" value={curTalukaValue} disabled></lightning-input></template>
+                           <template if:false={isTalukaCurValueSelected}><c-I-N-D_-L-W-C_-Custom_-Lookup  is-value-selected={isTalukaCurValueSelected} is-disabled={isTalukaCurValueSelected} selected-name={curTalukaValue} object-name="Taluka_Master__c" fetch-field="Name" search-field="Name" filter-field="State__c" filter-term={curStateValue} onlookupselected={talukalookupHandlerForCur} onclearvalue={talukaClearvaluelookupHandlerForCur} select-field-name="Name" is-custom-class-not-applicable="true"></c-I-N-D_-L-W-C_-Custom_-Lookup></template>
+                        </div>
+                     </div>
+                  </div><!--SFTRAC-1660 End-->
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label" id="customerLandmarkLbl"> Landmark
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-textarea type="text" class="currentAddress" label="Landmark" required
+                              data-id="LandmarkDataId" variant="label-hidden" onchange={onChangeHandler}
+                              value={currentlandmarkData} disabled={getCurrentTractorFieldDisable}>
+                           </lightning-textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </template>
+            <div class="slds-clearfix">
+               <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                  <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                     <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:280px; box-sizing:border-box; margin:0px;">
+                           <button data-btnid="currentAddressBtn"
+                              class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                              onclick={captureCurrentAddress} disabled={getCaptureCurrentBtn}>
+                              {capturebutton}
+                           </button>
+                           <!-- CISP-3088 -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </lightning-accordion-section>
+         <lightning-accordion-section name='B' label={getPerminantResiLabel}>
+            <div class="slds-clearfix">
+               <label
+                  class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">{getPerminantResiLabel}</label>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Application number
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" variant="label-hidden" data-id="applicationDataPId"
+                           label="Application number" value={applicantNumber} disabled> </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <template if:false={isPermanentAddressNotPresent}>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label"> Address proof
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-combobox name="progress" class="permanentAddress" data-id="addressDataPId"
+                              variant="label-hidden" value={permanentDocumentType} placeholder="Select Document Type"
+                              options={permanentDocTypeOptions} required onchange={permanentDocumentTypeHandler}
+                              disabled={disablePermanentAddressProof}>
+                           </lightning-combobox>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Address Line1
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="permanentAddress" label="KYC Address Line1" required
+                           data-id="kycAddressOneDataPId" variant="label-hidden"
+                           value={permanentAddressData.KYC_Address_Line_1__c} disabled={permanentAddressDisable}
+                           onchange={handleBarrowerParmaAddress1} pattern={label.KycAddress1Pattern}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Address Line2
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="permanentAddress" label="KYC Address Line2" required
+                           data-id="kycAdressTwoDataPId" variant="label-hidden"
+                           value={permanentAddressData.KYC_Address_Line_2__c} disabled={permanentAddressDisable}
+                           onchange={handleBarrowerParmaAddress2} pattern={label.KycAddress2Pattern}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">State
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="progress" class="permanentAddress" label="State"
+                           variant="label-hidden" value={permanentAddressData.KYC_State__c} data-id="kycStateDataPId"
+                           onchange={handleBarrowerParmaAddressState} placeholder="Select State" required
+                           options={allStateData} disabled={permanentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">District
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="District Value" class="permanentAddress" label="District"
+                           variant="label-hidden" value={permanentAddressData.KYC_District__c}
+                           data-id="kycDistrictDataPId" onchange={handleBarrowerParmaAddressDistrict}
+                           placeholder="Select District" required options={permanentDistrictValue}
+                           disabled={permanentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="progress" class="permanentAddress" label="City" variant="label-hidden"
+                           value={permanentAddressData.KYC_City__c} data-id="kycCityDataPId"
+                           onchange={handleBarrowerParmaAddressCity} placeholder="Select City" required
+                           options={permanentCityValue} disabled={permanentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Pin Code
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="permanentAddress" label="KYC Pin Code" required
+                           data-id="KycPinCodeDataPId" variant="label-hidden"
+                           value={permanentAddressData.KYC_Pin_Code__c} disabled={permanentAddressDisable}
+                           onchange={handleBarrowerParmaAddressPin} pattern={label.Pin_code_Pattern}
+                           message-when-pattern-mismatch={label.KYC_Pin_Code_ErrorMessage}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <template if:true={isTractorFinance}>
+                  <template if:false={isCurrentAddressSameAsPermanent}>
+                     <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-3">
+                              <label class="slds-form-element__label">Village
+                                 <abbr title="required" class="slds-required">*</abbr>
+                              </label>
+                           </div>
+                           <div class="slds-col slds-size_2-of-3">
+                              <lightning-input type="text" class="permanentAddress" label="Village" required
+                                 data-id="PermanentVillageDataId" variant="label-hidden" onchange={onChangeHandler}
+                                 value={permanentVillageData} disabled={parmanentTractorFieldDisable}>
+                              </lightning-input>
+                           </div>
+                        </div>
+                     </div>
+                  </template>
+               </template>
+            </div>
+            <template if:true={isTractorFinance}>
+               <template if:false={isCurrentAddressSameAsPermanent}>
+                  <div class="slds-form slds-grid slds-wrap">
+                     <!--SFTRAC-1660 Start Current Address-->
+                     <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-3">
+                              <label class="slds-form-element__label" id="TalukaForPer">Taluka <abbr title="required" class="slds-required">*</abbr></label>
+                           </div>
+                           <div class="slds-col slds-size_2-of-3">
+                              <template if:true={isTalukaPerValueSelected}><lightning-input autocomplete="off" class="slds-form-element__control" variant="label-hidden" value={perTalukaValue} disabled></lightning-input></template>
+                              <template if:false={isTalukaPerValueSelected}><c-I-N-D_-L-W-C_-Custom_-Lookup  is-value-selected={isTalukaPerValueSelected} is-disabled={isTalukaPerValueSelected} selected-name={perTalukaValue} object-name="Taluka_Master__c" fetch-field="Name" search-field="Name" filter-field="State__c" filter-term={perStateValue} onlookupselected={talukalookupHandlerForPer} onclearvalue={talukaClearvaluelookupHandlerForPer} select-field-name="Name" is-custom-class-not-applicable="true"></c-I-N-D_-L-W-C_-Custom_-Lookup></template>
+                           </div>
+                        </div>
+                     </div><!--SFTRAC-1660 End-->
+                     <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-3">
+                              <label class="slds-form-element__label" id="customerPermanentLandmarkLbl"> Landmark
+                                 <abbr title="required" class="slds-required">*</abbr>
+                              </label>
+                           </div>
+                           <div class="slds-col slds-size_2-of-3">
+                              <lightning-textarea type="text" class="permanentAddress" label="Landmark" required
+                                 data-id="parmanentLandmarkDataId" variant="label-hidden" value={permanentLandmark}
+                                 onchange={onChangeHandler} disabled={parmanentTractorFieldDisable}>
+                              </lightning-textarea>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+            </template>
+            <template if:false={isNotNonIndividualTractorBorrower}>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Resi Cum Office Address
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="checkbox" class="permanentAddress" label="" data-id="resiCumOfficeAddId"
+                           variant="label-hidden" onchange={handleclickResiCumOffice} checked={isResiCumOfficeAddress}
+                           disabled={parmanentTractorFieldDisable}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+            </template>
+            <template if:false={isPermanentAddressNotPresent}><!--//CISP-10087 Start-->
+               <div class="slds-clearfix">
+                  <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                     <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                        <div style="display: flex; justify-content:center; align-items:center;">
+                           <div style="width:280px; box-sizing:border-box; margin:0px;">
+                              <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                                 onclick={capturePermanentAddress} disabled={getCaptureParmanentBtn}>
+                                 {capturePermanentAddLabel}
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </template>
+         </lightning-accordion-section>
+         <lightning-accordion-section name="A" label={label.Current_Residential_Address} if:false={isNotNonIndividualTractorBorrower}>
+            <div class="slds-clearfix">
+               <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Current
+                  Residential Address</label>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Application number
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" variant="label-hidden" data-id="applicationDataId"
+                           label="Application number" value={applicantNumber} disabled> </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Name
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" label="Name" data-id="nameDataId" value={name} disabled
+                           min-length=3 pattern={label.RegEx_Alphabets_Only}
+                           message-when-pattern-mismatch={label.lastNameError} variant="label-hidden"
+                           onchange={nameHandler}>
+                        </lightning-input>
+                        <!-- CISP-3062 -->
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Address proof
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="currentAddress" name="progress" label="Address proof"
+                           value={currentdocumentType} placeholder="Select Document Type"
+                           options={currentDocTypeOptions} required disabled={disableCurrentAddressProof}
+                           onchange={currentDocumentTypeHandler} variant="label-hidden"
+                           data-id="addressDataId"></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Address Line1
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="currentAddress" label="KYC Address Line1" required
+                           data-id="kycAddressOneDataId" value={currentAddressData.KYC_Address_Line_1__c}
+                           disabled={currentAddressDisable} pattern={label.KycAddress1Pattern} variant="label-hidden"
+                           onchange={handleBarrowerAddress}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> KYC Address Line2
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="currentAddress" label="KYC Address Line2" required
+                           data-id="kycAdressTwoDataId" variant="label-hidden"
+                           value={currentAddressData.KYC_Address_Line_2__c} disabled={currentAddressDisable}
+                           onchange={handleBarrowerAddress2} pattern={label.KycAddress2Pattern}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">State
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="progress" class="currentAddress" label="State" variant="label-hidden"
+                           value={currentAddressData.KYC_State__c} data-id="kycStateDataId"
+                           onchange={handleBarrowerAddressState} placeholder="Select State" required
+                           options={allStateData} disabled={currentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">District
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="District Value" class="currentAddress" label="District"
+                           variant="label-hidden" value={currentAddressData.KYC_District__c} data-id="kycDistrictDataId"
+                           onchange={handleBarrowerAddressDistrict} placeholder="Select District" required
+                           options={districtValue} disabled={currentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" id="customerLastNameLbl1">City
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox name="progress" class="currentAddress" label="City" variant="label-hidden"
+                           value={currentAddressData.KYC_City__c} data-id="kycCityDataId"
+                           onchange={handleBarrowerAddressCity} placeholder="Select City" required options={cityValue}
+                           disabled={currentAddressDisable}></lightning-combobox>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" id="customerFirstNameLbl1"> KYC Pin Code
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="currentAddress" label="KYC Pin Code" required
+                           data-id="KycPinCodeDataId" variant="label-hidden" value={currentAddressData.KYC_Pin_Code__c}
+                           disabled={currentAddressDisable} onchange={handleBarrowerAddressPin}
+                           pattern={label.Pin_code_Pattern}
+                           message-when-pattern-mismatch={label.KYC_Pin_Code_ErrorMessage}>
+                        </lightning-input>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <template if:true={isTractorFinance}>
+               <div class="slds-form slds-grid slds-wrap">
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label">Village
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input type="text" class="currentAddress" label="Village" required
+                              data-id="CurrentVillageDataId" variant="label-hidden" value={currentVillage}
+                              onchange={onChangeHandler} disabled={getCurrentTractorFieldDisable}>
+                           </lightning-input>
+                        </div>
+                     </div>
+                  </div>
+                  <!--SFTRAC-1660 Start Current Address-->
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label" id="customerTalukaLbl">Taluka <abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <template if:true={isTalukaCurValueSelected}><lightning-input autocomplete="off" class="slds-form-element__control" variant="label-hidden" value={curTalukaValue} disabled></lightning-input></template>
+                           <template if:false={isTalukaCurValueSelected}><c-I-N-D_-L-W-C_-Custom_-Lookup  is-value-selected={isTalukaCurValueSelected} is-disabled={isTalukaCurValueSelected} selected-name={curTalukaValue} object-name="Taluka_Master__c" fetch-field="Name" search-field="Name" filter-field="State__c" filter-term={curStateValue} onlookupselected={talukalookupHandlerForCur} onclearvalue={talukaClearvaluelookupHandlerForCur} select-field-name="Name" is-custom-class-not-applicable="true"></c-I-N-D_-L-W-C_-Custom_-Lookup></template>
+                        </div>
+                     </div>
+                  </div><!--SFTRAC-1660 End-->
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label" id="customerLandmarkLbl1"> Landmark
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-textarea type="text" class="currentAddress" label="Landmark" required
+                              data-id="LandmarkDataId" variant="label-hidden" onchange={onChangeHandler}
+                              value={currentlandmarkData} disabled={getCurrentTractorFieldDisable}>
+                           </lightning-textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </template>
+            <div class="slds-clearfix">
+               <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                  <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                     <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:280px; box-sizing:border-box; margin:0px;">
+                           <button data-btnid="currentAddressBtn"
+                              class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                              onclick={captureCurrentAddress} disabled={getCaptureCurrentBtn}>
+                              {capturebutton}
+                           </button>
+                           <!-- CISP-3088 -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </lightning-accordion-section>
+         <lightning-accordion-section name="C" label={label.Demographic_Details} onclick={PreferredAddressPicklist}>
+            <div class="slds-clearfix">
+               <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Demographic
+                  Details
+               </label>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <template if:false={isNotNonIndividualTractorBorrower}>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label">Legal Entity Identifier
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input type="text" variant="label-hidden" label="Legal Entity Identifier" value={demogarphicDataFields.LegalEntityIdentifier__c}
+                           data-id="EntityIdentifier" max-length="20" onchange={handleOnchange}
+                           disabled={demographiFieldsDisable}>
+                        </lightning-input>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Preferred address for communication
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <template if:true={preferredAddressForCommunicationValue.data}>
+                           <lightning-combobox name="progress" class="demographicDetails"
+                              label="prefered address for communication" data-id="preferedAddress"
+                              variant="label-hidden" value={Addressvalue} onchange={addressHandler}
+                              placeholder="Select address for communication"
+                              options={preferredAddressForCommunicationPicklist} required
+                              disabled={demographiFieldsDisable}>
+                           </lightning-combobox>
+                           <br />
+                        </template>
+                     </div>
+                  </div>
+               </div>
+               <template if:true={isNotNonIndividualTractorBorrower}>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element  slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> #of family members are residing with you
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <template if:true={numOfFamilyResiding.data}>
+                           <lightning-combobox name="progress" class="demographicDetails" variant="label-hidden"
+                              label="#of family members residing with you" data-id="familyMember"
+                              value={familyMemberValue} onchange={familyMemeberHandler}
+                              placeholder="Select Family Members" options={numOfFamilyResiding.data.values} required
+                              disabled={demographiFieldsDisable}>
+                           </lightning-combobox>
+                        </template>
+                     </div>
+                  </div>
+               </div>
+               </template>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Residence Country
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <template if:true={residenceCountry.data}>
+                           <lightning-combobox name="progress" class="demographicDetails" variant="label-hidden"
+                              label="Residence Country" data-id="residenceCountry" value={countryValue}
+                              onchange={countryHandler} placeholder="Select" options={residenceCountry.data.values}
+                              required disabled></lightning-combobox>
+                        </template>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+            <template if:true={isBeneOffice}>
+               <c-lwc_los_beneficiary-Office-Address app-id={applicantId} record-id={recordid} ongetaddress1value={handlebeneadd1} ongetaddress2value={handlebeneadd2} ongetstatevalue ={handlebenestate} ongetcityvalue ={handlebenecity} ongetdistrictvalue ={handlebenedistrict} ongetpincodevalue ={handlebenepincode}></c-lwc_los_beneficiary-Office-Address>
+            </template>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Email-Id
+                           <template if:true={emailMandate}><abbr title="required"
+                                 class="slds-required">*</abbr></template>
+                           <!--CISP-2781-->
+                        </label>
+                     </div>
+                     <template if:true={emailMandate}>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input autocomplete="off" type="email" variant="label-hidden" label="Email-Id" value={emailValue}
+                              required data-id="EmailId" onchange={handleCustomValidationEmailIdBorrower}
+                              disabled={demographiEmailFieldsDisable}>
+                           </lightning-input>
+                        </div>
+                     </template>
+                     <template if:false={emailMandate}><div class="slds-col slds-size_2-of-3">
+                        <lightning-input autocomplete="off" type="email" variant="label-hidden" label="Email-Id" value={emailValue}
+                            data-id="EmailId" onchange={handleCustomValidationEmailIdBorrower}
+                           disabled={demographiEmailFieldsDisable}>
+                        </lightning-input>
+                     </div></template>
+                  </div>
+               </div>
+               <template if:false={isNonIndividualBeneficiary}>
+               <template if:true={forRelationshipTab}>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label">Relationship with borrower
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <template lwc:if={isTractor}>
+                        <div class="slds-col slds-size_2-of-3" lwc:if={isNonIndividualCBG}>
+                              <lightning-combobox type="text" name="progress" variant="label-hidden"
+                                 label="Relationship with borrower" data-id="relationWithBorrower"
+                                 value={relationshipValue} placeholder="Select"
+                                 options={relationWithCBGOptions} onchange={handleRelationshipType}
+                                 required disabled={demographiFieldsDisable}></lightning-combobox>
+                        </div>
+                           <div class="slds-col slds-size_2-of-3" lwc:else> <!--SFTRAC 453 SI#11 Blood relation values for coborrower-->
+                              <lightning-combobox type="text" name="progress" variant="label-hidden"
+                                 label="Relationship with borrower" data-id="relationWithBorrower" value={relationshipValue}
+                                 placeholder="Select" options={relationshipOptions}
+                                 onchange={handleRelationshipType} required disabled={demographiFieldsDisable}></lightning-combobox>
+                        </div>
+                        </template>
+                        <template lwc:else>
+                           <template if:true={relationshipWithBorrower}><div class="slds-col slds-size_2-of-3">
+                              <lightning-combobox type="text" name="progress" variant="label-hidden" label="Relationship with borrower" data-id="relationWithBorrower" value={relationshipValue} placeholder="Select" options={relationshipWithBorrower} onchange={handleRelationshipType} required disabled={demographiFieldsDisable}></lightning-combobox>
+                           </div></template>
+                        </template>
+                     </div>
+                  </div>
+               </template>
+            </template>
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                  <div class="slds-form-element slds-grid slds-wrap">
+                     <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Communication Language
+                           <abbr title="required" class="slds-required">*</abbr>
+                        </label>
+                     </div>
+                     <div class="slds-col slds-size_2-of-3">
+                        <template if:true={communicationLanguage.data}>
+                           <lightning-combobox type="text" class="demographicDetails" variant="label-hidden"
+                              label="Communication Language" required data-id="communicationId"
+                              onchange={communicationLangHandler} value={communicationValue}
+                              options={communicationLanguage.data.values}
+                              disabled={demographiFieldsDisable}></lightning-combobox>
+                        </template>
+                        <br />
+                     </div>
+                  </div>
+               </div>
+               <template if:true={whoWillRepayTheLoan}>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label"> Who will repay the loan
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-combobox name="progress" variant="label-hidden" label="who will repay the loan"
+                              data-id="repayLoan" value={repayLoanValue} onchange={repayLoanHandler}
+                              placeholder="Select Repayment Option" options={whoWillRepayLoan} required
+                              disabled={disbaleWhoWillRepayTheLoan}></lightning-combobox>
+                           <br />
+                        </div>
+                     </div>
+                  </div>
+               </template>
+               <template if:true={wouldYouLikeToOpenBankAccount}>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                           <label class="slds-form-element__label ">Would you like to open a bank account with IBL?
+                              {repayLoanLabel} <lightning-helptext content="Aadhaar as KYC Document is mandatory for opening a Bank account with IBL" icon-name="utility:info"></lightning-helptext></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input type="toggle" class="openBankAcct"
+                              value={WOULD_YOU_LIKE_TO_OPEN_A_BANK_ACCOUNT} onchange={openBankAccountHandler}
+                              variant="label-hidden" message-toggle-active="Yes" data-id="toggle3"
+                              message-toggle-inactive="No" message-when-value-missing={label.openNewBankAccountMsg}
+                              disabled={disabledOpenBankAcc}></lightning-input>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+            </div>
+            <template if:true={isNotNonIndividualTractorBorrower}>
+               <div class="slds-form slds-grid slds-wrap">
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label"> Marital status
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <template if:true={maritalStatus.data}>
+                              <lightning-combobox name="progress" class="demographicDetails" label="marital status"
+                                 variant="label-hidden" value={maritalStatusValue} data-id="maritalStatus"
+                                 onchange={maritalStatusHandler} placeholder="Select"
+                                 options={maritalStatus.data.values} required
+                                 disabled={disableMaritalStatus}></lightning-combobox><!-- //Ola Integration changes -->
+                           </template>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label" id="customerFirstNameLbl27">Spouse Name
+                              <abbr class="slds-required"></abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input autocomplete="off" type="text" class="demographicDetails" variant="label-hidden"
+                              label="Spouse Name" data-id="spouseId" value={spouseNameValue} min-length=3 max-length=20
+                              onchange={spouseHandler} pattern={label.RegEx_Alphabets_Only}
+                              message-when-pattern-mismatch={label.NameError} required={requiredSpouseValue}
+                              disabled={demographiSpouseieldsDisable}><!--CISP-2759 added -->
+                           </lightning-input>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label" id="customerLastNameLbl39">Father's Name
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input autocomplete="off" type="text" class="demographicDetails" variant="label-hidden"
+                              label="Father's Name" required data-id="fatherId" value={fatherNameValue} min-length=3 max-length=20
+                              onchange={fatherHandler} pattern={label.RegEx_Alphabets_Only}
+                              message-when-pattern-mismatch={label.NameError}
+                              disabled={demographiFieldsDisable}></lightning-input>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="slds-form slds-grid slds-wrap">
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label">Mother's Name
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <lightning-input autocomplete="off" type="text" class="demographicDetails" variant="label-hidden"
+                              label="Mother's Name" required data-id="motherId" value={motherNameValue}
+                              onchange={motherHandler} pattern={label.RegEx_Alphabets_Only} min-length=3 max-length=20
+                              message-when-pattern-mismatch={label.NameError} disabled={demographiFieldsDisable}>
+                           </lightning-input>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                     <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                           <label class="slds-form-element__label">Customer Qualification
+                              <abbr title="required" class="slds-required">*</abbr>
+                           </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                           <template if:true={customerQualificationValue.data}>
+                              <lightning-combobox type="text" class="demographicDetails" name="progress"
+                                 variant="label-hidden" label="customer Qualification" data-id="customerQuali"
+                                 value={qualificationValue} placeholder="Select"
+                                 options={customerQualificationValue.data.values} onchange={handleQualificationType}
+                                 required disabled={demographiFieldsDisable}>
+                              </lightning-combobox>
+                           </template>
+                        </div>
+                     </div>
+                  </div>
+                  <template if:true={isTractorFinance}>
+                  <template if:false={isD2CLead}>
+                     <template if:true={religionStatus.data}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                           <div class="slds-form-element slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-3">
+                                 <label class="slds-form-element__label">Religion
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                 </label>
+                              </div>
+                              <div class="slds-col slds-size_2-of-3">
+                                 <lightning-combobox name="religion" class="demographicDetails" label="Religion"
+                                    variant="label-hidden" value={religionValue} data-id="religionId"
+                                    onchange={religionHandler} placeholder="Select" options={religionStatus.data.values}
+                                    required disabled={demographiFieldsDisable}></lightning-combobox>
+                              </div>
+                           </div>
+                        </div>
+                     </template>
+                     <template if:true={casteStatus.data}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                           <div class="slds-form-element slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-3">
+                                 <label class="slds-form-element__label">Caste
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                 </label>
+                              </div>
+                              <div class="slds-col slds-size_2-of-3">
+                                 <lightning-combobox name="caste" class="demographicDetails" label="Caste"
+                                    variant="label-hidden" value={casteValue} data-id="casteId" onchange={casteHandler}
+                                    placeholder="Select" options={casteStatus.data.values} required
+                                    disabled={demographiFieldsDisable}></lightning-combobox>
+                              </div>
+                           </div>
+                        </div>
+                     </template>
+                     </template>
+                     <!--CISP-16661-->
+                     <template if:true={getIncomeSource}>
+                        <template if:false={isTractorIndividual}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_1-of-12">
+                              <span>Category</span>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_1-of-12">
+                           <div class="slds-form-element  slds-grid slds-wrap">
+                              <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Salaried"
+                                       name="salaried" onchange={handleSalaried} data-id="salaried"
+                                       disabled={demographiFieldsDisable} checked={isSalaried} required>
+                                       <!-- CISP-2752 -->
+                                    </lightning-input>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                           <div class="slds-form-element slds-grid slds-wrap">
+                              <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Self Employed"
+                                       name="selfEmployed" onchange={handleSelfEmployed} data-id="selfEmployed"
+                                       checked={isSelfEmployed} disabled={demographiFieldsDisable} required></lightning-input>
+                                       <!-- CISP-2752 -->
+                              </div>
+                           </div>
+                        </div>
+                        <template if:true={isShowSaleriedNonSalired}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" if:false={isTractorFinance}>
+                           <div class="slds-form-element  slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-3 ">
+                                 <label class="slds-form-element__label">Profile<abbr title="required"
+                                          class="slds-required">*</abbr></label>
+                              </div>
+                              <div class="slds-col slds-size_2-of-3">
+                                 <lightning-combobox class="slds-form-element__control profileOption " onchange={handleInputFieldChange} data-id="profile"
+                                       name="profileField" value={profile} label={profile} disabled={demographiFieldsDisable}
+                                       variant="label-hidden" options={profileValuesData} required><!-- //Ola Integration changes -->
+                                 </lightning-combobox>
+                              </div>
+                           </div>
+                     </div>
+                        <template if:false={isNonIndividual}>
+                     <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-3">
+                              <label class="slds-form-element__label"> Employer Type
+                                 <abbr title="required" class="slds-required">*</abbr>
+                              </label>
+                           </div>
+                           <div class="slds-col slds-size_2-of-3">
+                              <template if:true={employerTypeVal.data}>
+                                 <lightning-combobox name="progress" class="demographicDetails" data-id="employerType"
+                                    variant="label-hidden" value={demogarphicDataFields.Employer_Type__c}
+                                    onchange={handleOnchange} placeholder="Please select Employer Type"
+                                    options={employerTypeVal.data.values} required disabled={demographiFieldsDisable}>
+                                 </lightning-combobox>
+                                 <br />
+                              </template>
+                           </div>
+                        </div>
+                     </div>
+                     </template>
+                  </template>
+                        </template>
+                     </template>
+                        <template if:false={getIncomeSource}>
+                           <template if:false={isTractorIndividual}>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Customer Profile
+                                       <abbr title="required" class="slds-required">*</abbr>
+                                    </label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox name="profileMaster" data-id="profileMaster"
+                                    class="slds-form-element__control profileOption" variant="label-hidden" value={profileValue}
+                                    options={profileOptions} onchange={handleProfileNameChange} disabled={demographiFieldsDisable}
+                                    required></lightning-combobox>
+                                 </div>
+                              </div>
+                           </div>
+                        </template>
+                        </template>
+                     
+                     </template>
+                     <template if:true={isTractorFinance}>
+                     <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"
+                        lwc:if={showCoborrowerReside}>
+                        <div class="slds-form-element slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-3">
+                              <label class="slds-form-element__label">Does the Co-Borrower reside with the Borrower?
+                              </label>
+                           </div>
+                           <div class="slds-col slds-size_2-of-3">
+                              <lightning-input type="checkbox" variant="label-hidden"
+                                 checked={coborrowerResideWithBorrower} data-id="coborrowerWithBorrower"
+                                 onchange={handleCoborrowerResideWithBorrower} disabled={demographiFieldsDisable}>
+                              </lightning-input>
+                           </div>
+                        </div>
+                     </div>
+                     </template>
+               </div>
+               </template>
+            <template if:false={checkNonIndividual}>
+               <template if:true={isOpenNomineeDetialSection}>
+                  <hr />
+                  <div class="slds-clearfix">
+                     <label
+                        class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Nominee
+                        Details
+                        {repayLoanLabel}</label>
+                  </div>
+                  <lightning-accordion allow-multiple-sections-open active-section-name="Nominee">
+                     <lightning-accordion-section name="Nominee" label="NOMINEE DETAILS" class="nominee-custom-css">
+                        <div class="slds-form slds-grid slds-wrap" style="margin-bottom: 2rem;">
+                           <div
+                              class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee Available</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                       name="nomineeAvailable" data-id="nomineeAvailable" value={nomineeAvailable}
+                                       type="checkbox" checked disabled>
+                                    </lightning-input>
+                                 </div>
+                              </div>
+                           </div>
+                           <div
+                              class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee Name</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="cbNomineeField slds-form-element__control"
+                                       variant="label-hidden" name="nomineeName" data-id="nomineeName" type="text"
+                                       pattern="^[a-zA-Z ]{1,50}$" value={nomineeName}
+                                       onchange={handleNomineeFieldValueChange}
+                                       disabled={disableAllNomineeAndRepayField} required>
+                                    </lightning-input>
+                                 </div>
+                              </div>
+                           </div>
+                           <div
+                              class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee DOB</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="cbNomineeField slds-form-element__control"
+                                       variant="label-hidden" name="nomineeDOB" data-id="nomineeDOB" type="date"
+                                       value={nomineeDob} onchange={handleNomineeFieldValueChange}
+                                       disabled={disableAllNomineeAndRepayField} required>
+                                    </lightning-input>
+                                 </div>
+                              </div>
+                           </div>
+                           <div
+                              class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee Address</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="cbNomineeField slds-form-element__control"
+                                       variant="label-hidden" name="nomineeAddress" data-id="nomineeAddress"
+                                       value={nomineeAddress} onchange={handleNomineeFieldValueChange}
+                                       disabled={disableAllNomineeAndRepayField} required>
+                                    </lightning-input>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee Pin Code</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input autocomplete="off" class="cbNomineeField slds-form-element__control"
+                                       variant="label-hidden" name="nomineePinCode" data-id="nomineePinCode" type="text"
+                                       pattern={label.Pin_code_Pattern} value={nomineePincode}
+                                       onchange={handleNomineeFieldValueChange} max-length="6"
+                                       disabled={disableAllNomineeAndRepayField} required>
+                                    </lightning-input>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee City</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={nomineeCity}>
+                                       <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                          name="nomineeCity" data-id="nomineeCity" value={nomineeCity}
+                                          disabled={disableAllNomineeAndRepayField}
+                                          onchange={handleNomineeFieldValueChange} required>
+                                       </lightning-input>
+                                    </template>
+                                    <template if:false={nomineeCity}>
+                                       <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected={isNomineeCitySelected}
+                                          selected-name={nomineeCity} object-name="Finacle_City__c"
+                                          fetch-field="City_Code__c" search-field="City_Code__c"
+                                          filter-field="City_Code__c" filter-term=""
+                                          onlookupselected={nomineeCitylookupHandler}
+                                          onclearvalue={nomineeCityClearvaluelookupHandler}
+                                          select-field-name="City_Code__c" index="nomineeCityIn"
+                                          is-custom-class-not-applicable="true">
+                                       </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                    </template>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Nominee State</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="cbNomineeField slds-form-element__control"
+                                       variant="label-hidden" name="nomineeState" data-id="nomineeState"
+                                       value={nomineeState} disabled={disableAllNomineeAndRepayField}
+                                       onchange={handleNomineeFieldValueChange} required>
+                                    </lightning-input>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                              <div class="slds-form-element  slds-grid slds-wrap">
+                                 <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Relationship with Co-Borrower</label>
+                                 </div>
+                                 <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="cbNomineeField slds-form-element__control"
+                                       variant="label-hidden" name="nomineeRelationshipBorrower"
+                                       data-id="nomineeRelationshipBorrower" value={nomineeRelationship}
+                                       options={relationshipOptions} onchange={handleNomineeFieldValueChange}
+                                       disabled={disableAllNomineeAndRepayField} required>
+                                    </lightning-combobox>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="slds-clearfix"><div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium"><div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1"><div style="display: flex; justify-content:center; align-items:center;"><div style="width:280px; box-sizing:border-box; margin:0px;"><button class="indusPrimaryButton slds-button slds-button_brand colorgreen" onclick={saveNomineeDetails} disabled={disableAllNomineeAndRepayField}>SAVE NOMINEE DETAILS</button></div></div></div></div></div>
+
+                     </lightning-accordion-section>
+                  </lightning-accordion>
+                  <hr />
+               </template>
+               <template if:false={forRelationshipTab}>
+                  <div class="slds-clearfix">
+                     <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Reference
+                        Details</label>
+                  </div>
+                  <lightning-accordion class="example-accordion" active-section-name="A">
+                     <lightning-accordion-section name="A" label="Reference field 1">
+                        <div class="slds-form slds-grid slds-wrap">
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Name</label></div><div class="slds-col slds-size_2-of-3"><lightning-input type="text" label="NameRef1" data-id="nameRef1Id" class="referenceField1" value={nameRef1Value} min-length=3 pattern={label.RegEx_Alphabets_Only} message-when-pattern-mismatch={label.lastNameError} required   variant="label-hidden" onchange={nameHandler} disabled={demographiFieldsDisable}></lightning-input></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Relationship with borrower</label></div><div class="slds-col slds-size_2-of-3"><template if:true={relationshipWithBorrower}><lightning-combobox type="text" name="progress" variant="label-hidden" class="referenceField1" label="relationRef1" data-id="relationRef1Id" value={relationRef1Value} placeholder="Select"   options={relationshipWithBorrower} onchange={handleRelationshipType} required disabled={demographiFieldsDisable}></lightning-combobox></template></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element  slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Address Line 1</label></div><div class="slds-col slds-size_2-of-3"><lightning-input type="text" class="referenceField1" label="addressLine1Ref1" data-id="addressLine1Ref1Id" required value={addressLine1Ref1Value} disabled={demographiFieldsDisable} pattern={label.KycAddress1Pattern} variant="label-hidden" onchange={handleBarrowerAddress}></lightning-input></div></div></div>
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Address Line 2</label></div><div class="slds-col slds-size_2-of-3"><lightning-input type="text" class="referenceField1" label="addressLine2Ref1" data-id="addressLine2Ref1Id" required variant="label-hidden" value={addressLine2Ref1Value} disabled={demographiFieldsDisable} onchange={handleBarrowerAddress2} pattern={label.KycAddress2Pattern}></lightning-input></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">State</label></div><div class="slds-col slds-size_2-of-3"><lightning-combobox name="progress" class="referenceField1" label="StateRef1" variant="label-hidden" value={stateRef1Value} data-id="StateRef1Id" required onchange={handleBarrowerAddressState} placeholder="Select State" options={allStateData} disabled={demographiFieldsDisable}></lightning-combobox></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">District</label></div><div class="slds-col slds-size_2-of-3" lwc:if={isAdditionalDetailsSubmitted}><lightning-input class="referenceField1" variant="label-hidden" value={districtRef1Value} data-id="districtRef1Id" required disabled={demographiFieldsDisable}></lightning-input></div><div class="slds-col slds-size_2-of-3" lwc:else><lightning-combobox name="District Value" class="referenceField1" label="districtRef1" variant="label-hidden" required value={districtRef1Value} data-id="districtRef1Id" onchange={handleBarrowerAddressDistrict} placeholder="Select District" options={districtValue} disabled={demographiFieldsDisable}></lightning-combobox></div></div></div>
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">City</label></div><div class="slds-col slds-size_2-of-3" lwc:if={isAdditionalDetailsSubmitted}><lightning-input class="referenceField1" variant="label-hidden" value={cityRef1Value} data-id="cityRef1Id" required disabled={demographiFieldsDisable}></lightning-input></div><div class="slds-col slds-size_2-of-3" lwc:else><lightning-combobox name="progress" class="referenceField1" label="cityRef1" variant="label-hidden" value={cityRef1Value} data-id="cityRef1Id" onchange={handleBarrowerAddressCity} placeholder="Select City" options={cityValue} required disabled={demographiFieldsDisable}></lightning-combobox></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Pin Code</label></div><div class="slds-col slds-size_2-of-3"><lightning-input autocomplete="off" type="text" class="referenceField1" label="pinCodeRef1" data-id="pinCodeRef1Id" variant="label-hidden" value={pincodeRef1Value} disabled={demographiFieldsDisable} onchange={handleBarrowerAddressPin} required pattern={label.Pin_code_Pattern} max-length="6" message-when-pattern-mismatch={label.KYC_Pin_Code_ErrorMessage}></lightning-input></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label ">Phone Number</label></div><div class="slds-col slds-size_2-of-3"><lightning-input disabled={demographiFieldsDisable} class="referenceField1 slds-form-element__control" variant="label-hidden" value={phoneNumberRef1Value} label="phoneNumberRef1" max-length="10" min-length="10" name="phoneNo" pattern={label.RegEx_Number} onchange={PhoneNumberHandler} required data-id="phoneNumberRef1Id" message-when-pattern-mismatch={label.Mobile_Number_Error_Msg}></lightning-input></div></div></div>
+                        </div>
+                        <template if:true={isTractorFinance}><div class="slds-form slds-grid slds-wrap"><div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Feedback</label></div><div class="slds-col slds-size_2-of-3"><lightning-textarea  autocomplete="off" type="text" class="referenceField1" label="feedbackRef1" data-id="feedbackRef1" variant="label-hidden" value={feedbackRef1Value} disabled={demographiFieldsDisable} onchange={handleBarrowerFeedbackValue} required  max-length="1000"></lightning-textarea></div></div></div></div></template>
+                     </lightning-accordion-section>
+                     <lightning-accordion-section name="B" label="Reference field 2">
+                        <div class="slds-form slds-grid slds-wrap">
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Name</label></div><div class="slds-col slds-size_2-of-3"><lightning-input type="text" label="NameRef2" data-id="nameRef2Id" value={nameRef2Value} min-length=3 class="referenceField2" pattern={label.RegEx_Alphabets_Only} message-when-pattern-mismatch={label.lastNameError} required variant="label-hidden" onchange={nameHandler} disabled={demographiFieldsDisable}></lightning-input></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Relationship with borrower</label></div><div class="slds-col slds-size_2-of-3"><template if:true={relationshipWithBorrower}><lightning-combobox type="text" name="progress" variant="label-hidden" label="relationRef2" data-id="relationRef2Id" value={relationRef2Value} placeholder="Select" class="referenceField2" options={relationshipWithBorrower} onchange={handleRelationshipType} required disabled={demographiFieldsDisable}></lightning-combobox></template></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element  slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Address Line 1</label></div><div class="slds-col slds-size_2-of-3"><lightning-input type="text" class="referenceField2" label="addressLine1Ref2" data-id="addressLine1Ref2Id" required value={addressLine1Ref2Value} disabled={demographiFieldsDisable} pattern={label.KycAddress1Pattern} variant="label-hidden" onchange={handleBarrowerAddress}></lightning-input></div></div></div>
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element  slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Address Line 2</label></div><div class="slds-col slds-size_2-of-3"><lightning-input type="text" class="referenceField2" label="addressLine2Ref2" data-id="addressLine2Ref2Id" required variant="label-hidden" value={addressLine2Ref2Value} disabled={demographiFieldsDisable} onchange={handleBarrowerAddress2} pattern={label.KycAddress2Pattern}></lightning-input></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">State</label></div><div class="slds-col slds-size_2-of-3"><lightning-combobox name="progress" class="referenceField2" label="StateRef2" variant="label-hidden" required value={stateRef2Value} data-id="stateRef2Id" onchange={handleBarrowerAddressState} placeholder="Select State" options={allStateData} disabled={demographiFieldsDisable}></lightning-combobox></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">District</label></div><div class="slds-col slds-size_2-of-3" lwc:if={isAdditionalDetailsSubmitted}><lightning-input class="referenceField2" variant="label-hidden" value={districtRef2Value} data-id="districtRef2Id" required disabled={demographiFieldsDisable}></lightning-input></div><div class="slds-col slds-size_2-of-3" lwc:else><lightning-combobox name="District Value" class="referenceField2" label="districtRef2" variant="label-hidden" required value={districtRef2Value} data-id="districtRef2Id" onchange={handleBarrowerAddressDistrict} placeholder="Select District" options={districtValue} disabled={demographiFieldsDisable}></lightning-combobox></div></div></div>
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">City</label></div><div class="slds-col slds-size_2-of-3" lwc:if={isAdditionalDetailsSubmitted}><lightning-input class="referenceField2" variant="label-hidden" value={cityRef2Value} data-id="cityRef2Id" required disabled={demographiFieldsDisable}></lightning-input></div><div class="slds-col slds-size_2-of-3" lwc:else><lightning-combobox name="progress" class="referenceField2" label="cityRef2" variant="label-hidden" value={cityRef2Value} data-id="cityRef2Id" onchange={handleBarrowerAddressCity} placeholder="Select City" required options={cityValue} disabled={demographiFieldsDisable}></lightning-combobox></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Pin Code</label></div><div class="slds-col slds-size_2-of-3"><lightning-input autocomplete="off" type="text" class="referenceField2" label="pinCodeRef2" data-id="pinCodeRef2Id" variant="label-hidden" value={pincodeRef2Value} disabled={demographiFieldsDisable} onchange={handleBarrowerAddressPin} required pattern={label.Pin_code_Pattern} max-length="6" message-when-pattern-mismatch={label.KYC_Pin_Code_ErrorMessage}></lightning-input></div></div></div>
+                           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Phone Number</label></div><div class="slds-col slds-size_2-of-3"><lightning-input disabled={demographiFieldsDisable} class="referenceField2 slds-form-element__control" variant="label-hidden" value={phoneNumberRef2Value} label="phoneNumberRef2" max-length="10" min-length="10" name="phoneNo" pattern={label.RegEx_Number} onchange={PhoneNumberHandler} data-id="phoneNumberRef2Id" required message-when-pattern-mismatch={label.Mobile_Number_Error_Msg}></lightning-input></div></div></div>
+                        </div>
+                        <template if:true={isTractorFinance}><div class="slds-form slds-grid slds-wrap"><div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Feedback</label></div><div class="slds-col slds-size_2-of-3"><lightning-textarea  autocomplete="off" type="text" class="referenceField2" label="feedbackRef2" data-id="feedbackRef2" variant="label-hidden" value={feedbackRef2Value} disabled={demographiFieldsDisable} onchange={handleBarrowerFeedbackValue} required  max-length="1000" ></lightning-textarea></div></div></div></div></template>
+                     </lightning-accordion-section>
+                  </lightning-accordion>
+               </template>
+               <template if:true={isTractorFinance}><template if:true={isRefCustomerAvailable}><lightning-accordion class="example-accordion" active-section-name="C"><lightning-accordion-section name="R" label="Reference customers"><div class="slds-p-around_medium" style="background:#eee; border:1px #ddd solid;"><lightning-datatable key-field="Id" data={referenceCustomerRecords} columns={referenceCustomersColumns} hide-checkbox-column></lightning-datatable></div></lightning-accordion-section></lightning-accordion></template></template>
+            </template>
+            <template if:true={checkNonIndividual}>
+               <div class="slds-form slds-grid slds-wrap"><div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Is Customer NRI?<abbr title="required" class="slds-required">*</abbr></label></div><div class="slds-col slds-size_2-of-3"><lightning-input class="demographicDetails" variant="label-hidden" name="isCustomerNRI" data-id="isCustomerNRI" type="checkbox" checked={demogarphicDataFields.Is_Customer_NRI__c} onchange={handleOnchange} disabled={demographiFieldsDisable}></lightning-input></div></div></div></div>
+               <div class="slds-form slds-grid slds-wrap">
+                   <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Work Permit No<template if:true={demogarphicDataFields.Is_Customer_NRI__c}><abbr title="required" class="slds-required">*</abbr></template></label></div><div class="slds-col slds-size_2-of-3"><lightning-input class="demographicDetails" variant="label-hidden" name="workPermitNo" data-id="workPermitNo" type="text" value={demogarphicDataFields.Work_Permit_No__c} onchange={handleOnchange} disabled={demographiFieldsDisable} required={demogarphicDataFields.Is_Customer_NRI__c}></lightning-input></div></div></div>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Permit Validity<template if:true={demogarphicDataFields.Is_Customer_NRI__c}><abbr title="required" class="slds-required">*</abbr></template></label></div><div class="slds-col slds-size_2-of-3"><lightning-input class="demographicDetails" variant="label-hidden" name="permitValidity" data-id="permitValidity" type="date" value={demogarphicDataFields.Permit_Validity__c} onchange={handleOnchange} disabled={demographiFieldsDisable} required={demogarphicDataFields.Is_Customer_NRI__c}></lightning-input></div></div></div>
+                  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"><div class="slds-form-element slds-grid slds-wrap"><div class="slds-col slds-size_1-of-3"><label class="slds-form-element__label">Work Visa Details<template if:true={demogarphicDataFields.Is_Customer_NRI__c}><abbr title="required" class="slds-required">*</abbr></template></label></div><div class="slds-col slds-size_2-of-3"><lightning-input class="demographicDetails" variant="label-hidden" name="workVisaDetails" data-id="workVisaDetails" type="text" value={demogarphicDataFields.Work_Visa_Details__c} onchange={handleOnchange} disabled={demographiFieldsDisable} required={demogarphicDataFields.Is_Customer_NRI__c}></lightning-input></div></div></div>
+               </div>
+            </template>
+            <div class="slds-clearfix"><div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium"><div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1"><div style="display: flex; justify-content:center; align-items:center;"><div style="width:270px; box-sizing:border-box; margin:0px;"><button class="indusPrimaryButton slds-button slds-button_brand colorgreen" onclick={validateEmail} value={emailValue} data-id="EmailBrrowerId" disabled={isEmailVerifiedDisabled}>Email Verification<span if:true={isEmailVerifiedTick}>&#x2714;</span><span if:true={isEmailVerifiedCross}>&#10060;</span></button></div></div></div></div></div>
+            <template if:false={isNotNonIndividualTractorBorrower}><template if:true={isPropriorBusinessEntityType}><div class="slds-clearfix"><div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium"><div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1"><div style="display: flex; justify-content:center; align-items:center;"><div style="width:270px; box-sizing:border-box; margin:0px;"><template if:true={isGetCRIFFButton}><button disabled={isDisableGetCRIFFButton} class="indusPrimaryButton slds-button slds-button_brand" onclick={getCRIFFReport}>Bureau Pull</button></template><template if:false={isGetCRIFFButton}><button disabled={isDisableViewCRIFFButton} class="indusPrimaryButton slds-button slds-button_brand" onclick={viewCRIFFReport}>View CRIFF report</button></template></div></div></div></div></div></template></template>
+            <div class="slds-clearfix"><div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium"><div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1"><div style="display: flex; justify-content:center; align-items:center;"><div style="width:270px; box-sizing:border-box; margin:0px;"><button class="indusPrimaryButton slds-button slds-button_brand colorgreen" onclick={handleSubmit} disabled={disableSubmitButton}>Submit<span if:true={submitGreenTickButton}>&#x2714;</span></button></div></div></div></div></div>
+            <template if:false={isTractorFinance}><div class="slds-clearfix"><div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium"><div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1"><div style="display: flex; justify-content:center; align-items:center;"><div style="width:270px; box-sizing:border-box; margin:0px;"><button class="indusPrimaryButton slds-button slds-button_brand colorgreen" onclick={callBREScoreCardAPI} disabled={disableRiskBand}>View Risk Band</button></div></div></div></div></div><c-view-risk-band applicant-type={tabData} risk-band={riskBand}></c-view-risk-band></template>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </template>
+   <template if:true={noApplicantFound}>
+      <h1> {label.No_Applicant_Found} {tabData}</h1>
+   </template>
+   <template if:true={isEnableNext}>
+      <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinish} disabled={disableNext}>
+         Next
+      </button>
+   </template>
+   <template if:true={showFileUploadAndView}>
+      <c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordid}
+         onchangeflagvalue={closeUploadViewFloater} called-from="demographic"></c-i-N-D-_-L-W-C-_-Document-Upload>
+   </template>
+</template>

@@ -1,0 +1,4 @@
+.textInput{
+    --lwc-formLabelFontSize:1.1rem;
+    -webkit-text-fill-color:black
+}

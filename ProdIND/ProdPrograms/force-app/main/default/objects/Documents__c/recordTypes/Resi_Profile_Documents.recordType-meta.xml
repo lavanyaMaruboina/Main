@@ -1,0 +1,1815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Resi_Profile_Documents</fullName>
+    <active>true</active>
+    <label>Resi Profile Documents</label>
+    <picklistValues>
+        <picklist>Aadhar_Source__c</picklist>
+        <values>
+            <fullName>Biometric</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scan and Upload</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Addresss_Type__c</picklist>
+        <values>
+            <fullName>Current Residential Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permanent Residential Address</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Are_enter_details_as_per_RC_doc_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Are_enter_details_asper_NOC_doc_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Are_entered_details_as_per_document_uplo__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Are_entered_details_asper_doc_uploaded__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Buy_Seller_Indemnity_LTR_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Buyer_Seller_Undertaking_LTR_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Buyer_Seller_Undertaking_Letter_legib__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CMU_Accept_Reject__c</picklist>
+        <values>
+            <fullName>Accept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reject</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CMU_Rejection_Reason__c</picklist>
+        <values>
+            <fullName>Blank form 60 attached</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DOI incorrect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Date of birth not available</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Document number mismatch for mandatory documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documents reject or Customer Photo reject</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entity type mismatch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form 60 details not tallying with data points</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form 60 image not clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form 60 not filled properly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorrect fields</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAN acknowledgement number incorrect %2F incomplete in Form 60</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relationship not tagged properly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shareholding pattern not tagged properly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signature missing</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Cheque_legible__c</picklist>
+        <values>
+            <fullName>False</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>True</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Correctly_Captured__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DETLS_asper_COBWR_bank_STMT_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DETLS_asper_COBWR_canc_chq_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DL_Type__c</picklist>
+        <values>
+            <fullName>AUTO RICKSHAW %E2%80%93 TRANSPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AUTO RICKSHAW NON-TRANSPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HEAVY GOOD VEHICLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HEAVY PASSENGER VEHICLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HEAVY TRANSPORT VEHICLE %28GOODS AND PASSENGER VEHICLES%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HEAVY TRANSPORT VEHICLE WITH HAZARDOUS MATERIALS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIGHT MOTOR VEHICLE %E2%80%93 NON TRANSPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIGHT MOTOR VEHICLE %E2%80%93 TRANSPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEDIUM GOODS VEHICLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEDIUM PASSENGER VEHICLE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Doc_for_Good_Health_borrower_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Doc_for_Good_Health_coborrower_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Document_Side__c</picklist>
+        <values>
+            <fullName>Back</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Selfie</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Document_Type__c</picklist>
+        <values>
+            <fullName>ACH Mandate Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>APR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ARTICLES OF ASSOCIATION</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aadhaar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Address Declaration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Affidavit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement 1st Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement 2nd Schedule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement Copy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement Wrapper Booklet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application form Beneficiary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application form Guarantor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application form borrower</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Application form coborrower</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beneficial Ownership Declaration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Board Resolution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Borrower Bank Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Borrower%27s Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Borrower%27s Cancel Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Borrower%27s Passbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Branch In-charge Approval Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Branch In-charge Approval Email For DSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Branch Undertaking letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Buyer-Seller Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Buyer-Seller Undertaking letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CERTIFICATE ISSUED BY STATE%2FCENTRAL%2FLOCAL AUTHORITIES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CERTIFICATE OF COMMENCEMENT OF BUSINESS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CERTIFICATE OF INCORPORATION</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CH%2FDCH FI format</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CIN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture Chassis plate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture HMR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture Vehicle Left Side</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture Vehicle Right Side</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chassis Number uploaded during verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cheques SPDC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-Borrower Bank Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-Borrower%27s Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-Borrower%27s Cancel Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-Borrower%27s Passbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Image</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DD for closing existing loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DPN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declaration of Borrower Good Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declaration of Co-Borrower Good Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Driving Licence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electronic Bill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Engine Number uploaded during verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exchanged asset RC Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FACTORY REGISTRATION CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Financial Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foreclosure Letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foreclosure letter for closed existing loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form 29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form 30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form 60</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form of Particular %2F RC - Borrower Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form of Particular %2F RC - Co-Borrower Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form of Particular %2F RC - Guarantor Asset</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form26As</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fund Utilisation letter for Refinance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GST</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GST Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gas bill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Govt letter of accommodation allotment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Govt pension payment order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HUF deed%2Fletter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>House Tax Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IHM Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IMPORT AND EXPORT CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITR-Forms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITR-V</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indemnity letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Document Upload%28Original%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Policy Doc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance form Beneficiary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance form borrower</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance form coborrower</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LLP Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Land Holder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Land Photo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Land document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leased land proof</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linkage Proof</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List of Co-Percenters</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List of Directors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List of Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>List of Trustees%2FOffice Bearers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan NOC other Bank</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Statement 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Statement 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Statement 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEMORANDUM OF ASSOCIATION</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MSME REGISTRATION CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OD Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OD clearance proof 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OD clearance proof 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OD clearance proof 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OD clearance proof 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Odometer uploaded during verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Front View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PARTNERSHIP DEED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PARTNERSHIP REGISTRATION CERT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>POA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Patta Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pension Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Photo With Borrower</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Photo With Co Borrower</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Payments Request RC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post paid mobile bill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property or municipal tax receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC Copy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>REGISTRATION CERTIFICATE - OTHERS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RTO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Release letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rent Agreement%2FReciept</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Resi Profile Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residence FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residence Front View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SALES TAX REGISTRATION CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SHOPS AND ESTABLISHMENT CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SI Form</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SPR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sale Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Selfie with Vehicle-uploaded during verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller Bank Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller Cancel Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller Passbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller RC Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller%27s Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller%27s Cancel Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seller%27s Passbook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subsidy sanction letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TAX%2FSERVICE TAX%2FPROFESSIONAL TAX AUTH</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TRADE LICENCE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TRUST DEED%2FBYE LAW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Talathi%2FSarpanch Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telephone bill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UDYAM REGISTRATION CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UDYOG AADHAAR REG CERTIFICATE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Update RC Docuemnt%28Original%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utility bill in the name of company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vahan Extract</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Valuation Report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Back-uploaded during verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Front-uploaded during verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Image</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Images</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Insurance Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle RC Copy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voter Id</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Water Bill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work order</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Gender__c</picklist>
+        <values>
+            <fullName>FEMALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTHERS FEMALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTHERS MALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTHERS PREFER NOT TO DISCLOSE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TRANSGENDER</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Has_NOC_been_canceled__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Hypothecation_available__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Hypothecation_in_name_of__c</picklist>
+        <values>
+            <fullName>IBL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Affidavit_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Asset_details_matching_with_Invoice__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Branch_Undertaking_Letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Cancelled_NOC_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_DSA_Letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Dealer_Letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Debit_Authorisation_letter_completely__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Debit_Authorisation_letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Debit_Authorisation_letter_signed_by__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Delivery_Challan_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Document_Eligible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_ENACH_Form_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_ENACH_form_completely_filled__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_ENACH_form_signed_by_customer__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Fund_utilisation_letter_filled__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Fund_utilisation_letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Fund_utilisation_signed_by_customer__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Hypothecation_available__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Insurance_Policy_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Insurance_cover_note_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Payment_Receipt_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Sale_Agreement_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Signature_tally_with_other_documents__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Signature_verification_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Talathi_Sarpanch_certificate_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Tax_Invoice_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Vahan_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_bank_statement_legible_for_Borrower__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_bank_statement_legible_for_CoBorrowe__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_bank_statement_legible_for_Seller__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_cancelled_cheque_legible_CoBorrower__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_cancelled_cheque_legible_for_Borrower__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_cancelled_cheque_legible_for_Seller__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_customer_declaration_letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_customer_signature_available__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_passbook_legible_for_Borrower__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_passbook_legible_for_CoBorrower__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_passbook_legible_for_Seller__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_sale_DD_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_sale_Foreclosure_Letter_legible__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NCM_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReInitiated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RCU_Agency_Verification_Status__c</picklist>
+        <values>
+            <fullName>Initiated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Required</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sampled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Screened</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RCU_Agency_Verification_Sub_Status__c</picklist>
+        <values>
+            <fullName>Clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending for RCU Verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refer to Credit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rejection_Fields__c</picklist>
+        <values>
+            <fullName>Aadhaar Enrollment Number</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aadhaar KYC value not masked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer name%2FKYC value not matched with existing code - dedupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Driving Licence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Father name incorrect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gender</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Image not clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Image not pertains to this customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incomplete document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC Address Line 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC Address Line 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC City</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC DOB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC District</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC Expiry Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC Issuance Date</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC No%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC Pin Code</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC State</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KYC name</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Last Name</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minor KYC%2FPAN attached</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mother name incorrect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAN No%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport File No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salutation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spouse name incorrect</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SCM_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ReInitiated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Salutation__c</picklist>
+        <values>
+            <fullName>Dr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mrs%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ms%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prof%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_DETLS_as_per_BWR_canc_chq_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_DETLS_asper_BWR_bank_STMT_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_DETLS_asper_BWR_passbook_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_DETLS_asper_COBWR_pasbook_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_DETLS_asper_Payment_doc_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_details_as_per_canc_chq_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_details_asper_Tax_Invoice_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>enter_details_asper_bank_STMT_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>entered_details_asper_passbook_upload__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,181 @@
+<template>
+    <lightning-card > 
+    <div class="slds-grid slds-gutters slds-grid_align-center slds-align–absolute-center">
+    <lightning-button-group class="slds-align_absolute-center">
+        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Borrower"></lightning-button>
+        <lightning-button  class="slds-theme_brand" icon-position="left" variant="brand-outline"  type="button" label="Co-Borrower"></lightning-button>
+        
+        </lightning-button-group>
+    </div>
+    <hr>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+        
+        <div class="slds-col slds-size_1-of-8 slds-m-center">
+
+            <lightning-radio-group name="radioGroup"
+                label=""
+                options={option}
+                value={value}
+                type="radio"></lightning-radio-group>
+        </div>
+        </div>
+        <br>
+    <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+    
+    <div class="slds-button-group-item">
+    <lightning-button class="slds-theme_brand slds-align_absolute-center" variant="brand" label="Upload" onclick={ImageLoad}></lightning-button> <br>
+    </div>
+    </lightning-button-group>
+    <hr>
+    <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+    
+        <div class="slds-button-group-item">
+    
+    <lightning-button class="slds-theme_brand slds-align_absolute-center" variant="brand" label="Front Upload"></lightning-button> <br>
+    <lightning-button class="slds-theme_brand slds-align_absolute-center" variant="brand" label="Back Upload"></lightning-button> <br>
+    <lightning-button class="slds-theme_brand slds-align_absolute-center" variant="brand" label="Doc Auth"></lightning-button> <br>
+    </div>
+    </lightning-button-group>
+    <hr>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    
+    <lightning-input class="" type="text" label="Document Type" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="KYC No." ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="KYC Name" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="KYC Address Line" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    
+    <lightning-input class="" type="text" label="KYC Pin Code" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="KYC City" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="KYC State" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="KYC DOB" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    
+    <lightning-input class="" type="text" label="Pan No." ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    <lightning-input class="" type="text" label="First Name" ></lightning-input>
+    </div>
+    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+    
+        <lightning-input class="" type="text" label="Last Name" ></lightning-input>
+        </div>
+        <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+        <lightning-input class="" type="text" label="Gender" ></lightning-input>
+        </div>
+    
+        <lightning-card variant="base">
+            <div class="slds-clearfix">
+                <lightning-button class="slds-align_absolute-center" 
+                                        label="Golden Source" 
+                                        variant="brand" 
+                                        >
+                </lightning-button>
+            </div>
+            </lightning-card>
+    
+            <div class="slds-grid slds-gutters slds-grid_align-center slds-align–absolute-center">
+                <lightning-button-group class="slds-align_absolute-center">
+                    <div class="slds-col slds-size_1-of-2 slds-m-left">
+                    <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Done"></lightning-button>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    <lightning-button  class="slds-theme_brand" icon-position="right" variant="brand"  type="button" label="Cancel"></lightning-button>
+                    </div>
+                    </lightning-button-group>
+                </div>
+    
+                <!--upload screen start-->
+                <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+                <template if:true={modalPopUpCaptureImage}>
+                    <section id="modal1"
+                            role="dialog"
+                            tabindex="-1"
+                            aria-labelledby="modal-heading-02"
+                            aria-modal="true"
+                            aria-describedby="modal-content-id-1"
+                            class="slds-modal slds-fade-in-open">
+                    
+                        <div class="slds-form slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+            
+                                <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+                                    Upload
+                                </h2>
+                            </header>
+                            <lightning-card>
+                                <div class="slds-card__body_inner"> 
+                                    <lightning-button-group class="slds-align_absolute-center">
+                                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Upload Document"></lightning-button>
+                                        <lightning-button  class="slds-theme_brand" icon-position="left" variant="brand-outline"  type="button" label="View Document"></lightning-button>     
+                                    </lightning-button-group>
+                                    <br>
+                                    <br>   
+                                    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                        <div class="slds-col slds-size_1-of-8 slds-m-left">
+                                                    Document Type   
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-10">
+                                                    
+                                            <select class="slds-select" name = "AgentBLCode" onchange={UpdateAgent} >
+                                                <option value="OPTION A">Text Document</option>
+                                                <option value="OPTION B">PDF</option>
+                                                <option value="OPTION B">Image</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                        <lightning-radio-group class="slds-align_absolute-center" options={option1} type="radio"></lightning-radio-group>
+                                    </div>
+                                    <br>
+                                    <br>
+                                        <lightning-button class="slds-theme_brand slds-align_absolute-center" variant="brand" label="Capture Front"></lightning-button>
+                                    <br>
+                                        <lightning-button class="slds-theme_brand slds-align_absolute-center" variant="brand" label="Capture Back"></lightning-button>
+                                    <br>
+                                        <div slot="actions"  class="slds-align_absolute-center" title="No Preview"><img src="" alt="No Preview"></img>
+                                        </div>
+                                    <br>
+                                        <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                                            <div class="slds-button-group-item">
+                                                <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Done"></lightning-button>
+                                            </div>
+                                            <div class="slds-button-group-item">
+                                                <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Cancel"></lightning-button>
+                                            </div>
+                                        </lightning-button-group>
+                                        <br>
+                                    </div>
+                                    
+                            </lightning-card>
+                        </div>
+                    </section>
+                   
+                    <div class="slds-backdrop slds-backdrop_open modalBackdrops"
+                                id="modalBackdrops1">
+                    </div>
+                </template>  
+    
+                <!--Upload screen end-->
+    </lightning-card>
+    </template>

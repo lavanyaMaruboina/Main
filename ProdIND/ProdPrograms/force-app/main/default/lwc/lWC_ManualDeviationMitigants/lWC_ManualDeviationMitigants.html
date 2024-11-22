@@ -1,0 +1,159 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+    <div class="slds-grid slds-wrap">
+    <div class="slds-col slds-size_1-of-2">
+        <div class="slds-align_absolute-center slds-m-around_x-small">
+            <button class="slds-button slds-button_brand btnClass indusPrimaryVehicleButton" onclick={handleManualDeviation} disabled={disableDeviationBtn}>Manual Deviations</button>
+        </div>
+    </div>
+    <div class="slds-col slds-size_1-of-2">
+        <div class="slds-align_absolute-center slds-m-around_x-small">
+            <button class="slds-button slds-button_brand btnClass indusPrimaryVehicleButton" type="submit" onclick={handleMitigants} disabled={isMitigantDisabled}>Mitigants</button>
+        </div>
+    </div>
+    <div class="slds-col slds-size_1-of-2">
+        <div class="slds-align_absolute-center slds-m-around_x-small">
+            <button class="slds-button slds-button_brand btnClass indusPrimaryVehicleButton" type="submit" onclick={handleSubmitforApproval} disabled={isCAMApproved}>Submit for Approval</button>
+        </div>
+    </div>
+</div>
+
+    <template if:true={isManualModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="width : 70%;max-width: 90em;">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-012" class="slds-text-heading_medium slds-hyphenate">{getModalHeader}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <template if:true={isManualDeviation}>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-layout>
+                            <lightning-layout-item size="12">
+                                <h2></h2>
+                                <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+                                    onclick={handleAddRow} disabled={disableAddRows}>
+                                </lightning-button>
+
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                                    <thead>
+                                        <tr>
+                                            <th>Deviation Name (Select Deviation)</th>
+                                            <th>Deviation Id</th>
+                                            <th>Source</th>
+                                            <th>Deviation Level</th>
+                                            <th></th>
+                                        </tr>
+                                     </thead>
+                                     
+                                     <tbody>
+                                        <template for:each={dMobjRow} for:item="filterData" for:index="index">
+                                           <tr key={filterData}>
+                                              <td>
+                                                <lightning-combobox name="Parameter__c" data-record-id={index} variant="label-hidden"
+                                                    placeholder="" onchange={handleChange} value={filterData.Parameter} disabled={filterData.isDisabled}
+                                                    options={devialionNameOption}>
+                                                 </lightning-combobox>
+                                                 
+                                              </td>
+                                              <td>
+                                                <lightning-input type="text" name="Name" data-record-id={index}
+                                                    variant="label-hidden" placeholder="" onchange={handleChange}
+                                                    value={filterData.Deviation_Id} disabled>
+                                                </lightning-input>
+                                              </td>
+                                              <td>
+                                                 <lightning-input type="text" name="Source" data-record-id={index}
+                                                    variant="label-hidden" placeholder="" onchange={handleChange}
+                                                    value={filterData.Source} disabled>
+                                                 </lightning-input>
+                                              </td>
+                                              <td>
+                                                 <lightning-input type="text" name="Deviation_Level" data-record-id={index}
+                                                    value={filterData.Deviation_Level} variant="label-hidden" onchange={handleChange} disabled>
+                                                 </lightning-input>
+                                              </td>
+                                              <td>
+                                                 <lightning-button-icon data-record-id={filterData.recordId} class="slds-float--right"
+                                                    icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                                              </td>
+                                           </tr>
+                                        </template>
+                                     </tbody>
+                                </table>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick={saveRows} title="Save" disabled={disableSave}>Save</button>
+                    </footer>
+                </template>
+
+                <template if:true={isMitigants}>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                        <lightning-layout>
+                            <lightning-layout-item size="12">
+                                <h2></h2>
+                                <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+                                    onclick={handleAddRowMitigant} disabled={disableAddRows}>
+                                </lightning-button>
+
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                                    <thead>
+                                        <tr>
+                                            <th>Mitigant Name (Select Mitigant)</th>
+                                            <th>Description</th>
+                                            <th></th>
+                                        </tr>
+                                     </thead>
+                                     
+                                     <tbody>
+                                        <template for:each={mMobjRow} for:item="filterData" for:index="index">
+                                           <tr key={filterData}>
+                                              <td>
+                                                <lightning-combobox name="Name" data-record-id={index} variant="label-hidden"
+                                                    placeholder="" onchange={handleMitigantChange} value={filterData.Id}
+                                                    options={mitigantsNameOption} disabled={filterData.isDisabled}>
+                                                 </lightning-combobox>
+                                              </td>
+                                              <td>
+                                                <lightning-input type="text" name="Name" data-record-id={index}
+                                                    variant="label-hidden" placeholder="" onchange={handleMitigantChange}
+                                                    value={filterData.Description} disabled>
+                                                </lightning-input>
+                                              </td>
+                                              <td>
+                                                <lightning-button-icon data-record-id={filterData.recordId} class="slds-float--right"
+                                                   icon-name="action:delete" onclick={handleRemoveRowMitigant}></lightning-button-icon>
+                                             </td>
+                                           </tr>
+                                        </template>
+                                     </tbody>
+                                </table>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick={saveMitigantRows} title="Save" disabled={disableSave}>Save</button>
+                    </footer>
+                </template>
+            </div>
+        </section>
+        <template lwc:if={fromNotParent}> <!--SFTRAC-163-->
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+        
+    </template>
+</template>

@@ -1,0 +1,20 @@
+.heading{ border-bottom: 1px solid rgb(44, 44, 201); padding-bottom: 5px;}
+.heading > .text{ color:maroon;}
+.slds-table_header-fixed_container{ background-color: #ffffff;}
+.slds-scrollable_x, .slds-scrollable--x{ overflow-x: hidden;}
+.slds-card{ margin-bottom: 15px;;}
+
+.summaryLables div span{ padding-right: 20px; width: 20%; display: inline-block;}
+.addForm .slds-form-element__label.slds-no-flex { display: none;}
+.addForm label, .addForm .inputFld{ float: left;}
+.eighty-percent{
+    zoom: 80%;
+}
+.hideTable{ display: none;}
+.slds-dropdown-trigger{ display: block !important;}
+.noRecord{ text-align: center; padding-top:10px;}
+.slds-tabs_default .slds-card { background-color: transparent;}
+
+@media (min-width: 48em){ 
+.addcustForm .slds-form-element_horizontal .slds-form-element__control{ padding-left: 20%;}
+}

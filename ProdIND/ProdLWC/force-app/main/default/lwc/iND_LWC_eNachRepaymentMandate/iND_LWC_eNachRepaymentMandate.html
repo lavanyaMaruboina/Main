@@ -1,0 +1,84 @@
+<template>
+  <lightning-layout class="slds-box slds-size_12-of-12 slds-text-color_default" multiple-rows="true">
+    <template if:true={isENachStatusShow}>
+      <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center"> ENACH Status: {eNachStatus} </lightning-layout-item>
+      <!-- <template if:true={isENachMessageShow}>
+        <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center"> Message: {eNachMessage} </lightning-layout-item>
+      </template> -->
+    </template>
+    <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center">
+      <span>
+      <lightning-button label="Initiate e-NACH" variant="brand" onclick={initiateENach} disabled={isInitiateENACHButtonDisabled}> </lightning-button>
+      <template if:true={showTimer}>
+        <br/>
+        <span class="counter slds-text-color_weak">{timeLeftInMins}:{timeLeftInSecs} minutes remaining...</span>
+      </template>
+    </span>
+    </lightning-layout-item>
+    <br/>
+  <template if:true={enachStatusData}>
+    <table class="rclimit-table" style="width: 100%">
+    <thead>
+      <tr style="background-color: #dfdfe2">
+        <th>S.no</th>
+        <th>Session ID</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+      <template for:each={enachStatusData} for:item="record">
+          <tr key={record.Id}>
+              <td>{record.rowIndex}</td>
+              <td>{record.originalRequestSession}</td>
+              <td>{record.originalResponseMsg}</td>
+          </tr>
+      </template>
+  </tbody>
+    </table>
+  </template>
+     <!--CISP-4181 Combine the functionality of Initiate e-NACH and Trigger e-NACH Link-->
+    <!--<lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center">
+      <span>
+        <lightning-button label="Trigger e-NACH Link" variant="brand" onclick={triggerENachLink} disabled={isSendLinkDisabled}> </lightning-button>
+        <template if:true={showTimer}>
+          <span class="counter slds-m-left_medium slds-text-color_weak">{timeLeft} seconds remaining...</span>
+        </template>
+      </span>
+    </lightning-layout-item>-->
+    <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center">
+      <template if:true={isENACHSubmitButtonVisible}>
+        <lightning-button label="Submit" variant="brand" onclick={handleENACHSubmit} disabled={isReadOnly}> </lightning-button>
+      </template>
+    </lightning-layout-item>
+    <template if:true={showSpinner}>
+      <div class="slds-m-around_large">
+        <lightning-spinner variant="brand" alternative-text="Loading" size="large"></lightning-spinner>
+      </div>
+    </template>
+    <template if:false={isPreDisbursementFieldsDisabled}>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Repayments Captured Correctly ?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-combobox class="preDisburseField" name="repaymentCapturedCorrectly" data-id="repaymentCapturedCorrectlyId" disabled={isReadOnly} variant="label-hidden" options={yesNoOption} value={repaymentCapturedCorrectly} onchange={handleFieldChange}> </lightning-combobox>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Repayment Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" disabled={isReadOnly} name="repaymentRemarks" value={repaymentRemarks} label="Remarks" variant="label-hidden" type="text" data-id="repaymentRemarksId" onchange={handleFieldChange}> </lightning-input>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center">
+        <lightning-button label="Submit" variant="brand" disabled={isReadOnly} onclick={handlePreDisbursementSubmit}> </lightning-button>
+      </lightning-layout-item>
+    </template>
+  </lightning-layout>
+</template>

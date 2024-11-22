@@ -1,0 +1,41 @@
+<template>
+    <template if:true={showValidatedMsg}>
+        <template lwc:if={isTractor}>
+            <template for:each={showValidateMsgList} for:item="item">
+                <h3 class="sectionHeader slds-m-bottom_small" key={item}> {item.applicantType} Matching - {item.applicantName}</h3>
+                <lightning-card key={item}>
+                    <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">{item.validateMsg}</div>
+                </lightning-card>
+            </template>
+        </template>
+        <template lwc:else>
+            <template if:true={validateBorrower}>
+                <h3 class="sectionHeader slds-m-bottom_small"> Borrower Matching</h3>
+                <lightning-card>
+                    <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">{validateBorrowerMsg}</div>
+                </lightning-card>
+            </template>
+            <template if:true={validateCoBorrower}>
+                <h3 class="sectionHeader slds-m-bottom_small"> Co-Borrower Matching</h3>
+                <lightning-card>
+                    <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">{validateCoBorrowerMsg}</div>
+                </lightning-card>
+            </template>
+        </template>
+    </template>
+    <template if:true={showCustomerDedupe}>
+        <lightning-card variant="Narrow" title="Customer Dedupe" icon-name="utility:file" class="slds-m-bottom_large">
+            <div class="slds-m-around_medium">
+                <template for:each={applicantsList} for:item="applicant">
+                    <h3 class="sectionHeader slds-m-bottom_small" key={applicant.Id}> {applicant.Applicant_Type__c} Matching</h3>
+                    <c-l-W-C_-L-O-S_-Customer-Dedupe is-c-m-u-execution={isCMUExecution} record-id={applicant.Opportunity__c} applicant-id={applicant.Id}
+                        cust-type={applicant.Applicant_Type__c} key={applicant.Id}></c-l-W-C_-L-O-S_-Customer-Dedupe>
+
+                </template>
+                <template if:true={isCMUExecution}><!--CISP-3447-->
+                    <lightning-button class="slds-m-top_xx-large slds-align_absolute-center" variant="brand" label="Submit" title="Submit"  data-name ="submitDedupe" onclick={handleDedupeSubmit} disabled={dedupeSubmitDisable}></lightning-button>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+</template>

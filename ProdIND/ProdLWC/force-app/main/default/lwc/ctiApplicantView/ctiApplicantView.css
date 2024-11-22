@@ -1,0 +1,14 @@
+.section-header{
+    color: rgb(255, 255, 255);
+    background: #851119;
+    border-radius:5px;
+}
+
+.invalid{
+
+    --lwc-colorBorderInputDisabled : #FF000B !important;
+}
+
+.auto-filled{
+    --lwc-colorTextLabel : #2e844a;
+}

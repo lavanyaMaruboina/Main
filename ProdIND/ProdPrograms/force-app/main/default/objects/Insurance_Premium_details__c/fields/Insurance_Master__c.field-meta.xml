@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insurance_Master__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Insurance Master</label>
+    <referenceTo>InsuranceMaster__c</referenceTo>
+    <relationshipLabel>Insurance Premium details</relationshipLabel>
+    <relationshipName>Insurance_Premium_details</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

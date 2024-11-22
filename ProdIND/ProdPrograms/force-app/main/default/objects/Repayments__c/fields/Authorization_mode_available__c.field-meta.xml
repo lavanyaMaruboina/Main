@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Authorization_mode_available__c</fullName>
+    <label>Authorization mode available</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NetBanking</fullName>
+                <default>false</default>
+                <label>NetBanking</label>
+            </value>
+            <value>
+                <fullName>Debit Card</fullName>
+                <default>false</default>
+                <label>Debit Card</label>
+            </value>
+            <value>
+                <fullName>N</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>N</label>
+            </value>
+            <value>
+                <fullName>Y</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Y</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

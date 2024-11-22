@@ -1,0 +1,246 @@
+<template>
+    <div class="slds-p-around_medium">
+        
+        <template if:false={errorMsg}>
+            <lightning-card class="slds-p-around_medium">
+                <template if:true={showExecutiveAPD}>
+                    <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium"><strong>Executive APD Pending - {executiveUserName}</strong></div>
+                    <div class="slds-box slds-m-vertical_medium">
+                        
+                        <template if:true={hasUserRCAPD}>
+                            <table
+                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                            style="border: 1px solid rgb(201, 201, 201);">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate">Document Type</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Below 30 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">30 To 60 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">60 To 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Above 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Total Pending</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={UserRCPendings} for:item="executiveRCObj" for:index="i">
+                                    <tr class="slds-hint-parent" key={executiveRCObj.Name__c}>
+                                        <td>
+                                            <div class="slds-truncate">{executiveRCObj.Document_Type__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveRCObj.Below_30_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveRCObj.X30_To_60_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveRCObj.X60_To_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveRCObj.Above_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveRCObj.Total_Pending__c}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        </template>
+                        <template if:true={hasUserInsuranceAPD}>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-m-vertical_medium"
+                            style="border: 1px solid rgb(201, 201, 201);">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate">Document Type</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Deposit Avl</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Below 30 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">30 To 60 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">60 To 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Above 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Total Pending</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={UserInsurancePending} for:item="executiveInsuranceObj" for:index="i">
+                                    <tr class="slds-hint-parent" key={executiveInsuranceObj.Name__c}>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.Document_Type__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.Deposit_Available__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.Below_30_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.X30_To_60_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.X60_To_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.Above_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{executiveInsuranceObj.Total_Pending__c}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        </template>
+            
+                    </div>
+                </template>
+                <template if:true={showDealerAPD}>
+                    <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium"><strong>Dealer APD Pending - {dealerName}</strong></div>
+                    <div class="slds-box slds-m-vertical_medium">
+                        <template if:true={hasDealerRCAPD}>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                            style="border: 1px solid rgb(201, 201, 201);">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate">Document Type</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Below 30 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">30 To 60 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">60 To 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Above 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Total Pending</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={DealerRCPending} for:item="dealerRCObj" for:index="i">
+                                    <tr class="slds-hint-parent" key={dealerRCObj.Name__c}>
+                                        <td>
+                                            <div class="slds-truncate">{dealerRCObj.Document_Type__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerRCObj.Below_30_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerRCObj.X30_To_60_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerRCObj.X60_To_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerRCObj.Above_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerRCObj.Total_Pending__c}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        </template>
+                        <template if:true={hasDealerInsuranceAPD}>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-m-vertical_medium" 
+                            style="border: 1px solid rgb(201, 201, 201);">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate">Document Type</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Deposit Avl</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Below 30 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">30 To 60 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">60 To 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Above 90 Days</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate">Total Pending</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={DealerInsurancePending} for:item="dealerInsuranceObj" for:index="i">
+                                    <tr class="slds-hint-parent" key={dealerInsuranceObj.Document_Type__c}>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.Document_Type__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.Deposit_Avl}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.Below_30_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.X30_To_60_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.X60_To_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.Above_90_Days__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{dealerInsuranceObj.Total_Pending__c}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        </template>
+            
+                    </div>
+                </template>
+            </lightning-card>
+        </template>
+        
+        <template if:true={errorMsg} >
+            <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium"><strong>Executive APD Pending</strong></div>
+            <div class="slds-box">
+                <div class="slds-required">{errorMsg}</div>
+            </div>
+        </template>
+    </div>
+</template>

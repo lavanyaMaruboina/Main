@@ -1,0 +1,11 @@
+.indusbutton{
+    min-width: 150px !important;
+}
+.indusPrimaryButto{
+    min-width: 50px !important;
+}
+
+.button{
+    background-color: #800000;
+    color: white;
+}

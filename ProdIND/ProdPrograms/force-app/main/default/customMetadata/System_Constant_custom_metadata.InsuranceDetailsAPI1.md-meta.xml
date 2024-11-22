@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Insurance Details API1</label>
+    <protected>false</protected>
+    <values>
+        <field>Check_Eligibility_attempts__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Delay_Time_in_milliseconds__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>GstPercentage__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Max_allowed_threshold__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Min_allowed_threshold__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Number_Of_Attempts__c</field>
+        <value xsi:type="xsd:double">2.0</value>
+    </values>
+    <values>
+        <field>Selfie_retry_attempts__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

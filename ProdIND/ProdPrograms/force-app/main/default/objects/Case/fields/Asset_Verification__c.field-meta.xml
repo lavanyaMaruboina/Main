@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_Verification__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( RecordType.Name == &apos;Asset Verification&apos;,IF(ISPICKVAL($User.UserType, &apos;PowerPartner&apos;), HYPERLINK($Label.IBL_Community_Partners_URL+&quot;/s/av-page?c__recordId=&quot;+Id, &quot;Navigate to AV&quot;, &quot;_blank&quot;), HYPERLINK(&quot;/lightning/cmp/c__LOSAV?c__recordId=&quot;+Id, &quot;Navigate to AV&quot;, &quot;_blank&quot;)),&apos;&apos;)</formula>
+    <label>Asset Verification</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

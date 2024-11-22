@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UploadAndViewDocDisable__c</fullName>
+    <formula>IF(AND(Text(Product_Type__c) = $Label.TwoWheeler,NOT($Profile.Name = &apos;IBL Partner Community Marketing Agent&apos;),NOT($Profile.Name = &apos;IBL Partner Community CVO&apos;)) , true, false)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>UploadAndViewDocDisable</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

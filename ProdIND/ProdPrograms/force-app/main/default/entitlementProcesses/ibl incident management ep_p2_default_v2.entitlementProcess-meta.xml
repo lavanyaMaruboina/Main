@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>false</active>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.IsClosed</field>
+        <operation>equals</operation>
+        <value>true</value>
+    </exitCriteriaFilterItems>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <criteriaBooleanFilter>(1 OR 2) AND 3</criteriaBooleanFilter>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Assigned to L1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Priority</field>
+            <operation>equals</operation>
+            <value>P2</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>First Response to Customer</milestoneName>
+        <minutesToComplete>90</minutesToComplete>
+        <successActions>
+            <name>Change_status_on_case</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>In Progress - L2</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Priority</field>
+            <operation>equals</operation>
+            <value>P2</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Resolution time for L2</milestoneName>
+        <minutesToComplete>240</minutesToComplete>
+        <successActions>
+            <name>Update_status_on_case</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Assigned to L1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Priority</field>
+            <operation>equals</operation>
+            <value>P2</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Start working on L2 proposed solution</milestoneName>
+        <minutesToComplete>90</minutesToComplete>
+        <successActions>
+            <name>Update_status_on_case_L1</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>In Progress - L1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Priority</field>
+            <operation>equals</operation>
+            <value>P2</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Resolution time for L1</milestoneName>
+        <minutesToComplete>240</minutesToComplete>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>IBL Incident Management EP_P2_default</name>
+    <versionMaster>552Bl0000003SNx</versionMaster>
+    <versionNumber>2</versionNumber>
+</EntitlementProcess>

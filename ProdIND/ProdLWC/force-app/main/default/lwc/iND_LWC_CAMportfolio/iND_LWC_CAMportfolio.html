@@ -1,0 +1,212 @@
+<template>
+    <div class="slds-p-around_medium">
+        <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium slds-p-around_medium"><strong>Executive Portfolio</strong>
+        </div>
+
+       <template if:false={hasPortfolioContent}>
+            <div class="slds-box">
+                <div class="slds-required">{errorMsg}</div>
+            </div>
+       </template>
+
+       <template if:true={hasPortfolioContent}>
+        <div class="slds-box slds-m-vertical_medium">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped" style="border: 1px solid rgb(201, 201, 201);">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th rowspan="3" scope="col">
+                            <div class="slds-truncate">Executive</div>
+                        </th>
+                        <th rowspan="3" scope="col">
+                            <div class="slds-truncate">Year</div>
+                        </th>
+                        <th rowspan="2" colspan="2" scope="col">
+                            <div class="slds-truncate">Advance</div>
+                        </th>
+                        <th rowspan="2" colspan="2" scope="col">
+                            <div class="slds-truncate">No Due</div>
+                        </th>
+                        <th colspan="6" scope="col">
+                            <div class="slds-truncate">Standard</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate">NPA 1</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate">NPA 2</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate">NPA 3</div>
+                        </th>
+                        <th rowspan="2" colspan="2" scope="col">
+                            <div class="slds-truncate">NPA [A]</div>
+                        </th>
+                        <th rowspan="2" colspan="2" scope="col">
+                            <div class="slds-truncate">Total LOS</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate ">1 Month</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate ">2 Month</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate ">3 Month</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate ">4 to 6</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate ">7 to 12</div>
+                        </th>
+                        <th colspan="2" scope="col">
+                            <div class="slds-truncate ">Above</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Amt(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div>LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Opportunity Name">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Account Name">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">No's</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">LOS(in Lakhs)</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <template for:each={portfolioContent} for:item="portfolioObj" for:index="i">
+                            <tr class="slds-hint-parent" key={portfolioObj.Name__c}>
+                                <td >
+                                    <div class="slds-truncate">{portfolioObj.Name__c}</div>
+                                </td>
+                                <td >
+                                    <div class="slds-truncate">{portfolioObj.Year__c}</div>
+                                </td>
+                                <td >
+                                    <div class="slds-truncate">{portfolioObj.Adv_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.Adv_Amt__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NoDue_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NoDue_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.STD1_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.STD1_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.STD2_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.STD2_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.STD3_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.STD3_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPA1_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPA1_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPA2_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPA2_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPA3_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPA3_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPAA_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.NPAA_LOS__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.Tot_Nos__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{portfolioObj.Tot_LOS__c}</div>
+                                </td>
+                            </tr>
+                        </template>
+                </tbody>
+            </table>
+            <!-- <div style="float: right;">
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small" style="float: right;"
+                onclick={handleCloseButton}>
+                Close
+            </button>        </div> -->
+        </div>
+      </template>
+    </div>
+</template>

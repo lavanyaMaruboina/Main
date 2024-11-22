@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disbursed_Lead</fullName>
+    <columns>Lead_Number__c</columns>
+    <columns>IND_Name__c</columns>
+    <columns>Payment_Req_Date__c</columns>
+    <columns>IND_Lead_Creation_Date__c</columns>
+    <columns>IND_Ageing__c</columns>
+    <columns>Document_Upload__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Payment_Req_Date__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>Applicant_Type__c</field>
+        <operation>equals</operation>
+        <value>Borrower</value>
+    </filters>
+    <label>Lead Status and Document Upload</label>
+</ListView>

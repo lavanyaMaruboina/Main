@@ -1,0 +1,7 @@
+:host {
+    --sds-c-textarea-sizing-height: 500px;
+}
+
+.textarea{
+    padding: auto;
+}

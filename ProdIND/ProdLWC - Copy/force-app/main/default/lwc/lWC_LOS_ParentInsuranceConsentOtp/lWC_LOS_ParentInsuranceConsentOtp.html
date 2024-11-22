@@ -1,0 +1,30 @@
+<template>
+       <template if:true={showSubmittedPageVar}>
+        <div class="slds-card" style="background-color:#FFF5E7;width:68%;margin:1em auto 1em">
+            <article class="slds-card" style="width:68%;background-color:White;margin:1em auto 1em">
+                <img src={getIndBankImage} width="150" height="120" class="slds-align_absolute-center"/>         
+                <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure"></div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title" >
+                           {pageMessage} <br>
+                        </h2>
+                    </div>
+                    <div class="slds-no-flex"></div>
+                </header>
+            </div>
+            </article>
+        </div>
+    </template>  
+
+    <template if:true={showInsuranceConsent}>
+        <c-I-N-D_-Insurance-Consent
+        record-id={recordId}
+        name={name}
+        get-ins-prdouct-data={getInsPrdouctData}
+        onreceived={showThankyouConsentPage}></c-I-N-D_-Insurance-Consent>
+    </template>
+    
+    
+</template>

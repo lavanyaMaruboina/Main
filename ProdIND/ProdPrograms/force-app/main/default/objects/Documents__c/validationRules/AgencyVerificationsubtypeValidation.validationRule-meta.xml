@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AgencyVerificationsubtypeValidation</fullName>
+    <active>true</active>
+    <errorConditionFormula>($Profile.Name = &apos;IBL TF RCU Agent&apos; &amp;&amp; TEXT(RCU_Agency_Verification_Status__c)=&apos;Sampled&apos; &amp;&amp;  ISBLANK(TEXT( RCU_Agency_Verification_Sub_Status__c)) )</errorConditionFormula>
+    <errorMessage>Please select RCU Agency Verification Sub Status</errorMessage>
+</ValidationRule>

@@ -1,0 +1,189 @@
+<template>
+    <template if:true={showSpinner}>
+        <div>
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+    </template>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Existing EMI
+            </label>
+        </div>
+    </div>
+    <template if:true={showRunEMI}>
+        <template if:true={isTw}>
+        <div class="slds-m-bottom_large slds-clearfix">
+        </div>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleRunEMI} disabled={disableRunEMIBtn}>
+                        Run EMI Engine
+                        <span if:true={showCheckedTickForRunEMI}> &#x2714;</span>
+                        <span if:true={runEMiButtonX}>&#10060;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>
+
+    <template if:true={showNoEMIMessage}>
+        <lightning-card>
+            <div class="slds-p-bottom_large slds-text-align_center slds-text-heading_small slds-text-color_destructive">Applicant has not avail any loan.</div>
+        </lightning-card>
+    </template>
+
+    <template if:true={showEMIDetails}>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered" border="1" cellspacing="0" cellpadding="0" >
+            <thead>
+                <tr>
+                    <th>Sequential Number</th>
+                    <th>Loan Type</th>
+                    <th>Outstanding Amount</th>
+                    <th>EMI</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={existingEMIList} for:item="emiItem">
+                    <tr key={emiItem.Id}>
+                        <td>{emiItem.Sequential_Number}</td>
+                        <td>{emiItem.Loan_Type}</td>
+                        <td>{emiItem.Outstanding_Amount}</td>
+                        <td>
+                            <lightning-input label='EMI' variant="label-hidden" value={emiItem.EMI__c} data-id="emiInput" class="emiInput" disabled={emiItem.isEMISubmitted}></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-button variant="brand" label="Valid" value={emiItem} data-id={emiItem.Id} onclick={handleValid} disabled={emiItem.isEMISubmitted}
+                                class="slds-m-left_x-small validbtn"></lightning-button>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </template>
+    <br/>
+
+    <!-- <template> -->
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Monthly Income</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="incomeDec" variant="label-hidden" disabled
+                        value={monthlyIncome} formatter="currency" step="0.01" name='incomeFromField'>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Rental Expense</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input type="number" class="incomeDec" variant="label-hidden" disabled={disableRentalExpense}
+                        value={rentalExpense} formatter="currency" step="0.01" pattern={label.Regex_NumberOnly} onchange={handleRentalExpenseChange}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Other Obligation</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input type="number" class="incomeDec" variant="label-hidden" disabled={disableOtherObligation}
+                        value={otherObligation} formatter="currency" step="0.01" onchange={handleOtherObligationChange} pattern={label.Regex_NumberOnly}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">{emiLabel}</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input type="number" class="incomeDec" variant="label-hidden" disabled
+                        value={currentEMI} formatter="currency" step="0.01" pattern={label.Regex_NumberOnly}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">{totalEmiLabel}</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="incomeDec" variant="label-hidden" disabled
+                        value={totalEmiObligation} formatter="currency">
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Net Monthly Income</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="incomeDec" variant="label-hidden" disabled
+                        value={netMonthlyIncome} formatter="currency" step="0.01">
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={runFoir}>
+                    Calculate FOIR
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">FOIR</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input type="number" step="0.01" class="incomeDec" variant="label-hidden" disabled
+                        value={foirPercent}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </template> -->
+
+<template if:true={showModalEMI}>
+    <c-l-W-C_-L-O-S_-Customer-Dedupe-Modal modalspinner={showModalSpinner} msg={modalMsgEMI} showcancelbtn={showCancelBtn} onmodalcancel={handleModalCancelAction}
+        onmodalok={handleModalOkAction}>
+    </c-l-W-C_-L-O-S_-Customer-Dedupe-Modal>
+</template>
+
+</template>

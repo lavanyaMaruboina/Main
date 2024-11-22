@@ -1,0 +1,67 @@
+<template>
+    <div class="slds-p-around_medium">
+        <lightning-card class="slds-p-around_medium">
+            <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium slds-p-around_medium">
+                <strong>Viability Details</strong>
+            </div>
+
+            <!-- Show a loading spinner when data is being fetched -->
+            <template if:true={loading}>
+                <div class="slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Loading Viability Details" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Display Viability Details in a table -->
+            <template if:false={loading}>
+                <template if:true={hasViabilityDetails}>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                        style="border: 1px solid rgb(201, 201, 201);">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Distance</td>
+                                <td>{firstViabilityDetail.Distance__c}</td>
+                            </tr>
+                            <tr>
+                                <td>Gross Receipts (Month)</td>
+                                <td>{firstViabilityDetail.Gross_Receipts_Month__c}</td>
+                            </tr>
+                            <tr>
+                                <td>Number of Vehicles Owned</td>
+                                <td>{firstViabilityDetail.Number_of_vehicle_owned__c}</td>
+                            </tr>
+                            <tr>
+                                <td>Expense</td>
+                                <td>{firstViabilityDetail.Expense__c}</td>
+                            </tr>
+                            <tr>
+                                <td>Vehicle Route</td>
+                                <td>{firstViabilityDetail.Vehicle_Route__c}</td>
+                            </tr>
+                            <tr>
+                                <td>Route</td>
+                                <td>{firstViabilityDetail.Route__c}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </template>
+
+                <!-- Show a message when no viability details are available -->
+                <template if:false={hasViabilityDetails}>
+                    <p>No viability details available for the selected vehicle.</p>
+                </template>
+            </template>
+
+            <!-- Close Button -->
+            <div class="slds-float_right slds-m-around_medium">
+                <input class="iBLButton" type="submit" value="Close" onclick={handleCloseButton} />
+            </div>
+        </lightning-card>
+    </div>
+</template>

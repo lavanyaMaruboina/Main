@@ -1,0 +1,874 @@
+<template>
+    <template if:true={fiRecord}>
+
+
+        <template if:true={isTractor}>
+            <c-i-n-d_-l-w-c_-tractor-current-residence-f-i record-id={currentCaseId} calling-from-f-i-screen={callingFromFIScreen} disable-remarks-field="true"></c-i-n-d_-l-w-c_-tractor-current-residence-f-i>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Remarks</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input onchange={handleFIInputChange} name="Remarks" variant="label-hidden" value={inputWrapper.Remarks.value}
+                        disabled={disableButtonsAndFields} required> </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap slds-var-p-around_medium" >
+                    <div class="slds-col slds-size_1-of-1 slds-align_absolute-center slds-var-p-around_medium">
+                        <lightning-button variant="brand" class="button" label="Submit"
+                            disabled={disableButtonsAndFields} onclick={saveOfficeFI}></lightning-button>
+                    </div>
+            </div>
+        </template>
+
+        <template if:false={isTractor}>
+            <lightning-record-edit-form record-id={recordId} object-api-name="Field_Investigation__c">
+                <lightning-messages></lightning-messages>
+                <lightning-accordion class="example-accordion" allow-multiple-sections-open
+                    active-section-name={activeSections}>
+                    <lightning-accordion-section name="A" label={fiAccordionTitle}>
+                        <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                            style="background:#eee; border:1px #ddd solid;">
+                            <template if:true={pendingFI}>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label
+                                                class="slds-form-element__label">{inputWrapper.fiRequestGenerationDT.label}</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control slds-grow" type="datetime"
+                                                variant="label-hidden" value={inputWrapper.fiRequestGenerationDT.value}
+                                                disabled> </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="FI_Status__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                            </template>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Residence_FI_completion_time__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{inputWrapper.name.label}</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control slds-grow" variant="label-hidden"
+                                            value={inputWrapper.name.value} disabled>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Product__c" disabled>
+                                </lightning-input-field>
+                            </div> -->
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">{inputWrapper.product.label}</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input variant="label-hidden" name="product" value={inputWrapper.product.value} onchange={handleInputChange} disabled>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="B" label="Business/Office Address">
+                        <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                            style="background:#eee; border:1px #ddd solid;">
+                        <template if:true={isTractor}>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+
+
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Office Address Line 1</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input-field field-name="Address_Line_1__c" variant="label-hidden" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                </div>
+
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Office Address Line 2</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input-field field-name="Address_Line_2__c" variant="label-hidden" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <template if:false={isTractor}>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Address_Line_1__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Address_Line_2__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                        </template>
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="City__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Pin_Code__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="State__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Landmark__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Phone_Number__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Mobile__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Same_Addresst_as_in_the_Application__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <br />
+                            <hr />
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="KYC_Location__c" value={kycLocation} disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="FI_Location__c" value={fiLocation} disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label
+                                            class="slds-form-element__label">{inputWrapper.coordinatesVerfied.label}</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-progress-ring name="coordinatesVerfied"
+                                            variant={inputWrapper.coordinatesVerfied.value} value="100">
+                                        </lightning-progress-ring>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Are_Co_ordinates_Matching_If_Amber__c"
+                                    onchange={handleFIInputChange} disabled={coordinatesMatchDisable}><!--CISP-3135-->
+                                </lightning-input-field>
+                            </div>
+                            <!-- CISP-2701-START -->
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Coordinates_Distance__c"
+                                    onchange={handleFIInputChange} disabled={disableButtonsAndFields}>
+                                </lightning-input-field>
+                            </div>
+                            <!-- CISP-2701-END -->
+                        </div>
+                    </lightning-accordion-section>
+
+                    <lightning-accordion-section name="C" label="Location bound by">
+                        <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                            style="background:#eee; border:1px #ddd solid;">
+                            <template if:true={inputWrapper.buildingfrontview.value}>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-align_absolute-center slds-var-p-around_small">
+                                    <lightning-button class="button" variant="brand"
+                                        label={inputWrapper.buildingfrontview.label}
+                                        data-id={inputWrapper.buildingfrontview.value} onclick={previewImage}
+                                        disabled={disableButtonsAndFields}></lightning-button>
+                                </div>
+                            </template>
+                            <template if:true={inputWrapper.signatureView.value}>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-align_absolute-center slds-var-p-around_small">
+                                    <lightning-button class="button" variant="brand"
+                                        label={inputWrapper.signatureView.label} data-id={inputWrapper.signatureView.value}
+                                        onclick={previewImage} disabled={disableButtonsAndFields}></lightning-button>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-accordion-section>
+                    <template if:true={isPrimaryIncomeSourceTrue}>
+                        <lightning-accordion-section name="D" label="Office/Business Observation(SAL/SENP/SEP)">
+                            <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                style="background:#eee; border:1px #ddd solid;">
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Employer_Business_Name__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Office_Business_Type__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Business_Premise__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Office_Business_Board__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Office_Business_Size_Sqft__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Location__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Name_of_Person_met__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Relationship__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Political_Photo__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <template if:true={isSalaried}>
+                        <lightning-accordion-section name="E" label="SALARIED IP/NIP">
+                            <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                style="background:#eee; border:1px #ddd solid;">
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Category__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Profile__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Current_experience_years__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Total_Experience_Years__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Applicant_Recognized__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Touring_or_Transferable_Job__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Monthly_Income_as_per_FI_Visit__c" disabled>
+                                    </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        </template>
+                        <template if:true={isSelfEmployed}>
+                            <template if:true={Sep_IPNIP}>
+                                <lightning-accordion-section name="F" label="SEP IP/NIP">
+                                    <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                        style="background:#eee; border:1px #ddd solid;">
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Category__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Profile__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Current_experience_years__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Total_Experience_Years__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Income_as_per_FI_Visit__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                    </div>
+                                </lightning-accordion-section>
+                            </template>
+                            <template if:true={Senp_IPNIP}>
+                                    <lightning-accordion-section name="G"
+                                        label="SENP - IP/NIP (if none of the below profiles i.e other sub-bucket)">
+                                        <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                            style="background:#eee; border:1px #ddd solid;">
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                                <lightning-input-field field-name="Category__c" disabled>
+                                                </lightning-input-field>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                                <lightning-input-field field-name="Profile__c" disabled>
+                                                </lightning-input-field>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                                <lightning-input-field field-name="Current_experience_years__c" disabled>
+                                                </lightning-input-field>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                                <lightning-input-field field-name="Total_Experience_Years__c" disabled>
+                                                </lightning-input-field>
+                                            </div>
+                                            <div
+                                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                                <lightning-input-field field-name="Income_as_per_FI_Visit__c" disabled>
+                                                </lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </lightning-accordion-section>
+                            </template>
+                            <template if:true={profileAgriculture}>
+                                <lightning-accordion-section name="H"
+                                    label="SENP - Agriculture (Profile to identify if Agriculture - mapping basis scorecard)">
+                                    <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                        style="background:#eee; border:1px #ddd solid;">
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Area__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Land_Photo__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Patta_Document_available__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="No_of_crops_per_annum__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Type_of_Crop__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Yield_Per_Acre_monthly__c" disabled>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                            <lightning-input-field field-name="Price_per_unit__c" disabled>
+                                            </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Income__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Type_of_House__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Electricity_Connection_Present__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Access_to_Tubewells__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Irrigation_system_present__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="No_of_Cattle__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Agriculture_Income__c"
+                                            onchange={handleFIInputChange} disabled={disableButtonsAndFields}>
+                                        </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={profileShop}>
+                            <lightning-accordion-section name="I" label="SENP - Own Shop/Store (Credit to share profile mapping)">
+                                <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                    style="background:#eee; border:1px #ddd solid;">
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Type_of_goods_sold__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="No_of_Employees__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Inhouse_Security_Camera_present__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="POS_Machine__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="AC_Installed__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Average_no_of_customers__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Average_Ticket_Size_Rs__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Number_of_operational_hours_in_a_day__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Monthly_Sales__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Annual_Turnover__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Profit_Margin__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Estimated_Income_as_per_FI__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Own_Shop_Income__c" onchange={handleFIInputChange}
+                                            disabled={disableButtonsAndFields}> </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Latest_Water_Bill__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Payment_Proof_Shown__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Latest_Electricity_Bill_Amount_Paid_Mont__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Payment_Proof_Shown__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Latest_Telephone_Bill_Amount_Paid_Month__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Payment_Proof_Shown__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={profileService}>
+                            <lightning-accordion-section name="J" label="SENP - Service oriented">
+                                <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                    style="background:#eee; border:1px #ddd solid;">
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Own_Equipment_Tools__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="List_of_equipment_tools_owned__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Affiliation_to_e_commerce__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Average_Professional_Fee_Service_Rs__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="No_of_Service_Requests_catered_in_month__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Estimated_Service_Income_as_per_FI__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Service_oriented_Income__c"
+                                            onchange={handleFIInputChange} disabled={disableButtonsAndFields}>
+                                        </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={profileTransporter}>
+                            <lightning-accordion-section name="K" label="SENP - Transporter">
+                                <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                    style="background:#eee; border:1px #ddd solid;">
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Types_of_vehicles_owned__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="No_of_vehicles_owned__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Estimated_Average_Income_per_month__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Transporter_Income__c"
+                                            onchange={handleFIInputChange} disabled={disableButtonsAndFields}>
+                                        </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={profileContracter}>
+                            <lightning-accordion-section name="L" label="SENP - Contractor">
+                                <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                    style="background:#eee; border:1px #ddd solid;">
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="No_of_contracts_awarded_in_last_1_year__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Do_you_have_any_government_contracts__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Estimated_Total_Monthly_Income__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Contractor_Income__c" onchange={handleFIInputChange}
+                                            disabled={disableButtonsAndFields}> </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={profileRental}>
+                            <lightning-accordion-section name="M" label="SENP - Rental Income">
+                                <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                    style="background:#eee; border:1px #ddd solid;">
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Number_of_Properties_rented__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Income_per_month_property__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Income_per_month__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Upload_Rent_Agreement_Reciept__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Rental_Income__c" onchange={handleFIInputChange}
+                                            disabled={disableButtonsAndFields}> </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={profilePension}>
+                            <lightning-accordion-section name="N" label="SENP - Pension Income">
+                                <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                                    style="background:#eee; border:1px #ddd solid;">
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Upload_Pension_Document__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Income_per_month__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="Declared_Income_During_Application__c" disabled>
+                                        </lightning-input-field>
+                                    </div>
+                                    <div
+                                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                        <lightning-input-field field-name="SENP_Pension_Income__c" onchange={handleFIInputChange}
+                                            disabled={disableButtonsAndFields}> </lightning-input-field>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        </template>
+                    </template>
+                    <lightning-accordion-section name="O" label="FI Feedback">
+                        <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                            style="background:#eee; border:1px #ddd solid;">
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="No_of_Attempts__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="FI_Observation__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="FI_Feedback__c" disabled>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            {inputWrapper.Office_FI_Accepted_Rejected.label}</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-combobox class="slds-form-element__control slds-grow"
+                                            variant="label-hidden" value={inputWrapper.Office_FI_Accepted_Rejected.value}
+                                            placeholder="Select FI Status" options={fiStatusOptions}
+                                            onchange={handleFIStatusChange} disabled={disableButtonsAndFields} required>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Remarks__c" onchange={handleFIInputChange}
+                                    disabled={disableButtonsAndFields} required> </lightning-input-field>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+
+                    <div class="slds-grid slds-wrap slds-var-p-around_medium"
+                        style="background:#eee; border:1px #ddd solid;">
+                        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center slds-var-p-around_medium">
+                            <lightning-button variant="brand" class="button" label="Submit"
+                                disabled={disableButtonsAndFields} onclick={validateFinalIncome}></lightning-button>
+                        </div>
+                    </div>
+                </lightning-accordion>
+            </lightning-record-edit-form>
+        </template>
+        
+
+        <template if:true={showVariationPopup}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeVariationPopup}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{variationTitle}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+                        <p><b>{variationMessage}</b></p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeVariationPopup}
+                            title="Edit">Edit</button>
+                        <button class="slds-button slds-button_brand" onclick={saveOfficeFI}
+                            title="Continue">Continue</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+    </template>
+    <template if:true={isPreview}> 
+
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="background-color: grey;">
+                        <!-- modal header start -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                        <!-- modal body start -->
+                        <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+                        <!-- modal footer start-->
+                        <footer class="slds-modal__footer">
+                            <!--<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>-->
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+</template>

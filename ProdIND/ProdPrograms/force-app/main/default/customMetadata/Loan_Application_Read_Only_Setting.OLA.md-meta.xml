@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>OLA</label>
+    <protected>false</protected>
+    <values>
+        <field>Input_Labels__c</field>
+        <value xsi:type="xsd:string">Lead Number;Customer First Name;Customer Last Name;Customer Phone Number;Loan Amount;Marital Status;Required Loan Amount;Required Tenure;CRM IRR;1st year insurance premium;Ex-showroom price;Other charges;FAME Subsidy;Performance Upgrade;RTO Road Tax;ORP;Salaried/SE;Profile;Service charges;Documentation charges;Stamping charges;EMI Amount;Loan amount;Tenure;CRM IRR;EMI amount;Income Source Available;Loan Amount;Do you have a bank account;Do you have bank account with IBL;Would you like to open a bank account with IBL;Add Co-borrower;Check eligibility;Asset Details;Insurance details;Motor Insurance;Change Pay In/Pay Outs;Check Eligibility;Upload Invoice;Tax Invoice Date;Tax Invoice No;GST Type;Type of invoice;Engine No;Chassis No;Invoice Amount as per ORP;CGST;SGST;IGST;Loan amount sanctioned (F) - excl. funded insurance;Total Amount customer paid to dealer</value>
+    </values>
+</CustomMetadata>

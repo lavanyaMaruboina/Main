@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsExposureTriggered__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Once Customer code as passed to exposure API then mark this field as true</description>
+    <label>IsExposureTriggered</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

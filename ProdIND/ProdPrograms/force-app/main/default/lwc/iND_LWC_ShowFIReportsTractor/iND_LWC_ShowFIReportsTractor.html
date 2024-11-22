@@ -1,0 +1,11 @@
+<template>
+    <template if:true={errorMsg}>
+        {errorMsg}
+    </template>
+    <template if:true={isPreview}>
+        <header class="slds-modal__header" style="font-size: 2rem;">
+            FI Report
+        </header>
+        <c-i-n-d_-l-w-c_-tractor-current-residence-f-i record-id={currentCaseId} calling-from-f-i-screen={callingFromFIScreen}></c-i-n-d_-l-w-c_-tractor-current-residence-f-i>
+    </template>
+</template>

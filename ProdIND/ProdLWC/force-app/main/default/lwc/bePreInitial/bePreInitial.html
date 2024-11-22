@@ -1,0 +1,258 @@
+<!-- Author: Haarika Chodisetti
+Company: Salesforce
+Description: Child component for Business Executive Pre Initial Offer functionality -->
+<template>
+    <div class="slds-align_absolute-center lli-flex-center size"
+        style="display: flex;width: 500px;justify-content: center;font-size: 150%;"
+    >
+        <lightning-input type="text" variant="label-inline" class="slds-align_absolute-center auto-filled slds-form-element__legend" label="Lead No (Auto Filled)" name="ldProductType" value={initialOffer.Lead_number__c} disabled></lightning-input>  
+    </div>
+         
+    <br/>
+    <h3 class="slds-section-title--divider slds-margin-top_medium section-header">
+        Basic Details
+        <lightning-button-icon icon-name="utility:refresh"  class="whitecolour slds-hint-parent" size="small" variant="container" alternative-text="Refresh" style="float:right;color:white;" onclick={getRefreshedDetails}></lightning-button-icon>
+    </h3>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="text" label="Product Type" name="ldProductType" value={productType} disabled></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="text" label="First Name" name="ldFirstName" value={applicant.Customer_First_Name__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="text" label="Last Name" name="ldLastName" value={applicant.Customer_Last_Name__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="tel" label="Phone Number" name="ldMobileNumber" value={applicant.Contact_number__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="text" label="PAN" name="ldPanNumber" value={applicant.PAN_No__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="email" label="Email" name="ldEmailId" value={applicant.Email_Id__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="checkbox" label="Consent" name="ldConsent" checked={applicant.Consent_Received__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <!-- <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="checkbox" label="Mobile Number OTP" name="ldMobileOTP" disabled></lightning-input>
+        </lightning-layout-item> -->
+    </lightning-layout>
+
+    <h3 class="slds-section-title--divider slds-margin-top_large section-header">
+        Aadhar Details
+        <lightning-button-icon class="whitecolour" icon-name="utility:refresh"  size="small" variant="container" alternative-text="Refresh" style="float:right;" onclick={getRefreshedDetails}></lightning-button-icon>
+    </h3>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="text" label="Aadhaar" name="apAadharNumber" value={applicant.Aadhar_No__c} disabled></lightning-input>
+        </lightning-layout-item>
+        
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="checkbox" label="Confirmation on Aadhar been verified" name="ldAadharOTP" checked={applicant.Aadhar_OTP_or_Biometric__c} disabled></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+
+            <h3 class="slds-section-title--divider slds-margin-top_large section-header">
+                Personal Details
+                <lightning-button-icon class="whitecolour" icon-name="utility:refresh"  size="small" variant="container" alternative-text="Refresh" style="float:right;" onclick={getRefreshedDetails}></lightning-button-icon>
+            </h3>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="date" label="DOB (Auto Filled)" name="aaDob" value={aadharDocument.KYC_DOB__c} disabled class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Address Line 1 (Auto Filled)" name="aaAddressLine1" value={aadharDocument.KYC_Address_Line_1__c} class="auto-filled" disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Address Line 2 (Auto Filled)" name="aaAddressLine2" value={aadharDocument.KYC_Address_Line_2__c} disabled class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Pincode (Auto Filled)" name="aaPincode" value={aadharDocument.KYC_Pin_Code__c} disabled class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="City (Auto Filled)" name="aaCity" value={aadharDocument.KYC_City__c} disabled class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="District (Auto Filled)" name="aaDistrict" value={aadharDocument.KYC_District__c} disabled class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="State (Auto Filled)" name="aaState" value={aadharDocument.KYC_State__c} disabled class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="checkbox" label="My WhatsApp number is the same as Above" name="pdWhatsappMobileSame" checked={applicant.areWhatsappMobileSame} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="tel" label="WhatsApp Number" name="pdWhatsappNumber" value={applicant.Whatsapp_number__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-combobox type="text" label="Marital Status" name="pdMaritalStatus" placeholder={applicant.Marital_status__c} disabled></lightning-combobox>
+                </lightning-layout-item>
+            </lightning-layout>
+          
+    
+    
+    <!-- <template if:true={etb}>
+            <h3 class="slds-section-title--divider slds-margin-top_large section-header">
+                Personal Details
+                <lightning-button-icon class="whitecolour" icon-name="utility:refresh"  size="small" variant="container" alternative-text="Refresh" style="float:right;" onclick={getRefreshedDetails}></lightning-button-icon>
+            </h3>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Name" name="ldName" value={applicant.Name} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="PAN" name="ldPanNumber" value={applicant.PAN_No__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="tel" label="Phone" name="ldMobileNumber" value={applicant.Contact_number__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="checkbox" label="My WhatsApp number is the same as Above" name="pdWhatsappMobileSame" checked={applicant.areWhatsappMobileSame} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="tel" label="WhatsApp Number" name="pdWhatsappNumber" value={applicant.Whatsapp_number__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="email" label="Email" name="ldEmailId" value={applicant.Email_Id__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Address Line 1" name="aaAddressLine1" value={aadharDocument.KYC_Address_Line_1__c}  disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Address Line 2" name="aaAddressLine2" value={aadharDocument.KYC_Address_Line_2__c} disabled ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Pincode" name="aaPincode" value={aadharDocument.KYC_Pin_Code__c} disabled ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-combobox type="text" label="City" name="aaCity" placeholder={aadharDocument.KYC_City__c} disabled ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-combobox type="text" label="District" name="aaDistrict" placeholder={aadharDocument.KYC_District__c} disabled ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-combobox type="text" label="State" name="aaState" placeholder={aadharDocument.KYC_State__c} disabled ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-combobox type="text" label="Gender" name="pdGender" placeholder={applicant.Gender__c} disabled></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-combobox type="text" label="Marital Status" name="pdMaritalStatus" placeholder={applicant.Marital_status__c} disabled></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="date" label="DOB" name="aaDob" value={aadharDocument.KYC_DOB__c} disabled ></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template> -->
+    
+    <h3 class="slds-section-title--divider slds-margin-top_large section-header">
+        Professional Details
+        <lightning-button-icon class="whitecolour" icon-name="utility:refresh"  size="small" variant="container" alternative-text="Refresh" style="float:right;" onclick={getRefreshedDetails}></lightning-button-icon>
+    </h3>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-combobox type="text" label="Professional Type" name="prProfessionalType" placeholder={applicant.Income_Ca__c} disabled></lightning-combobox>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-combobox type="text" label="Occupation" name="prOccupationType" placeholder={applicant.Profile__c} disabled></lightning-combobox>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+            <lightning-input type="number" label="Monthly Income" name="prMonthlyDecIncome" formatter="currency" step="0.01" value={applicant.Declared_income__c} disabled></lightning-input>
+        </lightning-layout-item>
+        <template if:false={twoWheeler}>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="number" label="Existing EMI/Month" name="prExistingLoanAmount" formatter="currency" step="0.01" value={existingEMIDetails.EMI__c} disabled></lightning-input>
+            </lightning-layout-item>
+        </template>
+        <template if:true={aggregator}>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="text" label="Vehicle Purchase PIN Code" name="vdPurchasePincode" value={initialOffer.Vehicle_Pincode__c} disabled></lightning-input>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+
+    <template if:false={aggregator}>
+        <h3 class="slds-section-title--divider slds-margin-top_large section-header">
+            Vehicle Details 
+            <lightning-button-icon class="whitecolour" icon-name="utility:refresh"  size="small" variant="container" alternative-text="Refresh" style="float:right;" onclick={getRefreshedDetails}></lightning-button-icon>
+        </h3>
+        <template if:false={PV}>
+            <template if:false={refinance}>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                        <lightning-input type="text" label="Dealer Pincode" name="vdLocationPincode" value={initialOffer.Vehicle_Pincode__c} disabled></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                        <lightning-combobox type="text" label="City" name="vdCity" placeholder={vehicleDetails.City__c} disabled></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                        <lightning-combobox type="text" label="Make" name="vdMake" placeholder={vehicleDetails.Make__c} disabled></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                        <lightning-combobox type="text" label="Model" name="vdModel" placeholder={vehicleDetails.Model__c} disabled></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                        <lightning-combobox type="text" label="Variant" name="vdVariant" placeholder={vehicleDetails.Variant__c} disabled></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                        <lightning-input type="number" label="On Road Price (Tentative) (Auto Filled)" name="prOnRoadPrice" formatter="currency" step="0.01" disabled value={initialOffer.On_Road_price__c}  class="auto-filled"></lightning-input>
+                    </lightning-layout-item>                
+                </lightning-layout>
+            </template>        
+        </template>
+
+        <template if:true={PV}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Dealer Pincode" name="vdLocationPincode" value={initialOffer.Vehicle_Pincode__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="number" label="Estimated Price" name="vdEstPrice" formatter="currency" step="0.01" disabled value={initialOffer.Base_Price__c}  class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    
+        <template if:true={refinance}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="text" label="Current Vehicle Pincode" name="vdLocationPincode" value={initialOffer.Vehicle_Pincode__c} disabled></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                    <lightning-input type="number" label="Loan Amount Required" name="vdEstPrice" formatter="currency" step="0.01" disabled value={initialOffer.Required_Loan_amount__c}  class="auto-filled"></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </template> 
+
+    <template if:false={aggregator}>
+        <h3 class="slds-section-title--divider slds-margin-top_large section-header">
+            Initial Offer Details
+            <lightning-button-icon class="whitecolour" icon-name="utility:refresh"  size="small" variant="container" alternative-text="Refresh" style="float:right;"  onclick={getRefreshedDetails}></lightning-button-icon>
+        </h3>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="number" label="Loan Amount in Lakhs" name="ioLoanAmount" formatter="currency" step="0.01" value={initialOffer.Loan_amount__c} disabled></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="number" label="Tenure in Months" name="ioTenure" value={initialOffer.Requested_tenure_Required_tenure__c} disabled></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="number" label="Interest Rate (Auto Filled)" name="ioInterestRate" value={initialOffer.Required_ROI__c} formatter="percent-fixed" step="0.01" disabled class="auto-filled"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="number" label="EMI Amount (Auto Filled)" name="EMI Amount"  value={initialOffer.EMI_Amount__c} formatter="currency" step="0.01" disabled class="auto-filled"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="text" label="Application Number (Auto Filled)" name="ioLoanRefNumber" value={initialOffer.Application_number__c} disabled class="auto-filled" ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="text" label="Bank Executive Name (Auto Filled)" name="ioBankExecutiveName" disabled class="auto-filled" value={vehicleDetails.Executive_Name__c}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" large-device-size="4">
+                <lightning-input type="tel" label="Bank Executive Contact (Auto Filled)" name="ioBankExecutiveContact" disabled class="auto-filled" value={vehicleDetails.Executive_Contact_Number__c}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Relationship_with_borrower__c</fullName>
+    <label>Relationship with borrower</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MOTHER</fullName>
+                <default>false</default>
+                <label>MOTHER</label>
+            </value>
+            <value>
+                <fullName>FATHER</fullName>
+                <default>false</default>
+                <label>FATHER</label>
+            </value>
+            <value>
+                <fullName>BROTHER</fullName>
+                <default>false</default>
+                <label>BROTHER</label>
+            </value>
+            <value>
+                <fullName>SISTER</fullName>
+                <default>false</default>
+                <label>SISTER</label>
+            </value>
+            <value>
+                <fullName>ASSOCIATION FOR PROFIT</fullName>
+                <default>false</default>
+                <label>ASSOCIATION FOR PROFIT</label>
+            </value>
+            <value>
+                <fullName>AUNTY</fullName>
+                <default>false</default>
+                <label>AUNTY</label>
+            </value>
+            <value>
+                <fullName>BROTHER - IN LAW</fullName>
+                <default>false</default>
+                <label>BROTHER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>BROTHER - INCLUDING STEP BROTHER</fullName>
+                <default>false</default>
+                <label>BROTHER - INCLUDING STEP BROTHER</label>
+            </value>
+            <value>
+                <fullName>COUSIN BROTHER</fullName>
+                <default>false</default>
+                <label>COUSIN BROTHER</label>
+            </value>
+            <value>
+                <fullName>COUSIN SISTER</fullName>
+                <default>false</default>
+                <label>COUSIN SISTER</label>
+            </value>
+            <value>
+                <fullName>DAUGHTER - INCLUDING STEP DAUGHTER</fullName>
+                <default>false</default>
+                <label>DAUGHTER - INCLUDING STEP DAUGHTER</label>
+            </value>
+            <value>
+                <fullName>FATHER - IN LAW</fullName>
+                <default>false</default>
+                <label>FATHER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>GRANDDAUGHTER</fullName>
+                <default>false</default>
+                <label>GRANDDAUGHTER</label>
+            </value>
+            <value>
+                <fullName>GRANDSON</fullName>
+                <default>false</default>
+                <label>GRANDSON</label>
+            </value>
+            <value>
+                <fullName>HUSBAND</fullName>
+                <default>false</default>
+                <label>HUSBAND</label>
+            </value>
+            <value>
+                <fullName>HUSBAND OF GRANDDAUGHTER</fullName>
+                <default>false</default>
+                <label>HUSBAND OF GRANDDAUGHTER</label>
+            </value>
+            <value>
+                <fullName>HUSBAND OF SISTER</fullName>
+                <default>false</default>
+                <label>HUSBAND OF SISTER</label>
+            </value>
+            <value>
+                <fullName>HUSBAND OF SISTER - IN LAW</fullName>
+                <default>false</default>
+                <label>HUSBAND OF SISTER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>MATERNAL GRANDFATHER</fullName>
+                <default>false</default>
+                <label>MATERNAL GRANDFATHER</label>
+            </value>
+            <value>
+                <fullName>MATERNAL GRANDMOTHER</fullName>
+                <default>false</default>
+                <label>MATERNAL GRANDMOTHER</label>
+            </value>
+            <value>
+                <fullName>MEMBER OF HINDU UNDIVIDED FAMILY</fullName>
+                <default>false</default>
+                <label>MEMBER OF HINDU UNDIVIDED FAMILY</label>
+            </value>
+            <value>
+                <fullName>MOTHER - IN LAW</fullName>
+                <default>false</default>
+                <label>MOTHER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>MOTHER -INCLUDING STEP MOTHER</fullName>
+                <default>false</default>
+                <label>MOTHER -INCLUDING STEP MOTHER</label>
+            </value>
+            <value>
+                <fullName>NEPHEW</fullName>
+                <default>false</default>
+                <label>NEPHEW</label>
+            </value>
+            <value>
+                <fullName>NIECE</fullName>
+                <default>false</default>
+                <label>NIECE</label>
+            </value>
+            <value>
+                <fullName>PRIVATE LIMITED COMPANY</fullName>
+                <default>false</default>
+                <label>PRIVATE LIMITED COMPANY</label>
+            </value>
+            <value>
+                <fullName>PROPRIETORSHIP</fullName>
+                <default>false</default>
+                <label>PROPRIETORSHIP</label>
+            </value>
+            <value>
+                <fullName>PROPRIETRIX</fullName>
+                <default>false</default>
+                <label>PROPRIETRIX</label>
+            </value>
+            <value>
+                <fullName>DIRECTOR</fullName>
+                <default>false</default>
+                <label>DIRECTOR</label>
+            </value>
+            <value>
+                <fullName>TRUST</fullName>
+                <default>false</default>
+                <label>TRUST</label>
+            </value>
+            <value>
+                <fullName>OTHERS</fullName>
+                <default>false</default>
+                <label>OTHERS</label>
+            </value>
+            <value>
+                <fullName>PATERNAL GRANDFATHER</fullName>
+                <default>false</default>
+                <label>PATERNAL GRANDFATHER</label>
+            </value>
+            <value>
+                <fullName>PATERNAL GRANDMOTHER</fullName>
+                <default>false</default>
+                <label>PATERNAL GRANDMOTHER</label>
+            </value>
+            <value>
+                <fullName>SISTER - IN LAW</fullName>
+                <default>false</default>
+                <label>SISTER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>SISTER - INCLUDING STEP SISTER</fullName>
+                <default>false</default>
+                <label>SISTER - INCLUDING STEP SISTER</label>
+            </value>
+            <value>
+                <fullName>SON - IN LAW</fullName>
+                <default>false</default>
+                <label>SON - IN LAW</label>
+            </value>
+            <value>
+                <fullName>SON - INCLUDING STEP SON</fullName>
+                <default>false</default>
+                <label>SON - INCLUDING STEP SON</label>
+            </value>
+            <value>
+                <fullName>SON WIFE</fullName>
+                <default>false</default>
+                <label>SON WIFE</label>
+            </value>
+            <value>
+                <fullName>TP EMPLOYEE</fullName>
+                <default>false</default>
+                <label>TP EMPLOYEE</label>
+            </value>
+            <value>
+                <fullName>TP EMPLOYER</fullName>
+                <default>false</default>
+                <label>TP EMPLOYER</label>
+            </value>
+            <value>
+                <fullName>TP FRIEND</fullName>
+                <default>false</default>
+                <label>TP FRIEND</label>
+            </value>
+            <value>
+                <fullName>TP NEIGHBOUR</fullName>
+                <default>false</default>
+                <label>TP NEIGHBOUR</label>
+            </value>
+            <value>
+                <fullName>TP SUBORDINATE</fullName>
+                <default>false</default>
+                <label>TP SUBORDINATE</label>
+            </value>
+            <value>
+                <fullName>UNCLE</fullName>
+                <default>false</default>
+                <label>UNCLE</label>
+            </value>
+            <value>
+                <fullName>WIFE</fullName>
+                <default>false</default>
+                <label>WIFE</label>
+            </value>
+            <value>
+                <fullName>WIFE OF BROTHER</fullName>
+                <default>false</default>
+                <label>WIFE OF BROTHER</label>
+            </value>
+            <value>
+                <fullName>WIFE OF BROTHER - IN LAW</fullName>
+                <default>false</default>
+                <label>WIFE OF BROTHER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>WIFE OF GRANDSON</fullName>
+                <default>false</default>
+                <label>WIFE OF GRANDSON</label>
+            </value>
+            <value>
+                <fullName>PARTNERSHIP FIRM</fullName>
+                <default>false</default>
+                <label>PARTNERSHIP FIRM</label>
+            </value>
+            <value>
+                <fullName>PUBLIC LIMITED COMPANY</fullName>
+                <default>false</default>
+                <label>PUBLIC LIMITED COMPANY</label>
+            </value>
+            <value>
+                <fullName>MANAGING PARTNER</fullName>
+                <default>false</default>
+                <label>MANAGING PARTNER</label>
+            </value>
+            <value>
+                <fullName>MANAGING DIRECTOR</fullName>
+                <default>false</default>
+                <label>MANAGING DIRECTOR</label>
+            </value>
+            <value>
+                <fullName>ASSOCIATION</fullName>
+                <default>false</default>
+                <label>ASSOCIATION</label>
+            </value>
+            <value>
+                <fullName>APPLICANT</fullName>
+                <default>false</default>
+                <label>APPLICANT</label>
+            </value>
+            <value>
+                <fullName>SON</fullName>
+                <default>false</default>
+                <label>SON</label>
+            </value>
+            <value>
+                <fullName>Neighbour</fullName>
+                <default>false</default>
+                <label>Neighbour</label>
+            </value>
+            <value>
+                <fullName>Friend</fullName>
+                <default>false</default>
+                <label>Friend</label>
+            </value>
+            <value>
+                <fullName>Broker</fullName>
+                <default>false</default>
+                <label>Broker</label>
+            </value>
+            <value>
+                <fullName>Business Associate</fullName>
+                <default>false</default>
+                <label>Business Associate</label>
+            </value>
+            <value>
+                <fullName>10</fullName>
+                <default>false</default>
+                <label>SHAREHOLDER</label>
+            </value>
+            <value>
+                <fullName>11</fullName>
+                <default>false</default>
+                <label>HOLDING COMPANY</label>
+            </value>
+            <value>
+                <fullName>12</fullName>
+                <default>false</default>
+                <label>SUBSIDIARY COMPANY</label>
+            </value>
+            <value>
+                <fullName>20</fullName>
+                <default>false</default>
+                <label>PROPRIETOR</label>
+            </value>
+            <value>
+                <fullName>30</fullName>
+                <default>false</default>
+                <label>PARTNER</label>
+            </value>
+            <value>
+                <fullName>40</fullName>
+                <default>false</default>
+                <label>TRUSTEE</label>
+            </value>
+            <value>
+                <fullName>51</fullName>
+                <default>false</default>
+                <label>PROMOTER DIRECTOR</label>
+            </value>
+            <value>
+                <fullName>52</fullName>
+                <default>false</default>
+                <label>NOMINEE DIRECTOR</label>
+            </value>
+            <value>
+                <fullName>53</fullName>
+                <default>false</default>
+                <label>INDEPENDENT DIRECTOR</label>
+            </value>
+            <value>
+                <fullName>54</fullName>
+                <default>false</default>
+                <label>DIRECTOR - SINCE RESIGNED</label>
+            </value>
+            <value>
+                <fullName>60</fullName>
+                <default>false</default>
+                <label>OTHER</label>
+            </value>
+            <value>
+                <fullName>EMPLOYEE</fullName>
+                <default>false</default>
+                <label>EMPLOYEE</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

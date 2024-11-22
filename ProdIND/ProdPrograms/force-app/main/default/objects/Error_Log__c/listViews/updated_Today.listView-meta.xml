@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>updated_Today</fullName>
+    <columns>NAME</columns>
+    <columns>Method_Name__c</columns>
+    <columns>Loan_Application__c</columns>
+    <columns>OBJECT_ID</columns>
+    <columns>Error_Message__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Error_Cause__c</columns>
+    <columns>Error_Stacktrace__c</columns>
+    <columns>Error_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Loan_Application__c</field>
+        <operation>equals</operation>
+        <value>L17102306900-A</value>
+    </filters>
+    <label>updated Today</label>
+</ListView>

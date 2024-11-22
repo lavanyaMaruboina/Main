@@ -1,0 +1,593 @@
+<template>
+    <lightning-card>
+
+        <template if:true={isLoading}>
+            <div>
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={isDeleteButton}>
+            <lightning-button label="Delete" slot="actions" disabled={isDeleteDisable} onclick={deleteIncomeSource}>
+            </lightning-button>
+        </template>
+
+        <div class="slds-m-bottom_large slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Income Source</label>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Income Source
+                            <template if:true={incomeSourceRequired}>
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </template>
+                        </label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" onchange={handleInputChange} name="incomeSource" 
+                        value={incomeSource} options={incomeSourceOptions} variant="label-hidden" required={incomeSourceRequired} disabled={disableAllFields}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <template if:true={showITRSection}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Assessment Year<abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control" onchange={handleInputChange} name="assessmentYear" 
+                                value={assessmentYear} options={assessmentYearsOptions} variant="label-hidden" required disabled={disableAllFields}>
+                            </lightning-combobox>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">ITR Filing Date<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="itrLastYearDate" data-name="itrLastYearDate" value={itrLastYearDate} variant="label-hidden"
+                            type="date" onchange={handleInputChange} required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Annual Income<abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="incomeLastYear" value={incomeLastYear} variant="label-hidden"
+                            type="number" onchange={handleInputChange} required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <!--SFTRAC-241-->
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Saral Date <abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="saralDate" value={saralDate} variant="label-hidden"
+                            type="date" onchange={handleInputChange} required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Tax Return Filed <abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control" onchange={handleInputChange} name="taxReturnFiled" 
+                                value={taxReturnFiled} options={taxReturnFiledOptions} variant="label-hidden" required disabled={disableAllFields}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div> <!--SFTRAC-241-->
+            </div>
+        </template>
+
+        <template if:true={showFinancialsSection}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Financial Year</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control" onchange={handleInputChange} name="financialYear" 
+                                value={financialYear} options={assessmentYearsOptions} variant="label-hidden" required disabled={disableAllFields}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-text-heading_small">
+            <div class="slds-text-align_center">Profit & Loss</div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Total Income
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="totalIncome" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={totalIncome} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Total Expense
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="totalExpense" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={totalExpense} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">PBT<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="PbtValue" 
+                            value={PbtValue} pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!" variant="label-hidden" onchange={handleInputChange}
+                            type="text" required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">PAT</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="PatValue" 
+                            value={PatValue} pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!" variant="label-hidden" onchange={handleInputChange}
+                            type="text" disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Cash Profit</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="cashProfit"
+                            value={cashProfit} variant="label-hidden" onchange={handleInputChange} pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            type="text" disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-text-heading_small">
+                <div class="slds-text-align_center">Liabilities</div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Shareholder Funds
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="shareholderFunds" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={shareholderFunds} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div> 
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Secured Loans
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="securedLoans" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={securedLoans} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Working Capital
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="workingCapital" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={workingCapital} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Unsecured Loans
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="unsecuredLoans" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={unsecuredLoans} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Current Liabilities
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="currentLiabilities" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={currentLiabilities} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Sundry Creditors
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="sundryCreditors" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={sundryCreditors} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            <div class="slds-text-heading_small">
+                <div class="slds-text-align_center">Assets</div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Current Assets
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="currentAssets" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={currentAssets} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div> 
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Sundry Debtors
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="sundryDebtors" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={sundryDebtors} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Fixed Assets
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="fixedAssets" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={fixedAssets} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Non Current Assets
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="nonCurrentAssets" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={nonCurrentAssets} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Cash and Bank Balances
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="cashAndBankBalances" pattern="[0-9]*" message-when-pattern-mismatch="Please enter number only!"
+                            value={cashAndBankBalances} variant="label-hidden" type="text" onchange={handleInputChange}
+                            required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={showBankingSection}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Bank Name
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected={bankId} selected-name={bank}
+                                object-name="Bank_Masters__c" fetch-field="Name" search-field="Name"
+                                filter-field="" filter-term=" " onlookupselected={selectedStateHandler}
+                                onclearvalue={selectedStateHandler} select-field-name="Name"
+                                disable-value={disableAllFields} is-disabled={disableAllFields} required
+                                is-custom-class-not-applicable="true"></c-I-N-D_-L-W-C_-Custom_-Lookup>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Account Number
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="accountNumber" value={accountNumber} data-name="accountNumber" 
+                             variant="label-hidden" type="text" onchange={handleInputChange} required disabled={disableAllFields} max-length="20"></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Bank Branch Name
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="bankBranch" value={bankBranch}
+                             variant="label-hidden" type="text" onchange={handleInputChange} required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">A/C opening Date
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" name="accountOpeningDate" data-name="accountOpeningDate" 
+                            value={accountOpeningDate} variant="label-hidden" type="date"  max={maxDate} 
+                            onchange={handleInputChange} required disabled={disableAllFields}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.last3rdMonthDay1}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.last3rdMonthDay1} data-key="last3rdMonthDay1" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.last3rdMonthDay10}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.last3rdMonthDay10} data-key="last3rdMonthDay10" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.last3rdMonthDay20}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.last3rdMonthDay20} data-key="last3rdMonthDay20" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.last2ndMonthDay1}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.last2ndMonthDay1}  data-key="last2ndMonthDay1" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.last2ndMonthDay10}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.last2ndMonthDay10} data-key="last2ndMonthDay10" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.last2ndMonthDay20}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.last2ndMonthDay20} data-key="last2ndMonthDay20" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.lastMonthDay1}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.lastMonthDay1} data-key="lastMonthDay1" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.lastMonthDay10}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.lastMonthDay10} data-key="lastMonthDay10" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">{last3MonthsLabels.lastMonthDay20}
+                                <abbr title="required" class="slds-required">*</abbr>
+                            </label>
+                        </div>
+                        
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" 
+                            variant="label-hidden" value={last3MonthsValues.lastMonthDay20}  data-key="lastMonthDay20" type="number" onchange={handleInputChange} required disabled={disableAllFields}> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </template>
+        
+        <div id="footer">
+            <template if:true={displayUploadButton}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-var-p-around_small">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <!--<lightning-button onclick={handleUpload} variant="brand" label={UploadButtonLabel}
+                             disabled={disableAllFields}></lightning-button>-->
+                            <button class="slds-button slds-button_brand" onclick={handleUpload} disabled={disableAllFields}>
+                                {UploadButtonLabel}<span if:true={iconButtonCaptureImage}>&nbsp;&nbsp;&#x2714;</span>
+                            </button>   
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-var-p-around_small">
+                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <lightning-button onclick={handleSubmit} variant="brand" label="Submit" alternative-text="Submit" disabled={disableAllFields}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <template if:true={showModalForFileUpload}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue} uploadviewdocpopup={showModalForFileUpload}
+            currentloanapplicationid={currentOppRecordId} currentapplicantid={applicantId} doctype={docType} onfileuploadstatus={fileUploadStatus}
+            showdocview={showDocView} vehicledocs={vehicledocs} alldocs="false" documentrecordidfromparent={documentRecordId}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+        
+    </lightning-card>
+
+</template>

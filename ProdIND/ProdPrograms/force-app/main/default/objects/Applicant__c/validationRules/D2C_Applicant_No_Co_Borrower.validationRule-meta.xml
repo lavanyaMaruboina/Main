@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>D2C_Applicant_No_Co_Borrower</fullName>
+    <active>true</active>
+    <description>Co Borrowers are not allowed in D2C Application</description>
+    <errorConditionFormula>ISPICKVAL(Applicant_Type__c, &apos;Co-borrower&apos;) &amp;&amp;  ISPICKVAL (Opportunity__r.LeadSource, &apos;D2C&apos;)</errorConditionFormula>
+    <errorMessage>Applicant Type Co Borrower is not supported in D2C Application</errorMessage>
+</ValidationRule>

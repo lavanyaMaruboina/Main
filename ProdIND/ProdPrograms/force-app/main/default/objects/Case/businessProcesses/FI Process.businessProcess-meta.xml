@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FI Process</fullName>
+    <description>Support Process for the Field Investigation</description>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Accepted</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed- Revoke</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Completed</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>FI Assigned</fullName>
+        <default>true</default>
+    </values>
+    <values>
+        <fullName>FI-Unassigned</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>In Progress</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Rejected</fullName>
+        <default>false</default>
+    </values>
+</BusinessProcess>

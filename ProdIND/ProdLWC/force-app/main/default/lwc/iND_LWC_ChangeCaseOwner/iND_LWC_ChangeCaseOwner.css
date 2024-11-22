@@ -1,0 +1,11 @@
+lightning-button.cancel-button {
+    --slds-c-button-text-color: #8c3137;
+    --slds-c-button-text-color-hover: #571818;
+}
+
+lightning-button.submit-button {
+	--slds-c-button-brand-color-background: #8c3137;
+    --slds-c-button-brand-color-background-hover: #571818;
+    --slds-c-button-brand-color-border: #8c3137;
+    --slds-c-button-brand-color-border-hover: #571818;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>CarWale Prices</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;response&quot;:{&quot;status&quot;:&quot;SUCCESS&quot;,&quot;respDesc&quot;:&quot;&quot;,&quot;content&quot;:[{&quot;isMetallic&quot;:false,&quot;pricesList&quot;:[{&quot;value&quot;:698000,&quot;type&quot;:1,&quot;id&quot;:2,&quot;name&quot;:&quot;Ex-Showroom Price&quot;},{&quot;value&quot;:69800,&quot;type&quot;:1,&quot;id&quot;:3,&quot;name&quot;:&quot;RTO&quot;},{&quot;value&quot;:2950,&quot;type&quot;:1,&quot;id&quot;:88,&quot;name&quot;:&quot;Road Safety Tax&quot;},{&quot;value&quot;:59355,&quot;type&quot;:1,&quot;id&quot;:5,&quot;name&quot;:&quot;Insurance&quot;},{&quot;value&quot;:600,&quot;type&quot;:1,&quot;id&quot;:117,&quot;name&quot;:&quot;FASTag&quot;}],&quot;nearByCityId&quot;:0,&quot;nearByCityName&quot;:&quot;&quot;}]}}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">CarWale Prices</value>
+    </values>
+</CustomMetadata>

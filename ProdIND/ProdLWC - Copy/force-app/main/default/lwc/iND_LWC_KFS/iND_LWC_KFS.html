@@ -1,0 +1,315 @@
+<template>
+  <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+      <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+  </template>
+
+  <template if:true={modalPopUpCaptureImage}>
+    <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-form slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={captureImageClose}>
+                    <lightning-icon icon-name="utility:close" size="medium" variant="bare"></lightning-icon> <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate"> KFS</h2>
+            </header>
+            <lightning-card>
+                <div class="slds-card__body_inner">
+                    <br>
+                    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                        <div class="slds-col slds-size_1-of-8 slds-m-left">  Doc Type </div>
+                        <div class="slds-col slds-size_1-of-10">
+                            <lightning-input type="text" variant="label-hidden" value="KFS" label="KFS" disabled></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                    
+                    <lightning-file-upload  variant="brand" class="slds-theme_brand slds-align_absolute-center" name="fileUploader" accept={acceptedFormats} record-id={docId} file-field-name="Document_Side_fileupload__c" file-field-value="KFS" onuploadfinished={handleUploadFinished}></lightning-file-upload>
+                    
+                    <br><br>
+                    <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                        <div class="slds-button-group-item">
+                            <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Done" onclick={captureImageDone} disabled ={isDone}></lightning-button>
+                        </div>
+                    </lightning-button-group>
+                    <br>
+                </div>
+            </lightning-card>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+    </div>
+</template>
+
+
+
+<!--
+  <template>
+    <template if:true={uploadviewdocpopup}>
+        <section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={uploadImageClose}>
+                        <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+                        Upload Key Fact Statement Document
+                    </h2>
+                </header>
+                <lightning-card>
+                    <div class="slds-card__body_inner">
+                   
+                       
+                            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_1-of-8 slds-m-left">
+                                    Document Type
+                                </div>
+                          
+                                    <div class="slds-col slds-size_1-of-10">
+                                        <lightning-input type="text" variant="label-hidden" value={doctype}  disabled></lightning-input>
+                                    </div>
+                            </div>                         
+                       <br>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <template if:true={webApp}>
+                                            <lightning-file-upload label={fileUploadLabel} variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader" accept={acceptedFormats} record-id={docId} file-field-name="Document_Side_fileupload__c"
+                                            file-field-value="Front" onuploadfinished={handleFileUpload} multiple disabled={disabledFileUpload} ></lightning-file-upload>
+                                       <br>
+                                       
+                                    </template>
+                            
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+   <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+                                    <button class=" slds-button slds-button_brand " onclick={uploadDone}>
+                                        Done 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 400vh !important;" id="modalBackdrops1">
+        </div>
+    </template>
+</template>
+
+-->
+
+  
+  <!-- <template if:false={isSpinnerMoving}> -->
+    
+  <div if:true={getFinalOfferDetailflag} class="slds-p-around_xx-small"
+  style="background-color: white; border-radius: 0.4rem;">
+
+  <div>
+    <div class="slds-grid slds-wrap">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="Name" type="text" label="Name"
+              value={getFinalOfferDetails.loanApplicationName}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="Lead_Number__c" type="text"
+              label="Application No" value={getFinalOfferDetails.loanApplicationNumber}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="Contact_number__c" type="text"
+              label="Contact No" value={getFinalOfferDetails.loanApplicationContactNumber}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="textarea-id-01">MMV</label>
+              <div class="slds-form-element__control">
+                <textarea disabled id="textarea-id-01" class="slds-textarea">{getMMVDetails}</textarea>
+              </div>
+            </div>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="Loan_Amount__c" type="text"
+              label="Loan Amount" value={getFinalOfferDetails.offerLoanAmount}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="Tenure__c" type="text" label="Tenure"
+              value={getFinalOfferDetails.offerTenure}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="CRM_IRR__c" type="text"
+              label="CRM IRR" value={getFinalOfferDetails.offerIrr}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" data-label="EMI_Amount__c" type="text"
+              label="EMI Amount" value={getFinalOfferDetails.offerEmi}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" type="text"
+              label="No of Instalments" value={getFinalOfferDetails.numberOfInstallmentValue}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12" if:true={getFinalOfferDetails.isProductTypePV}>
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" type="text"
+              label="Net IRR" value={getFinalOfferDetails.netIRRValue}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12" if:true={getFinalOfferDetails.isProductTypePV}>
+        <span>
+          <div class="slds-p-around_medium lgc-bg">
+            <lightning-input data-name="offer_input" readonly="true" type="text"
+              label="Gross IRR" value={getFinalOfferDetails.grossIRRValue}>
+            </lightning-input>
+          </div>
+        </span>
+      </div>
+
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+           <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">KFS Type
+                 <abbr title="required" class="slds-required">*</abbr>
+              </label>
+           </div>
+           <div class="slds-col slds-size_2-of-3">
+              
+                 <lightning-combobox name="progress" class="demographicDetails" data-id="kfsType"
+                    variant="label-hidden" value={kfsTypeVal}
+                    onchange={handleOnchange} placeholder="Please select KFS Type"
+                    options={kfsOptions} required disabled={disableCmbBox}>
+                 </lightning-combobox>
+
+      
+             
+           </div>
+        </div>
+     </div>
+
+      <!--
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+          <span>
+            <div class="slds-p-around_medium lgc-bg">
+              <lightning-input data-name="offer_input" type="text"
+                label="Deal Number" onchange={handleDealNumber} value={dealNumberfortesting}>
+              </lightning-input>
+            </div>
+          </span>
+        </div>
+-->       <template if:true={showKFSLink}>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+              <div>
+                 <label class="slds-form-element__label">KFS Link
+                 </label>
+              </div>
+              
+              <div class="slds-text-body_regular">
+                  <a style="color: #011596" href={requestfortesting} target="_blank">{requestfortesting}</a>
+               </div>
+        </div>
+      </template>
+
+        
+
+      
+
+        
+
+    </div>
+  </div>
+
+  <!--
+  <template if:true={multiAsset}>
+        <lightning-datatable
+            key-field="DealNumber"
+            class="slds-table_striped"
+            data={dealNumberData}
+            columns={columns}
+            onrowselection={handleRowSelection}
+            min-column-width="160"
+        >
+        </lightning-datatable>
+    <br/>
+    </template>
+  -->
+    
+
+  <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+    <div style="display: flex; justify-content:center; align-items:center;">
+      <span>
+      <button class="slds-button slds-button_brand" title="Initiate Key Fact Statement" type="button" disabled={disableKFSBtn}
+        onclick={initiateKFS}>Initiate Key Fact Statement</button>
+        <template if:true={showTimer}>
+          <br/>
+          <br/>
+          <span class="counter slds-text-color_weak">Retry in {timeLeft} seconds</span>
+        </template>
+      </span>
+    </div>
+  </div>
+  <br/>
+  <template if:true={showKFSLink}>
+  <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+    <div style="display: flex; justify-content:center; align-items:center;">
+      <button class="slds-button slds-button_brand" title="Initiate Key Fact Statement" type="button"
+        onclick={captureKFS} disabled={disableUpload}>Upload KFS</button>
+    </div>
+  </div>
+</template>
+
+</div>
+
+<!-- </template> -->
+</template>

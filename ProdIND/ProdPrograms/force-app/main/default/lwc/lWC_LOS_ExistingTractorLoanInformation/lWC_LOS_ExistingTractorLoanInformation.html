@@ -1,0 +1,249 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+    <lightning-layout>
+        <lightning-layout-item size="12">
+            <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+                onclick={handleAddRow} disabled={disableAddRows}>
+            </lightning-button>
+            <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Save"
+                onclick={saveRows} disabled={disableSave}>
+            </lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+     <lightning-layout>
+        <lightning-layout-item size="12" class={className}>
+           <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr>
+                       <th>Sr No.</th>
+                       <th>Loan Type</th>
+                       <th>Loan Free</th>
+                       <th>Loan Stakeholders</th>
+                       <th>Loan Number</th>
+                       <th>Loan Amount</th>
+                       <th>Model Details</th>
+                       <th>Bank Name</th>
+                       <th>Loan Start Date</th>
+                       <th>EMI Amount</th>
+                       <th>Last EMI Paid Date</th>
+                       <th>Total Remarks by FI Agent</th>
+                       <th></th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <template for:each={filterList} for:item="filterData" for:index="index">
+                        <template if:false = {filterData.isValid}>
+                            <tr key={filterData}>
+                                <td>
+                                 {filterData.srNo}
+                                 </td>
+                                 <td>
+                                    <template if:true={isDesktop}>
+                                       <lightning-combobox name="Loan_Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                       placeholder="" onchange={handleChange} value={filterData.Loan_Type}
+                                       options={loanTypeOptions} required>
+                                   </lightning-combobox>
+                                    </template>
+                                    <template if:false={isDesktop}>
+                                       <div class="slds-form-element">
+                                          <div class="slds-form-element__control">
+                                            <div class="slds-select_container">
+                                             <select name="Loan_Type__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.Loan_Type} required>
+                                                <option value="">-None-</option>
+                                                <template for:each={loanTypeOptions} for:item="item">
+                  
+                                                   <option key={item.value} value={item.value}>{item.label}</option>
+                  
+                                                </template>
+                                             </select>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </template>
+                                   
+                                 </td>
+                                 <td>
+                                    <template if:true={isDesktop}>
+                                       <lightning-combobox name="Loan_Free__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                       placeholder="" onchange={handleChange} value={filterData.Loan_Free}
+                                       options={loanFreeOptions} required>
+                                   </lightning-combobox>
+                                    </template>
+                                    
+                                    <template if:false={isDesktop}>
+                                       <div class="slds-form-element">
+                                          <div class="slds-form-element__control">
+                                            <div class="slds-select_container">
+                                             <select name="Loan_Free__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.Loan_Free} required>
+                                                <option value="">-None-</option>
+                                                <template for:each={loanFreeOptions} for:item="item">
+                  
+                                                   <option key={item.value} value={item.value}>{item.label}</option>
+                  
+                                                </template>
+                                             </select>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </template>
+                                 </td>
+                                 <!-- SFTRAC-453 Removing Required SI#5 Start-->
+                                 <td>
+
+                                    <template if:true={isDesktop}>
+                                       <lightning-combobox name="Loan_Stakeholders__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                        placeholder="" onchange={handleChange} value={filterData.Loan_Stakeholders}
+                                        options={loanStakeholdersOptions}  disabled={filterData.disableFields}>
+                                    </lightning-combobox>
+                                    </template>
+
+                                    
+                                    <template if:false={isDesktop}>
+                                       <div class="slds-form-element">
+                                          <div class="slds-form-element__control">
+                                            <div class="slds-select_container">
+                                             <select name="Loan_Stakeholders__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.Loan_Stakeholders} disabled={filterData.disableFields} >
+                                                <option value="">-None-</option>
+                                                <template for:each={loanStakeholdersOptions} for:item="item">
+                  
+                                                   <option key={item.value} value={item.value}>{item.label}</option>
+                  
+                                                </template>
+                                             </select>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </template>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="text" name="Loan_number__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Loan_number}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="number" name="LOAN_AMOUNT__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onblur={handleChange}
+                                       value={filterData.LOAN_AMOUNT}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="text" name="Model_Details__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Model_Details}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="text" name="BANK_NAME__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.BANK_NAME}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="date" name="Loan_Start_Date__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Loan_Start_Date}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="number" name="EMI_Amount__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.EMI_Amount}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="date" name="Last_EMI_Paid_Date__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Last_EMI_Paid_Date}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="text" name="Total_Remarks_by_FI_Agent__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Total_Remarks_by_FI_Agent}  disabled={filterData.disableFields}>
+                                    </lightning-input>
+                                 </td>
+                                 <!-- SFTRAC-453 Removing Required SI#5 Close -->
+                                 <td>
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                                 </td>
+                            </tr>
+                        </template>
+                        <template if:true={filterData.isValid}>
+                           <tr key={filterData}>
+                              <td>
+                                 {filterData.srNo}
+                              </td>
+                              <td>
+                                 {filterData.Loan_Type}
+                              </td>
+                              <td>
+                                 {filterData.Loan_Free}
+                              </td>
+                              <td>
+                                 {filterData.Loan_Stakeholders}
+                              </td>
+                              <td>
+                                 {filterData.Loan_number}
+                              </td>
+                              <td>
+                                 {filterData.LOAN_AMOUNT}
+                              </td>
+                              <td>
+                                {filterData.Model_Details}
+                             </td>
+                              <td>
+                                 {filterData.BANK_NAME}
+                              </td>
+                              <td>
+                                 {filterData.Loan_Start_Date}
+                              </td>
+                              <td>
+                                 {filterData.EMI_Amount}
+                              </td>
+                              <td>
+                                 {filterData.Last_EMI_Paid_Date}
+                              </td>
+                              <td>
+                                 {filterData.Total_Remarks_by_FI_Agent}
+                              </td>
+                               <td>
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:delete" onclick={handleDeleteRow}>
+                                    </lightning-button-icon>
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:edit" onclick={handleEditRow}>
+                                    </lightning-button-icon>
+                               </td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </lightning-layout-item>
+     </lightning-layout>
+    <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Total Tractor Loan - Stakeholders:</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+              {totalTractorLoanStakeholders}
+          </div>
+          </div>
+    </div>
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+      <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+          <label class="slds-form-element__label">Total Tractor Loan - Family:</label>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+          {totalTractorLoanFamily}
+        </div>
+      </div>
+    </div>
+   </div>
+</template>

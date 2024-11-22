@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset_model_Variant_as_per__c</fullName>
+    <label>Asset model &amp; Variant as per</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Dealer login</fullName>
+                <default>false</default>
+                <label>Dealer login</label>
+            </value>
+            <value>
+                <fullName>Quotation</fullName>
+                <default>false</default>
+                <label>Quotation</label>
+            </value>
+            <value>
+                <fullName>As per RC</fullName>
+                <default>false</default>
+                <label>As per RC</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

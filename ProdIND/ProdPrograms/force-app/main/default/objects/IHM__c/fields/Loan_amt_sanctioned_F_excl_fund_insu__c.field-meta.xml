@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_amt_sanctioned_F_excl_fund_insu__c</fullName>
+    <description>Loan amount sanctioned (F) - excl. funded insurance</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Loan amount sanctioned (F) - excl. funded insurance</inlineHelpText>
+    <label>Loan amt sanctioned (F) - excl fund insu</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

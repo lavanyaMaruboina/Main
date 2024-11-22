@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Balance_Account_Exists__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Do you have an account where you maintain balance?</description>
+    <inlineHelpText>Do you have an account where you maintain balance?</inlineHelpText>
+    <label>Balance Account Exists</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

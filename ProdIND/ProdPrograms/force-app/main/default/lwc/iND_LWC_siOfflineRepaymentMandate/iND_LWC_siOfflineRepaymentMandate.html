@@ -1,0 +1,161 @@
+<template>
+  <lightning-layout class="slds-box slds-size_12-of-12 slds-text-color_default" multiple-rows="true">
+    <template if:true={isLoading}>
+      <div>
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+      </div>
+    </template>
+    <div if:true={isStagePostSanction} class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+      <lightning-button label="Upload SI Form" variant="brand" onclick={handleUploadSIForm}> </lightning-button>
+    </div>
+    <div if:true={isStagePredisbursement} class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+      <lightning-button label="View SI Form" variant="brand" onclick={handleViewSIForm}> </lightning-button>
+    </div>
+    <div class="slds-form slds-grid slds-wrap slds-text-color_default">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Signed SI?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input type="checkbox" disabled={disablePostSanctionField} class="postSanctionFields" name="signedSIField" data-id="signedSIId" variant="label-hidden" checked={signedSIField} onchange={handleInputFieldChange}> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Is SI form legibile?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-combobox class="preDisburseFields" name="siFormLegibleField" data-id="siFormLegibleId" variant="label-hidden" options={yesNoOption} value={siFormLegibleField} disabled={disablePreDisField} required onchange={handleInputFieldChange}> </lightning-combobox>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Form Legibility Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="legibilityRemarksField" value={legibilityRemarksField} label="Remarks" variant="label-hidden" type="text" data-id="remarksId" disabled={disablePreDisField} onchange={handleInputFieldChange} required> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <!---->
+
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Bank Name</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="bankNameField" value={bankName} label="Bank Name" variant="label-hidden" type="text" data-id="bankNameId" disabled required> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">MICR Code</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input disabled={disablePostSanctionField} class="slds-form-element__control postSanctionFields" onchange={handleInputFieldChange} name="micrCodeField" value={micrCodeField} label="MICR Code" variant="label-hidden" type="text" data-id="micrCodeId" required> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">IFSC Code</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="ifscCodeField" value={ifscCode} label="IFSC Code" variant="label-hidden" type="text" data-id="ifscCodeId" disabled required> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Account No</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="accNoField" value={accNum} label="Account No" variant="label-hidden" type="number" data-id="accNoId" disabled required> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Name of the A/c holder</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input disabled={disablePostSanctionField} class="slds-form-element__control postSanctionFields" onchange={handleInputFieldChange} name="nameOfAcHolderField" value={nameOfAcHolderField} variant="label-hidden" type="text" data-id="nameOfAcHolderId" required> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Form filled correctly?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-combobox class="preDisburseFields" name="siFormFilledCorrectlyField" data-id="siFormFilledCorrectlyId" variant="label-hidden" options={yesNoOption} value={siFormFilledCorrectlyField} disabled={disablePreDisField} required onchange={handleInputFieldChange}> </lightning-combobox>
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Form Filled Correctly Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="siFormFilledCorrectRemarks" value={siFormFilledCorrectRemarks} label="Remarks" variant="label-hidden" type="text" data-id="remarksId" disabled={disablePreDisField} required onchange={handleInputFieldChange}> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Repayments Captured Correctly ?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-combobox class="preDisburseFields" name="siRepaymentCapturedCorrectly" data-id="siRepaymentCapturedCorrectly" variant="label-hidden" options={yesNoOption} value={siRepaymentCapturedCorrectly} disabled={disablePreDisField} required onchange={handleInputFieldChange}> </lightning-combobox>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Offline CVO Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="siOfflineCVORemarks" value={siOfflineCVORemarks} label="Remarks" variant="label-hidden" type="text" data-id="remarksId" disabled={disablePreDisField} required onchange={handleInputFieldChange}> </lightning-input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+      <template if:true={isStageNamePost}>
+        <lightning-button label="Submit" variant="brand" disabled={isDisabledSubmitBtn} onclick={submitPostSanction}> </lightning-button>
+      </template>
+      <template if:true={isStagePreDis}>
+        <lightning-button label="Submit" variant="brand" disabled={isDisabledSubmitBtn} onclick={submitPreDisbursement}> </lightning-button>
+      </template>
+    </div>
+    <template if:true={uploadViewDocFlag}>
+      <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue} currentloanapplicationid={recordId} currentapplicantid={applicantid} uploadviewdocpopup={uploadViewDocFlag} createdoconparentbutton= "false" title={title} doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehiclerecordid} onfileuploadstatus={docUploadSuccessfully} additionaldocument={additionaldocument}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+    </template>
+    <template if:true={viewDocFlag}>
+        <c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document onchangeflagvalue={changeflagvalue}
+        currentloanapplicationid={recordId} currentapplicantid={applicantid}
+        uploadviewdocpopup={viewDocFlag} createdoconparentbutton= "false" title='View SI Form'
+        doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+        docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+        documentrecordidfromparent={documentRecordId}
+        ></c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document>
+      </template>
+  </lightning-layout>
+</template>

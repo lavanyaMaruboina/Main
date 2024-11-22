@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>D2C_Lead_Logs</fullName>
+    <columns>NAME</columns>
+    <columns>Loan_Application__c</columns>
+    <columns>Original_request__c</columns>
+    <columns>Original_response__c</columns>
+    <columns>Service_Name__c</columns>
+    <columns>Status__c</columns>
+    <columns>Created_DateTime__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Loan_Application__c</field>
+        <operation>contains</operation>
+        <value>L24012409829</value>
+    </filters>
+    <filters>
+        <field>Service_Name__c</field>
+        <operation>contains</operation>
+        <value>Customer</value>
+    </filters>
+    <label>D2C Lead Logs</label>
+</ListView>

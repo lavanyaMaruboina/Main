@@ -1,0 +1,19 @@
+.div{
+  font-family: 'Lucida Sans';
+  font-weight: bold;
+  font-size: '19px';
+  color: #84181F;
+}
+
+.section-btn {
+  line-height: 100%;
+  padding: 4px;
+  background: none;
+  color: black;
+  font-size: large;
+}
+
+.searchButtonStyle{
+  margin-top: 4px;
+  margin-right: 0px;
+}

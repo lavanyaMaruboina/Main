@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Address_As_per_Bank__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If address coming from Bank in D2C then it will be true, if user enters it manually then it will be false, in other cases also it will be false.</description>
+    <label>Is Address As per Bank</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

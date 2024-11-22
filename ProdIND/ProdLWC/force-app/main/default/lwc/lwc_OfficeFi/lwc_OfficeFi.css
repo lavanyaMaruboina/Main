@@ -1,0 +1,28 @@
+/* lightning-button.button {
+	--sds-c-button-brand-color-background: #ecdeda;
+    --sds-c-button-brand-color-border-hover: #e41728;
+    --sds-c-button-text-color: #180404;
+} */
+
+/* .slds-accordion__summary-content, .accordion_Header{
+      background-color:#84181f;
+} */
+/* :host{
+    --sds-c-accordion-summary-color-background: #84181F;
+    --sds-c-accordion-heading-text-color: white;
+    --sds-c-accordion-heading-text-color-hover: white;
+}
+
+.accordion_Header
+{ 
+cursor: pointer; 
+display: flex; 
+--slds-c-accordion-heading-background-color: #2196F3; 
+} 
+.example-accordion {
+    ---slds-c-accordion-summary-color-background: orange;
+}
+.marginClass{
+    margin-left: 33%!important;
+    color: #84181f;
+} */

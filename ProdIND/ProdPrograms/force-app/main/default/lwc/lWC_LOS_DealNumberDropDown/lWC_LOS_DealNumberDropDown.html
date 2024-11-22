@@ -1,0 +1,79 @@
+<template>
+    <template if:true={showDealNumberDropDown}>
+        <lightning-layout multiple-rows="true" horizontal-align="end">
+            <lightning-layout-item alignment-bump="right" size="12" small-device-size={layoutSize}>
+                <div class="slds-table slds-table_cell-buffer slds-p-around_medium">
+                    <table class="slds-table slds-table_bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                    Deal Number
+                                </th>
+                                <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                    Post Sanction
+                                </th>
+                                <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                    Pre Disbursement
+                                </th>
+                                <th scope="col" class="slds-cell-wrap cell-border table_header">
+                                    Payment Request
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={dealNumberOptions} for:item="item">
+                                <tr key={item.value}>
+                                    <td class="slds-cell-wrap cell-border">
+                                    <div class="slds-truncate slds-truncate slds-text-heading_small slds-text-title_bold">
+                                        {item.label}
+                                    </div>
+                                    </td>
+                                    <td class="slds-cell-wrap cell-border">
+                                        <div class="slds-truncate">
+                                            <span class="slds-p-left_xx-small" if:true={item.isAllPostScreensSubmitted}>&#x2714;</span>
+						                    <span class="slds-p-left_xx-small" if:false={item.isAllPostScreensSubmitted}>&#10060;</span>
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap cell-border">
+                                        <div class="slds-truncate">
+                                            <span class="slds-p-left_xx-small" if:true={item.isAllPreScreensSubmitted}>&#x2714;</span>
+						                    <span class="slds-p-left_xx-small" if:false={item.isAllPreScreensSubmitted}>&#10060;</span>
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap cell-border">
+                                        <div class="slds-truncate">
+                                            <span class="slds-p-left_xx-small" if:true={item.isPayamentRequestCompleted}>&#x2714;</span>
+						                    <span class="slds-p-left_xx-small" if:false={item.isPayamentRequestCompleted}>&#10060;</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item alignment-bump="right" size="12" small-device-size={layoutSize}>
+                <div class="slds-form-element slds-p-around_medium">
+                    <label for="dealNumberSelect">Please Select Deal Number</label>
+                    <div class="slds-form-element__control">
+                        <select id="dealNumberSelect" class="slds-select" onchange={handleDealNumberChange} value={selectedDealNumber} style="width: 10rem;">
+                            <template for:each={dealNumberOptions} for:item="option">
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                    <template if:true={option.isTickMark}>
+                                        <span>&#10003;</span>
+                                    </template>
+                                </option>
+                            </template>
+                        </select>
+                    </div>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item alignment-bump="right" size="12" small-device-size={layoutSize}>
+                &nbsp;
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

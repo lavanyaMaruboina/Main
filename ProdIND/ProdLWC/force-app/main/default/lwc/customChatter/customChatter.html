@@ -1,0 +1,38 @@
+<template>
+        <lightning-card title="Comments" icon-name="standard:case_comment">
+            <lightning-layout>
+                <lightning-layout-item padding="around-small">
+                    <lightning-input-rich-text value={commentBody} onchange={commentHandler}>
+                    </lightning-input-rich-text>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout class="slds-border_bottom">
+                <lightning-layout-item padding="around-small" class="slds-float_right">
+                    <lightning-button name="post" label="Post" variant="brand" onclick={handlePostClick}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-m-around_medium slds-p-around_medium slds-scrollable_y" style="border:1px solid black ; height:300px">
+                    <template for:each={commentsData} for:item="userComment">
+                        <div key={userComment.Id} style="border-bottom:2px solid cyan">
+                        <lightning-layout vertical-align="center">
+                            <lightning-layout-item>
+                                <lightning-icon icon-name="standard:avatar" size="small"></lightning-icon>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                    <p><b>{userComment.CreatedBy.Name}</b></p>
+                                <p><small>
+                                    {userComment.CreatedDate}
+                                    </small>
+                                </p>
+                            </lightning-layout-item>
+                            
+                        </lightning-layout>
+                        <div class="slds-m-bottom_small slds-m-left_medium" style="font-size:16px;">
+                            <lightning-icon icon-name="utility:chat" class="slds-m-right_small" size="x-small"></lightning-icon>
+                             <b>{userComment.CommentBody}</b>
+                        </div>
+                    </div>
+                    </template>
+            </div>
+        </lightning-card>
+</template>

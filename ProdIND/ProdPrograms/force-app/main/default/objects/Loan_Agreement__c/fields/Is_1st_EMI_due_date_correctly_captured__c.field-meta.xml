@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_1st_EMI_due_date_correctly_captured__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Is 1st EMI due date correctly captured ?</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

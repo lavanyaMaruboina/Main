@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_Message_logs__c</fullName>
+    <defaultValue>true</defaultValue>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Check if messages need to be captured</inlineHelpText>
+    <label>Enable Message logs</label>
+    <type>Checkbox</type>
+</CustomField>

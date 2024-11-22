@@ -1,0 +1,70 @@
+<template>
+    <template if:true={isPopupOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Accept/Reject
+                    </h2>
+                </header>
+
+                <!-- modal body start -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p class="slds-align_absolute-center">{assignedModule} is assigned to you.Do you want to accept it.
+                    </p>
+                </div>
+
+                <!-- modal footer start-->
+                <footer class="slds-modal__footer slds-grid slds-wrap">
+                    <div class="slds-col slds-size_2-of-4">
+                        <lightning-button class="slds-var-m-around_small slds-align_absolute-center" variant="brand"
+                            type="button" label="Yes" onclick={handleYes}></lightning-button>
+                    </div>
+                    <div class="slds-col slds-size_2-of-4">
+                        <lightning-button class="slds-var-m-around_small slds-align_absolute-center" variant="brand"
+                            type="button" label="No" onclick={handleNo}></lightning-button>
+                    </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+
+
+    <template if:true={leadAssignmentWizard}>
+        <lightning-card title={subModuleName}>
+            <!-- <template if:true={fieldsList}> -->
+            <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} density="compact">
+                <div class="slds-grid slds-wrap">
+                    <template for:each={fieldsList} for:item="obj">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-around_x-small"
+                            key={obj.fieldName}>
+                            <lightning-input-field key={obj.fieldName} field-name={obj.fieldName}
+                                required={obj.isRequired}>
+                            </lightning-input-field>
+                        </div>
+                    </template>
+                </div>
+                <div if:true={showPrevious}>
+                    <lightning-button class="slds-float_left slds-p-left_large" label="Previous" variant="brand"
+                        onclick={handlePrevious}>
+                    </lightning-button>
+                </div>
+                <div if:true={showNext}>
+                    <lightning-button class="slds-float_right slds-p-right_large" label="Next" variant="brand"
+                        type="submit" onclick={handleNext}></lightning-button>
+                </div>
+                <div if:true={showSubmit}>
+                    <lightning-button class="slds-float_right slds-p-right_large" label="Submit" variant="brand"
+                        onclick={handleSubmit}></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+            <div class="slds-col slds-size_4-of-4">
+                <div class="slds-var-p-around_xx-large">
+                </div>
+            </div>
+            <!-- </template> -->
+        </lightning-card>
+    </template>
+</template>

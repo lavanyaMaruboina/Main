@@ -1,0 +1,74 @@
+<template>
+    <lightning-card
+            variant="narrow"
+            icon-name="standard:file">
+            <h1 slot="title">Customer Image</h1>
+            <hr style="margin: 0;">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-left_large slds-p-top_small">
+                        <span><img class ="iconImg" src={customerImageLink}/></span>
+                      </div>
+                      <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-large-size_8-of-12">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_8-of-12">
+                            <span style="color:rgba(140, 49, 55, 1);"> <a onclick={handleImagePreview}>{customerImageTitle}</a></span>
+                          </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_8-of-12">
+                            <span><lightning-formatted-date-time
+                                value={customerImageLastModifiedDate} year="numeric" month="numeric" day="numeric">
+                            </lightning-formatted-date-time> <b>.</b> {customerImageExtension}</span>
+                          </div>
+                      </div>  
+            <template if:true={noCustomerImage}>
+                <div class="slds-align_absolute-center slds-p-around_large" style="font-weight:bold ;font-size:1rem">
+                    No files found
+                </div>
+            </template>
+    <div slot="footer">
+    </div>
+    </lightning-card>
+    <lightning-card variant="narrow"
+    icon-name="standard:file">
+        <h1 slot="title">POI Document Details</h1>
+        <div class="slds-grid slds-gutters " style="margin: 0;">
+      <div class="slds-col"> <p><strong>POI Gender</strong></p><lightning-input label="POI Gender" value={genderPOI} read-only	variant="label-hidden"></lightning-input></div>
+      <div class="slds-col"> <p><Strong>POI Salutation</Strong></POI></p> <lightning-input label="POI Salutation" value={salutationPOI} read-only	variant="label-hidden"></lightning-input></div>
+        <div slot="footer">
+        </div>
+    </div>
+    </lightning-card>
+    <lightning-card
+            variant="narrow"
+            icon-name="standard:file">
+            <h1 slot="title">Files ({countOfFiles})</h1>
+            <hr style="margin: 0;">
+            <template for:each={contentList} for:item="conObj" for:index="imgIndex">
+                <div class="slds-grid slds-wrap" key ={conObj.Id}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-left_large slds-p-top_small">
+                        <span><img class ="iconImg" src={conObj.imageUrl}/></span>
+                      </div>
+                      <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-large-size_8-of-12">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_8-of-12">
+                            <span style="color:rgba(140, 49, 55, 1);"> <a onclick={handlePreview} data-target-id={imgIndex} >{conObj.Title}</a></span>
+                          </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_8-of-12">
+                            <span><lightning-formatted-date-time
+                                value={conObj.LastModifiedDate}  year="numeric" month="numeric" day="numeric">
+                            </lightning-formatted-date-time> <b>.</b> {conObj.FileExtension}</span>
+                          </div>
+                      </div>    
+                </div>
+            </template>
+            <template if:true={nofiles}>
+                <div class="slds-align_absolute-center slds-p-around_large" style="font-weight:bold ;font-size:1rem">
+                    No files found
+                </div>
+            </template>
+    <div slot="footer">
+    </div>
+    </lightning-card>
+    <template if:true={previewCustomerImageView}> 
+        <c-lwc_-document-file-child-cmp customer-img-array={customerImgArray} onclosecustomerimage={closeCustomerImageModal} customer-img-doc="true"></c-lwc_-document-file-child-cmp>
+    </template> 
+    <template if:true={previewMobileView}>
+        <c-lwc_-document-file-child-cmp img-array={imgArray} onclose={closeModal} isaadharfront={isAadharFront} isaadharback={isAadharBack} showspinnerinmodel={showSpinnerinModel} onfrontocr={runFrontOCR} onbackocr={runBackOCR} kyc-doc="true"></c-lwc_-document-file-child-cmp> 
+    </template>
+</template>

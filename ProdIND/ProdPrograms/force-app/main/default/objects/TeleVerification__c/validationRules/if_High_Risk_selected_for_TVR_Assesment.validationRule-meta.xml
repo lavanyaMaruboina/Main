@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>if_High_Risk_selected_for_TVR_Assesment</fullName>
+    <active>true</active>
+    <description>Remarks (Text Area) - Required if High Risk selected for TVR Assessment.</description>
+    <errorConditionFormula>IF(
+    AND(
+        TEXT(TVR_assessment__c) = &quot;High Risk&quot;, 
+        ISBLANK(Remarks_in_RemarkSection__c)), True, False
+ )</errorConditionFormula>
+    <errorMessage>Required if High Risk selected for TVR Assessment.</errorMessage>
+</ValidationRule>

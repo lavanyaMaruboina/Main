@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Income_Source_for_Tractor__c</fullName>
+    <label>Income Source for Tractor</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ITR</fullName>
+                <default>false</default>
+                <label>ITR</label>
+            </value>
+            <value>
+                <fullName>Banking</fullName>
+                <default>false</default>
+                <label>Banking</label>
+            </value>
+            <value>
+                <fullName>Financials</fullName>
+                <default>false</default>
+                <label>Financials</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

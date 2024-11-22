@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Perfios BS Transaction Status</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{ 
+  &quot;TxnId&quot;: &quot;15122021192049869&quot;, 
+  &quot;perfiosTransactionId&quot;: &quot;747P1639576361433&quot;, 
+  &quot;Status&quot;: &quot;success&quot;, 
+  &quot;error_message&quot;: &quot;E_NO_ERROR&quot;, 
+  &quot;error_code&quot;: &quot;200&quot;, 
+  &quot;files_Availabilty&quot;: &quot;available&quot;, 
+  &quot;Reason&quot;: &quot;&quot; 
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Perfios BS Transaction Status</value>
+    </values>
+</CustomMetadata>

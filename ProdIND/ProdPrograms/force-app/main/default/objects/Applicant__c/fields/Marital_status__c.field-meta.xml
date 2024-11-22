@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Marital_status__c</fullName>
+    <label>Marital status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>DIVOR</fullName>
+                <default>false</default>
+                <label>DIVORCE</label>
+            </value>
+            <value>
+                <fullName>DVRCE</fullName>
+                <default>false</default>
+                <label>DIVORCEE</label>
+            </value>
+            <value>
+                <fullName>MARR</fullName>
+                <default>false</default>
+                <label>MARRIED</label>
+            </value>
+            <value>
+                <fullName>SINGP</fullName>
+                <default>false</default>
+                <label>SINGLE PARENT</label>
+            </value>
+            <value>
+                <fullName>UNMAR</fullName>
+                <default>false</default>
+                <label>UN MARRIED</label>
+            </value>
+            <value>
+                <fullName>WIDOW</fullName>
+                <default>false</default>
+                <label>WIDOW</label>
+            </value>
+            <value>
+                <fullName>WIDWR</fullName>
+                <default>false</default>
+                <label>WIDOWER</label>
+            </value>
+            <value>
+                <fullName>Divorced</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Divorced</label>
+            </value>
+            <value>
+                <fullName>Married</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Married</label>
+            </value>
+            <value>
+                <fullName>SINGLE</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>SINGLE</label>
+            </value>
+            <value>
+                <fullName>Single Parent</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Single Parent</label>
+            </value>
+            <value>
+                <fullName>Widower</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Widower</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

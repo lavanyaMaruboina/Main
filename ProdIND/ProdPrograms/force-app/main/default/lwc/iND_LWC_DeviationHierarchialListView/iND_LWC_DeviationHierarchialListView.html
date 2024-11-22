@@ -1,0 +1,82 @@
+<template>
+<div class="slds-section slds-is-open">
+    <h3 class="slds-section__title">
+        <button data-position="1" class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn" aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+        </svg>
+        <span class="slds-truncate" title="Section Title">List of Applications</span>
+        </button>
+    </h3>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_12-of-12" style="float: right;">
+            <lightning-input name="search" placeholder="Search Lead No" value={searchKey} onchange={handleSearchLoanApplication} style="float: right;padding-right: 3rem;">
+            </lightning-input>
+            <!-- <span><lightning-icon style="z-index: 1;margin: 0.5% 0 0 92%;" class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" icon-name="utility:search" size="x-small"></lightning-icon></span> -->
+        </div>
+        <div class="slds-modal__content slds-p-around_medium slds-scrollable_x slds-col slds-size_1-of-1 slds-size_12-of-12" style="overflow-y: auto; border:2px" id="modal-content-id-1">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_row-bordered" >
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <!-- <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Sr No</div>
+                        </th> -->
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Lead No</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Applicant Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">CAM Page</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">CAM Number</div>
+                        </th>
+                        <!-- <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Deviation Description</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Deviation Level</div>
+                        </th> -->
+                        <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Deviation Triggered to</div>
+                        </th>
+                        <!-- <th class="" scope="col">
+                            <div class="labelClass slds-cell-wrap">Approval Status</div>
+                        </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={deviationList} for:item='item'>
+                        <tr class="slds-hint-parent" key={item} style={item.style}>
+                            <td data-label="Sr No">
+                                <div class="slds-ztruncate centerClass" ><a href={item.loanApplicationId} target="_blank">{item.loanApplication}</a></div>
+                            </td>
+                            <td data-label="Lead No">
+                                <div class="slds-ztruncate centerClass" >{item.applicantName}</div>
+                            </td>
+                            <td data-label="CAM Page">
+                                <div class="slds-ztruncate centerClass" ><a href={item.camLink} target="_blank">CAM Page</a></div>
+                            </td> 
+                            <td data-label="CAM Name">
+                                <div class="slds-ztruncate centerClass" >{item.cam}</div>
+                            </td> 
+                            <!-- <td data-label="CAM Number">
+                                <div class="slds-ztruncate centerClass" >{item.deviationDescription}</div>
+                            </td>  -->
+                            <!-- <td data-label="Deviation Description">
+                                <div class="slds-ztruncate centerClass" >{item.deviationLevel} </div>
+                            </td>  -->
+                            <td data-label="Deviation Level">
+                                <div class="slds-ztruncate centerClass" >{item.deviationTriggeredTo}</div>
+                            </td>
+                        </tr>
+                    </template>
+    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</template>

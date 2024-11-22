@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assigned_to_L1</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Assign to L1</masterLabel>
+    <openType>noSidebar</openType>
+    <protected>false</protected>
+    <url>/flow/Incident_Management_flow_for_custom_buttons?CaseID={!Case.Id}&amp;currentRecordTypeName={!Case.RecordType}&amp;buttonName=assignedtol1&amp;retURL=500/o</url>
+</WebLink>

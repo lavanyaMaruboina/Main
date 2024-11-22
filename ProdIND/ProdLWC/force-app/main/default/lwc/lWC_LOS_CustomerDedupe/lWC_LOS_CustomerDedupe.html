@@ -1,0 +1,157 @@
+<template>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Lead Number</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden" type="text" value={leadNumberValue} disabled></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" id="customerFirstNameLbl">Customer Name</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden" type="text" value={customerNameValue} disabled></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <template if:true={showDedupeDataTable}>
+        <div if:true={hideSelection}>
+            <lightning-datatable
+                key-field="id"
+                class="slds-table_striped"
+                data={customerResponseDisplayData}
+                columns={columns}
+                hide-checkbox-column="true"
+                onrowselection={handleRowSelection}
+                min-column-width="160"
+            >
+            </lightning-datatable>
+        </div>
+        <div if:false={hideSelection}>
+            <lightning-datatable
+                key-field="id"
+                class="slds-table_striped"
+                data={customerResponseDisplayData}
+                columns={columns}
+                onrowselection={handleRowSelection}
+                min-column-width="160"
+            >
+            </lightning-datatable>
+        </div>
+
+        <br/>
+        <div class="slds-clearfix slds-float_right">
+            <lightning-button variant="brand" label="Valid" title="Valid" onclick={handleValid} data-id="ValidBtnId" disabled></lightning-button>
+            <lightning-button class="slds-m-left_medium" variant="brand" label="Invalid" title="Invalid" onclick={handleInvalid} data-id="InvalidBtnId" disabled></lightning-button>
+            <!--CISP:142-->
+            <lightning-button class="slds-m-left_medium" variant="brand" label="Re-trigger" title="Re-trigger Customer Dedupe" onclick={executeDedupeAPIs} disabled={enableRetriggerDedupe}></lightning-button>
+        </div>
+        <br/><br/>
+    </template>
+
+    <template if:true={showCardMsg}>
+        <lightning-card>
+            <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">{cardMsg}</div>
+        </lightning-card>
+    </template>
+
+    <!--CISP:142-->
+    <template if:false={showDedupeDataTable}>
+        <lightning-button class="slds-m-top_xx-large slds-float_right" variant="brand" label="Re-trigger Customer Dedupe" title="Re-trigger Customer Dedupe"  data-name ="Re-trigger Customer Dedupe" onclick={executeDedupeAPIs} disabled={enableRetriggerDedupe}></lightning-button>
+    </template>
+    
+    <template if:true={showModal}>
+        <c-l-W-C_-L-O-S_-Customer-Dedupe-Modal modalspinner={showModalSpinner} msg={modalMsg} showcancelbtn={showModalCancelBtn} onmodalcancel={handleModalCancelAction} onmodalok={handleModalOkAction}></c-l-W-C_-L-O-S_-Customer-Dedupe-Modal>
+    </template>
+    <template if:true={showRadioButton}>
+        <div class="slds-form_horizontal slds-form slds-size_1-of-1">
+            <div class="slds-align_absolute-center slds-m-around_x-small">
+                <fieldset class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <span class="slds-radio">
+                            <input type="radio" id="Yes" data-id="Yes" value="Yes" name="default" onchange={handleFieldValueChange} checked={isYesChecked} disabled ={isradioButtonSelected}/>
+                            <label class="slds-radio__label" for="Yes">
+                                <span class="slds-radio_faux"></span>
+                                <span class="slds-form-element__label">Yes</span>
+                            </label>
+                        </span>
+                        <span class="slds-radio">
+                            <input type="radio" data-id="No" id="No" value="No" name="default" onchange={handleFieldValueChange} checked={isNoChecked} disabled ={isradioButtonSelected}/>
+                            <label class="slds-radio__label" for="No">
+                                <span class="slds-radio_faux"></span>
+                                <span class="slds-form-element__label">No</span>
+                            </label>
+                        </span>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </template>
+    <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+    <template if:true={confirmationModal}>
+        <section id="modal8" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+
+            <div class="slds-form slds-modal__container">
+
+                <lightning-card>
+                    <div class="slds-card__body_inner">
+                        <div class="slds-card__body_inner">
+                            <div class="slds-m-horizontal_medium" style="font-size: 0.8125rem;">
+                                <div style="margin-bottom: 0.8rem;">The name captured in the lead and name as per customer code is different. Do you wish to continue?</div>
+                                <div>Name entered by Sales User : {applicantNameSF}</div>
+                                <div>Name as per Dedupe : {applicantNameDedupe}</div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                            <div class="slds-button-group-item">                                
+                                <lightning-button class=" slds-theme_brand" icon-position="left" variant="brand" type="button" label="Yes" onclick={yesPopUPHandler}></lightning-button>
+                            </div>
+                            <div class="slds-button-group-item">
+                                <lightning-button class=" slds-theme_brand" icon-position="left" variant="brand" type="button" label="No" onclick={noPopUPHandler}></lightning-button>
+                            </div>
+                        </lightning-button-group>
+                        <br/>
+                        <br/>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+
+
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops8">
+        </div>
+    </template>
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-00" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <template if:true={sameCustomerCode}>
+                            <h2 id="modal-heading-00" class="slds-text-heading_medium slds-hyphenate">Existing customer code cannot be the same for both borrower and co borrower. You cannot proceed further</h2>
+                        </template>
+                    </header>
+                        <footer class="slds-modal__footer">
+                            <lightning-button class="slds-m-top_small" variant="brand" name="Ok" label="Ok" onclick={closeModal}></lightning-button>
+                        </footer>
+                    </div>
+        </section>
+    </template>
+    
+</template>

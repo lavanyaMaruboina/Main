@@ -1,0 +1,16 @@
+<template>
+    <!-- show residence Fi componet -->
+    <template if:false={isTractorProduct}>
+        <template if:true={showResidenceFIComponent}>
+            <c-i-n-d_-l-w-c_-current-residence-f-i record-id={fiDetails.Id}></c-i-n-d_-l-w-c_-current-residence-f-i>
+        </template>
+    <!-- show office Fi componet -->
+        <template if:true={showOfficeFIComponent}>
+             <c-lwc_-office-fi record-id={fiDetails.Id}></c-lwc_-office-fi>
+        </template>
+    </template>
+    <!-- show Tractor residence Fi component-->
+    <template if:true={isTractorProduct}>
+         <c-i-n-d_-l-w-c_-tractor-current-residence-f-i record-id={recordId} calling-from-fi-screen={callingFromFIScreen} ></c-i-n-d_-l-w-c_-tractor-current-residence-f-i>
+    </template>
+</template>

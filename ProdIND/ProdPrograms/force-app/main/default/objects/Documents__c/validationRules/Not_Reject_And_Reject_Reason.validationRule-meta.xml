@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_Reject_And_Reject_Reason</fullName>
+    <active>true</active>
+    <description>If CMU Accept/Reject is Not Reject and reason field.</description>
+    <errorConditionFormula>AND(NOT(ISPICKVAL(CMU_Accept_Reject__c,&apos;Reject&apos;)), OR(NOT(ISBLANK(CMU_Rejection_Reason__c)),NOT(ISBLANK(Rejection_Fields__c))))</errorConditionFormula>
+    <errorMessage>You can not select Rejected Reason/ Rejected Fields, if status is Accept.	You can not select Rejected Reason/ Rejected Fields, if status is Accept.</errorMessage>
+</ValidationRule>

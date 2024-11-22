@@ -1,0 +1,766 @@
+<template>
+    <lightning-tabset active-tab-value={activeTab}>
+        <lightning-tab label="Borrower" value="Borrower">
+            <lightning-accordion class="example-accordion" allow-multiple-sections-open
+                active-section-name={activeSections}>
+                <lightning-accordion-section name="Income" label="Income Details">
+                      <!--CISP-2380-->
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Customer Profile</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control "
+                                      variant="label-hidden" type="text"
+                                        value={borrowerProfile} disabled></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isNonIndividualTractorBorrower}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Crop - Net Income</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control "
+                                          variant="label-hidden" type="text"
+                                            value={fiInfo.cropNetIncome} disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Other Source of Income</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control "
+                                          variant="label-hidden" type="text"
+                                            value={fiInfo.otherIncomeSource} disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Existing Propsed Tractor Income</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control "
+                                          variant="label-hidden" type="text"
+                                            value={fiInfo.existingProposedTractorIncome} disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Non-Agri Income</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control "
+                                          variant="label-hidden" type="text"
+                                            value={fiInfo.nonAgriIncome} disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Total Expenses</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control "
+                                          variant="label-hidden" type="text"
+                                            value={fiInfo.totalExpense} disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Net Income</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control "
+                                          variant="label-hidden" type="text"
+                                            value={fiInfo.netIncome} disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>  
+                       <!--<template if:false={isTractorLead}>-->
+                            <template if:false={isD2CLead}>
+                                <div style="pointer-events: none;">
+                                <div class="slds-text-heading_large slds-text-align_center slds-text-title_bold">Declaration Content</div>
+            <div>
+                <p>{uiLabel.Declaration_Content_Income_Details}</p>
+            </div>
+                <div>
+                    <p>1.{uiLabel.Is_Borrower_Relative_Of_Director}</p>
+                    <div class="slds-grid">
+        
+                        <div class="slds-size_1-of-8">
+                
+                            <lightning-radio-group name="radioGroupBorrower1"
+                                label=""
+                                options={yesAndNoOptions}
+                                value={isBorrowerRelativeOfDirectorAnswer}
+                                type="radio" disabled></lightning-radio-group> 
+                        </div>
+                        </div>
+                </div>
+                <div>
+                    <p>2.{uiLabel.Is_Borrower_Relative_Of_Senior_Officer}</p>
+                    <div class="slds-grid">
+        
+                        <div class="slds-size_1-of-8">
+                
+                            <lightning-radio-group name="radioGroupBorrower2"
+                                label=""
+                                options={yesAndNoOptions}
+                                value={isBorrowerRelativeOfSeniorOfficerAnswer}
+                                type="radio" disabled></lightning-radio-group>
+                        </div>
+                        </div>
+                </div>
+                <template if:true={isBorrowerOptedYes}>
+                    <div>
+                        <p>{uiLabel.Is_Relationship_With_IndusInd_Or_Other_Bank}</p>
+                        <div class="slds-grid">
+            
+                            <div class="slds-size_1-of-8">
+                    
+                                <lightning-radio-group name="relationshipWithBankRadioGroup1"
+                                    label=""
+                                    options={BankOptions}
+                                    value={IsBorrRelationshipWithIndusIndOrOtherBank}
+                                    type="radio" disabled></lightning-radio-group> 
+                            </div>
+                            </div>
+                    </div>
+                    <template if:true={isBorrowerChosenIndusInd}>
+                        <div>
+                            <p>{uiLabel.Borrower_Relation_With_IndusInd_Question_1}</p>
+                            <div class="slds-grid">
+                
+                                <div class="slds-size_1-of-8">
+                        
+                                    <lightning-radio-group name="CoBrRelationWithIndQ1"
+                                        label=""
+                                        options={yesAndNoOptions}
+                                        value={BorrowerRelationWithIndusIndQuestion1Answer}
+                                        type="radio" disabled></lightning-radio-group> 
+                                </div>
+                                </div>
+                        </div>
+                        <div>
+                            <p>{uiLabel.Borrower_Relation_With_IndusInd_Question_2}</p>
+                            <div class="slds-grid">
+                
+                                <div class="slds-size_1-of-8">
+                        
+                                    <lightning-input type="text" value={BorrowerRelationWithIndusIndQuestion2Answer} disabled></lightning-input> 
+                                </div>
+                                </div>
+                        </div>
+                    </template>
+                    <template if:true={isBorrowerChosenOtherBank}>
+                        <div>
+                            <p>{uiLabel.Borrower_Relation_With_Other_Bank_Question_1}</p>
+                            <div class="slds-grid">
+                
+                                <div class="slds-size_1-of-8">
+                        
+                                    <lightning-radio-group name="CoBrRelationWithOtherQ1"
+                                        label=""
+                                        options={yesAndNoOptions}
+                                        value={BorrowerRelationWithOtherBankQuestion1Answer}
+                                        type="radio" disabled></lightning-radio-group> 
+                                </div>
+                                </div>
+                        </div>
+                        <div>
+                            <p>{uiLabel.Borrower_Relation_With_Other_Bank_Question_2}</p>
+                            <div class="slds-grid">
+                
+                                <div class="slds-size_1-of-8">
+                        
+                                    <lightning-input type="text" value={BorrowerRelationWithOtherBankQuestion2Answer} disabled></lightning-input> 
+                                </div>
+                                </div>
+                        </div>
+                </template>
+            </template>
+        </div>
+                            </template>
+                        <!--</template>-->                     
+                    </div>
+                     <template if:true={isD2CLead}>
+                        <div class="slds-text-heading_large slds-text-align_center slds-text-title_bold">Declaration Content</div>
+                    <div>
+                        <p>{uiLabel.Declaration_Content_Income_Details}</p>
+                    </div>
+                    <div>
+                        <p>1.{uiLabel.Is_Borrower_Relative_Of_Director}</p>
+                        <div class="slds-grid">
+            
+                            <div class="slds-size_1-of-8">
+                    
+                                <lightning-radio-group name="radioGroupBorrower1"
+                                    label=""
+                                    options={yesAndNoOptions}
+                                    value={isBorrowerRelativeOfDirectorAnswer}
+                                    onchange={handleBorrowerRelativeOfDirector}
+                                    type="radio"></lightning-radio-group> 
+                            </div>
+                            </div>
+                    </div>
+                    <div>
+                        <p>2.{uiLabel.Is_Borrower_Relative_Of_Senior_Officer}</p>
+                        <div class="slds-grid">
+            
+                            <div class="slds-size_1-of-8">
+                    
+                                <lightning-radio-group name="radioGroupBorrower2"
+                                    label=""
+                                    options={yesAndNoOptions}
+                                    value={isBorrowerRelativeOfSeniorOfficerAnswer}
+                                    onchange={handleBorrowerReletiveOfSeniorOfficer}
+                                    type="radio"></lightning-radio-group>
+                            </div>
+                            </div>
+                    </div>
+                    <template if:true={isBorrowerOptedYes}>
+                        <div>
+                            <p>{uiLabel.Is_Relationship_With_IndusInd_Or_Other_Bank}</p>
+                            <div class="slds-grid">
+                
+                                <div class="slds-size_1-of-8">
+                        
+                                    <lightning-radio-group name="relationshipWithBankRadioGroup2"
+                                        label=""
+                                        options={BankOptions}
+                                        value={IsRelationshipWithIndusIndOrOtherBank}
+                                        onchange={handleRelationWithIndusIndOrOther}
+                                        type="radio"></lightning-radio-group> 
+                                </div>
+                                </div>
+                        </div>
+                        <template if:true={isBorrowerChosenIndusInd}>
+                            <div>
+                                <p>{uiLabel.Borrower_Relation_With_IndusInd_Question_1}</p>
+                                <div class="slds-grid">
+                    
+                                    <div class="slds-size_1-of-8">
+                            
+                                        <lightning-radio-group name="CoBrRelationWithIndQ1"
+                                            label=""
+                                            options={yesAndNoOptions}
+                                            value={BorrowerRelationWithIndusIndQuestion1Answer}
+                                            onchange={handleBorrowerIndusIndQ1}
+                                            type="radio"></lightning-radio-group> 
+                                    </div>
+                                    </div>
+                            </div>
+                            <div>
+                                <p>{uiLabel.Borrower_Relation_With_IndusInd_Question_2}</p>
+                                <div class="slds-grid">
+                    
+                                    <div class="slds-size_1-of-8">
+                            
+                                        <lightning-input type="text" value={BorrowerRelationWithIndusIndQuestion2Answer} onblur={handleBorrowerIndusIndQ2}></lightning-input> 
+                                    </div>
+                                    </div>
+                            </div>
+                        </template>
+                        <template if:true={isBorrowerChosenOtherBank}>
+                            <div>
+                                <p>{uiLabel.Borrower_Relation_With_Other_Bank_Question_1}</p>
+                                <div class="slds-grid">
+                    
+                                    <div class="slds-size_1-of-8">
+                            
+                                        <lightning-radio-group name="CoBrRelationWithOtherQ1"
+                                            label=""
+                                            options={yesAndNoOptions}
+                                            value={BorrowerRelationWithOtherBankQuestion1Answer}
+                                            onchange={handleBorrowerOtherQ1}
+                                            type="radio"></lightning-radio-group> 
+                                    </div>
+                                    </div>
+                            </div>
+                            <div>
+                                <p>{uiLabel.Borrower_Relation_With_Other_Bank_Question_2}</p>
+                                <div class="slds-grid">
+                    
+                                    <div class="slds-size_1-of-8">
+                            
+                                        <lightning-input type="text" value={BorrowerRelationWithOtherBankQuestion2Answer} onblur={handleBorrowerOtherQ2}></lightning-input> 
+                                    </div>
+                                    </div>
+                            </div>
+                        </template>
+                    </template>
+                     <lightning-accordion-section name="AdditionalDemographicDetails" label="Additional Demographic Details">
+                        <template if:true={religionStatus.data}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Religion
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox name="religion" class="demographicDetails" label="Religion"
+                                    variant="label-hidden" value={religionValue} data-id="religionId"
+                                    onchange={religionHandler} placeholder="Select" options={religionStatus.data.values}
+                                    required disabled={casteAndReligionDisable}></lightning-combobox>
+                            </div>
+                        </div>
+                        </div>
+                    </template>
+                    <template if:true={casteStatus.data}>
+                        <div
+                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Caste
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox name="caste" class="demographicDetails" label="Caste"
+                                    variant="label-hidden" value={casteValue} data-id="casteId" onchange={casteHandler}
+                                    placeholder="Select" options={casteStatus.data.values} required
+                                    disabled={casteAndReligionDisable}></lightning-combobox>
+                            </div>
+                        </div>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input type="string" disabled="true" class="dealinputs" value={borrCutomerCode} name="Borrower Customer Code" label="Borrower Customer Code"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3 slds-align-bottom slds-p-horizontal_small slds-align_absolute-center">
+                                <lightning-button label={generateBorrower} title="Code action" icon-position="left" type="button" variant="brand"  onclick={handleGenerateBorrowerCode} disabled={borrowerLoanApplicantDisabled}>
+                                </lightning-button>
+                             </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                 </template>
+                  <!--CISP-2380-->
+                                <div if:true={nonstpPV}>
+                                    <c-lwc_incomesourcecmp record-id={recordid} app-id={appId} onincomechange={handleincChange} substage={substage}> 
+                                    </c-lwc_incomesourcecmp>
+                                </div>
+                    <!-- SFTRAC-569 - Start - Commented Changed variant section - 113 -->
+                    <!-- <div if:true={varnewbool}>
+                                    <div if:true={isTractorLead}>
+                                        <template for:each={vehicleRecordIds} for:item="vRecordId" for:index="index">
+                                            <c-l-W-C_Incomedetails-Varient key={vRecordId} record-id={recordid} app-id={appId} onparentmethodaccept={disableaccept} vehicle-record-id={vRecordId}
+                                            onparentmethoddisabled={parentmethoddisableds} onchildmethod={handle_offer_Text_ClickofferVarient} substage={substage} onupdateorpamount={updateORPAmountHandler}></c-l-W-C_Incomedetails-Varient>
+                                        </template>
+                                    </div>     
+                                    <div if:false={isTractorLead}>
+                        <c-l-W-C_Incomedetails-Varient record-id={recordid} app-id={appId} onparentmethodaccept={disableaccept}
+                        onparentmethoddisabled={parentmethoddisableds} onchildmethod={handle_offer_Text_ClickofferVarient} substage={substage} onupdateorpamount={updateORPAmountHandler}></c-l-W-C_Incomedetails-Varient>
+                    </div>
+                    </div> -->
+                    <!-- Added below div with for:each iteration for tractor vehicle details : SFTRAC-92 START-->
+                    <!-- <div if:true={isTractorLead}>
+                        <template if:true={varusedbool}>
+                        <template for:each={vehicleRecordIds} for:item="vRecordId" for:index="index"> -->
+                            <!-- Create an instance of the child component for each recordId -->
+                            <!-- <c-l-W-C_-Income-Varient-Changed
+                                key={vRecordId}
+                                record-id={recordid}
+                                app-id={appId}
+                                index = {index}
+                                substage={substage}
+                                is-tractor-lead={isTractorLead}
+                                is-used-tractor-lead={isUsedTractorLead} 
+                                is-new-tractor-lead={isNewTractorLead}
+                                vehicle-record-id={vRecordId}>
+                            </c-l-W-C_-Income-Varient-Changed>
+                        </template>
+                        </template>
+                    </div> -->
+                    <!-- Added above div with for:each iteration for tractor vehicle details : SFTRAC-92 END-->
+                    <!--<div if:false={isTractorLead}>--> <!--Added outer div for SFTRAC-92 START-->
+                       <!-- <div if:true={varusedbool}>
+                            <c-l-W-C_-Income-Varient-Changed record-id={recordid} app-id={appId} substage={substage}>
+                            </c-l-W-C_-Income-Varient-Changed>
+                        </div>
+                        <div if:true={varrefinancebool}>
+                            <c-l-W-C_-Income-Varient-Changed record-id={recordid} app-id={appId} substage={substage}>
+                            </c-l-W-C_-Income-Varient-Changed>
+                        </div>
+                    </div>                         Added outer div for SFTRAC-92 END-->
+                    <!-- SFTRAC-569 - END - Commented Changed variant section - 144 -->
+                    <!-- D2C_CHANGE - Raman, d2cCheck condition added with template-->
+                    <template if:false={d2cCheck}>
+                
+                <template lwc:if={componentRendered}>
+
+                    <div lwc:if={isTractorLead}>
+                        <template for:each={vehicleRecordIds} for:item="vRecordId" for:index="index">
+                            <!-- SFTRAC-569 - START -->
+                            <div key={vRecordId} lwc:if={varnewbool}>
+                                    <c-l-W-C_Incomedetails-Varient record-id={recordid} app-id={appId} onparentmethodaccept={disableaccept} vehicle-record-id={vRecordId}
+                                    onparentmethoddisabled={parentmethoddisableds} onchildmethod={handle_offer_Text_ClickofferVarient} substage={substage} onupdateorpamount={updateORPAmountHandler} onupdateofferaccordionlabel={updateofferAccordionlabelHandler} index = {index}></c-l-W-C_Incomedetails-Varient>
+                            </div>
+                            <div key={vRecordId} lwc:else>
+                                <c-l-W-C_-Income-Varient-Changed
+                                    record-id={recordid}
+                                    app-id={appId}
+                                    index = {index}
+                                    substage={substage}
+                                    is-tractor-lead={isTractorLead}
+                                    is-used-tractor-lead={isUsedTractorLead} 
+                                    is-new-tractor-lead={isNewTractorLead}
+                                    vehicle-record-id={vRecordId}>
+                                </c-l-W-C_-Income-Varient-Changed>
+                            </div>
+                            <!-- SFTRAC-569 - END -->
+                            <div key={vRecordId}>
+                                <c-lwc_incomeloanoffer record-id={recordid} vehicle-id={vRecordId} app-id={appId}  onparentmhd={disableReRun} onparentmethodaccept={disableaccept}  onparentmethod={enableReRun} onparentmethodaccepts={enableaccept} onfailedofferengine={handleFailedOfferEngine} substage={substage} offerengineparent={offerengineparent} onemiamountchange={handleEnableReRun} onemiamountsame={handleDisableReRun} is-revoked-loan-application={isRevokedLoanApplication} onnotvalidtenure={handleNotValidTenure} onvalidtenure={handleValidTenure} updated-o-r-p-amount={updatedORPAmount} updated-accordion-label={updateofferlabel} onenablererunbtn={handleEnableReRunBtn} onsavevarient={saveVarientHandler} index = {index}></c-lwc_incomeloanoffer><!--CISP-60--><!--CISP-2646-->
+                            </div>
+                        </template>
+                    </div>
+
+                    <div lwc:else>
+                        <!-- SFTRAC-569 - START -->
+                        <div if:true={varnewbool}>
+                            <c-l-W-C_Incomedetails-Varient record-id={recordid} app-id={appId} onparentmethodaccept={disableaccept}
+                            onparentmethoddisabled={parentmethoddisableds} onchildmethod={handle_offer_Text_ClickofferVarient} substage={substage} onupdateorpamount={updateORPAmountHandler} onupdateofferaccordionlabel={updateofferAccordionlabelHandler}></c-l-W-C_Incomedetails-Varient>
+                        </div>
+                        <div if:true={varusedbool}>
+                            <c-l-W-C_-Income-Varient-Changed record-id={recordid} app-id={appId} substage={substage}>
+                            </c-l-W-C_-Income-Varient-Changed>
+                        </div>
+                        <div if:true={varrefinancebool}>
+                            <c-l-W-C_-Income-Varient-Changed record-id={recordid} app-id={appId} substage={substage}>
+                            </c-l-W-C_-Income-Varient-Changed>
+                        </div>
+                     <!-- SFTRAC-569 - END -->
+                        <c-lwc_incomeloanoffer is-cibil-called-in-ltwo={isCibilCalledInLtwo} onisrerunoffer={getrerunoffer} record-id={recordid} app-id={appId}  onparentmhd={disableReRun} onparentmethod={enableReRun} onparentmethodaccepts={enableaccept} onfailedofferengine={handleFailedOfferEngine} substage={substage} offerengineparent={offerengineparent} onemiamountchange={handleEnableReRun} onemiamountsame={handleDisableReRun} is-revoked-loan-application={isRevokedLoanApplication} onnotvalidtenure={handleNotValidTenure} onvalidtenure={handleValidTenure} updated-o-r-p-amount={updatedORPAmount} updated-accordion-label={updateofferlabel} onenablererunbtn={handleEnableReRunBtn} onsavevarient={saveVarientHandler} onenableinsbutton={enableInsButton} ondisableinsbutton={disableInsButton} index = {index}></c-lwc_incomeloanoffer><!--CISP-60--><!--CISP-2646-->
+                        <!-- CISP-2735 -->
+                    </div>
+                    
+                </template>
+
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-4">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand"
+                                        disabled={onchangeclick} onclick={handleacceptloan}>
+                                        Accept Loan Offer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <template lwc:if={componentRendered}>
+                        <div if:false={isTractorLead}
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-4">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                        onclick={handle_changebutton} disabled={changevarient}>
+                                        Change Variant<!--CISP-12635-->
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </template>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_3-of-4">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " disabled>
+                                        Add/Change Co-Borrower
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <template lwc:if={componentRendered}>
+                        <div if:false={isTractorLead}
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_3-of-3">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " name="rerunbtn"
+                                        onclick={handle_offer_Text_Click} disabled={rerunOEDisable}>
+                                        Rerun Offer Engine
+                                        <span if:true={iconButtonengine}>&#x2714;</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_3-of-3">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " name="foirbtn"
+                                        onclick={handleFoirClick} disabled={foirBtnDisbaled}>
+                                        Check FOIR
+                                        <!-- <span if:true={iconButtonengine}>&#x2714;</span> -->
+                                    </button>
+                                     <!-- <c-i-n-d-_-l-w-c-_-run-e-m-i-engine record-id={recordid}></c-i-n-d-_-l-w-c-_-run-e-m-i-engine> -->
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </template>
+                    </div>
+                    <div if:false={isTractorLead}
+                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_3-of-3">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand insSchedule"
+                            onclick={handleInstallmentSchedule} name="amortSchedule" disabled={disableInsSchedule}>Installment Schedule</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    </template>
+
+                    <div class="slds-clearfix">
+                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                            <div
+                                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                    disabled={submitclick} onclick={onsubmit}>
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </lightning-tab>
+
+        <template if:true={isCoborrowerTab}>
+            <lightning-tab label="Co-Borrower" value="Co-Borrower">
+                <lightning-accordion class="example-accordion" allow-multiple-sections-open
+                active-section-name={activeSections}>
+                <lightning-accordion-section name="Income" label="Income Details">
+                    <template if:true={isPVProduct}>
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                               <div class="slds-col slds-size_1-of-3">
+                                  <label class="slds-form-element__label">Relationship with borrower
+                                     <abbr title="required" class="slds-required">*</abbr>
+                                  </label>
+                               </div>
+                               <div class="slds-col slds-size_2-of-3">
+                                <template if:true={relationshipWithBorrower.data}>
+                                <lightning-combobox type="text" name="progress" variant="label-hidden"
+                                label="Relationship with borrower" data-id="relationWithBorrower"
+                                value={relationshipValue} placeholder="Select"
+                                 onchange={handleRelationshipType} options={relationshipWithBorrower.data.values}
+                             disabled=true></lightning-combobox></template>
+                             </div>
+                            </div>
+                         </div>
+                         <div class="slds-col slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"></div>
+                     </div>
+                     </template>
+                    <!--CISP-2380-->
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Customer Profile</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control "
+                                      variant="label-hidden" type="text"
+                                        value={co_borrowerProfile} disabled></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <template if:false={isD2CLead}>
+                            <div style="pointer-events: none;">
+                                <div class="slds-text-heading_large slds-text-align_center slds-text-title_bold">Declaration Content</div>
+                            <div>
+                            <p>{uiLabel.Declaration_Content_Income_Details}</p>
+                            </div>
+                            <div>
+                            <p>1.{uiLabel.Is_CoBorrower_Relative_Of_Director}</p>
+                            <div class="slds-grid">
+                            
+                            <div class="slds-size_1-of-8">
+                            
+                            <lightning-radio-group name="radioGroupCoBorrower1"
+                                label=""
+                                options={yesAndNoOptions}
+                                value={isCoBorrowerRelativeOfDirectorAnswer}
+                                type="radio" disabled></lightning-radio-group>
+                            </div>
+                            </div>
+                            </div>
+                            <div>
+                            <p>2.{uiLabel.Is_CoBorrower_Relative_Of_Senior_Officer}</p>
+                            <div class="slds-grid">
+                            
+                            <div class="slds-size_1-of-8">
+                            
+                            <lightning-radio-group name="radioGroupCoBorrower2"
+                                label=""
+                                options={yesAndNoOptions}
+                                value={isCoBorrowerRelativeOfSeniorOfficerAnswer}
+                                type="radio" disabled></lightning-radio-group>
+                            </div>
+                            </div>
+                            </div>
+                            <template if:true={isCoBorrowerOptedYes}>
+                            <div>
+                            <p>{uiLabel.Is_Relationship_With_IndusInd_Or_Other_Bank}</p>
+                            <div class="slds-grid">
+                            
+                            <div class="slds-size_1-of-8">
+                            
+                                <lightning-radio-group name="relationshipWithBankRadioGroup3"
+                                    label=""
+                                    options={BankOptions}
+                                    value={IsCoBorrRelationshipWithIndusIndOrOtherBank}
+                                    type="radio" disabled></lightning-radio-group> 
+                            </div>
+                            </div>
+                            </div>
+                            <template if:true={isCoBorrowerChosenIndusInd}>
+                            <div>
+                            <p>{uiLabel.CoBorrower_Relation_With_IndusInd_Question_1}</p>
+                            <div class="slds-grid">
+                            
+                                <div class="slds-size_1-of-8">
+                            
+                                    <lightning-radio-group name="BrRelationWithIndQ1Radio"
+                                        label=""
+                                        options={yesAndNoOptions}
+                                        value={CoBorrowerRelationWithIndusIndQuestion1Answer}
+                                        type="radio" disabled></lightning-radio-group> 
+                                </div>
+                                </div>
+                            </div>
+                            <div>
+                            <p>{uiLabel.CoBorrower_Relation_With_IndusInd_Question_2}</p>
+                            <div class="slds-grid">
+                            
+                                <div class="slds-size_1-of-8">
+                            
+                                    <lightning-input type="text" value={CoBorrowerRelationWithIndusIndQuestion2Answer} disabled></lightning-input> 
+                                </div>
+                                </div>
+                            </div>
+                            </template>
+                            <template if:true={isCoBorrowerChosenOtherBank}>
+                            <div>
+                            <p>{uiLabel.CoBorrower_Relation_With_Other_Bank_Question_1}</p>
+                            <div class="slds-grid">
+                            
+                                <div class="slds-size_1-of-8">
+                            
+                                    <lightning-radio-group name="BrRelationOtherQ1Radio"
+                                        label=""
+                                        options={yesAndNoOptions}
+                                        value={CoBorrowerRelationWithOtherBankQuestion1Answer}
+                                        type="radio" disabled></lightning-radio-group> 
+                                </div>
+                                </div>
+                            </div>
+                            <div>
+                            <p>{uiLabel.CoBorrower_Relation_With_Other_Bank_Question_2}</p>
+                            <div class="slds-grid">
+                            
+                                <div class="slds-size_1-of-8">
+                            
+                                    <lightning-input type="text" value={CoBorrowerRelationWithOtherBankQuestion2Answer} disabled></lightning-input> 
+                                </div>
+                                </div>
+                            </div>
+                            </template>
+                            </template>
+                            </div>
+                            </template>
+                        <template if:true={isD2CLead}>
+                        <lightning-accordion-section name="AdditionalDemographicDetails" label="Additional Demographic Details">
+                        <template if:true={religionStatus.data}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Religion
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox name="religion" class="demographicDetails" label="Religion"
+                                        variant="label-hidden" value={religionValueForCo} data-id="religionId"
+                                        onchange={religionHandlerForCoBorrower} placeholder="Select" options={religionStatus.data.values}
+                                        required disabled={coCasteAndReligionDisable}></lightning-combobox>
+                                </div>
+                            </div>
+                            </div>
+                        </template>
+                        <template if:true={casteStatus.data}>
+                            <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Caste
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox name="caste" class="demographicDetails" label="Caste"
+                                        variant="label-hidden" value={casteValueForCo} data-id="casteId" onchange={casteHandlerForCoBorrower}
+                                        placeholder="Select" options={casteStatus.data.values} required
+                                        disabled={coCasteAndReligionDisable}></lightning-combobox>
+                                </div>
+                            </div>
+                            </div>
+                        </template>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input type="string" disabled="true" class="dealinputs" value={coBorrCutomerCode} name="Co-borrower Customer Code" label="Co-borrower Customer Code"></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3 slds-align-bottom slds-p-horizontal_small slds-align_absolute-center">
+                                    <lightning-button label={generateCoBorrower} title="Code action" icon-position="left" type="button" variant="brand"  onclick={handleGenerateCoBorrowerCode} disabled={coBorrowerLoanApplicantDisabled}>
+                                    </lightning-button>
+                                 </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                     </template>
+                    
+                      <!--CISP-2380-->
+                    <div if:true={nonstpPV}>
+                        <c-lwc_incomesourcecmp record-id={recordid} app-id={coappId} onincomechange={handleincChange}> 
+                        </c-lwc_incomesourcecmp>
+                    </div>
+                </lightning-accordion-section>
+                </lightning-accordion>
+            </lightning-tab>
+        </template>
+    </lightning-tabset>
+    <!-- modal end -->
+    <template lwc:if={isModalOpen}>
+        <c-i-n-d-_-l-w-c-_-installment-schedule record-id={recordid}  show-installment-model={isModalOpen} onclose={handleCloseModal} onsubmit={handleInsSubmit}></c-i-n-d-_-l-w-c-_-installment-schedule>
+    </template>
+    <template lwc:if={isFOIRModalOpen}>
+        <c-i-n-d-_-l-w-c-_-run-e-m-i-engine record-id={recordid} is-tw={isTw} is-pv={isPVProduct} onclose={handleFoirClose}></c-i-n-d-_-l-w-c-_-run-e-m-i-engine>
+    </template>
+    <template if:true={toggleSpinner} class=" slds-align_absolute-center slds">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+        </lightning-spinner>
+    </template>
+</template>

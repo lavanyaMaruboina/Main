@@ -1,0 +1,53 @@
+.lli-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+ 
+.ibl-btn-red{
+    background-color: #832625;
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-red_secondary{
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #832625;
+    color: #832625;
+    font-weight: bold;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    .responsive-btn{
+        width: 50%;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    .responsive-btn{
+        width: 12%;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+    .responsive-btn{
+        width: 12%;
+    }
+}

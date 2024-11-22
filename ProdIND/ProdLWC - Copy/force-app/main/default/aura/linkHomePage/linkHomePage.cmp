@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute type="id" name="recordId" />
+    <c:ind_LWC_AcceptCurrentOwner aura:id="lWCComponent2" recordId="{!v.recordId}"></c:ind_LWC_AcceptCurrentOwner> 
+</aura:component>

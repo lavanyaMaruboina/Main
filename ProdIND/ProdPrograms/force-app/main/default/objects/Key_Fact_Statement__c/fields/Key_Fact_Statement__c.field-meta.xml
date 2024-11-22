@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Key_Fact_Statement__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Key Fact Statement</label>
+    <referenceTo>Key_Fact_Statement__c</referenceTo>
+    <relationshipLabel>Key Fact Statements</relationshipLabel>
+    <relationshipName>Key_Fact_Statements</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

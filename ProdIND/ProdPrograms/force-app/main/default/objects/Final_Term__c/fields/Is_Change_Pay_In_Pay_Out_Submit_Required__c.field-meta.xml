@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Change_Pay_In_Pay_Out_Submit_Required__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Is Change Pay In Pay Out Submit Required</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,743 @@
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={fiRecord}>
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+            <lightning-accordion-section name="ResidenceAddress" label={residenceAddressSectionHeader}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.addrLine1.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="addrLine1" value={inputWrapper.addrLine1.value} onchange={handleInputChange}
+                                    disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.addrLine2.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="addrLine2" value={inputWrapper.addrLine2.value} onchange={handleInputChange}
+                                    disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.city.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="city" value={inputWrapper.city.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.pinCode.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="pinCode" value={inputWrapper.pinCode.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.state.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="state" value={inputWrapper.state.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.landmark.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="landmark" value={inputWrapper.landmark.value} onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.phoneNo.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="phoneNo" value={inputWrapper.phoneNo.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.mobile.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="mobile" value={inputWrapper.mobile.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.locationSameAsInApplication.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="checkbox" variant="label-hidden" name="locationSameAsInApplication" value={inputWrapper.locationSameAsInApplication.value}
+                                    onchange={handleCheckboxChange} checked={inputWrapper.locationSameAsInApplication.value}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="OtherFields" label="Other fields">
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.yearsInResidence.label}
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={resiYearPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="yearsInResidence" label={inputWrapper.yearsInResidence.label} value={inputWrapper.yearsInResidence.value}
+                                        options={resiYearPicklist.data.values} class="validate" required onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="PersonalInformation" label="Personal Information">
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.name.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="name" value={inputWrapper.name.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.product.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="product" value={inputWrapper.product.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.resiType.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={resiTypePicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="resiType" label={inputWrapper.resiType.label} value={inputWrapper.resiType.value}
+                                        options={resiTypePicklist.data.values} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="IdentityProof" label="Identity Proof">
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table" border="1">
+                    <thead>
+                        <tr class="slds-hint-parent">
+                            <th>KYC</th>
+                            <th>Original Verified</th>
+                            <th>Timestamp</th>
+                            <th>Upload Document</th>
+                        </tr>
+                    </thead>
+                    <template for:each={fileDocumentLists} for:item="element">
+                        <tr class="slds-hint-parent" key={element.doument.Id}>
+                            <td>{element.doument.Document_Type__c}</td>
+                            <td>
+                                <lightning-input variant="label-hidden" class="slds-form-element__control" type="checkbox" data-id={element.doument.Id} name={element.doument.Document_Type__c}
+                                    checked={element.originalVerified} value={element.originalVerified} onchange={handleKycCheckBoxChange}
+                                    disabled={element.originalVerified} readonly></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-formatted-date-time value={element.doument.CreatedDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                    minute="2-digit" hour12="true"></lightning-formatted-date-time>
+
+                            </td>
+                            <td>
+                                <div class="slds-clearfix">
+                                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                        <div class="slds-form-element slds-small-size_1-of-2 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                            <button class="indusPrimaryButton slds-button slds-button_brand fiButton" data-type="button" data-id={element.doument.Id}
+                                                name={element.doument.Document_Type__c} onclick={handleKycButtonClick} disabled>
+                                                Upload
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+
+            </lightning-accordion-section>
+
+            <!-- <lightning-accordion-section name="ResidenceAddressPermanent" label="Residence Address - Permanent">
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.permCurrAddress.label}
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="permCurrAddress" value={inputWrapper.permCurrAddress.value}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-accordion-section> -->
+
+            <lightning-accordion-section name="LoanDetails" label="Loan Details">
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.purposeOfPurchase.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="purposeOfPurchase" value={inputWrapper.purposeOfPurchase.value} onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.make.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="make" value={inputWrapper.make.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.model.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="model" value={inputWrapper.model.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.variant.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="variant" value={inputWrapper.variant.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.profileProductMatch.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="profileProductMatch" value={inputWrapper.profileProductMatch.value} onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.dealer.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="dealer" value={inputWrapper.dealer.value} onchange={handleInputChange} disabled>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="FamilyDetails" label="Family Details &amp; Income">
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noofDependents.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noofDependents" value={inputWrapper.noofDependents.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.numberOfEarningMembersInTheFamily.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="numberOfEarningMembersInTheFamily" value={inputWrapper.numberOfEarningMembersInTheFamily.value}
+                                        options={goodsCountPicklist.data.values} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="OtherObservations" label="Other Observations">
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.nameOfPersonMet.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="nameOfPersonMet" value={inputWrapper.nameOfPersonMet.value} onchange={handleInputChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.relationShipWithCustomer.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={relationPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="relationShipWithCustomer" value={inputWrapper.relationShipWithCustomer.value}
+                                        options={relationPicklist.data.values} onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfYearsinCity.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={cityYearPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfYearsinCity" value={inputWrapper.noOfYearsinCity.value} class="noOfYearsinCity"
+                                        options={cityYearPicklist.data.values} required onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <lightning-button label="Capture Signature" variant="brand" onclick={handleSignatureUpload} class="slds-align_absolute-center"></lightning-button>
+                        <template if:true={showSignatureModal}>
+                            <section aria-modal="true" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container ">
+                                    <header class="slds-modal__header">
+                                        <h2 class="slds-text-heading_small">Signature</h2>
+                                        <lightning-icon class="slds-modal__close" icon-name="utility:close" size="small" onclick={handleCloseSignatureModal}></lightning-icon>
+                                    </header>
+                                    <div class="slds-modal__content">
+                                        <c-capture-signature documentid={signatureDocumentId} oncapturesucessfull={handleCloseSignatureModal}></c-capture-signature>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="brand" label="Save" onclick={handleSignatureSave} class="slds-p-around_x-small"></lightning-button>
+                                        <lightning-button variant="brand" label="Clear" title="Clear" onclick={handleSignatureClear} class="slds-m-left_x-small"></lightning-button>
+                                        <lightning-button variant="brand" label="Cancel" onclick={handleCloseSignatureModal} class="slds-p-around_x-small"></lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+
+                        </template>
+
+                    </div>
+                    <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 ">
+                        <lightning-button class="slds-align_absolute-center" variant="brand" label="Capture Residence Front View" onclick={handleCaptureFrontViewUplaod}></lightning-button>
+
+                        <template if:true={showCaptureFrontViewComponent}>
+                            <c-l-w-c_-l-o-s_-upload_-view-and-delete document-record-id={documentId} onclosemodel={closeCaptureFrontViewUplaod} onuploadsuccess={closeCaptureFrontViewUplaod}
+                                document-name={documentType}></c-l-w-c_-l-o-s_-upload_-view-and-delete>
+
+                        </template>
+                        <template if:true={uploadViewDocFlag}>
+                            <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+                            currentloanapplicationid={applicationId} currentapplicantid={applicantId}
+                            uploadviewdocpopup={uploadViewDocFlag} doctype={documentType} showdocview={showDocView}
+                            showupload={showUpload}  alldocs={isAllDocType} vehicledocs={isVehicleDoc}
+                            documentrecordidfromparent={documentId} ondocdelete={docDeleted} recordtypename = {sendingRecordTypeName}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+                            <!--CISP-2975-->
+                        </template>
+
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="FIFeedback" label="FI Feedback">
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noofAttempts.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" name="noofAttempts" onchange={handleInputChange} value={inputWrapper.noofAttempts.value}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.fiObservation.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={observationPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="fiObservation" value={inputWrapper.fiObservation.value} options={observationPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.fiFeedback.label}</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="text" class="fiFeedback" variant="label-hidden" name="fiFeedback" value={inputWrapper.fiFeedback.value} onchange={handleInputFIChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_3-of-3">
+                                <b>White goods at home</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <!-- <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <input type="checkbox" name="noneWhiteGoods" value={noneWhiteGoods}>&nbsp;&nbsp;
+                                <label class="slds-form-element__label">None
+                                </label>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfTVs.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfTVs" value={inputWrapper.noOfTVs.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfFridgess.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfFridgess" value={inputWrapper.noOfFridgess.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noofWashingMachines.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noofWashingMachines" value={inputWrapper.noofWashingMachines.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfSofas.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfSofas" value={inputWrapper.noOfSofas.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfACs.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfACs" value={inputWrapper.noOfACs.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfComputers.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfComputers" value={inputWrapper.noOfComputers.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_3-of-3">
+                                <b>Vehicles owned at home</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <!--  <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <input type="checkbox" name="noneVehicleOwned" value={noneVehicleOwned}>&nbsp;&nbsp;
+                                <label class="slds-form-element__label">None
+                                </label>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOf2Wheelers.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOf2Wheelers" value={inputWrapper.noOf2Wheelers.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOf3Wheelers.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOf3Wheelers" value={inputWrapper.noOf3Wheelers.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOf4Wheelers.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOf4Wheelers" value={inputWrapper.noOf4Wheelers.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">{inputWrapper.noOfCVs.label}
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:true={goodsCountPicklist.data}>
+                                    <lightning-combobox variant="label-hidden" name="noOfCVs" value={inputWrapper.noOfCVs.value} options={goodsCountPicklist.data.values}
+                                        onchange={handleInputChange}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryButton slds-button slds-button_brand fiButton" onclick={saveResidenceFI}>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
+            </lightning-accordion-section>
+        </lightning-accordion>
+            <div class="slds-grid slds-wrap slds-p-around--medium">
+                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+
+                </div> -->
+
+                <!-- <div class="slds-col  slds-p-horizontal_medium">
+                    <lightning-button class="button" label="Submit"></lightning-button>
+             
+            </div>   -->
+            <!-- CISP-2701- START -->
+                <div class="slds-col  slds-p-horizontal_medium slds-align_absolute-center">
+                    <!-- CISP-3069 fiLatitudeAndLogitude Class added  -->
+                    <button type="button" class="indusPrimaryButton slds-button slds-button_brand fiButton fiLatitudeAndLogitude" disabled={disabledCapturedBtn} onclick={fiLatitudeLongitude}>
+                        Capture FI Latitude & Longitude
+                    </button>
+                </div>
+            </div>
+            <!-- CISP-2701-END -->
+            <div class="slds-grid slds-wrap slds-p-around--medium">
+                <!-- <div class="slds-col slds-size_5-of-12 slds-p-horizontal_medium">
+
+                </div> -->
+                <div class="slds-col  slds-p-horizontal_medium slds-align_absolute-center">
+                    <lightning-button variant="brand" label="Submit" title="Submit" onclick={saveResidenceFI} class="indusPrimaryButton slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+    </template>
+</template>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Agri_Expenses_for_Proposed_Harvest__c</fullName>
+    <externalId>false</externalId>
+    <label>Total Agri Expenses for Proposed Harvest</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>1</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

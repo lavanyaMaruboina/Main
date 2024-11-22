@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AllOpportunities</fullName>
+    <columns>Lead_number__c</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Sub_Stage__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.LAST_UPDATE</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>LastStageName__c</columns>
+    <columns>Vehicle_Type__c</columns>
+    <columns>Product_Type__c</columns>
+    <columns>Motor_Insurance_Premium__c</columns>
+    <columns>X1st_yr_Insurance_Premium__c</columns>
+    <columns>Journey_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Final Terms</value>
+    </filters>
+    <filters>
+        <field>Product_Type__c</field>
+        <operation>equals</operation>
+        <value>Passenger Vehicles</value>
+    </filters>
+    <label>All Loan Applications</label>
+</ListView>

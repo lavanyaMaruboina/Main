@@ -1,0 +1,89 @@
+<!-- Html template modified by Ruchi Jain for otp verification-->
+<template>
+    
+    <!-- <button class="selfieUpload slds-button slds-button_brand " onclick={consentLoad}>Consent</button>
+    <button class="consentButton"  onclick={consentLoad}>clickme</button> -->
+    <!-- <template if:true={otppopup}>
+         <button class="slds-button slds-button_brand indusbutton">PAN</button> 
+        <lightning-card  class="slds-border_top slds-border_bottom slds-border_left slds-border_right slds-card slds-card_boundary" >
+
+    <section id="modal" 
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="modal-heading-01"
+    aria-modal="true"
+    aria-describedby="modal-content-id-1"
+    class="slds-modal slds-fade-in-open">
+
+<div class="slds-modal__container"> -->
+    <template if:true={otppopup}>
+        <section id="modal1"
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-02"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open">
+
+    <div class="slds-form slds-modal__container">
+    <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closepopup}>
+            <lightning-icon icon-name="utility:close" class="color" size="medium" variant="bare">
+            </lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+            OTP Generator
+        </h2>
+    </header>
+    <lightning-card variant="base">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-3 slds-m-left_xx-large">
+                    Enter OTP   
+                </div>
+                <div class="slds-col slds-size_1-of-3 slds-large-size_2-of-3" >
+                    <input class="slds-input" data-id="OTP" pattern="^[0-9]\d{4}$"  placeholder="xxxxx" disabled={disableInput} onclick={handleInput}></input >
+                </div>
+            </div>
+        </div>
+        <div class="slds-align_absolute-center">
+            <lightning-button
+                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large" variant='brand'
+                onclick={handleVerify} icon-position="left"  label="Verify">
+            </lightning-button>
+        </div>
+        <div>
+           
+            <!-- <lightning-button label="Verify"  variant="brand" onclick={handleVerify} type="submit"    class="slds-align_absolute-center  "></lightning-button>          -->
+            <!-- <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+            type="button" label="Verify" onclick={handleVerify}></lightning-button> -->
+        </div>
+        <div class="slds-grid slds-gutters slds-align_absolute-center">
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-2">
+                <lightning-button label="Resend"  onclick={handleResend}  type="submit" variant='brand'
+                disabled={resend} class=" slds-var-m-around_large slds-m-bottom_large ">
+                </lightning-button>
+                <template if:true = {showtimer}> <div> <p style ="color:brown;"> <span if:true = {showtimer}>  Resend OTP in {timervalue} <span id="timer"></span></span> </p> </div>
+                </template>
+                </div>            
+
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-2">
+                <lightning-button label="Refresh" onclick={handleRefresh} variant='brand'
+                    class="slds-var-m-around_large slds-m-bottom_large"></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</div>
+</section>
+
+<div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;"
+            id="modalBackdrops1">
+</div>
+</template>
+<!-- </div>
+</section>   
+</lightning-card>
+</template> -->
+</template>

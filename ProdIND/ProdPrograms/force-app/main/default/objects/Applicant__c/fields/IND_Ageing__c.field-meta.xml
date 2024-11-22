@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IND_Ageing__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(Opportunity__r.DSA_isDisbursed__c,&apos;NA&apos;,&apos;N/A&apos;, &apos;YES&apos;,&apos;RC Transferred&apos;,&apos;NO&apos;,TEXT(TODAY()-DATEVALUE(Opportunity__r.Payment_Request_Generation_Date__c)),&apos;NA&apos;)</formula>
+    <label>Ageing</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

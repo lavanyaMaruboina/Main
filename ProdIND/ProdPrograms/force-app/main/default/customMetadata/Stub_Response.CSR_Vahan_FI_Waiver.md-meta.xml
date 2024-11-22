@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>CSR Vahan FI Waiver</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">json</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{ 
+
+    &quot;Off_Addresss_Fi&quot;: &quot;Not Waived&quot;, 
+
+    &quot;Curr_Resi_Addresss_Fi&quot;: &quot;Waived&quot;, 
+
+    &quot;Perm_Resi_Addresss_Fi&quot;: &quot;Not Waived&quot; 
+
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">CSR Vahan FI Waiver</value>
+    </values>
+</CustomMetadata>

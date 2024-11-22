@@ -1,0 +1,17 @@
+<template>
+    <lightning-card>
+        <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId}
+            class="slds-align_absolute-center" onsubmit={handleSubmit}>
+            <lightning-input-field field-name="CMU_Accept__c" class="slds-hide"></lightning-input-field>
+            <lightning-input-field field-name="CreatedById" class="slds-hide"></lightning-input-field>
+            <lightning-input-field field-name="OwnerId" class="slds-hide"></lightning-input-field>
+
+            <lightning-button label='Accepts' type="submit" class=" slds-m-around_xx-large accept" variant="brand"
+                onclick={handleAccept}>
+            </lightning-button>
+            <lightning-button label='Reject' type="submit" class="slds-m-around_xx-large reject" variant="brand"
+                onclick={handleReject}>
+            </lightning-button>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

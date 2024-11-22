@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Perfios BS Report</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{ 
+  &quot;payload&quot;: { 
+    &quot;perfiosTransactionId&quot;: &quot;747P1639576361433&quot;, 
+    &quot;reportType&quot;: &quot;json&quot;, 
+    &quot;txnId&quot;: &quot;15122021192049869&quot;, 
+    &quot;Maker_Id&quot;: &quot;58930&quot; 
+  } 
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Perfios BS Report</value>
+    </values>
+</CustomMetadata>

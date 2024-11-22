@@ -1,0 +1,1188 @@
+<template>
+
+    <div>
+        <template if:true={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
+
+<lightning-accordion class="example-accordion" active-section-name="A">
+    <lightning-accordion-section name="A" label={label.Beneficiary_Details}>
+        <lightning-accordion class="example-accordion slds-p-vertical_small" active-section-name="A1" allow-multiple-sections-open="true">
+            <template if:true={isUsedVehicle}>
+                        <lightning-accordion-section name="A1" label={label.Adjustment}>
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table"
+                                        border="1">
+                                        <thead>
+                                            <tr class="slds-hint-parent">
+                                                <th>Adjusted Deal Number</th>
+                                                <th>Customer Name</th>
+                                                <th>Adjusted Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <template for:each={adjustmentDetails} for:item="adj">
+                                        <tr class="slds-hint-parent" key={adj.id}>
+                                            <td class="slds-p-around_small">
+                                                <lightning-layout multiple-rows="true" vertical-align="true">
+                                                    <lightning-layout-item size="5">
+                                                        <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                            onchange={handleAdjustmentInputFieldChange} type="text"
+                                                            name={adj.adjDealNumberDataId} data-id={adj.adjDealNumberDataId} data-key={adj.id}
+                                                            value={adj.dealNo} disabled={disableAdjustmentFields}>
+                                                        </lightning-input>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="1">
+                                                        <template if:true={adj.notFound}>
+                                                            <div class="slds-p-left_xxx-small">
+                                                                <span class="exclamation">!</span>
+                                                            </div>
+                                                        </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="6">
+                <lightning-button class="slds-theme_brand" data-id={adj.id} icon-position="right" variant="brand" style="margin-left: 35px;" name="btnGetCustomer1" type="button" label="Get Customer" disabled={disableAdjustmentFields} onclick={handleGetCustomerName}>
+                </lightning-button>
+            </lightning-layout-item>
+            </lightning-layout>
+            </td>
+            <td>
+                <lightning-input variant="label-hidden" class="slds-form-element__control" onchange={handleAdjustmentInputFieldChange} type="text" name={adj.customerNameDataId} data-id={adj.customerNameDataId} data-key={adj.id} value={adj.customerName} disabled={isCustomNameFieldDisable}>
+                </lightning-input>
+            </td>
+            <td>
+                <lightning-input variant="label-hidden" class="slds-form-element__control" onchange={handleAdjustmentInputFieldChange} type="number" data-key={adj.id} name={adj.adjAmountDataId} disabled={disableAdjustmentFields} data-id={adj.adjAmountDataId} value={adj.adjustedAmount}>
+                </lightning-input>
+            </td>
+            <td>
+                <lightning-button class="slds-theme_brand" data-id={adj.id} icon-position="right" variant="brand" name="btnClear" type="button" label="Clear" disabled={disableAdjustmentFields} onclick={handleClear}>
+                </lightning-button>
+            </td>
+            </tr>
+            </template>
+            <!-- Commented By: Daksh Mandowara 18/04/2022
+                                        Module: Benefeciary Details
+                                        Reason for comment: To build dynamic component for Adjustment Details.
+                                            <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber2Field" data-id="adjDealNumber2Field"
+                                                    value={adjDealNumber2} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer2"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName2Field" data-id="customerName2Field"
+                                                    value={customerName2} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount2Field" data-id="adjAmount2Field" value={adjAmount2}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber3Field" data-id="adjDealNumber3Field"
+                                                    value={adjDealNumber3} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer3"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName3Field" data-id="customerName3Field"
+                                                    value={customerName3} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount3Field" data-id="adjAmount3Field" value={adjAmount3}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber4Field" data-id="adjDealNumber4Field"
+                                                    value={adjDealNumber4} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer4"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName4Field" data-id="customerName4Field"
+                                                    value={customerName4} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount4Field" data-id="adjAmount4Field" value={adjAmount4}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber5Field" data-id="adjDealNumber5Field"
+                                                    value={adjDealNumber5} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer5"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName5Field" data-id="customerName5Field"
+                                                    value={customerName5} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount5Field" data-id="adjAmount5Field" value={adjAmount5}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber6Field" data-id="adjDealNumber6Field"
+                                                    value={adjDealNumber6} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer6"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName6Field" data-id="customerName6Field"
+                                                    value={customerName6} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount6Field" data-id="adjAmount6Field" value={adjAmount6}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber7Field" data-id="adjDealNumber7Field"
+                                                    value={adjDealNumber7} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer7"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName7Field" data-id="customerName7Field"
+                                                    value={customerName7} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount7Field" data-id="adjAmount7Field" value={adjAmount7}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-list_horizontal slds-p-around_small">
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="adjDealNumber8Field" data-id="adjDealNumber8Field"
+                                                    value={adjDealNumber8} required></lightning-input>
+                                                <lightning-button class="slds-theme_brand" icon-position="right"
+                                                    variant="brand" style="margin-left: 35px;" name="btnGetCustomer8"
+                                                    type="button" label="Get Customer" onclick={handleGetCustomerName}>
+                                                </lightning-button>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="text"
+                                                    name="customerName8Field" data-id="customerName8Field"
+                                                    value={customerName8} disabled={isCustomNameFieldDisable}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-input variant="label-hidden" class="slds-form-element__control"
+                                                    onchange={handleAdjustmentInputFieldChange} type="number"
+                                                    name="adjAmount8Field" data-id="adjAmount8Field" value={adjAmount8}>
+                                                </lightning-input>
+                                            </td>
+                                        </tr>-->
+            <tr class="slds-hint-parent">
+                <td></td>
+                <td>Total Adjusted Amount</td>
+                <td>
+                    <lightning-input variant="label-hidden" class="slds-form-element__control" onchange={handleAdjustmentInputFieldChange} type="number" name="totalAdjAmount" data-id="totalAdjAmount" disabled="true" value={totalAdjAmount}>
+                    </lightning-input>
+                </td>
+            </tr>
+
+            </table>
+            </div>
+            </div>
+
+    </lightning-accordion-section>
+    </template>
+    <template if:true={isPVUsedRefinanceDealer}>
+        <lightning-accordion-section name="A6" label="RC Limit Check (for Dealer)">
+            <div class="slds-form slds-grid slds-wrap slds-m-top_large">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">Dealer Name</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                <lightning-input-field field-name="Dealer_Sub_dealer_name__c" value ={rcLimitDealerName} name ="dealerNameField" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={oncheckRCLimitButtonForDealer} disabled ={isReadOnlyDealer}>
+                    Check RC Limit parameters</button>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">No. of proposals available</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                <lightning-input-field field-name="No_of_proposals_available__c" value ={noOfProposalsAvailable} name ="noOfProposalsAvailableField" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">Available disbursal amount</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                <lightning-input-field field-name="Available_disbursal_amount__c" value ={availableDisbursalAmount} name ="availableDisbursalAmountField" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">No. of days pending for RC submission for earlier applications</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                <lightning-input-field field-name="No_of_days_RC_Pending__c" value ={noOfDaysRCPending} name ="noOfDaysRCPendingField" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-6">
+                                <lightning-record-edit-form object-api-name="Vehicle_Detail__c" record-id={vehicleRecordId}>
+                                    <lightning-input-field field-name="Can_we_continue_with_above_RC_limit__c" value ={continueWithRCLimit} name ="canWeContinueWithRCLimitField" variant="label-hidden" disabled></lightning-input-field>
+                                </lightning-record-edit-form>
+                        </div>
+                        <div class="slds-col slds-size_5-of-6">
+                            <label class="slds-form-element__label ">RC limit cleared</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-m-bottom_small  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={uploadBranchForDealer}  value="Branch In-charge Approval Email" disabled ={disabledUploadBranchApproval} data-doctype="Branch In-charge Approval Email">
+                    Upload Branch Incharge approval </button>
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </template>
+    <template if:true={isPVUsedRefinanceDSA}>
+        <lightning-accordion-section name="A7" label="RC Limit Check (for DSA)">
+            <div class="slds-form slds-grid slds-wrap slds-m-top_large">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">Referrer Name</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Final_Term__c" record-id={finalTermRecordId}>
+                                <lightning-input-field field-name="Referrer_Name__c" value ={finalTermReferrerName} name ="rrferrerNameField" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_4-of-12 slds-clearfix">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={oncheckRCLimitButtonForDSA} disabled ={isReadOnlyDSA}>
+                    Check RC Limit parameters</button>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">No. of proposals available</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Final_Term__c" record-id={finalTermRecordId}>
+                                <lightning-input-field field-name="No_of_proposals_available__c" value ={noOfProposalsAvailableForDSA} name ="noOfProposalsAvailableField" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">Available disbursal amount</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Final_Term__c" record-id={finalTermRecordId}>
+                                <lightning-input-field field-name="Available_Disbursal_Amount__c" value ={availableDisbursalAmountForDSA} name ="availableDissmountDSA" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-4">
+                            <label class="slds-form-element__label ">No. of days pending for RC submission for earlier applications</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-4 slds-clearfix" style="width:120px">
+                            <lightning-record-edit-form object-api-name="Final_Term__c" record-id={finalTermRecordId}>
+                                <lightning-input-field field-name="No_of_days_RC_Pending__c" value ={noOfDaysRCPendingForDSA} name ="noOfDaysPendingDSA" variant="label-hidden" disabled></lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-6">
+                                <lightning-record-edit-form object-api-name="Final_Term__c" record-id={finalTermRecordId}>
+                                    <lightning-input-field field-name="Can_we_continue_with_above_RC_limit__c" value ={continueWithRCLimitForDSA} name ="canWeContinueWithRCLimitField" variant="label-hidden" disabled></lightning-input-field>
+                                </lightning-record-edit-form>
+                        </div>
+                        <div class="slds-col slds-size_5-of-6">
+                            <label class="slds-form-element__label ">RC limit cleared</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-m-bottom_small  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={uploadBranchForDSA}  value="Branch In-charge Approval Email For DSA" disabled ={disabledUploadBranchApproval}  data-doctype="Branch In-charge Approval Email For DSA">
+                    Upload Branch Incharge approval For DSA</button>
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </template>
+    <lightning-accordion-section name="A2" label={label.Beneficiary_Details}>
+        <template if:true={isUsedVehicle}>
+                            <div class="slds-form slds-grid slds-wrap">
+                            
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">DSA Name</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                name="dsaNameField" data-id="dsaNameField" onchange={handleInputFieldChange}
+                                                value={dsaName} disabled>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Payment to DSA</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" type="checkbox"
+                                                disabled={disableDSA} variant="label-hidden" name="paymentToDSAField"
+                                                data-id="paymentToDSAField" onchange={handleInputFieldChange}
+                                                checked={paymentToDSA} >
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Co-borrower Name</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                name="coborrowerNameField" data-id="coborrowerNameField"
+
+                                                onchange={handleInputFieldChange} value={coborrowerName} disabled={diableCoborrower} > <!--CISP-3550-->
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                                        
+                            </div>
+                            <div class="slds-form slds-grid slds-wrap">
+
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input class="slds-form-element__control"
+                                                name="paymentToCoborrowerField" data-id="paymentToCoborrowerField"
+                                                label="Payment to Co-borrower" onchange={handleInputFieldChange}
+                                                
+                                                type="checkbox" checked={paymentToCoborrower} disabled={disablepaymenttocoborrowe}> <!--CISP-3550-->
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </template>
+        <template if:true={showBodyChassisInfo}>
+            <div class="slds-form slds-grid slds-wrap">
+                    
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Payment to Dealer</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <!-- {disableDealer}  -->
+                            <lightning-input class="slds-form-element__control" type="checkbox"
+                                 variant="label-hidden" name="paymentToDealerField"
+                                data-id="paymentToDealerField" onchange={handleInputFieldChange}
+                                disabled={disableDealer} checked={paymentToDealer} >
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Payment to Manufacturer</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" type="checkbox"
+                                 variant="label-hidden" name="paymentToBuilderField"
+                                data-id="paymentToBuilderField" onchange={handleInputFieldChange}
+                                disabled={disableBuilder} checked={paymentToBuilder} >
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>                
+        <div class="slds-form slds-grid slds-wrap">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table" border="1">
+                <thead>
+                    <tr class="slds-hint-parent">
+                        <th>Name</th>
+                        <th>Account Number</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tr class="slds-hint-parent">
+                    <td>
+                        <!-- <lightning-combobox data-id="beneficiaryName1Field" class="slds-form-element__control" name="beneficiaryName1Field" label="-- Select --" value={beneficiaryName1} variant="label-hidden" placeholder="Select Name 1" options={beneficiary1NameOptions} onchange={handleBeneficiaryInputFieldChange}
+                            disabled={isDisableBeneficiaryName1}>
+                        </lightning-combobox> -->
+                        
+                        <template if:false={showBankCustomLookup1}>
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="beneficiaryName1Field" data-id="beneficiaryName1Field" onchange={handleBeneficiaryInputFieldChange}
+                            value={beneficiaryName1} disabled></lightning-input>
+                        </template>
+
+                        <template if:true={showBankCustomLookup1}>
+                            <c-I-N-D_-L-W-C_-Custom_-Lookup
+                            is-value-selected={benefiId}
+                            selected-name={beneficiaryName1}
+                            object-name="Benefi__c"
+                            fetch-field="Name"
+                            search-field={searchField}
+                            filter-field="Dealership_Nature__c"
+                            filter-term="EFN"
+                            onlookupselected={selectedBankHandler}
+                            onclearvalue={clearBankHandler}
+                            select-field-name="Name"
+                            disable-value={isDisabled}
+                            required
+                            is-custom-class-not-applicable="true">
+                            </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                        </template> 
+
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="text" name="beneficiaryAccNo1Field" data-id="beneficiaryAccNo1Field" value={beneficiaryAccNo1} disabled={isbeneficiaryAccNo1Disabled}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="number" name="beneficiaryAmount1Field" data-id="beneficiaryAmount1Field" value={beneficiaryAmount1} disabled={isDisableBeneficiaryAmount1}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <td>
+                        <!-- <lightning-combobox data-id="beneficiaryName2Field" class="slds-form-element__control" name="beneficiaryName2Field" label="-- Select --" value={beneficiaryName2} variant="label-hidden" placeholder="Select Name 2" options={beneficiary2NameOptions} onchange={handleBeneficiaryInputFieldChange}
+                            disabled={isDisableBeneficiaryName2}>
+                        </lightning-combobox> -->
+
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="beneficiaryName2Field" data-id="beneficiaryName2Field" onchange={handleBeneficiaryInputFieldChange}
+                            value={beneficiaryName2} disabled></lightning-input>
+
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="text" name="beneficiaryAccNo2Field" data-id="beneficiaryAccNo2Field" value={beneficiaryAccNo2} disabled={isbeneficiaryAccNo2Disabled}>
+                        </lightning-input>
+                    </td>
+                    <td>
+
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="number" name="beneficiaryAmount2Field" data-id="beneficiaryAmount2Field" value={beneficiaryAmount2} disabled={isDisableBeneficiaryAmount2}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <td>
+                        <!-- <lightning-combobox data-id="beneficiaryName3Field" class="slds-form-element__control" name="beneficiaryName3Field" label="-- Select --" value={beneficiaryName3} variant="label-hidden" placeholder="Select Name 3" options={beneficiary3NameOptions} onchange={handleBeneficiaryInputFieldChange}
+                            disabled={isDisableBeneficiaryName3}>
+                        </lightning-combobox> -->
+
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="beneficiaryName3Field" data-id="beneficiaryName3Field" onchange={handleBeneficiaryInputFieldChange}
+                            value={beneficiaryName3} disabled></lightning-input>
+
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="text" name="beneficiaryAccNo3Field" data-id="beneficiaryAccNo3Field" value={beneficiaryAccNo3} disabled={isbeneficiaryAccNo3Disabled}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="number" name="beneficiaryAmount3Field" data-id="beneficiaryAmount3Field" value={beneficiaryAmount3} disabled={isDisableBeneficiaryAmount3}>
+                        </lightning-input>
+                    </td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <td>
+                        <!-- <lightning-combobox data-id="beneficiaryName4Field" class="slds-form-element__control" name="beneficiaryName4Field" label="-- Select --" value={beneficiaryName4} variant="label-hidden" placeholder="Select Name 4" options={beneficiary4NameOptions} onchange={handleBeneficiaryInputFieldChange}
+                            disabled={isDisableBeneficiaryName4}>
+                        </lightning-combobox> -->
+
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="beneficiaryName4Field" data-id="beneficiaryName4Field" onchange={handleBeneficiaryInputFieldChange}
+                            value={beneficiaryName4} disabled></lightning-input>
+
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="text" name="beneficiaryAccNo4Field" data-id="beneficiaryAccNo4Field" value={beneficiaryAccNo4} disabled={isbeneficiaryAccNo4Disabled}>
+                        </lightning-input>
+                    </td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control required" onchange={handleBeneficiaryInputFieldChange} type="number" name="beneficiaryAmount4Field" data-id="beneficiaryAmount4Field" value={beneficiaryAmount4} disabled={isDisableBeneficiaryAmount4}>
+                        </lightning-input>
+                    </td>
+                </tr>
+
+
+
+                <tr class="slds-hint-parent">
+                    <td></td>
+                    <td>Total Beneficiary Amount</td>
+                    <td>
+                        <lightning-input variant="label-hidden" class="slds-form-element__control" onchange={handleBeneficiaryInputFieldChange} type="number" name="totalBeneficiaryAmount" data-id="totalBeneficiaryAmount" value={totalBeneficiaryAmount} disabled></lightning-input>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+    </lightning-accordion-section>
+
+    <lightning-accordion-section name="A3" label={label.ACH_SI_only_for_Physical_ACH_SI}>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Physical Mandate Dispatched to
+                                            Karapakkam<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" variant="label-hidden" name="phyMandateDispToKarapakkamField" data-id="phyMandateDispToKarapakkamField" value={phyMandateDispToKarapakkam} onchange={handleInputFieldChange} placeholder="-- Select --"
+                            options={phyMandateDispToKarapakkamOptions} disabled={disableMandate} required><!--D2C change-->
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </lightning-accordion-section>
+
+	<template if:true={isSellerSectionEnabled}>
+		<lightning-accordion-section name="A4" label={label.Seller_Bank_Details}>
+			<div class="slds-form slds-grid slds-wrap">
+
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Bank Name<abbr title="required"
+													class="slds-required">*</abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input class="slds-form-element__control" variant="label-hidden" name="bankNameField" data-id="bankNameField" onchange={handleInputFieldChange} value={bankName} disabled={isSellerBankFieldDisabled} required>
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">A/c No.<abbr title="required"
+													class="slds-required">*</abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input class="slds-form-element__control" variant="label-hidden" name="accoundNumberField" data-id="accoundNumberField" onchange={handleInputFieldChange} value={accountNumber} disabled={isSellerBankFieldDisabled} required>
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Bank Branch Name<abbr title="required"
+													class="slds-required">*</abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input class="slds-form-element__control" variant="label-hidden" name="bankBranchNameField" data-id="bankBranchNameField" onchange={handleInputFieldChange} value={bankBranchName} disabled={isSellerBankFieldDisabled} required>
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="slds-form slds-grid slds-wrap">
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Bank Branch Pincode<abbr
+													title="required" class="slds-required">*</abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input class="slds-form-element__control" variant="label-hidden" name="bankBranchPincodeField" data-id="bankBranchPincodeField" onchange={handleInputFieldChange} value={bankBranchPincode} disabled={isSellerBankFieldDisabled} required>
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Bank IFSC Code<abbr
+													title="required" class="slds-required">*</abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input class="slds-form-element__control" variant="label-hidden" name="bankifsccodeField" data-id="bankifsccodeField" onchange={handleInputFieldChange} value={bankBranchIFSCCode} disabled={isSellerBankFieldDisabled} required>
+							</lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			</br>
+
+			<div class="slds-clearfix">
+				<div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+					<div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+						<button class="indusPrimaryVehicleButton slds-button slds-button_brand " data-doctype="Seller Passbook" onclick={handlePassbook} disabled={isSellerBankFieldDisabled}>
+											Passbook
+										</button>
+					</div>
+				</div>
+			</div>
+
+			</br>
+
+			<div class="slds-clearfix">
+				<div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+					<div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+						<button class="indusPrimaryVehicleButton slds-button slds-button_brand " data-doctype="Seller Bank Statement" onclick={handleAccountStatement} disabled={isSellerBankFieldDisabled}>
+											Account Statement
+										</button>
+					</div>
+				</div>
+			</div>
+
+			</br>
+
+			<div class="slds-clearfix">
+				<div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+					<div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+						<button class="indusPrimaryVehicleButton slds-button slds-button_brand " data-doctype="Seller Cancel Cheque" onclick={handleCancelledCheque} disabled={isSellerBankFieldDisabled}>
+											Cancelled Cheque
+										</button>
+					</div>
+				</div>
+			</div>
+
+		</lightning-accordion-section>
+	</template>
+    <lightning-accordion-section name="A5" label={label.Disbursement}>
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">{dealerPaymentLabel}</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" variant="label-hidden" name="dealerPaymentField" data-id="dealerPaymentField" onchange={handleInputFieldChange} value={dealerPayment} disabled>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-accordion-section>
+    
+    <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " disabled={disabledSMSResnd} onclick={handlesmsClick}>
+                                            Resend SMS
+                                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--SFTRAC-1896 Start-->
+        <template lwc:if={isTractor}>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <!--<span><lightning-input type="date" label="Payment to be Made On" value={tfloanDealDate} onchange={handleTFPaymentInputChange} disabled={isTFPaymentMadeDisabled} >
+                    </lightning-input></span>-->
+                    <span><lightning-input data-name="text"  label="Payment to be Made On" value={tfloanDealDate} disabled="true" >
+                    </lightning-input></span> <!--SFTRAC-2262-->
+                </div>
+                <div class="slds-col">
+                    <span><lightning-input  data-name="text"  label="1st EMI due date"  field-name="First_EMI_Date__c" value={tffirstEMIdueDate} disabled="true">
+                    </lightning-input></span>
+                </div>
+                <div class="slds-col">
+                    <span><lightning-input  data-name="text"  label="2nd EMI due date"  field-name="Second_EMI_Date__c" value={tfsecEMIdueDate} disabled="true">
+                    </lightning-input></span>
+                </div>
+            </div>
+    
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <span><lightning-input data-name="tfcrm_irr" disabled="true" type="text" label="CRM IRR" value={tfCRMIRR}></lightning-input></span>
+                </div>
+                <div class="slds-col">
+                    <span><lightning-input data-name="tfgross_irr" disabled="true" type="text" label="Gross IRR" value={tfGrossRR}></lightning-input></span>
+                  </div>
+                  <div class="slds-col">
+                    <span><lightning-input data-name="tfnet_irr" disabled="true" type="text" label="Net IRR" value={tfNetRR}></lightning-input></span>
+                  </div>
+            </div>
+    
+            <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleTFOfferEngine} 
+                                disabled={isTFOfferEngineDisabled}> Run Offer Engine</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleTFInstallment} 
+                                disabled={isTFInstallmentDisabled}> Installment Schedule</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <template lwc:if={isModalOpenForTractor}>
+                <section role="dialog" class="slds-modal slds-fade-in-open slds-modal_large">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header" style="background: #8C3137;">
+                            <button style="background-color: grey"
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closebtn" title="Close"
+                                onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <div>
+                                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"
+                                    style="color: white;">
+                                    Installment Schedule
+                                </h2>
+                            </div>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium"
+                            style="overflow-y: auto;" id="modal-content-id-12">
+                            <!--<c-lwc_tf_emi-Details record-id={recordid} deal-id={dealId}> </c-lwc_tf_emi-Details>-->
+                            <c-lwc_tf_emi-Details record-id={recordid} deal-id={dealId} show-installment-model={showInstallmentModel} is-structured={isStructured} onclosemodal={closeModal} called-from="paymentRequest"> </c-lwc_tf_emi-Details>
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+              </template>
+        </template>
+        <!--SFTRAC-1896 End-->
+    
+        <template lwc:if={isNotTractor}>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                  <span><lightning-input type="date" label="Payment to be Made On" 
+                    value={loanDealDate} onchange={handlePaymentInputChange} disabled={isPaymentMadeDisabled} >
+               </lightning-input></span>
+                </div>
+                <div class="slds-col">
+                    <span></span><lightning-combobox label="1st EMI due date"  name ='First_Emi_Date' value={firstEMIdueDate} disabled={showemidropdown} placeholder="-- Select --"  options={emidatelist} onchange={handleFirstEMICahngeHandler}></lightning-combobox></span>
+                  </div>
+                  <div class="slds-col">
+                    <span><lightning-input  data-name="text"  label="2st EMI due date"  field-name="X2nd_EMI_Due_Date__c" value={secEMIdueDate} disabled="true"
+                        onchange={handleFieldChange}>
+                  </lightning-input></span>
+                  </div>
+              </div>
+              <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand "  onclick={handleOfferEngine} disabled={isOfferEngineDisabled}>
+                                Trigger Offer Engine
+                                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand "  onclick={handleInstallmentSchedule} disabled={isInstallmentScBtnShown}>
+                                Installment Schedule
+                                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <template lwc:if={irrComBtnClicked}>
+                <div style="display: block;margin-left: auto;margin-right: auto;width: 90%;margin-bottom: 3%;">
+                    <div class="slds-text-heading_medium slds-col slds-size_1-of-1" style="width:250px">IRR Comparison</div>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">IRR Values</th>
+                            <th scope="col">IRR Values at the of sanction</th>
+                            <th scope="col">IRR Values Of Offer Engine</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                          <tr style="padding-left: 100px;">
+                            <td class="slds-text-align_center">CRM IRR</td>
+                            <td class="slds-text-align_center">{irrSanctionObj.crmIRR}</td>
+                            <td class="slds-text-align_center">{irrOfferEngineObj.crmIRR}</td>
+                          </tr>
+                          <tr style="padding-left: 100px;">
+                            <td class="slds-text-align_center">GROSS IRR</td>
+                            <td class="slds-text-align_center">{irrSanctionObj.grossIRR}</td>
+                            <td class="slds-text-align_center">{irrOfferEngineObj.grossIRR}</td>
+                          </tr>
+                          <tr style="padding-left: 100px;">
+                            <td class="slds-text-align_center">NET IRR</td>
+                            <td class="slds-text-align_center">{irrSanctionObj.netIRR}</td>
+                            <td class="slds-text-align_center">{irrOfferEngineObj.netIRR}</td>
+                          </tr>
+                          <tr lwc:if={isTw} style="padding-left: 100px;">
+                            <td class="slds-text-align_center">IMPUTED IRR</td>
+                            <td class="slds-text-align_center">{irrSanctionObj.imputedIRR}</td>
+                            <td class="slds-text-align_center">{irrOfferEngineObj.imputedIRR}</td>
+                          </tr>
+                    </tbody>
+                </table>
+                </div>
+            </template>    
+           <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+              <span><lightning-input data-name="crm_irr" disabled="true" type="text"
+                label="CRM IRR" value={crmIRR}>
+              </lightning-input></span>
+            </div>
+            <div class="slds-col">
+                <span><lightning-input data-name="gross_irr" disabled="true" type="text"
+                  label="GROSS IRR" value={grossIRR}>
+                </lightning-input></span>
+              </div>
+              <template lwc:if={isPv}>
+                <div class="slds-col">
+                    <span><lightning-input data-name="net_irr" disabled="true" type="text"
+                      label="Net IRR" value={netIRR}>
+                    </lightning-input></span>
+                  </div>
+              </template>
+            <template lwc:if={isTw}>
+              <div class="slds-col">
+                <span>
+                  <lightning-input data-name="imputed_irr" disabled="true" type="text"
+                    label="Imputed IRR" value={imputedIRR}>
+                  </lightning-input>
+                </span>
+              </div>
+            </template>
+            <div class="slds-col">
+                <span><lightning-input data-name="emi" disabled="true" type="text"
+                  label="EMI" value={emiValue}>
+                </lightning-input></span>
+              </div>
+          </div>
+          <!-- <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand "  onclick={handleTriggerIRRDev} disabled={isDisabledTriggerIRR}>
+                            Trigger IRR Deviation
+                                            </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <template if:true={openIRRDeviation}>
+            <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+                <c-i-n-d-_-l-w-c-_-view-deviation receviedvaluefromparent={valuesPassedToChild}>
+                </c-i-n-d-_-l-w-c-_-view-deviation>
+            </div>
+        </template>
+        <c-i-n-d-_-l-w-c-_-view-deviation receviedvaluefromparent={valuesPassedToChild} ontriggerdeviations={triggerDeviationsClick}>
+        </c-i-n-d-_-l-w-c-_-view-deviation>
+        </template>
+        <template lwc:if={isNotTractor}>
+            <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand " disabled={isRevokedDisabled} onclick={handleRevoke}>
+                                                    Revoke
+                                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    
+    <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " disabled={disablefields} onclick={handleSubmit}>
+                                            Submit
+                                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template if:false={frompostsanction}>
+    <div class="slds-form slds-grid slds-wrap slds-grid_align-center slds-p-top_small">
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleRetriggerPR} disabled={disableReTriggerPR}>
+                                            Re-Trigger Payment Request
+                                        </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </template>
+
+    </lightning-accordion>
+    </lightning-accordion-section>
+
+</lightning-accordion>
+
+<template if:true={uploadFileFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={closeUpload}
+                currentloanapplicationid={recordid} currentapplicantid={applicantid}
+                uploadviewdocpopup={uploadDocFlag} createdoconparentbutton="true" title={uploadTitle}
+                doctype={docType} isphotocopy={showPhotoCopy}
+                showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}>
+            </c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+<template if:true={uploadViewFileFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={closeUpload}
+                currentloanapplicationid={recordid} currentapplicantid={applicantid}
+                uploadviewdocpopup={uploadDocFlag} createdoconparentbutton="false" title={docType}
+                doctype={docType} isphotocopy={showPhotoCopy} showdocview="true" documentrecordidfromparent={documentRecordId}
+                showupload="false" vehicledocs={isVehicleDoc} alldocs={isAllDocType}>
+            </c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+</div>
+<template if:true={isLoading}>
+    <div class="slds-var-p-around_x-large">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </div>
+</template>
+<!-- SFTRAC - 163 -->
+<template if:true={isModalOpen}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container" style="width : 70%;max-width: 90em;">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-012" class="slds-text-heading_medium slds-hyphenate">{modalHeader}</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <template  lwc:if={isCaseFI}>
+                    <div style="margin-left: 30%;">
+                        <lightning-button variant="brand" label="Redo FI - upload new pics" title="Redo FI - upload new pics" name="RedoFI" onclick={handleChange} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Borrower change ? income change" title="Others - Borrower change ? income change" name="createNewLoanFI" onclick={handleChange} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </template>
+                <template  lwc:elseif={isAssetVerExceeded}>
+                    <div style="margin-left: 30%;">
+                        <lightning-button variant="brand" label="Redo Asset Verification" title="Redo Asset Verification" name="AssetVerification" onclick={handleChange} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Other" title="Other" name="createNewLoanAssetVer" onclick={handleChange} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </template>
+                <template lwc:elseif={isCibilPulled}>
+                    <template for:each={applicantCibilRecordList} for:item="item">
+                        <div key={item.applicantId} class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2" style="margin:10px;">
+                                <span>{item.nameAndType}</span>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2" style="margin:10px;">
+                                <span>
+                                    <lightning-button
+                                        variant="brand"
+                                        label="Pull CIBIL"
+                                        title="Pull CIBIL"
+                                        name="input5"
+                                        data-id={item.applicantId}
+                                        onclick={handleChange}
+                                        class="slds-m-left_x-small"
+                                    ></lightning-button>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                    <div style="margin-top:10px;margin-left:35%">
+                        <lightning-button variant="brand" label="CIBIL score change from the previous score" title="CIBIL score change from the previous score" name="createNewLoanCIBIL" onclick={handleChange} class="slds-m-left_x-small"></lightning-button> 
+                    </div>
+                </template>
+                <template lwc:elseif={isCamApproval}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-text-align_center slds-m-around_x-small">
+                                    <lightning-button class="slds-button slds-button_brand btnClass indusPrimaryVehicleButton" variant="brand" 
+                                                                    type="submit" name="camApproval" label="Re-approval of CAM"
+                                                                    onclick={handleChange}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-text-align_center slds-m-around_x-small">
+                                    <lightning-button class="slds-button slds-button_brand btnClass indusPrimaryVehicleButton" variant="brand" 
+                                                                    type="submit" name="createNewLoanCAM" label="Change in Loan Application"
+                                                                    onclick={handleChange}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                </template>
+                <template lwc:if={isReapprovalOfCam}>
+                    <c-l-w-c-_-manual-deviation-mitigants disable-child-button={isdisableChildButton} cam-rec-id={camRecId} from-parent="BeneficiaryDetails" onapprovalsuccess={selectedNavHandler}></c-l-w-c-_-manual-deviation-mitigants>
+                </template>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+</template>
+<template lwc:if={isISModalOpen}>
+    <c-i-n-d-_-l-w-c-_-installment-schedule record-id={recordid} show-installment-model={isISModalOpen} onclose={handleCloseModal} onsubmit={handleInsSubmit}></c-i-n-d-_-l-w-c-_-installment-schedule>
+</template>
+<template if:true={showRevokeModal}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+        </svg>
+        <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__header">
+        <h1  class="slds-modal__title slds-hyphenate">Revoke ?</h1>
+        </div>
+        <div class="slds-modal__content slds-p-around_medium" >
+        <strong>Are you sure you want to Revoke the Application?</strong>
+        <!--CISP-4628 Start-->
+        <br/><br/>
+        <template lwc:if={showUserSelectionLookupOnRevoke}>
+            <c-generic-custom-lookup is-value-selected={isUserSelected} selected-name={selectedUserName}
+                icon-name='standard:avatar' is-called-from-revoke="true" parent-data={revokeData}
+                onclearvalue={clearUserSelection} onlookupselected={handleUserSelection} select-field-name='Ben Code'
+                small-input="true">
+            </c-generic-custom-lookup>
+        </template>
+        <!--CISP-4628 End-->
+        </div>
+        <div class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeRevokeModal}>Cancel</button>
+        <button class="slds-button slds-button_brand" onclick={handleRevokeConfirm} disabled={isConfirmDisabled}>Confirm</button>
+        </div>
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;" role="presentation"></div>
+</template>
+</template>

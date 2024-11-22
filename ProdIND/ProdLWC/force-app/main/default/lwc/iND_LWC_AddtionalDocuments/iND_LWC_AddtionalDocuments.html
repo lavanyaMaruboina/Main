@@ -1,0 +1,1269 @@
+<template>
+    <template if:true={isCheckBoxSectionOpen}>
+        <div class="slds-align_absolute-center slds-p-around_small" style="border: 1px solid;">
+            <h3>{headerTitle}</h3>
+        </div>
+        <div class="slds-align_absolute-center slds-p-around_large slds-m-left_xx-large slds-m-right_xx-large">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox"  label="Updated RC Document" name="RC Document" onchange={onRCClick} class="chkBox" disabled={isReadOnly} checked={isRCVisible}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox"  label="Canceled Cheque: Co-borrower bank account" name="Co-Borrower's Cancel Cheque" class="chkBox" onchange={handleCoboroowercancelChqCo} disabled={coBorrowerReadOnly} checked={isCoborrowercancelCheq}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                        <lightning-input type="checkbox"   label="DD for closing existing loan" name="DD for closing existing loan" class="chkBox" onchange={handleDDforClosing} disabled={isD2CDisabled} checked={isBankTransfer}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                    <!--CISP-2432-->    <lightning-input type="checkbox"   label="Buyer-Seller undertaking  letter" name="Buyer-Seller Undertaking letter" class="chkBox" onchange={handleBuyerSeller} disabled={isD2CDisabled} checked={isBuyerSeller}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                        <lightning-input type="checkbox"  label="Foreclosure letter for closed existing loan" class="chkBox" name="Foreclosure letter for closed existing loan" onchange={handleForeclosure} disabled={isD2CDisabled} checked={isForeClosure}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                    <!--CISP-2432-->    <lightning-input type="checkbox"  label="Customer undertaking letter (indemnity)" class="chkBox" name="Indemnity letter" onchange={handleindemnity} disabled={isReadOnly} checked={isIndemnityLetter}> </lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox"  label="Passbook: Seller bank account" name="Seller's Passbook" class="chkBox" onchange={handleSellerPassbook} disabled={isReadOnly} checked={isSellerPassbook}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox"  label="Sale agreement" name="Sale Agreement" class="chkBox" onchange={handleSaleAgreement} disabled={isReadOnly} checked={isSaleAgreement}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Bank statement: Seller bank account" class="chkBox" name="Seller's Bank Statement" onchange={handlesellerBankState} disabled={isReadOnly} checked={issellerBankState}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Tax invoice" name="Tax Invoice" class="chkBox" onchange={handleTaxInvoice} disabled={isReadOnly} checked={isTaxInvoice}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled cheque: Seller bank account" class="chkBox" name="Seller's Cancel Cheque" onchange={handlesellerChqCancel} disabled={isReadOnly} checked={issellerChqCancel}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Payment Receipt & Remarks" name="Payment Receipt" class="chkBox" onchange={handlePaymentReceipts} disabled={isReadOnly}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox"  label="Passbook: Borrower bank account" name="Borrower's Passbook" class="chkBox" onchange={handleborrowPassbook} disabled={isReadOnly} checked={isborrowPassbook}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled NOC" name="NOC" onchange={handleNOC} class="chkBox" checked={isNOC} disabled={isNOCMandatory}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Bank statement: Borrower bank account" name="Borrower's Bank Statement" class="chkBox" onchange={handleborrowerBankState} disabled={isReadOnly} checked={isborrowerBankState}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                        <lightning-input type="checkbox" label="Branch undertaking letter" name="Branch Undertaking letter" class="chkBox" onchange={handleBranchUndertake} disabled={isD2CDisabled} checked={isBranchUndertake}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled cheque: Borrower bank account" class="chkBox" name="Borrower's Cancel Cheque" onchange={handleborrowercancelCheq} disabled={isReadOnly} checked={isborrowercancelCheq}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Declaration of Good Health (borrower)" class="chkBox" name="Declaration of Borrower Good Health" checked={isBorrowerDeclare} onchange={handleBorrowerDeclare} disabled={isBorrowerMandetory}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Passbook: Co-borrower bank account" class="chkBox" name="Co-Borrower's Passbook" onchange={handleCoborrowerPassbook} disabled={coBorrowerReadOnly} checked={isCoborrowPassbook}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Declaration of Good Health (co-borrower)" class="chkBox" checked={isCoBorrowerDeclare} name="Declaration of Co-Borrower Good Health" onchange={handleCoBorrowerDeclare} disabled={isCoBorrowerMandetory}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Bank statement: Co-borrower bank account" class="chkBox" name="Co-Borrower's Bank Statement" onchange={handleCoborrowerBankState} disabled={coBorrowerReadOnly} checked={isCoborrowerBankState}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+    <template if:false={stageCheck}>
+    </template>
+    <template if:true={isadditionDocSectionOpen}>
+        <lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} class="slds-size_12-of-12">
+                <template if:true={noDocSelected}><template if:false={isCheckBoxSectionOpen}> <c-i-n-d_-l-w-c_-additional-documents-child record-id={recordId} ondisablesubmit={childChange} deal-id={dealId}></c-i-n-d_-l-w-c_-additional-documents-child></template>
+                </template>
+                <template if:true={isRCVisible}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="RC">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} value="RC Document" disabled={disableCaptureChassisNumber}>
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewRC" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label ">RC in name of </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="RCOwner" label="RC in name of" variant="label-hidden" type="text" data-id="RCOwner" value={rcDoumentData.RC_Owner__c} required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Hypothecation available </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} value={rcDoumentData.Hypothecation_available__c} name="Hypothecationavailable" label="Hypothecation available" variant="label-hidden" options={yesNoOptions} type="text" data-id="Hypothecationavailable" required disabled={isNotPreDisbursement}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Hypothecation in name of </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="hypothecationName" label="Hypothecation in name of " variant="label-hidden" type="text" data-id="hypothecationName" options={hypothecationName} required value={rcDoumentData.Hypothecation_in_name_of__c} disabled={isNotPreDisbursement}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Are entered details as per document uploaded?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="enteredDetailsAsPerDocRC" value={rcDoumentData.Are_enter_details_as_per_RC_doc_upload__c} options={optionsEnteredDetailsAsPerDocRC} label="Are entered details as per document uploaded?" variant="label-hidden" type="text" data-id="valueEnteredDetailsAsPerDocRC" disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Is RC Document legible ?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isRCDocLegible" options={optionsIsRCDocLegible} value={rcDoumentData.Are_entered_details_as_per_document_uplo__c} label="Is RC Document legible ?" variant="label-hidden"  data-id="valueIsRCDocLegible" disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="remarksRCDoc" value={rcDoumentData.Remarks_for_RC_Upload__c} label="Remarks" variant="label-hidden" type="text" data-id="valueRemarksRCDoc" disabled={disabledFields}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBankTransfer}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Transfer">
+                        <template if:true={isDDforClosing}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="DD for closing existing loan">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="DD for closing existing loan">
+                                            Upload <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewDDClosingLoan" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is sale DD legible ? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSaleLegibleDD" value={bankTransfer.Is_sale_DD_legible__c} data-id="valueIsSaleLegibleDD" variant="label-hidden" options={optionsIsSaleLegibleDD} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="remarksSaleLegibleDD" value={bankTransfer.Remarks_for_DD__c} label="Remarks" variant="label-hidden" type="text" data-id="valueRemarksSaleLegibleDD" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isForeClosure}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Foreclosure letter for closed existing loan">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Foreclosure letter for closed existing loan">
+                                            Upload <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewForeClosure" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is sale Foreclosure Letter legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isForeclosureLetterLegible" value={foreclosureLetter.Is_sale_Foreclosure_Letter_legible__c} data-id="valueIsForeclosureLetterLegible" label="Is sale Foreclosure Letter legible ?" variant="label-hidden" options={optionsIsForeclosureLetterLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="foreclosureLetterRemarks" value={foreclosureLetter.Remarks_for_foreclosure_letter__c} data-id="valueForeclosureLetterRemarks"  label="Remarks" variant="label-hidden" type="text" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isSeller}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="  Seller Bank Details ">
+                        <div class="slds-form slds-grid slds-wrap">
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label ">Bank name </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} value={sellerData.Seller_Bank_name__c} label="Bank name" variant="label-hidden" data-id="sellerBankName" required options={bankNameList} disabled={isNotPreDisbursement}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Account number </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={sellerData.Seller_Account_number__c} label="Account number" variant="label-hidden" type="text" data-id="sellerAccountNumber" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Name of account holder </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={sellerData.Name_of_Seller_account_holder__c} label="Name of account holder " variant="label-hidden" type="text" data-id="sellerAccountHolder" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">IFSC code </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="ifscCodeSeller" value={sellerData.IFSC_code_Seller__c} label="IFSC code " data-id="valueIfscCodeSeller" variant="label-hidden" type="text" disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isSellerPassbook}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Passbook">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Seller's Passbook">
+                                            Upload PassBook <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewSellerPassBook" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per passbook uploaded? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSellerPassbookUploaded" value={sellerData.entered_details_asper_passbook_upload__c} data-id="valueSellerPassbookUploaded" label="Are entered details as per passbook uploaded?" options={optionsSellerPassbookUploaded} variant="label-hidden" disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is passbook legible ? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSellerPassbookLegible" value={sellerData.Is_passbook_legible_for_Seller__c} data-id="valueIsSellerPassbookLegible" label="Is passbook legible ?" variant="label-hidden" options={optionsIsSellerPassbookLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="sellerPassbookRemarks" value={sellerData.Passbook_Remarks_for_Seller__c} data-id="valueSellerPassbookRemarks" label="Remarks" variant="label-hidden" type="text"  disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={issellerBankState}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Statement">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Seller's Bank Statement">
+                                            Upload Bank Statment <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewSellerBankStatement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per bank statement uploaded?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSellerEnteredDetailsUploaded" value={sellerData1.enter_details_asper_bank_STMT_upload__c} label="Are entered details as per bank statement uploaded?" data-id="valueIsSellerEnteredDetailsUploaded" variant="label-hidden" options={optionsIsSellerEnteredDetailsUploaded} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is bank statement legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSellerBankStatementLegible" value={sellerData1.Is_bank_statement_legible_for_Seller__c} label="Is bank statement legible ?" data-id="valueIsSellerBankStatementLegible" variant="label-hidden" options={optionsIsSellerBankStatementLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="sellerBankStatementRemarks" value={sellerData1.Bank_Statement_Remarks_for_Seller__c} data-id="valueSellerBankStatementRemarks"  label="Remarks" variant="label-hidden" type="text"  disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={issellerChqCancel}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Cancelled Cheque">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Seller's Cancel Cheque">
+                                            Upload Canceled Cheque <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewSellerCanCheq" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per cancelled cheque uploaded?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSellerCanCheq" value={sellerData2.enter_details_as_per_canc_chq_upload__c} data-id="valueisSellerCanCheq" label="Are entered details as per cancelled cheque uploaded?" variant="label-hidden" options={optionsisSellerCanCheq} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is cancelled cheque legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSellerCanCheqLegible" value={sellerData2.Is_cancelled_cheque_legible_for_Seller__c} data-id="valueIsSellerCanCheqLegible"  label="Is cancelled cheque legible ?" variant="label-hidden" options={optionsIsSellerCanCheqLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="sellerCanCheqRemarks" value={sellerData2.cancelled_cheque_Remarks_for_Seller__c} data-id="valueSellerCanCheqRemarks"  label="Remarks" variant="label-hidden" type="text"  disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBorrower}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Borrower Bank Details  ">
+                        <div class="slds-form slds-grid slds-wrap">
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label ">Bank name </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} value={borrowerData.Borrower_Bank_name__c} label="Bank name" variant="label-hidden" data-id="borrowerBankName" required options={bankNameList} disabled={isNotPreDisbursement}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Account number </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={borrowerData.Borrower_Account_number__c} label="Account number" variant="label-hidden" type="text" data-id="borrowerAccountNumber" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Name of account holder </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={borrowerData.Name_of_Borrower_account_holder__c} label="Name of account holder " variant="label-hidden" type="text" data-id="borrowerAccountHolder" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">IFSC code </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="ifscCodeBorrower" value={borrowerData.IFSC_code_Borrower__c} label="IFSC code " variant="label-hidden" type="text" data-id="valueIfscCodeBorrower" disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isborrowPassbook}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Passbook">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Borrower's Passbook">
+                                            Upload PassBook <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewBorrowerPassBook" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per passbook uploaded? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBorrowerPassbookUploaded" value={borrowerData.enter_DETLS_asper_BWR_passbook_upload__c} data-id="valueBorrowerPassbookUploaded"  label="Are entered details as per passbook uploaded?" variant="label-hidden" options={optionsBorrowerPassbookUploaded} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is passbook legible ? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBorrowerPassbookLegible" value={borrowerData.Is_passbook_legible_for_Borrower__c} data-id="valueIsBorrowerPassbookLegible"  label="Is passbook legible ?" variant="label-hidden" options={optionsIsBorrowerPassbookLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="borrowerPassbookRemarks" value={borrowerData.Passbook_Remarks_for_Borrower__c} data-id="valueBorrowerPassbookRemarks" label="Remarks" variant="label-hidden" type="text" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isborrowerBankState}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Statement">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Borrower's Bank Statement">
+                                            Upload Bank Statment <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewBorrowerBankStatement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per bank statement uploaded?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBorrowerEnteredDetailsUploaded" value={borrowerData1.enter_DETLS_asper_BWR_bank_STMT_upload__c} data-id="valueIsBorrowerEnteredDetailsUploaded"  label="Are entered details as per bank statement uploaded?" variant="label-hidden" options={optionsIsBorrowerEnteredDetailsUploaded} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is bank statement legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBorrowerBankStatementLegible" value={borrowerData1.Is_bank_statement_legible_for_Borrower__c} data-id="valueIsBorrowerBankStatementLegible" label="Is bank statement legible ?" variant="label-hidden" options={optionsIsBorrowerBankStatementLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="borrowerBankStatementRemarks" value={borrowerData1.Bank_Statement_Remarks_for_Borrower__c} label="Remarks" variant="label-hidden" type="text" data-id="valueBorrowerBankStatementRemarks" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isborrowercancelCheq}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Cancelled Cheque">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Borrower's Cancel Cheque">
+                                            Upload Canceled Cheque <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewBorrowerCanCheq" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per cancelled cheque uploaded?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBorrowerCanCheq" value={borrowerData2.enter_DETLS_as_per_BWR_canc_chq_upload__c} data-id="valueisBorrowerCanCheq" label="Are entered details as per cancelled cheque uploaded?" variant="label-hidden" options={optionsisBorrowerCanCheq} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is cancelled cheque legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBorrowerCanCheqLegible" value={borrowerData2.Is_cancelled_cheque_legible_for_Borrower__c} data-id="valueIsBorrowerCanCheqLegible" label="Is cancelled cheque legible ?" variant="label-hidden" options={optionsIsBorrowerCanCheqLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="borrowerCanCheqRemarks" value={borrowerData2.Cancelled_cheque_Remarks_for_Borrower__c} data-id="valueBorrowerCanCheqRemarks" label="Remarks" variant="label-hidden" type="text"  disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isCoBorrower}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Co-Borrower Bank Details  ">
+                        <div class="slds-form slds-grid slds-wrap">
+                        </div>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label ">Bank name </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} value={coBorrowerData.CoBorrower_Bank_name__c} label="Bank name" variant="label-hidden" data-id="coBorrowerBankName" required options={bankNameList} disabled={isNotPreDisbursement}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Account number </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={coBorrowerData.CoBorrower_Account_number__c} label="Account number" variant="label-hidden" type="text" data-id="coBorrowerAccountNumber" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-sfize_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Name of account holder </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={coBorrowerData.Name_of_CoBorrower_account_holder__c} label="Name of account holder " variant="label-hidden" type="text" data-id="coBorrowerAccountHolder" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">IFSC code </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="ifscCodeCoBorrower" value={coBorrowerData.IFSC_code_CoBorrower__c} label="IFSC code " variant="label-hidden" type="text" data-id="valueIfscCodeCoBorrower" disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={isCoborrowPassbook}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Passbook">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Co-Borrower's Passbook">
+                                            Upload PassBook <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewCoBorrowerPassBook" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per passbook uploaded? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCoBorrowerPassbookUploaded" value={coBorrowerData.enter_DETLS_asper_COBWR_pasbook_upload__c} data-id="valueIsCoBorrowerEnteredDetailsUploaded" label="Are entered details as per passbook uploaded?" variant="label-hidden" options={optionsCoBorrowerPassbookUploaded} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is passbook legible ? </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCoBorrowerPassbookLegible" value={coBorrowerData.Is_passbook_legible_for_CoBorrower__c} data-id="valueIsCoBorrowerBankStatementLegible" label="Is passbook legible ?" variant="label-hidden" options={optionsIsCoBorrowerPassbookLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="coBorrowerPassbookRemarks" value={coBorrowerData.Passbook_Remarks_for_CoBorrower__c} label="Remarks" variant="label-hidden" type="text" data-id="valueCoBorrowerBankStatementRemarks" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isCoborrowerBankState}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Statement">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Co-Borrower's Bank Statement">
+                                            Upload Bank Statment <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewCoBorrowerBankStatement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per bank statement uploaded?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCoBorrowerEnteredDetailsUploaded" value={coBorrowerData1.DETLS_asper_COBWR_bank_STMT_upload__c} data-id="valueisCoBorrowerBank" label="Are entered details as per bank statement uploaded?" variant="label-hidden" options={optionsIsCoBorrowerEnteredDetailsUploaded} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is bank statement legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCoBorrowerBankStatementLegible" value={coBorrowerData1.Is_bank_statement_legible_for_CoBorrowe__c} data-id="valueIsCoBorrowerBankLegible" label="Is bank statement legible ?" variant="label-hidden" options={optionsIsCoBorrowerBankStatementLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="coBorrowerBankStatementRemarks" value={coBorrowerData1.Bank_Statement_Remarks_for_CoBorrower__c} label="Remarks" variant="label-hidden" type="text" data-id="valueCoBorrowerBankqRemarks" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isCoborrowercancelCheq}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Cancelled Cheque">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Co-Borrower's Cancel Cheque">
+                                            Upload Canceled Cheque <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewCoBorrowerCanCheq" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-4">
+                                                <label class="slds-form-element__label ">Are entered details as per cancelled cheque uploaded?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCoBorrowerCanCheq" value={coBorrowerData2.DETLS_asper_COBWR_canc_chq_upload__c} data-id="valueisCoBorrowerCanCheq" label="Are entered details as per cancelled cheque uploaded?" variant="label-hidden" options={optionsisCoBorrowerCanCheq} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Is cancelled cheque legible ?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCoBorrowerCanCheqLegible" value={coBorrowerData2.Is_cancelled_cheque_legible_CoBorrower__c} data-id="valueIsCoBorrowerCanCheqLegible"  label="Is cancelled cheque legible ?" variant="label-hidden" options={optionsIsCoBorrowerCanCheqLegible} disabled={disabledFields}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks </label>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="coBorrowerCanCheqRemarks" value={coBorrowerData2.Cancelled_cheque_Remarks_for_CoBorrower__c} label="Remarks" variant="label-hidden" type="text" data-id="valueBorrowerCanCheqRemarks" disabled={disabledFields}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBuyerSeller}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Buyer-Seller Undertaking Letter">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Buyer-Seller Undertaking letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewBuyerSellerUnderTaking" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Is Buyer-Seller Undertaking Letter legible ?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="Buyer-Seller Undertaking letter" value={buyerSellerData.Buyer_Seller_Undertaking_Letter_legib__c} data-id="valueIsBuyerSellerUndertakingLetterLegible" label="Is Buyer-Seller Undertaking Letter legible ?" variant="label-hidden" options={optionsIsBuyerSellerUndertakingLetterLegible} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="buyerSellerUndertakingLetterRemarks" value={buyerSellerData.Buyer_Seller_Undertaking_Letter_Remarks__c} data-id="valueBuyerSellerUndertakingLetterRemarks"  label="Remarks" variant="label-hidden" type="text" disabled={disabledFields}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isIndemnityLetter}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Indemnity Letter">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <!-- Modified disabled condition for d2c check -->
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumberWithD2C} value="Indemnity letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewIndeminityLetter" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Is Indemnity Letter legible ?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="Indemnity letter" value={indemnityLetterData.Buy_Seller_Indemnity_LTR_legible__c} data-id="valueIsIndemnityLetterLegible" label="Is  Indemnity Letter legible ?" variant="label-hidden" options={optionsIsIndemnityLetterLegible} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="indemnityLetterRemarks" value={indemnityLetterData.Indemnity_Remarks__c} data-id="valueIndemnityLetterRemarks" label="Remarks" variant="label-hidden" type="text" disabled={disabledFields}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isSaleAgreement}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Sale agreement">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Sale Agreement">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewSaleAgreement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Is Sale Agreement legible ?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isSaleAgreementLegible" value={saleAgreementData.Is_Sale_Agreement_legible__c} data-id="valueIsSaleAgreementLegible"   label="Is Sale Agreement legible ?" variant="label-hidden" options={optionsIsSaleAgreementLegible} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="saleAgreementRemarks" value={saleAgreementData.Sale_Agreement_Remarks__c} data-id="valueSaleAgreementRemarks"  label="Remarks" variant="label-hidden" type="text"  disabled={disabledFields}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isTaxInvoice}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Tax invoice ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Tax Invoice">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewTaxInvoice" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label ">Invoice number </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberField" value={taxInvoice.Invoice_number__c} label="Invoice number " variant="label-hidden" type="number" data-id="invoiceNumber" disabled={isNotPreDisbursement} required></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Invoice date </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={taxInvoice.Invoice_date__c} label="Invoice date " variant="label-hidden" type="Date" data-id="invoiceDate" disabled={isNotPreDisbursement} required></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Invoice amount </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={taxInvoice.Invoice_amount__c} label="Invoice amount " variant="label-hidden" type="number" data-id="invoiceAmount" disabled={isNotPreDisbursement} required></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Are entered details as per document uploaded?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isTaxInvoiceDcoUploaded" value={taxInvoice.enter_details_asper_Tax_Invoice_upload__c} label="Are entered details as per document uploaded?" data-id="valueIsTaxInvoiceDcoUploaded" variant="label-hidden" options={optionsIsTaxInvoiceDcoUploaded} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Is Tax Invoice legible ?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isTaxInvoiceLegible" value={taxInvoice.Is_Tax_Invoice_legible__c} label="Is Tax Invoice legible ?" variant="label-hidden" data-id="valueIsTaxInvoiceLegible" options={optionsIsTaxInvoiceLegible} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="taxInvoiceRemarks" value={taxInvoice.Tax_Invoice_Remarks__c} label="Remarks" variant="label-hidden" type="text" data-id="valueTaxInvoiceRemarks" disabled={disabledFields}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isPaymentReceipts}>
+                    
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Payment receipts">
+                        <template if:true={stageCheck}>
+                        <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={addPaymentReceipt} disabled={disableCaptureChassisNumber}>
+                                Add Payment Receipt <span if:true={iconButton}>&#x2714;</span></button>
+                        </div>
+                        </template>
+                        <template if:true={isAddPayment}>
+                            <table>
+                                <thead><th> Receipt Number </th><th>Receipt Date </th> <th> Payment Made To</th> <th> Payment Made By</th> <th> Payment Amount </th> <template if:true={stageCheck}><th> Upload</th></template> <th>Preview</th><th> Delete</th></thead>
+                                <tbody>
+                                    <template if:true={paymentList} for:each={paymentList} for:item="payment" for:index="index">
+                                        <tr key={payment.keyIndex}>
+                                            <td><lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberField" value={payment.Payment_receipt_no__c} label="Payment receipt no." variant="label-hidden" type="number" data-id="receiptNo" required  disabled={isNotPreDisbursement}></lightning-input> </td>
+                                            <td> <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={payment.Payment_receipt_date__c} label="Payment receipt date " variant="label-hidden" type="date" data-id="receiptDate"  disabled={isNotPreDisbursement}></lightning-input></td>
+                                            <td><lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={payment.Payment_made_to__c} label="Payment made to" variant="label-hidden" type="text" data-id="paymentMadeTo"  disabled={isNotPreDisbursement}></lightning-input> </td>
+                                            <td><lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={payment.Payment_made_by__c} label="Payment made by" variant="label-hidden" type="text" data-id="paymentMadeBy"  disabled={isNotPreDisbursement}></lightning-input> </td>
+                                            <td> <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="chassisNumberField" value={payment.Payment_amount__c} label="Payment amount" variant="label-hidden" type="number" data-id="paymentAmount"  disabled={isNotPreDisbursement}></lightning-input></td>
+                                            <template if:true={stageCheck}><td><div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Payment Receipt" data-target-id={index} >
+                                                        Upload <span if:true={iconButton}>&#x2714;</span></button></div></td>
+                                            </template>
+                                            <td> <lightning-icon icon-name="utility:preview" alternative-text="Preview" value={payment.paymentPreview} data-target-id={index} title="Preview" class="slds-m-top_medium slds-align_absolute-center" size="small" onclick={handlePreviewPostSanction}></lightning-icon> </td>
+                                            <td> <lightning-icon data-target-id={index} value={payment.docId} onclick={deleteRow} id={index} icon-name="utility:delete" alternative-text="Delete Row" title="Delete Row" class="slds-m-top_medium slds-align_absolute-center" size="small"  disabled={isNotPreDisbursement}></lightning-icon> </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap"> <div class="slds-col slds-size_2-of-4"><label class="slds-form-element__label ">Are entered details as per document uploaded?</label></div>
+                                        <div class="slds-col slds-size_2-of-4" style="width:100px"> <lightning-combobox value={paymentDocUploadedValue} class="slds-form-element__control" onchange={handleInputFieldChange} name="paymentReceiptUploaded" label="Are entered details as per document uploaded?" variant="label-hidden" data-id="paymentReceiptUploaded" options={optionsIsPaymentReceiptDocUploaded} disabled={disabledFields}></lightning-combobox>
+                                           </div>
+                                    </div>
+                                </div>
+                                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_2-of-4"><label class="slds-form-element__label ">Is Payment Receipt legible?</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-4" style="width:100px"> <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} value={paymentLegibleValue} name="paymentReceiptLegible" label="Is Payment Receipt legible?" variant="label-hidden" data-id="paymentReceiptLegible" options={optionsIsPaymentLegible} disabled={disabledFields}></lightning-combobox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_2-of-4"> <label class="slds-form-element__label ">Remarks</label> </div>
+                                        <div class="slds-col slds-size_2-of-4" style="width:100px"><lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} value={paymentRemarksValue} name="paymentRemarks"  label="Remarks" variant="label-hidden" type="text" data-id="paymentRemarks" disabled={disabledFields}></lightning-input>  </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isNOC}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" NOC ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="NOC">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewNOC" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label ">Hologram no. as per NOC </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberField" value={nocData.Hologram_no_as_per_NOC__c} label="Hologram no. as per NOD " variant="label-hidden" type="text" data-id="hologramNO" required disabled={isNotPreDisbursement}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">NOC ref no. as per journey </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="engineNumberFieldCapturedIntially" value={nocNumberOfLA}  label="NOC ref no. as per journey " variant="label-hidden" type="number" data-id="nocRef" disabled></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Has NOC been cancelled? </label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="hasNOcCancel" label="Has NOC been cancelled?" variant="label-hidden" options={yesNoOptions} type="text" data-id="hasNocCanel" value={nocData.Has_NOC_been_canceled__c} required disabled={isNotPreDisbursement}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-4">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Are entered details as per document uploaded?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isNOCDetailsDocUpload" value={nocData.Are_enter_details_asper_NOC_doc_upload__c} data-id="valueIsNOCDetailsDocUpload" label="Are entered details as per document uploaded?" variant="label-hidden" options={optionsIsNOCDetailsDocUpload} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Is Cancelled NOC legible ?</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isCancelNOCLegible" value={nocData.Is_Cancelled_NOC_legible__c} data-id="valueIsCancelNOCLegible" label="Is Cancelled NOC legible ?" variant="label-hidden" options={optionsIsCancelNOCLegible} disabled={disabledFields}></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="nOCRemarks" value={nocData.NOC_Remarks__c} label="Remarks" variant="label-hidden" type="text" data-id="valuenOCRemarks" disabled={disabledFields}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBranchUndertake}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Branch Undertaking ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Branch Undertaking letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewBranchUndertaking" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Is Branch Undertaking Letter legible ?</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                    <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isBranchUndertakLetterLegible" value={branchUndertakingData.Is_Branch_Undertaking_Letter_legible__c} data-id="valueIsBranchUndertakLetterLegible"  label="Is Branch Undertaking Letter legible ?" variant="label-hidden" options={optionsIsBranchUndertakLetterLegible} disabled={disabledFields}></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="branchUndertakRemarks" value={branchUndertakingData.Branch_Undertaking_Remarks__c} label="Remarks" variant="label-hidden" type="text" data-id="valueBranchUndertakRemarks" disabled={disabledFields}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBorrowerDeclare}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Declaration of Good Health(borrower) ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Declaration of Borrower Good Health">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewHealthBorrower" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Is Declaration of Good Health(borrower) legible</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                    <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isDecGoodBorrowerLegible" value={borrowerHealthData.Doc_for_Good_Health_borrower_legible__c} data-id="valueIsDecGoodBorrowerLegible" label="Is Declaration of Good Health(borrower) legible" variant="label-hidden" options={optionsIsDecGoodBorrowerLegible} disabled={disabledFields}></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="decGoodBorrowerRemarks" value={borrowerHealthData.Borrower_Good_Health_Dec_Remarks__c} data-id="valueDecGoodBorrowerRemarks" label="Remarks" variant="label-hidden" type="text" disabled={disabledFields}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isCoBorrowerDeclare}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Declaration of Good Health(co-borrower) ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Declaration of Co-Borrower Good Health">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewHealthCoBorrower" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Declaration of Good Health(co-borrower) legible</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                    <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} name="isDecGoodCoBorrower" value={coBorrowerHealthData.Doc_for_Good_Health_coborrower_legible__c} data-id="valueIsDecGoodCoBorrower" label="Is Declaration of Good Health(borrower) legible" variant="label-hidden" options={optionsIsDecGoodCoBorrower} disabled={disabledFields}></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} name="decGoodCoBorrowerRemarks" value={coBorrowerHealthData.CoBorrower_Good_Health_Declaration_Remak__c} label="Remarks" variant="label-hidden" type="text" data-id="valueDecGoodCoBorrowerRemarks" disabled={disabledFields}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                
+            </lightning-accordion>
+            <template if:true={uploadViewDocFlag}>
+                <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue} currentloanapplicationid={recordId} currentapplicantid={applicantId} uploadviewdocpopup={uploadViewDocFlag} doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentRecordId} onfileuploadstatus={docUploadSuccessfully}>
+                </c-l-W-C_-L-O-S_-Upload-And-View-Document>
+            </template>
+            <template if:true={uploadAdditionalDocFlag}>
+                <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValue} currentloanapplicationid={recordId} currentapplicantid={applicantid} uploadviewdocpopup={uploadAdditionalDocFlag} createdoconparentbutton="false" title="Upload Additional Document" doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentRecordId} currentvehiclerecordid={vehiclerecordid} onfileuploadstatus={docUploadSuccessfully} additionaldocument="true" iscommunityuser = {isCommunityUser}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+            </template>
+        </lightning-layout>
+    </template>
+    <template if:true={isBEVisible}>
+        <div class="slds-m-bottom_medium  slds-m-top_small slds-large-size_12-of-12 slds-clearfix"> <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleSubmit} disabled={isSubmitDisabled}> Submit </button></div>
+    </template>
+    <template if:true={isPreview}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="background-color: grey;">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                        <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+                        <footer class="slds-modal__footer">
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    <template if:true={isLoadingSpinner}><div class="spinner"><lightning-spinner alternative-text="Loading" size="large"></lightning-spinner> </div> </template>
+</template>

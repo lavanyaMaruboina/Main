@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId,lightning:actionOverride" >
+    <div class="slds-text-heading_large slds-align_absolute-center" style="margin-top: 20%;" >
+        You don't have edit access.
+    </div>      
+</aura:component>

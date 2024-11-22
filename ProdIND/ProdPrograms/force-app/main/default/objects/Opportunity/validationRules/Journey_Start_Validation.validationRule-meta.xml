@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Journey_Start_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (  $Profile.Name != &apos;System Administrator&apos;,OR(ISPICKVAL(PRIORVALUE(StageName),&apos;Journey Restart&apos;)&amp;&amp; ISCHANGED(StageName ), (ISPICKVAL( Journey_Status__c , &apos;Stop&apos;) &amp;&amp; ISCHANGED(StageName ))))</errorConditionFormula>
+    <errorMessage>You are not allowed to proceed with this application. Journey has been restarted or Stopped for this lead.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deviation_Approval_Status__c</fullName>
+    <description>This has the overall status for the deviations.</description>
+    <label>Deviation Approval Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Approve</fullName>
+                <default>false</default>
+                <label>Approve</label>
+            </value>
+            <value>
+                <fullName>Reject</fullName>
+                <default>false</default>
+                <label>Reject</label>
+            </value>
+            <value>
+                <fullName>Waiting for the Action</fullName>
+                <default>false</default>
+                <label>Waiting for the Action</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

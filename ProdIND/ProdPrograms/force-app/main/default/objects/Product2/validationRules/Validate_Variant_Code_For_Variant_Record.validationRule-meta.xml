@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Variant_Code_For_Variant_Record</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL( Type__c, &apos;Variant&apos;), ISNULL(Variant_Code__c) )</errorConditionFormula>
+    <errorMessage>Variant Code is required for the selected Product Type</errorMessage>
+</ValidationRule>

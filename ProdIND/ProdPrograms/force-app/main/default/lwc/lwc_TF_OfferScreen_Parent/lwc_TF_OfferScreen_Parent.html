@@ -1,0 +1,26 @@
+<template>
+    <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Offer Screen</label>
+    </div>
+    <lightning-accordion active-section-name={activeVehicle}>
+        <template for:each={vehicleRecords} for:item="vehicleRecord" for:index="index">
+            <lightning-accordion-section name={vehicleRecord.Id} label={vehicleRecord.Variant__c} key={vehicleRecord.Id} >
+                <c-Lwc_-T-F_-Offer-Screen_-Child tab-value={tabValue} recordid={recordid} vehicle-record-id={vehicleRecord.Id} checkleadaccess={checkleadaccess}
+                is-revoked-loan-application={isRevokedLoanApplication} loan-amount-obj={loanAmountObj} onloanamountchanged={updateLoanAmount} borrower-p-a-n={borrowerPAN}
+                vehicle-intallment-type={vehicleRecord.Installment_Type__c}></c-Lwc_-T-F_-Offer-Screen_-Child> 
+                <!-- SFTRAC-2283 Addition of intallment type -->
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div class="slds-form-element slds-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-align_absolute-center">
+                <button type="button" class="indusPrimaryButton slds-button slds-button_brand slds-button_stretch submit  slds-float_right" style="width: 1rem;"
+                onclick={handleButtonClick} disabled={disableSubmit}>Submit</button>
+            </div>
+            <div class="slds-form-element slds-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-align_absolute-center">
+                <button type="button" class="indusPrimaryButton slds-button slds-button_brand slds-button_stretch cancel  slds-float_left" style="width: 1rem;" onclick={handleCancel} disabled={disableSubmit}>Cancel</button>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>View_Application_Sub_Stages__c</fullName>
+    <label>View Application Sub Stages</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lead/KYC Details</fullName>
+                <default>false</default>
+                <label>Lead/KYC Details</label>
+            </value>
+            <value>
+                <fullName>Additional Customer Details</fullName>
+                <default>false</default>
+                <label>Additional Customer Details</label>
+            </value>
+            <value>
+                <fullName>Asset Details</fullName>
+                <default>false</default>
+                <label>Asset Details</label>
+            </value>
+            <value>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+                <label>Vehicle Insurance</label>
+            </value>
+            <value>
+                <fullName>Vehicle Valuation</fullName>
+                <default>false</default>
+                <label>Vehicle Valuation</label>
+            </value>
+            <value>
+                <fullName>Loan Details</fullName>
+                <default>false</default>
+                <label>Loan Details</label>
+            </value>
+            <value>
+                <fullName>Income Details</fullName>
+                <default>false</default>
+                <label>Income Details</label>
+            </value>
+            <value>
+                <fullName>Final Terms</fullName>
+                <default>false</default>
+                <label>Final Terms</label>
+            </value>
+            <value>
+                <fullName>Insurance Details</fullName>
+                <default>false</default>
+                <label>Insurance Details</label>
+            </value>
+            <value>
+                <fullName>Additional Customer Code</fullName>
+                <default>false</default>
+                <label>Additional Customer Code</label>
+            </value>
+            <value>
+                <fullName>Final Offer Page</fullName>
+                <default>false</default>
+                <label>Final Offer Page</label>
+            </value>
+            <value>
+                <fullName>Engine Outputs</fullName>
+                <default>false</default>
+                <label>Engine Outputs</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

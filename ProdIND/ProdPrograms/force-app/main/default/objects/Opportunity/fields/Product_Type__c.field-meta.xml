@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Type__c</fullName>
+    <label>Product Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ALL</fullName>
+                <default>false</default>
+                <label>ALL</label>
+            </value>
+            <value>
+                <fullName>Two Wheeler</fullName>
+                <default>false</default>
+                <label>Two Wheeler</label>
+            </value>
+            <value>
+                <fullName>Passenger Vehicles</fullName>
+                <default>false</default>
+                <label>Passenger Vehicles</label>
+            </value>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>C</label>
+            </value>
+            <value>
+                <fullName>H</fullName>
+                <default>false</default>
+                <label>H</label>
+            </value>
+            <value>
+                <fullName>Tractor</fullName>
+                <default>false</default>
+                <label>Tractor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

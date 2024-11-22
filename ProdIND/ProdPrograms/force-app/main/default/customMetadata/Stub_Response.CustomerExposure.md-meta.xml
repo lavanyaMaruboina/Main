@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>CustomerExposure</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{
+  &quot;body&quot;: null,
+  &quot;response&quot;: {
+    &quot;status&quot;: &quot;SUCCESS&quot;,
+    &quot;respDesc&quot;: &quot;Customer Exposure&quot;,
+    &quot;content&quot;: [
+      {
+        &quot;Lien&quot;: [ 
+		{
+            &quot;Table&quot;: [
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01006D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;TLN01006D&quot;,
+                &quot;Lien_No&quot;: &quot;LIEN78938&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2020-11-05T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2019-11-13T09:42:38.2&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN00539E&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE255260&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-06-25T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-06-28T09:47:30.51&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN00521E&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE237001&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-02-09T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-02-16T11:39:20.86&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01130D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE289952&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-12-07T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-12-10T11:29:18.653&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01009D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;HEAD(CFD)&quot;,
+                &quot;Lien_No&quot;: &quot;LIEN81700&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;Lien marking done based on instruction from Head(CFD) for customer having more than 1 crore.&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2023-12-31T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2019-12-17T00:00:00&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              }
+            ]
+          },
+          {
+            &quot;Table&quot;: [
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01130D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE289952&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-12-07T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-12-10T11:29:18.967&quot;,
+                &quot;Deal_No&quot;: &quot;TLN01134D&quot;
+              }
+            ]
+          }
+        ],	
+		&quot;Family_Exposure&quot;: {
+          &quot;RS2&quot;: [
+            {
+              &quot;Customer_Relation&quot;: &quot;EC&quot;,
+              &quot;Customer&quot;: &quot;EC&quot;
+            }
+          ],
+          &quot;RS1&quot;: [
+            {
+              &quot;Write_Off&quot;: 0,
+              &quot;Waiver&quot;: 0,
+              &quot;used&quot;: &quot;N&quot;,
+              &quot;Status_Flag&quot;: &quot;L&quot;,
+              &quot;SOH&quot;: 2767250,
+              &quot;Product_Variant_Name&quot;: &quot;JEEP COMPASS 2.0S(O2) 4X4 DIESEL AT BSVI                                                            &quot;,
+              &quot;Product&quot;: &quot;C&quot;,
+              &quot;Peak_Delay&quot;: 0,
+              &quot;PD&quot;: 0,
+              &quot;Over_Due&quot;: -2750,
+              &quot;Manufacture_Date&quot;: null,
+              &quot;IBLSeasoning&quot;: &quot;0/41&quot;,
+              &quot;Guaranteed_SOH&quot;: 0,
+              &quot;Guaranteed_OD&quot;: 0,
+              &quot;Finance_Amt&quot;: 2500000,
+              &quot;DPD&quot;: -3.912,
+              &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+              &quot;Deal_No&quot;: &quot;TLN06285C&quot;,
+              &quot;Deal_Date&quot;: &quot;2022-01-31T00:00:00&quot;,
+              &quot;Deal_Ageing&quot;: -0.0385,
+              &quot;Average_Delay&quot;: 0,
+              &quot;Amt_Paid&quot;: 74000,
+              &quot;Agreement_Amt&quot;: 2841250,
+              &quot;AD&quot;: 0
+            },
+            {
+              &quot;Write_Off&quot;: 0,
+              &quot;Waiver&quot;: 0,
+              &quot;used&quot;: &quot;N&quot;,
+              &quot;Status_Flag&quot;: &quot;L&quot;,
+              &quot;SOH&quot;: 1983220,
+              &quot;Product_Variant_Name&quot;: &quot;EPIROCHYDRAULIC ROCKBREAKER MODEL MB1650                                                            &quot;,
+              &quot;Product&quot;: &quot;E&quot;,
+              &quot;Peak_Delay&quot;: 0,
+              &quot;PD&quot;: 0,
+              &quot;Over_Due&quot;: -1180,
+              &quot;Manufacture_Date&quot;: null,
+              &quot;IBLSeasoning&quot;: &quot;1/23&quot;,
+              &quot;Guaranteed_SOH&quot;: 0,
+              &quot;Guaranteed_OD&quot;: 0,
+              &quot;Finance_Amt&quot;: 1890000,
+              &quot;DPD&quot;: -3.912,
+              &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+              &quot;Deal_No&quot;: &quot;TLN00572E&quot;,
+              &quot;Deal_Date&quot;: &quot;2022-01-19T00:00:00&quot;,
+              &quot;Deal_Ageing&quot;: -0.0129,
+              &quot;Average_Delay&quot;: 0,
+              &quot;Amt_Paid&quot;: 92000,
+              &quot;Agreement_Amt&quot;: 2075220,
+              &quot;AD&quot;: 0
+            }
+          ]
+        },        
+		&quot;Customer_Exposure&quot;: [
+          
+          {
+            &quot;Write_Off&quot;: 0,
+            &quot;Waiver&quot;: 0,
+            &quot;used&quot;: &quot;N&quot;,
+            &quot;Status_Flag&quot;: &quot;L&quot;,
+            &quot;SOH&quot;: 4021455,
+            &quot;Sanctioned_Amt&quot;: 3740000,
+            &quot;Product_Variant_Name&quot;: &quot;AL3520UJT | ASHOK LEYLAND UJ3520 T 8X4 TIPPER BS VI                                                 &quot;,
+            &quot;Product&quot;: &quot;D&quot;,
+            &quot;Peak_Delay&quot;: 0,
+            &quot;PD&quot;: 0,
+            &quot;Over_Due&quot;: -1245,
+            &quot;Mor2&quot;: &quot;No&quot;,
+            &quot;Mor1&quot;: &quot;No&quot;,
+            &quot;IBLSeasoning&quot;: &quot;2/35&quot;,
+            &quot;Guaranteed_SOH&quot;: 0,
+            &quot;Guaranteed_OD&quot;: 0,
+            &quot;Finance_Amt&quot;: 3740000,
+            &quot;DPD&quot;: -3.987,
+            &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+            &quot;Deal_No&quot;: &quot;TLN01133D&quot;,
+            &quot;Deal_Date&quot;: &quot;2021-12-07T00:00:00&quot;,
+            &quot;Deal_Ageing&quot;: -0.0102,
+            &quot;Current_Demand&quot;: 121900,
+            &quot;Average_Delay&quot;: 0,
+            &quot;AD&quot;: 0
+          },
+          {
+            &quot;Write_Off&quot;: 0,
+            &quot;Waiver&quot;: 0,
+            &quot;used&quot;: &quot;N&quot;,
+            &quot;Status_Flag&quot;: &quot;L&quot;,
+            &quot;SOH&quot;: 4021455,
+            &quot;Sanctioned_Amt&quot;: 3740000,
+            &quot;Product_Variant_Name&quot;: &quot;AL3520UJT | ASHOK LEYLAND UJ3520 T 8X4 TIPPER BS VI                                                 &quot;,
+            &quot;Product&quot;: &quot;D&quot;,
+            &quot;Peak_Delay&quot;: 0,
+            &quot;PD&quot;: 0,
+            &quot;Over_Due&quot;: -1245,
+            &quot;Mor2&quot;: &quot;No&quot;,
+            &quot;Mor1&quot;: &quot;No&quot;,
+            &quot;IBLSeasoning&quot;: &quot;2/35&quot;,
+            &quot;Guaranteed_SOH&quot;: 0,
+            &quot;Guaranteed_OD&quot;: 0,
+            &quot;Finance_Amt&quot;: 3740000,
+            &quot;DPD&quot;: -3.987,
+            &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+            &quot;Deal_No&quot;: &quot;TLN01134D&quot;,
+            &quot;Deal_Date&quot;: &quot;2021-12-07T00:00:00&quot;,
+            &quot;Deal_Ageing&quot;: -0.0102,
+            &quot;Current_Demand&quot;: 121900,
+            &quot;Average_Delay&quot;: 0,
+            &quot;AD&quot;: 0
+          }
+        ],
+        &quot;Customer_Code&quot;: &quot;CU5658609&quot;,
+        &quot;ChequeDetails&quot;: {
+          &quot;Min_Deal_Date&quot;: &quot;29/06/2015&quot;,
+          &quot;ChequeReturnCount&quot;: &quot;487&quot;
+        }
+      }
+    ]
+  }
+}
+{
+  &quot;body&quot;: null,
+  &quot;response&quot;: {
+    &quot;status&quot;: &quot;SUCCESS&quot;,
+    &quot;respDesc&quot;: &quot;Customer Exposure&quot;,
+    &quot;content&quot;: [
+      {
+        &quot;Lien&quot;: [ 
+		{
+            &quot;Table&quot;: [
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01006D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;TLN01006D&quot;,
+                &quot;Lien_No&quot;: &quot;LIEN78938&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2020-11-05T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2019-11-13T09:42:38.2&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN00539E&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE255260&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-06-25T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-06-28T09:47:30.51&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN00521E&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE237001&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-02-09T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-02-16T11:39:20.86&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01130D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE289952&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-12-07T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-12-10T11:29:18.653&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              },
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01009D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;HEAD(CFD)&quot;,
+                &quot;Lien_No&quot;: &quot;LIEN81700&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;Lien marking done based on instruction from Head(CFD) for customer having more than 1 crore.&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2023-12-31T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2019-12-17T00:00:00&quot;,
+                &quot;Deal_No&quot;: &quot;TLN00460E&quot;
+              }
+            ]
+          },
+          {
+            &quot;Table&quot;: [
+              {
+                &quot;Source_Deal_No&quot;: &quot;TLN01130D&quot;,
+                &quot;Lien_Type&quot;: &quot;CUSLIEN&quot;,
+                &quot;Lien_Request_By&quot;: &quot;RAJARAM-SCM&quot;,
+                &quot;Lien_No&quot;: &quot;LIE289952&quot;,
+                &quot;Lien_Marking_Reason&quot;: &quot;LIEN MARKED BASED ON SH/SCM APPROVAL&quot;,
+                &quot;Lien_Marking_Period&quot;: &quot;2022-12-07T00:00:00&quot;,
+                &quot;Lien_Maker_Date&quot;: &quot;2021-12-10T11:29:18.967&quot;,
+                &quot;Deal_No&quot;: &quot;TLN01134D&quot;
+              }
+            ]
+          }
+        ],	
+		&quot;Family_Exposure&quot;: {
+          &quot;RS2&quot;: [
+            {
+              &quot;Customer_Relation&quot;: &quot;EC&quot;,
+              &quot;Customer&quot;: &quot;EC&quot;
+            }
+          ],
+          &quot;RS1&quot;: [
+            {
+              &quot;Write_Off&quot;: 0,
+              &quot;Waiver&quot;: 0,
+              &quot;used&quot;: &quot;N&quot;,
+              &quot;Status_Flag&quot;: &quot;L&quot;,
+              &quot;SOH&quot;: 2767250,
+              &quot;Product_Variant_Name&quot;: &quot;JEEP COMPASS 2.0S(O2) 4X4 DIESEL AT BSVI                                                            &quot;,
+              &quot;Product&quot;: &quot;C&quot;,
+              &quot;Peak_Delay&quot;: 0,
+              &quot;PD&quot;: 0,
+              &quot;Over_Due&quot;: -2750,
+              &quot;Manufacture_Date&quot;: null,
+              &quot;IBLSeasoning&quot;: &quot;0/41&quot;,
+              &quot;Guaranteed_SOH&quot;: 0,
+              &quot;Guaranteed_OD&quot;: 0,
+              &quot;Finance_Amt&quot;: 2500000,
+              &quot;DPD&quot;: -3.912,
+              &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+              &quot;Deal_No&quot;: &quot;TLN06285C&quot;,
+              &quot;Deal_Date&quot;: &quot;2022-01-31T00:00:00&quot;,
+              &quot;Deal_Ageing&quot;: -0.0385,
+              &quot;Average_Delay&quot;: 0,
+              &quot;Amt_Paid&quot;: 74000,
+              &quot;Agreement_Amt&quot;: 2841250,
+              &quot;AD&quot;: 0
+            },
+            {
+              &quot;Write_Off&quot;: 0,
+              &quot;Waiver&quot;: 0,
+              &quot;used&quot;: &quot;N&quot;,
+              &quot;Status_Flag&quot;: &quot;L&quot;,
+              &quot;SOH&quot;: 1983220,
+              &quot;Product_Variant_Name&quot;: &quot;EPIROCHYDRAULIC ROCKBREAKER MODEL MB1650                                                            &quot;,
+              &quot;Product&quot;: &quot;E&quot;,
+              &quot;Peak_Delay&quot;: 0,
+              &quot;PD&quot;: 0,
+              &quot;Over_Due&quot;: -1180,
+              &quot;Manufacture_Date&quot;: null,
+              &quot;IBLSeasoning&quot;: &quot;1/23&quot;,
+              &quot;Guaranteed_SOH&quot;: 0,
+              &quot;Guaranteed_OD&quot;: 0,
+              &quot;Finance_Amt&quot;: 1890000,
+              &quot;DPD&quot;: -3.912,
+              &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+              &quot;Deal_No&quot;: &quot;TLN00572E&quot;,
+              &quot;Deal_Date&quot;: &quot;2022-01-19T00:00:00&quot;,
+              &quot;Deal_Ageing&quot;: -0.0129,
+              &quot;Average_Delay&quot;: 0,
+              &quot;Amt_Paid&quot;: 92000,
+              &quot;Agreement_Amt&quot;: 2075220,
+              &quot;AD&quot;: 0
+            }
+          ]
+        },        
+		&quot;Customer_Exposure&quot;: [
+          
+          {
+            &quot;Write_Off&quot;: 0,
+            &quot;Waiver&quot;: 0,
+            &quot;used&quot;: &quot;N&quot;,
+            &quot;Status_Flag&quot;: &quot;L&quot;,
+            &quot;SOH&quot;: 4021455,
+            &quot;Sanctioned_Amt&quot;: 3740000,
+            &quot;Product_Variant_Name&quot;: &quot;AL3520UJT | ASHOK LEYLAND UJ3520 T 8X4 TIPPER BS VI                                                 &quot;,
+            &quot;Product&quot;: &quot;D&quot;,
+            &quot;Peak_Delay&quot;: 0,
+            &quot;PD&quot;: 0,
+            &quot;Over_Due&quot;: -1245,
+            &quot;Mor2&quot;: &quot;No&quot;,
+            &quot;Mor1&quot;: &quot;No&quot;,
+            &quot;IBLSeasoning&quot;: &quot;2/35&quot;,
+            &quot;Guaranteed_SOH&quot;: 0,
+            &quot;Guaranteed_OD&quot;: 0,
+            &quot;Finance_Amt&quot;: 3740000,
+            &quot;DPD&quot;: -3.987,
+            &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+            &quot;Deal_No&quot;: &quot;TLN01133D&quot;,
+            &quot;Deal_Date&quot;: &quot;2021-12-07T00:00:00&quot;,
+            &quot;Deal_Ageing&quot;: -0.0102,
+            &quot;Current_Demand&quot;: 121900,
+            &quot;Average_Delay&quot;: 0,
+            &quot;AD&quot;: 0
+          },
+          {
+            &quot;Write_Off&quot;: 0,
+            &quot;Waiver&quot;: 0,
+            &quot;used&quot;: &quot;N&quot;,
+            &quot;Status_Flag&quot;: &quot;L&quot;,
+            &quot;SOH&quot;: 4021455,
+            &quot;Sanctioned_Amt&quot;: 3740000,
+            &quot;Product_Variant_Name&quot;: &quot;AL3520UJT | ASHOK LEYLAND UJ3520 T 8X4 TIPPER BS VI                                                 &quot;,
+            &quot;Product&quot;: &quot;D&quot;,
+            &quot;Peak_Delay&quot;: 0,
+            &quot;PD&quot;: 0,
+            &quot;Over_Due&quot;: -1245,
+            &quot;Mor2&quot;: &quot;No&quot;,
+            &quot;Mor1&quot;: &quot;No&quot;,
+            &quot;IBLSeasoning&quot;: &quot;2/35&quot;,
+            &quot;Guaranteed_SOH&quot;: 0,
+            &quot;Guaranteed_OD&quot;: 0,
+            &quot;Finance_Amt&quot;: 3740000,
+            &quot;DPD&quot;: -3.987,
+            &quot;Deal_Stage&quot;: &quot;OLD&quot;,
+            &quot;Deal_No&quot;: &quot;TLN01134D&quot;,
+            &quot;Deal_Date&quot;: &quot;2021-12-07T00:00:00&quot;,
+            &quot;Deal_Ageing&quot;: -0.0102,
+            &quot;Current_Demand&quot;: 121900,
+            &quot;Average_Delay&quot;: 0,
+            &quot;AD&quot;: 0
+          }
+        ],
+        &quot;Customer_Code&quot;: &quot;CU5658609&quot;,
+        &quot;ChequeDetails&quot;: {
+          &quot;Min_Deal_Date&quot;: &quot;29/06/2015&quot;,
+          &quot;ChequeReturnCount&quot;: &quot;487&quot;
+        }
+      }
+    ]
+  }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">CustomerExposure</value>
+    </values>
+</CustomMetadata>

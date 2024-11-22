@@ -1,0 +1,736 @@
+<template> 
+    <template if:true={showSpinner} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+	<!--prashanth-->
+    <template if:false = {isD2cApplication}>
+    	<lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+        class=" slds-float_right "></lightning-button-icon>
+	</template>
+    <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Asset
+            Details</label>
+            <!--prashanth-->
+            <template if:false = {isD2cApplication}>
+              <template if:true={isEnableUploadViewDoc}>
+                  <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+                      alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton" disabled={isUploadViewDisabled}>
+                  </lightning-button>
+              </template>
+            </template>
+    </div>
+
+    <!--<template for:each="" for:item=""></template>-->
+    <template lwc:if={isTractor}>
+        <lightning-accordion active-section-name="0">
+            <template for:each={assetDetailList} for:item="assetDetail" for:index="index">
+                <lightning-accordion-section name={index} label={assetDetail.accordianLabel} key={assetDetail.vehicleDetailId}>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Vehicle type<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" value={assetDetail.vehicleType} variant="label-hidden" type="text" 
+                                    disabled required></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Product type <abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" value={assetDetail.vehicleSubType} variant="label-hidden" type="text"
+                                    disabled required> </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Purpose of purchase <abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={purposeOfPurchaseOptionsList}>
+                                        <lightning-combobox class="slds-form-element__control" variant="label-hidden" 
+                                        options={assetDetail.purposeOfPurchaseOptionsList} value={assetDetail.purposeOfPurchase} disabled required></lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                                  
+                    <div class="slds-border_top slds-m-vertical_large"></div>
+                
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label"> Make<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" options={assetDetail.makeOptionsList}
+                                        onchange={handleInputFieldChange} name="makeField" value={assetDetail.makeCodeOfProduct}
+                                        variant="label-hidden" data-index={index} disabled={assetDetail.mmvDisable} required></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label"> Model <abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" options={assetDetail.modelOptionsList}
+                                        onchange={handleInputFieldChange} name="modelField" value={assetDetail.modelCodeOfProduct}
+                                        variant="label-hidden" data-index={index} disabled={assetDetail.allFieldsDisabled} required></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-form-element__label" value={variant}> Variant <abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" options={assetDetail.variantOptionsList}
+                                        onchange={handleInputFieldChange} name="variantField" value={assetDetail.variantCodeOfProduct}
+                                        variant="label-hidden" data-index={index} disabled={assetDetail.allFieldsDisabled} required></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+
+                     <div class="slds-border_top slds-m-vertical_large"></div>
+                 
+                
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Dealer Name <abbr if:true={assetDetail.isDealerFieldMandatory} title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                                        name="dealerSubDealerNameField" options={assetDetail.dealerSubDealerOptionsList} value={assetDetail.dealerSubdealerName}
+                                        variant="label-hidden" disabled={assetDetail.isDealerFieldDisabled} required={assetDetail.isDealerFieldMandatory}
+                                        data-index={index}></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Invoice in the name of </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" name="invoiceNameField" variant="label-hidden"
+                                    type="text" value={assetDetail.invoiceInNameOf} data-id="invoicename" min-length=3 required={assetDetail.invoiceRequired}
+                                    pattern={labels.RegEx_Alphabets_Only} message-when-pattern-mismatch={labels.NameError} disabled={assetDetail.disableTractorFields}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:true={assetDetail.isVehicleToBeRegisteredInTheNameOf}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label"> Vehicle registered in the name of </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <template if:true={assetDetail.isUsedOrRefinance}>
+                                            <template if:true={assetDetail.vehicleRegisteredInNameOfOptionsList}>
+                                                <lightning-combobox class="slds-form-element__control" variant="label-hidden" name="vehicleRegNameValueField"
+                                                    options={assetDetail.vehicleRegisteredInNameOfOptionsList} 
+                                                    value={assetDetail.vehicleRegisteredInNameOf} disabled required>
+                                                </lightning-combobox>
+                                            </template>
+                                        </template>
+                                        <template if:false={assetDetail.isUsedOrRefinance}>
+                                            <lightning-input class="slds-form-element__control" name="vehicleRegNameValueField" variant="label-hidden"
+                                            type="text" value={assetDetail.vehicleRegisteredInNameOf} data-id="invoicename" min-length=3 
+                                            pattern={labels.RegEx_Alphabets_Only} message-when-pattern-mismatch={labels.NameError} disabled={assetDetail.disableTractorFields}>
+                                            </lightning-input>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                
+                    <template if:true={assetDetail.displayUsedVehicleTypeFields}>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <!-- SFTRAC 453- SI#12 - removed disabled -->
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label"> Usage Type </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <template if:true={usageTypeOptionsListTractor}>
+                                            <lightning-combobox class="slds-form-element__control" name="usageTypeField" 
+                                            value={assetDetail.usageType} variant="label-hidden" options={usageTypeOptionsListTractor}
+                                            required></lightning-combobox>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" if:false={assetDetail.isImplement}>
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label"> Vehicle Registration Number </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control" name="vehicleRegNoValueField" variant="label-hidden"
+                                            type="text" value={assetDetail.vehicleRegNoValue} disabled required></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label"> Vehicle Serial Number </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input class="slds-form-element__control" name="vehicleSerialNoValueField" variant="label-hidden"
+                                            type="text" value={assetDetail.vehicleSerialNumber} disabled required></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                
+                        <template if:false={assetDetail.isImplement}>
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-around_medium">
+                                    <div
+                                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                        <button class="indusPrimaryButton slds-button slds-button_brand" onclick={handleGetVehicleDetailsTractor}
+                                            disabled={assetDetail.disableGetVehicleDetails} data-index={index}>
+                                            Get Vehicle Details <span if:true={assetDetail.showSuccessTick}> &#x2714;</span><span
+                                                if:true={showFailureTick}> &#10060;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                
+                        <template if:true={assetDetail.showVahanDetailsSection}>
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> Manufacturer Year, Month <abbr title="required"
+                                                    class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" data-id={assetDetail.mnfYearMonthId}
+                                                onchange={handleInputFieldChange} name="manufacturerYearAndMonthField"
+                                                value={assetDetail.manufacturerYearAndMonth} variant="label-hidden" type="month"
+                                                data-index={index} disabled={assetDetail.isManufacturerYearAndMonthField} required></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> Last owner name </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" data-id={assetDetail.lastOwnerId}
+                                                onchange={handleInputFieldChange} name="lastOwnerNameField" value={assetDetail.lastOwnerName}
+                                                variant="label-hidden" type="text" disabled={assetDetail.disableTractorFields} min-length=3 
+                                                pattern={labels.RegEx_Alphabets_Only} message-when-pattern-mismatch={labels.lastNameError} 
+                                                data-index={index} required></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> Number of ownerships </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <template if:true={assetDetail.numberOfOwnershipsOptionsList}>
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} 
+                                                    name="noOfOwnershipField" value={assetDetail.numberOfOwnerships} variant="label-hidden" 
+                                                    options={assetDetail.numberOfOwnershipsOptionsList} disabled={assetDetail.disableTractorFields}
+                                                    data-index={index} required></lightning-combobox>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> Engine number </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" pattern={labels.EngineNo_Regex}
+                                                onchange={handleInputFieldChange} name="engineNumberField" value={assetDetail.engineNumber}
+                                                variant="label-hidden" type="text" disabled={assetDetail.disableTractorFields}
+                                                message-when-pattern-mismatch="Please provide a valid Engine Number" data-index={index} 
+                                                required></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> Chassis number</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                                name="chassisNumberField" value={assetDetail.chassisNumber}
+                                                variant="label-hidden" type="text" onfocusout={handleOnFocusoutOutTractor} data-index={index}></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> Lien in favor of </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <template if:true={assetDetail.lienInFavorOfOptionsList}>
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} 
+                                                    name="lienInFavorField" value={assetDetail.lienInFavorOf} data-index={index} 
+                                                    variant="label-hidden" options={assetDetail.lienInFavorOfOptionsList}
+                                                    disabled={assetDetail.disableTractorFields} required></lightning-combobox>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- SFTRAC 453- SI#13 - removeddisabled={assetDetail.disableTractorFields} -->
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label"> RC retention applicable </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <template if:true={rcRetentionOptionsListTractor}>
+                                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} 
+                                                    name="rcRetentionApplicableField" value={assetDetail.rcRetentionApplicable} variant="label-hidden" 
+                                                    data-index={index} options={rcRetentionOptionsListTractor} >
+                                                </lightning-combobox>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--SFTRAC-1715 Start-->
+                                <template if:true={assetDetail.rcRetentionApplicableYes}>
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label"> RC Hold Amount </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input class="slds-form-element__control" label="Enter RC Hold Amount" type="number" onchange={handleInputFieldChange} 
+                                                    name="rcHoldAmountField" value={assetDetail.rcHoldAmount} variant="label-hidden" data-index={index} required>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <!--SFTRAC-1715 End-->
+                            </div>
+                        </template>
+                    </template>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </template>
+    <template lwc:else>
+        <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label"> Vehicle type<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                        name="vehicleTypeField" value={vehicleType} label="Vehicle type" variant="label-hidden"
+                        type="text" data-id="vehicleTypeId" disabled required></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label"> Product <abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                        name="productField" value={product} label="Product" variant="label-hidden" type="text"
+                        data-id="productId" disabled required> </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label"> Purpose of purchase <abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <template if:true={purposeOfPurchaseOptionsList}>
+                        <lightning-combobox class="slds-form-element__control" label="Purpose of purchase"
+                            variant="label-hidden" data-id="purposofpurchaseId" options={purposeOfPurchaseOptionsList}
+                            onchange={handleInputFieldChange} name="purposeofPurcValueField" value={purposeOfPurchase}
+                            disabled required></lightning-combobox>
+                    </template>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+     <!--1780 start-->
+   
+     <div class="slds-border_top slds-m-vertical_large"></div>
+
+     <div class="slds-form slds-grid slds-wrap">
+         <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+                 <div class="slds-col slds-size_2-of-3">
+                     <label class="slds-form-element__label"> Make<abbr title="required"
+                             class="slds-required">*</abbr></label>
+                 </div>
+                 <!--CISP-2794-->
+                 <div class="slds-col slds-size_2-of-3">
+                     <lightning-combobox class="slds-form-element__control" options={makeOptions}
+                         onchange={handleInputFieldChange} name="makeField" value={makeCodeOfProduct} label="Make"
+                         variant="label-hidden" id="make" disabled={mmvDisable} required></lightning-combobox>
+                 </div>
+             </div>
+         </div>
+         </div>
+         <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_2-of-3">
+                        <label class="slds-form-element__label"> Model <abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <!--CISP-2794-->
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" options={modelOptions}
+                            onchange={handleInputFieldChange} name="modelField" value={modelCodeOfProduct} label="Model"
+                            variant="label-hidden" id="model" disabled={disableMMVOverall} required></lightning-combobox>
+                    </div>
+                </div>
+            </div>
+     </div>
+     <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_2-of-3">
+                    <label class="slds-form-element__label" value={variant}> Variant <abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <!--CISP-2794-->
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" options={variantOptions}
+                        onchange={handleInputFieldChange} name="variantField" value={variantCodeOfProduct} label="Varient"
+                        variant="label-hidden" id="variant" disabled={disableMMVOverall} required></lightning-combobox>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="slds-border_top slds-m-vertical_large"></div>
+ 
+     <!--1780 end-->
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label"> Dealer/Sub-dealer name <abbr if:true={isDealerFieldMandatory} title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                        name="dealerSubDealerNameField" options={dealerSubDealerOptions} value={dealerSubDealerName}
+                        label="Dealer/Sub-dealer name" variant="label-hidden" data-id="dealername"
+                        disabled={isDealerFieldDisabled} required={isDealerFieldMandatory}></lightning-combobox><!--Hero CISH-2-->
+                </div>
+            </div>
+        </div>
+        <template if:true={isPVUsedAndRefinance}><!--CISP-8762-->
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-align_absolute-center slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input type="checkbox" data-id="rcLimitcheckbox" label=" RC limit enabled Dealer" disabled checked={isRcLimitChecked} ></lightning-input>
+                    </div>
+                </div>
+            </div>
+            </template>    
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label"> Invoice in the name of <abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                        name="invoiceNameField" label="Invoice In the Name Of" variant="label-hidden" type="text"
+                        value={invoiceInNameOf} data-id="invoicename" disabled={invoiceNameDisabled} min-length=3
+                        pattern={labels.RegEx_Alphabets_Only} message-when-pattern-mismatch={labels.NameError} required>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label"> Vehicle registered in the name of <abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <template if:true={vehicleRegisteredInNameOfOptionsList}>
+                        <lightning-combobox class="slds-form-element__control" label="Vehicle registered in the name of"
+                            variant="label-hidden" id="vehicleregisteredname"
+                            options={vehicleRegisteredInNameOfOptionsList} onchange={handleInputFieldChange}
+                            name="vehicleRegNameValueField" value={vehicleRegisteredInNameOf} disabled required>
+                        </lightning-combobox>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={displayUsedVehicleTypeFields}>
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Usage Type <abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <template if:true={usageTypeOptionsList}>
+                            <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                                name="usageTypeField" value={usageType} label="Usage Type" variant="label-hidden"
+                                id="usagetype1" options={usageTypeOptionsList} disabled required></lightning-combobox>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Vehicle Registration Number <abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                            name="vehicleRegNoValueField" label="Vehicle Registration number" variant="label-hidden"
+                            type="text" value={vehicleRegNoValue} data-id={vehicleRegNoId} disabled required>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-around_medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryButton slds-button slds-button_brand" onclick={handleGetVehicleDetails}
+                        disabled={disableGetVehicleDetails}>
+                        Get Vehicle Details <span if:true={showSuccessTick}> &#x2714;</span><span
+                            if:true={showFailureTick}> &#10060;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!--Vahaan Details Section-->
+        <template if:true={showVahanDetailsSection}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Manufacturer Year, Month <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" data-id="mnfYearMonthId"
+                                onchange={handleInputFieldChange} name="manufacturerYearAndMonthField"
+                                value={manufacturerYearAndMonth} label="Manufacturer Year, Month" variant="label-hidden"
+                                type="month" disabled={allFieldsDisabled} required></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Last owner name <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" data-id="lastOwnerId"
+                                onchange={handleInputFieldChange} name="lastOwnerNameField" value={lastOwnerName}
+                                label="Last owner name" variant="label-hidden" type="text" disabled={allFieldsDisabled}
+                                min-length=3 pattern={labels.RegEx_Alphabets_Only} message-when-pattern-mismatch={labels.lastNameError} required></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Number of ownerships <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <template if:true={numberOfOwnershipsOptionsList}>
+                                <lightning-combobox class="slds-form-element__control" data-id="noOfOwnershipId"
+                                    onchange={handleInputFieldChange} name="noOfOwnershipField"
+                                    value={numberOfOwnerships} label="Number of ownerships" variant="label-hidden"
+                                    options={numberOfOwnershipsOptionsList} disabled={allFieldsDisabled} required>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Engine number <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" data-id="engineNoId" pattern={labels.EngineNo_Regex}
+                                onchange={handleInputFieldChange} name="engineNumberField" value={engineNumber}
+                                label="Engine number" variant="label-hidden" type="text" disabled={allFieldsDisabled}
+                                message-when-pattern-mismatch="Please provide a valid Engine Number" required> </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Chassis number <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" data-id="chassisNoId"
+                                onchange={handleInputFieldChange} name="chassisNumberField" value={chassisNumber} pattern={labels.ChassisNo_Regex}
+                                label="Chassis number" variant="label-hidden" type="text" disabled={allFieldsDisabled}
+                                message-when-pattern-mismatch="Please provide a valid Chassis Number" required></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> Lien in favor of <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <template if:true={lienInFavorOfOptionsList}>
+                                <lightning-combobox class="slds-form-element__control" data-id="LieninfavorId"
+                                    onchange={handleInputFieldChange} name="lienInFavorField" value={lienInFavorOf}
+                                    label="Lien in favor of" variant="label-hidden" options={lienInFavorOfOptionsList}
+                                    disabled={allFieldsDisabled} required></lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"> RC retention applicable <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <template if:true={rcRetentionOptionsList}>
+                                <lightning-combobox class="slds-form-element__control" data-id="RCretentionId"
+                                    onchange={handleInputFieldChange} name="rcRetentionApplicableField"
+                                    value={rcRetentionApplicable} label="RC retention applicable" variant="label-hidden"
+                                    options={rcRetentionOptionsList} disabled={allFieldsDisabled} required>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </template>
+    
+</template>
+
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <lightning-button variant="brand" onclick={handleSubmit} disabled={isDisabledSubmit} label="Submit"> </lightning-button>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={showPopupModal}>
+        <section id="modal6" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-05" class="slds-modal__title slds-hyphenate">Kindly Retry</h2>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-text-align_left slds-p-around_medium">
+                        <lightning-formatted-rich-text value={modalMsg}></lightning-formatted-rich-text>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button
+                                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                onclick={handleModalBtnAction} variant="brand" label="OK"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops6"></div>
+    </template>
+    <template if:true={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next"
+           onclick={handleOnfinish}>
+           Next
+        </button>
+  </template>
+
+  <template if:true={showFileUploadAndView}>
+    <c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordid} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+  </template>
+</template>

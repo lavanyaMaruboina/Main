@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Segment__c</fullName>
+    <label>Product Segment</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HIENDBIKE</fullName>
+                <default>false</default>
+                <label>HIENDBIKE</label>
+            </value>
+            <value>
+                <fullName>ESCOOTER</fullName>
+                <default>false</default>
+                <label>ESCOOTER</label>
+            </value>
+            <value>
+                <fullName>HISTREET</fullName>
+                <default>false</default>
+                <label>HISTREET</label>
+            </value>
+            <value>
+                <fullName>TWO_WHEELER</fullName>
+                <default>false</default>
+                <label>TWO_WHEELER</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

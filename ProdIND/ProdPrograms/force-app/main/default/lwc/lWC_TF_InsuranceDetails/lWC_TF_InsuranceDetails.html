@@ -1,0 +1,48 @@
+<template>
+ 
+    <div style="height: 80px;text-align: center;vertical-align: middle;padding: 1%;">
+    <p style="font-size: 20px; color: rgba(140, 49, 55, 1);">Insurance Details</p>
+    </div>
+
+    <!-- Upload & View Document Button :Start -->
+    <div class="slds-m-bottom_large slds-clearfix">
+        <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+            class=" slds-float_right slds-m-left_medium slds-m-right_medium">
+        </lightning-button-icon>
+        <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+            alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton">
+        </lightning-button>
+    </div>
+    <!-- Upload & View Document Button :End -->
+    
+
+    <template if:true = {showChildComponent}>
+        <lightning-tabset data-id="assetTabSet" active-tab-value={activeTabId}>
+            <template for:each={assetTabList} for:item="tab" for:index="index">
+                <lightning-tab label={tab.label} value={tab.id} key={tab} onactive={handleActive}>
+                    <c-l-w-c_-t-f_-insurance-details_-child
+                        active-applicant-tab={activeTab}
+                        tab-applicant-id={applicantId}
+                        record-id={recordId}
+                        asset-id ={tab.id}
+                        tablength={tablength}
+                        isdisabled={isdisabled}
+                        is-called-from-l1={isCalledFromL1}
+                        is-called-from-l2={isCalledFromL2}
+                        index={index}
+                        current-stage={currentStage}
+                        oncustomcodevaleve={handleOnfinish}
+                        is-revoked-loan-application={isRevokedLoanApplication}
+                    >
+                    </c-l-w-c_-t-f_-insurance-details_-child>
+                    <button if:true={enableNext} class="slds-button slds-float_right slds-button_brand ninext" onclick={handlebeneficiaryNext}>Next</button>
+                </lightning-tab>
+            </template>
+        </lightning-tabset>
+    </template>
+
+    <!--SFTRAC-2243 Start-->
+    <template lwc:if={showFileUploadAndView}><c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordId} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+    </template>
+    <!--SFTRAC-2243 End-->
+</template>

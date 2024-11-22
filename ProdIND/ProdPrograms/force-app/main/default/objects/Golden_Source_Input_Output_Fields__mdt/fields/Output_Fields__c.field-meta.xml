@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Output_Fields__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Name of the card holder, Voter ID number, Address of the card holder, Gender of the Card holder, Date of Birth, Age of the Card holder, Name, DL number, Registered address as per Driving License, Passport file number, First Name + Middle name, Last name, Passport number, Address, PAN number, PAN name, Aadhaar number, Name, DOB, Address of the card holder, Gender</inlineHelpText>
+    <label>Output Fields</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

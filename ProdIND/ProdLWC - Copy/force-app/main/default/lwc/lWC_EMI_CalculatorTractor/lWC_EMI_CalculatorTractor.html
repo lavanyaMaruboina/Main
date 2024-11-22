@@ -1,0 +1,324 @@
+<template>
+	<template if:true={isSpinnerMoving} class=" slds-align_absolute-center slds">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+        </lightning-spinner>
+    </template>
+	<lightning-card variant="narrow">
+		<div style="margin : 1rem; padding : 1rem">
+			<div class="slds-clearfix">
+				<label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium slds-text-title_bold">EMI Calculator</label>
+			</div>
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Product<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-combobox variant="label-hidden" label="Product" class="emiFields"
+								onchange={handleInputChange} name="product" value={product} required
+								options={products}></lightning-combobox>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Variant Installment Type<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-combobox variant="label-hidden" label="Variant Installment Type"
+								onchange={handleInputChange} name="variantInstallmentType" class="emiFields" required
+								options={variantInstallmentTypeOptions}></lightning-combobox>
+						</div>
+					</div>
+				</div>
+		    </div>
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Finance Amount<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" type="number" label="Finance Amount" class="emiFields" required
+								onchange={handleInputChange} name="financeAmount"></lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">ROI<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" type="number" step=".01" label="ROI" class="emiFields" required
+								onchange={handleInputChange} name="ROI"></lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Tenure<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-combobox variant="label-hidden" label="Tenure" onchange={handleInputChange} class="emiFields" required
+								name="tenure" options={tenureOptions}></lightning-combobox>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Advance EMI Numbers<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" type="number" label="Advance EMI Numbers" class="emiFields" required
+								onchange={handleInputChange} name="advanceEMINumbers"></lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Moratorium in Days<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-combobox variant="label-hidden" label="Moratorium in Days" class="emiFields" required
+								onchange={handleInputChange} name="moratoriumInDays" options={moratoriumInDaysOptions} value={moratoriumInDaysValue} disabled={disabledMID} data-id="moratoriumID">
+							</lightning-combobox>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Total PayIns (Including GST)<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" type="number" label="Total PayIns (Including GST)" class="emiFields" required
+								onchange={handleInputChange} name="totalPayInsIncludingGST" value={payin}></lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Total Pay Outs<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" type="number" label="Total Pay Outs" class="emiFields" required
+								onchange={handleInputChange} name="totalPayOuts" value={payout}></lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Installment Type<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-combobox variant="label-hidden" label="Installment Type" class="emiFields" required
+								onchange={handleInputChange} name="installmentType" options={installmentTypeOptions}>
+							</lightning-combobox>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">EMI AMOUNT<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" label="EMI AMOUNT" disabled value={totalMonthlyPayment}></lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">Agreement Amount<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" label="Agreement Amount" disabled value={totalPrinciple}></lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">CRM IRR<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" label="CRM IRR" value={crmIRR} disabled></lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">GROSS IRR<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" label="GROSS IRR"  value={grossIRR} disabled></lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">NET IRR<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" label="NET IRR" value={netIRR} disabled></lightning-input>
+						</div>
+					</div>
+				</div>
+				<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+					<div class="slds-form-element  slds-grid slds-wrap slds-grid_vertical-align-start">
+						<div class="slds-col slds-size_1-of-3">
+							<label class="slds-form-element__label">No of Installments<abbr title="required" class="slds-required"></abbr></label>
+						</div>
+						<div class="slds-col slds-size_2-of-3">
+							<lightning-input variant="label-hidden" type="number" value={numberOfInstallmentsValue}
+								label="No of Installments" disabled></lightning-input>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="slds-form slds-grid slds-wrap slds-grid_align-center">
+				</br>
+				<div class="slds-p-around_small slds-size_1-of-2 slds-medium-size_1-of-3 slds-large-size_1-of-4">
+					<div
+						class="slds-form-element slds-grid slds-wrap slds-grid_vertical-align-start slds-align_absolute-center">
+						<!--<button type="button" style="width: 10rem;" class="indusPrimaryButton slds-button slds-button_brand slds-button_stretch" onclick={handlerComputeIRR} disabled={disableCompute}>Compute IRR</button> -->
+						<button class="slds-button slds-button_brand" onclick={handlerComputeIRR} disabled={disableCompute}>Compute IRR</button>
+					</div>
+				</div>
+			</div>
+			<br></br>
+			<template lwc:if={showAmort}>
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+					<thead>
+						<tr>
+							<th>instalmentNo</th>
+							<th>dueDate</th>
+							<th>days</th>
+							<th>closingPrinciple</th>
+							<th>openingPrinciple</th>
+							<th>interestComp</th>
+							<th>principalComp</th>
+							<th>instalmentAmount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={totalPaybleEMI} for:item="emi">
+							<tr key={emi.instalmentNo}>
+								<td>{emi.instalmentNo}</td>
+								<td>{emi.dueDate}</td>
+								<td>{emi.days}</td>
+								<td>{emi.closingPrinciple}</td>
+								<td>{emi.openingPrinciple}</td>
+								<td>{emi.interestComp}</td>
+								<td>{emi.principalComp}</td>
+								<td>{emi.instalmentAmount}</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+            </template>
+			<template lwc:if={showStructured}>
+				<div>
+					<lightning-layout>
+						<lightning-layout-item>
+							<div class="slds-text-heading_medium slds-col slds-size_1-of-1" style="width:250px">Structured Installments</div>
+						</lightning-layout-item>
+						<lightning-layout-item>
+							<div class="slds-size_1-of-1">
+								<!--<button type="button" style="width:90px;color:black;font-size:15px;" class="indusPrimaryButton slds-button slds-button_base" onclick={handlerAddRow} disabled={disableAdd}><b>ADD ROW</b></button>-->
+								<button class="slds-button slds-button_brand" onclick={handlerAddRow} disabled={disableAdd}>Add Row</button>
+
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item>	
+							<div class="slds-size_1-of-1">
+								<!--<button type="button" style="width: 110px;color:black;font-size:15px;" class="indusPrimaryButton slds-button slds-button_base" onclick={handlerRemoveRow}><b>REMOVE ROW</b></button>-->
+								<button class="slds-button slds-button_brand" onclick={handleReset}>Reset</button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+					<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+						<thead>
+							<tr>
+								<th style="color:#832625;">From Inst</th>
+								<th style="color:#832625;">To Inst</th>
+								<th style="color:#832625;">Emi Payable</th>
+								<th style="color:#832625;">Total Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={itemList} for:item="item" for:index="index">
+								<tr key={item}>
+									<td>
+										<lightning-input type="Number" label="" name="fromMon"
+										value={item.fromMonth} data-target-id={index} disabled={item.readOnly} data-id="validateFromCmp"
+										onblur={changeHandlerOnFromMonth}>
+									</lightning-input>
+								</td>
+									<td>
+										<lightning-input type="Number" label="" name="toMonth" data-id="validateToCmp"
+										value={item.toMonth} data-target-id={index} disabled={item.readOnly}
+										onblur={changeHandlerOnToMonth}>
+									</lightning-input>
+								</td>
+									<td>
+										<lightning-input type="Number" label="" name="emiPayable" data-id="validateEMIId"
+											value={item.emiPayable} data-target-id={index} disabled={item.readOnly}
+											onblur={changeHandlerOnEmiPayable}>
+										</lightning-input>
+									</td>
+									<td>
+										<lightning-input type="Number" label="" name="totalAmount"
+											value={item.totalAmount} data-target-id={index}
+											disabled>
+										</lightning-input>
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+					<div class="slds-p-top_medium"><b>TOTAL AMOUNT Sum : Rs.  <span style="color:#4ccc11;font-size:20px;">{totalSumAmount}</span> </b></div>
+					<div class="slds-p-top_medium"><b>TOTAL AMOUNT BALANCE : RS.  {balanceAmount}</b></div>
+				</div>
+            </template>
+		</div>
+	</lightning-card>
+</template>

@@ -1,0 +1,119 @@
+<template>
+    <div class="slds-p-around_medium" if:false={hidePdfBtn}>
+        <lightning-button name="Print" class="slds-no-print" label="Print" onclick={handlePrint}></lightning-button>
+    </div>
+    <div style="border: 1px solid" class="slds-p-around_small print" data-print="elementToPrint">
+            <table border="1">
+                <tr>
+                    <th>Applicant Name</th>
+                    <td class="tdColor">{applicantName}</td>
+                    <th>Deal Number/ Application no</th>
+                    <td class="tdColor">{dealNumber}</td>
+                </tr>
+                <tr>
+                    <th>Sourced By</th>
+                    <td class="tdColor">{Sourced_By}</td>
+                    <th>Sourcing Staff Name</th>
+                    <td class="tdColor">{Sourcing_Staff_name}</td>
+                </tr>
+                <tr>
+                    <th>Office / Business Name</th>
+                    <td class="tdColor">{branchLocation}</td>
+                    <th>Loan Amount Applied for</th>
+                    <td class="tdColor">{loanAmount}</td>
+                </tr> 
+                <tr>
+                    <th>Address</th>
+                    <td class="tdColor">{address}</td>
+                </tr>
+                <tr>
+                    <th>Sampled Date</th>
+                    <td class="tdColor">{Sampled_Date}</td>
+                    <th>Reported Date</th>
+                    <td class="tdColor">{reportedDate}</td>
+                </tr>
+                <!--SFTRAC-1451-->
+                <tr>
+                    <th>Sampler Name</th>
+                    <td class="tdColor">{SamplerName}</td>
+                    <th>RCU Agency Name</th>
+                    <td class="tdColor">{rcuAgencyName}</td>
+                </tr>
+                <tr>
+                    <th>Loan Type</th>
+                    <td class="tdColor">{loanType}</td>
+                    <th>Verifier Name</th>
+                    <td class="tdColor">{verifierName}</td>
+                </tr>
+            </table>
+            <br/>
+            <div class="slds-scrollable_x"
+            style="overflow-y: auto;">
+            <table border="1">
+                <tr>
+                    <th>Overall RCU Verification Status</th>
+                    <th>Overall RCU Verification Remarks</th>
+                    <th>Overall RCU Agency Verification Status</th>
+                    <th>Overall RCU Agency Verification Remarks</th>
+                    <th>Reasons for Negative/Non Clear</th>
+                </tr>
+                <tr>
+                    <td>{overall_RCU_Verification_Status}</td>
+                    <td>{overall_RCU_Verification_Remarks}</td>
+                    <td>{overall_RCU_Agency_Verification_Status}</td>
+                    <td>{overall_RCU_Agency_Verification_Remarks}</td>
+                    <td>{overall_RCU_Agency_Sampling_Reason}</td>
+                </tr>
+            </table>
+            </div>
+            <br/>
+            <table border ="1">
+                <tr>
+                    <th>Co-Applicant Name</th>
+                </tr>
+                <template for:each={coBorrower} for:item="borrower">
+                    <tr key={borrower}>
+                        <td>{borrower.Name}</td>
+                    </tr>
+                </template>
+            </table>
+            <br/>
+            <table border="1">
+                <tr>
+                    <th>Vehicle Model</th>
+                    <th>Vehicle Make</th>
+                </tr>
+                <template for:each={vehicleDetails} for:item="vehicle">
+                    <tr key={vehicle}>
+                        <td>{vehicle.Model__c}</td>
+                        <td>{vehicle.Make__c}</td>
+                    </tr>
+                </template>
+            </table>
+            <br/>
+            <table border="1">
+                <tr>
+                    <th>Document Name</th>
+                    <th>Applicant Name</th>
+                    <th>RCU Agency Verification Status</th>
+                    <th>RCU Agency Verification Sub Status</th>
+                    <th>RCU Document Remark</th>
+                </tr>
+                <template for:each={documents} for:item="document">
+                    <tr key={document}>
+                        <td>{document.Name}</td>
+                        <td>{document.Applicant__r.Name}</td>
+                        <td>{document.RCU_Agency_Verification_Status__c}</td>
+                        <td>{document.RCU_Agency_Verification_Sub_Status__c}</td>
+                        <td>{document.RCU_Document_Remarks__c}</td>
+                    </tr>
+                </template>
+            </table>
+            <br/>
+            <template for:each={files} for:item="file">
+                <div key={file} style="width : 200px;height: 200px;">
+                    <img src={file.src}/>
+                </div>
+            </template>
+    </div>
+</template>

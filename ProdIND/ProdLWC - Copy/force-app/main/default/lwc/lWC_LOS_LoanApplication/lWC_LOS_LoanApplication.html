@@ -1,0 +1,1092 @@
+<!-- Screen Developed By : Vinita Kamble.
+Screen Name: 'LWC_LOS_LoanApplication'
+Description: The new LOS will also provide a framework for sales executives where they can identify existing customers and obtain consent to retrieve customer’s CIBIL report/Golden Source/WhatsApp banking (if applicable). 
+             The user will also be able to add co-borrower details-->
+             <template>
+                <template if:true={isLoading}  class="slds-is-relative slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Loading" size="large" variant="brand" style="height: 300vh !important;"></lightning-spinner>
+                </template>
+                    <template if:false={loanApplicationComponent}>
+                        <lightning-progress-indicator class="slds-progress__marker_icon-success" current-step={currentStep} type="base" variant="base" >
+                            <lightning-progress-step label="User Details" value="User Details"></lightning-progress-step>
+                            <lightning-progress-step label="Capture current residential address" value="Capture current residential address"></lightning-progress-step>
+                            <lightning-progress-step label="Capture permanent residential address" value="Capture permanent residential address"></lightning-progress-step>
+                            <lightning-progress-step label="Capture PAN or Other KYC" value="Capture PAN or Other KYC"></lightning-progress-step>
+                            <lightning-progress-step label="Customer Dedupe" value="Capture Dedupe"></lightning-progress-step>
+                            <lightning-progress-step label="Vehicle Dedupe" value="Vehicle Dedupe"></lightning-progress-step>
+                            <lightning-progress-step label="Declared Income/Required Loan Amount" value="Declared Income/Required Loan Amount"></lightning-progress-step>
+                            <lightning-progress-step label="Bank Account Check" value="Bank Account Check"></lightning-progress-step>
+                            <lightning-progress-step label="Gatting And Screening" value="Gatting And Screening"></lightning-progress-step>
+                        </lightning-progress-indicator>
+                        <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+                            class=" slds-float_right ">
+                        </lightning-button-icon>
+                        <template if:true={isStepOne}>
+                            <div class="slds-clearfix">
+                                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">{label.LeadDetails}</label>
+                            </div>
+                            <!-- Start : Customer Informaiton Fields -->
+                            <!-- This section will be visible on borrower tab only -->
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3"> <label class="slds-form-element__label">Vehicle Type</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-combobox class="slds-form-element__control vehicleCss" variant="label-hidden"
+                                                name="Vehicle Type" label="Vehicle Type" value={vehicleTypeval} placeholder="-- Select --"
+                                                message-when-value-missing="Select Vehicle Type" options={vehicleTypeOptions}
+                                                onchange={handleVehicleTypeChange} required disabled={disableVehicle}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">{label.AgentBranchName}</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-combobox class="slds-form-element__control agentCss" variant="label-hidden"
+                                                name="agentBLCodeId" label="Agent BL code" value={agentBLCodeValue}
+                                                message-when-value-missing={label.completeField} onchange={agentBLCodeHandler}
+                                                options={agentBLCodeOptions} disabled={isDisableAGBLCode} id="agentBLCodeId" required>
+                                            </lightning-combobox>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">{label.ProductType}</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input class="slds-form-element__control" variant="label-hidden" type="text"
+                                            disabled label="Product Type" value={productType} name='product' required>
+                                        </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" if:false={isNonIndividualBorrower}>
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label" id="customerFirstNameLbl">{label.CustomerFirstName}
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                            </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input disabled={disableFirsttName} class="slds-form-element__control" variant="label-hidden" pattern={label.RegEx_Alphabets_Only} value={firstNameValue} type="text" label="Customer First Name" onchange={firstNameHandler} required message-when-pattern-mismatch={label.lastNameError} min-length=3 data-id="firstNameId"></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" if:false={isNonIndividualBorrower}>
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label" id="customerLastNameLbl">{label.CustomerLastName}
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                            </label><!-- <abbr title="required" class="slds-required">*</abbr> -->
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input disabled={disableLastName} class="slds-form-element__control" value={lastNameValue} variant="label-hidden" pattern={label.RegEx_Last_Name} type="text" label="Customer Last Name" onchange={lastNameHandler} message-when-pattern-mismatch={label.lastNameError} data-id="lastNameId" min-length=1 required></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">{label.LeadNumber}</label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                         <lightning-input class="slds-form-element__control" variant="label-hidden" type="text" disabled label="Product Type" value={leadNumber} name='product'></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <template if:true={isTractor}>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label" id="NumberOfProducts">{label.NumberOfProducts}
+                                                </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input disabled class="slds-form-element__control" variant="label-hidden" value={numberOfProducts} type="number" label="Number of Products" ></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label" id="EntityType">{label.EntityType}
+                                                    <abbr title="required" class="slds-required">*</abbr>
+                                                </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                    name="EntityTypeComboBox"  data-id="EntityTypeComboBox" label="Entity Type" value={getEntityType}
+                                                    message-when-value-missing={label.completeField}
+                                                    options={entityOptions} id="EntityTypeComboBox" onchange={handleInputChange} required disabled={disableEntityTypeVal}>
+                                                </lightning-combobox>
+                                                <!-- <lightning-input class="slds-form-element__control" value={entityType} variant="label-hidden" type="text" label="Entity Type" required></lightning-input> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="ApplicationType">{label.ApplicationType}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                        name="ApplicationTypeInput" label="Application Type" value={applicationTypeVal}
+                                                        message-when-value-missing={label.completeField} disabled={disableApplicationTypeVal}
+                                                        options={applicationTypeOptions} data-id="ApplicationTypeInput" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <template if:true={isNonIndividualBeneficiary}>
+                                    <div class="slds-form slds-grid slds-wrap">
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="BeneficialOwnerCategory">Beneficial Owner Category
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                    name="BeneficialOwnerCategoryCombo" label="Beneficial Owner Category" value={beneficialOwnerCategory}
+                                                    options ={beneficialOwnerCategoryOptions} message-when-value-missing={label.completeField} disabled={disableBOC} 
+                                                    data-id="beneficialOwnerCategoryId" onchange={beneficialOwnerCategoryHandler} required>
+                                                </lightning-combobox>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="Relatioshipwithentity">Relationship with Entity
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                        name="RelatioshipwithEntityCombo" label="Relatioship with Entity" value={relationshipWithEntity}
+                                                        message-when-value-missing={label.completeField} disabled={disableRelEntity}
+                                                        options={relationshipWithEntityOptions} data-id="relwithEntityId" onchange={relationshipWithEntityHandler} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="RelationshipType">Relationship Type
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                    name="relationshipTypeCombo" label="Relatioship Type" value={relationshipType}
+                                                    message-when-value-missing={label.completeField} disabled={disableRelationshipType}
+                                                    options={relationshipTypeOptions} data-id="relTypeId" onchange={relationshipTypeHandler} required>
+                                                </lightning-combobox>                                                
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input class="slds-form-element__control" type="checkbox" label="POA Holder" name="POA Holder" onchange={poaChangeHandler} data-id="poaId" disabled={disablePOAHolder}></lightning-input>                                              
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="shareHolderPercent">Shareholder %
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="shareHolderPercentInput" label="shareHolderPercent" value={shareHolderPercent}
+                                                    message-when-value-missing={label.completeField} type="number" disabled={disablesharePercent}
+                                                    data-id="shareHolderPId" onchange={shareHolderHandler} required>
+                                                </lightning-input>                                                
+                                            </div>
+                                            </div>
+                                        </div>            
+                                    </div>
+                                </template>            
+                                <template if:true={isNonIndividualBorrower}>
+                                    <div class="slds-form slds-grid slds-wrap">
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="EntityName">{label.EntityName}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden" required value={loan.Entity_Name__c} onchange={handleInputChange} name="EntityName" type="text" disabled={readonly} ></lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="EntityTypeNonInd">{label.EntityTypeNonInd}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox if:true={entityTypeOptions.data} class="slds-form-element__control" variant="label-hidden"
+                                                        name="EntityTypeNonInd" label="Entity Type" value={loan.Entity_Type__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={entityTypeOptions.data.values} data-id="EntityTypeNonInd" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="EntityCode">{label.EntityCode}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={loan.Entity_Code__c} name="EntityCode" type="text" disabled></lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form slds-grid slds-wrap">
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="EntityCategory">{label.EntityCategory}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                        name="EntityCategory" value={loan.Entity_Category__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={entityCategoryOptions} data-id="EntityCategoryComboBox" onchange={handleInputChange} required><!--SFTRAC-536-->
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="profile">{label.Profile}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                        name="profile" value={loan.Profile__c}
+                                                        message-when-value-missing={label.completeField} disabled={profileDisabled}
+                                                        options={profileOptions} data-id="profile" onchange={handleInputChange}>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="slds-form slds-grid slds-wrap">
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="ContactPersonName">{label.ContactPersonName}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={loan.Contact_Person_Name__c} onchange={handleInputChange} name="ContactPersonName" type="text" required disabled={readonly} ></lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="LeadSource">{label.LeadSource}
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox if:true={leadSourceOptions.data} class="slds-form-element__control" variant="label-hidden"
+                                                        name="LeadSource" value={loan.Lead_Source_Non_Ind__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={leadSourceOptions.data.values} data-id="leadSourceComboBox" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="ClassofActivity">{label.ClassofActivity}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox if:true={classOfActivityOptions.data} class="slds-form-element__control" variant="label-hidden"
+                                                        name="ClassofActivity" value={loan.Class_of_Activity__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={classOfActivityOptions.data.values} data-id="classOfActivityComboBox" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="slds-form slds-grid slds-wrap">
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="LoanType">{label.LoanTypeNonInd}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox if:true={loanTypeOptions.data} class="slds-form-element__control" variant="label-hidden"
+                                                        name="LoanType" value={loan.Loan_Type__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={loanTypeOptions.data.values} data-id="loanTypeComboBox" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="EvaluationType">{label.EvaluationType}
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox if:true={evalutionTypeOptions.data} class="slds-form-element__control" variant="label-hidden"
+                                                        name="EvaluationType" value={loan.Evaluation_Type__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={evalutionTypeOptions.data.values} data-id="evaluationTypeComboBox" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="MajorIndustry">{label.MajorIndustry}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-combobox if:true={majorIndustryOptions.data} class="slds-form-element__control" variant="label-hidden"
+                                                        name="MajorIndustry" value={loan.Major_Industry__c}
+                                                        message-when-value-missing={label.completeField} disabled={readonly}
+                                                        options={majorIndustryOptions.data.values} data-id="majorIndustryComboBox" onchange={handleInputChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label" id="MinorIndustry">{label.MinorIndustry}
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                    </label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden" value={loan.Minor_Industry__c} onchange={handleInputChange} name="MinorIndustry" type="text" disabled={readonly} ></lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                </template>
+                                <template if:true={isTopUpShow}><!--SFTRAC-172-->
+                                    <div class="slds-form slds-grid slds-wrap">
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Would you like to open a Topup loan?" name="Would you like to open a topup loan" onchange={topupChangeHandler} data-id="topupChangeCheckBox" checked={isTopUpChecked} disabled={getDisabledTopUp}></lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </template>    
+                            </template>             
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label " id="customerPhoneNumberLbl">{label.CustomerPhoneNumber}
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                            </label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input disabled={disablePhoneNumber} class="slds-form-element__control" pattern={label.RegEx_Number} variant="label-hidden" value={phoneNoValue} label="Customer Phone Number" max-length="10" min-length="10" name="phoneNo" onchange={PhoneNumberHandler} data-id="phoneNumberId" message-when-pattern-mismatch={label.Mobile_Number_Error_Msg} required></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={showAadhaarLinkedModal}>
+                                    <div class="modal-container slds-modal slds-fade-in-open">
+                                        <div class="slds-modal__container">
+                                            <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={handleAadhaarLinkedNo}>
+                                                <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                                                <span class="slds-assistive-text">Close</span>
+                                            </button>
+                                            <div class="slds-modal__header">
+                                                <h2 class="slds-text-heading_medium">Mobile Number Verify</h2>
+                                            </div>
+                                            <div class="slds-modal__content slds-p-around_medium">
+                                                <p>The Mobile Number entered is {phoneNoValue}. Is this number linked to Aadhaar? </p>
+                                            </div>
+                                            <div class="slds-modal__footer">
+                                                <lightning-button label="Yes" onclick={handleAadhaarLinkedYes}></lightning-button>
+                                                <lightning-button label="No" onclick={handleAadhaarLinkedNo}></lightning-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                </template>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input class="slds-form-element__control" type="checkbox" label="WhatsApp number is same as contact number" name="WhatsApp Number is same as Contact Number" onchange={sameNoHandler} data-id="samePhoneCheckBox" disabled={disableSamePhoneCheckBox} ></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label" id="customerWhatsAppNumberLbl">{label.WhatsAppNumber}<template if:true={isWhatsAppNumberRequired}><abbr title="required" class="slds-required">*</abbr></template><!--SFTRAC-536--> </label>
+                                        </div>
+                                        <template if:true={showCopiedWhatsAppNumber}>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" name="whatsAppNo" value={whatsAppNumberValue} class="slds-form-element__control" type="tel" label="WhatsApp Number" max-length="10" disabled={isWhatsAppNumberAccessible} data-id="checkedWhatsAppNumberId" required={isWhatsAppNumberRequired}></lightning-input><!--SFTRAC-536-->
+                                            </div>
+                                        </template>
+                                        <template if:false={showCopiedWhatsAppNumber}>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" name="whatsAppNo" value={whatsAppNumberValue} class="slds-form-element__control" type="tel" pattern={label.RegEx_Number} label="WhatsApp Number" max-length="10" onchange={whatsappNumberHandler} disabled={isWhatsAppNumberAccessible} message-when-pattern-mismatch={label.Mobile_Number_Error_Msg} data-id="whatsAppNumberId" required={isWhatsAppNumberRequired}></lightning-input><!--SFTRAC-536-->
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input class="slds-form-element__control" type="checkbox" label="Register for WhatsApp banking" name="Register for whatsApp banking" value={registerWhatsAppValue} onchange={checkWhatsappNumber} data-id="registerWhatsAppId" disabled={disableRegisterOnlineWhatsApp}></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End :  Customer Information Fields Closed -->
+                            <!-- Consent Button Code  -->
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+                                                <button class="indusPrimaryButton slds-button slds-button_brand colorgreen" onclick={handleConsent} disabled={consentDisable} > Consent 
+                                                    <span  if:true={iconButton}>&#x2714;</span></button>
+                                                <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"  variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}></lightning-button-icon>
+                               </div></div>
+                            </div>
+                            <!-- Consent Button Code Closed -->
+                            <!-- Create Application Button Code  SFTRAC-536 -->
+                            <template if:true={isNonIndividualBorrower}>
+                                <div class="slds-clearfix">
+                                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <div style="display: flex; justify-content:center; align-items:center;">
+                                                <div style="width:220px; box-sizing:border-box; margin:0px;">
+                                                    <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleCreateApplication} disabled={createApplicationDisable}> Create Application <span  if:true={iconButtonCreateApplication}>&#x2714;</span> <span if:true={createApplicationCross}>&#10060;</span></button>                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <!-- Create Application Button Code Closed -->
+
+                            <!-- Start : Capture Customer Image Code -->
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                   <div style="display: flex; justify-content:center; align-items:center;">
+                                           <div style="width:220px; box-sizing:border-box; margin:0px;">
+                                                <button class="indusPrimaryButton slds-button slds-button_brand " onclick={captureCustomerImage} disabled={customerImageDisableVal}>Customer Image  <span  if:true={iconButtonCaptureImage}>&#x2714;</span></button>                               <!--SFTRAC-536-->                           
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End : Capture Customer Image Code -->
+                            <!-- start : Image Upload Button Code  -->
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <div style="display: flex; justify-content:center; align-items:center;">
+                                            <div style="width:220px; box-sizing:border-box; margin:0px;">
+                                                <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleSelfieUpload} disabled={imageUploadDisableVal}> Image Upload   <span  if:true={iconButtonCaptureUpload}>&#x2714;</span><span if:true={imageUploadRedCross}>&#10060;</span></button><!--SFTRAC-536-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>            
+                            <!-- End : Image Upload Button Code  -->
+                            <!--Start :  This Popup will Show for Capture Screen on click of Image Upload Button -->
+                            <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+                            <template if:true={modalPopUpCaptureImage}>
+                                <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-form slds-modal__container">
+                                        <header class="slds-modal__header">
+                                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={captureCustomerImageClose}>
+                                                <lightning-icon icon-name="utility:close" size="medium" variant="bare"></lightning-icon> <span class="slds-assistive-text">Close</span>
+                                            </button>
+                                            <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate"> Customer Image</h2>
+                                        </header>
+                                        <lightning-card>
+                                            <div class="slds-card__body_inner">
+                                                <br>
+                                                <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                                    <div class="slds-col slds-size_1-of-8 slds-m-left">  Doc Type </div>
+                                                    <div class="slds-col slds-size_1-of-10">
+                                                        <lightning-input type="text" variant="label-hidden" value="Customer Image" label="Customer Image" disabled></lightning-input>
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <template if:true={captureImageWeb}>
+                                                <lightning-file-upload  variant="brand" class="slds-theme_brand slds-align_absolute-center" name="fileUploader" accept={acceptedFormats} record-id={documentRecordId} file-field-name="Document_Side_fileupload__c" file-field-value="Selfie" onuploadfinished={handleUploadFinished} onclick={uploadCustomerImage}></lightning-file-upload>
+                                                </template>
+                                                <template if:true={captureImageApi}>
+                                                    <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand" type="button" label="Capture" onclick={captureCustomerImageApp}></lightning-button>
+                                                </template>
+                                                <br><br>
+                                                <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                                                    <div class="slds-button-group-item">
+                                                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Done" onclick={captureImageDone} disabled ={isDone}></lightning-button>
+                                                    </div>
+                                                    <div class="slds-button-group-item">
+                                                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Cancel" onclick={captureCustomerImageClose} disabled ={isCancel}></lightning-button>
+                                                    </div>
+                                                </lightning-button-group>
+                                                <br>
+                                            </div>
+                                        </lightning-card>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+                                </div>
+                            </template>
+                            <!--End :  This Popup will Show for Capture Screen on click of Image Upload Button -->
+                        </template>
+                        <template if:true={modalPopUpToggleFlag}>
+                            <c-l-W-C_-L-O-S_-O-T-P currentapplicationid={applicantId} otppopup={modalPopUpToggleFlag}
+                            onchangeflagvalue={changeValuePopup} onchangebuttoncolor={changecolor} recordid={recordid}></c-l-W-C_-L-O-S_-O-T-P>
+                            <!-- CISP-2787 -->
+                        </template>
+                            <template if:true={isStepTwo}>
+                                <div class="slds-clearfix">
+                                    <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Capture Current Residential Address</label>
+                                </div>
+                                <label class="font_design_note">Choose any ONE document to upload</label>
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <div class="slds-clearfix">
+                                    </br>
+                                    <div class="slds-p-top_medium slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_1-of-2 slds-large-size_2-of-12">
+                                                <button class="indusKycButton slds-button slds-align_absolute-center aadharbtn"
+                                                    onclick={adharKYCUpload} disabled={disableAadharButton01}>
+                                                    <img class="imgClass" src={aadhaarLogoURL}>
+                                                    <span if:true={aadharButton}>&#x2714;</span>
+                                                </button>
+                                            </div>
+                                            <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                                <button class="indusKycButton slds-button slds-align_absolute-center passportbtn"
+                                                    onclick={passportKYCUpload} disabled={disablePassportButton01}>
+                                                    <img class="imgClass" src={passportLogoURL}>
+                                                    <span if:true={passportButton}>&#x2714;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                                <button class="indusKycButton slds-button slds-align_absolute-center voteridbtn"
+                                                    onclick={voterIdKYCUpload} disabled={disableVoterIdButton01}>
+                                                    <img class="imgClass" src={voteridLogoURL}>
+                                                    <span if:true={voterIdButton}>&#x2714;</span>
+                                                </button>
+                                            </div>
+                                            <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                                <button class="indusKycButton slds-button slds-align_absolute-center driverbtn"
+                                                    onclick={dLKYCUpload} disabled={disableDLButton01}>
+                                                    <img class="imgClass" src={dlLogoURL}>
+                                                    <span if:true={drivingLicenseButton}>&#x2714;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-p-top_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <lightning-input  class="slds-form-element__control notCurrent" type="checkbox" data-id="currentAddress" label={label.CurrentAddressOptionsMsg} name="Customer does not have present address on any of the above KYC" onchange={currentAddressHandler} disabled={disableCurrentAddress}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-p-top_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <lightning-input  class="slds-form-element__control sameAdd" type="checkbox"  label={label.Permnt_Same_as_Current} name="Permanent Residential Address is same as current residential address" onchange={permanentCurrentAddressCheckbox} disabled={disableCurrentPermntSameAddr}></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </br></br>
+                            </template>
+                        <!-- popup -->
+                        <!--quit pop up screen start-->
+                        <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+                        <template if:true={journeyPopUP}>
+                            <section id="modal2" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-form slds-modal__container">
+                                    <lightning-card>
+                                        <div class="slds-card__body_inner">
+                                            <div class="slds-card__body_inner">
+                                                <div class="slds-align_absolute-center" style="font-size: 0.8125rem;">
+                                                    <div>As Current or Permanent address is not a KYC the journey will stop. Do you wish to upload a KYC for Current or Permanent address?</div>
+                                                </div>
+                                            </div>
+                                            <br><br>
+                                            <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                                                <div class="slds-button-group-item">
+                                                    <lightning-button class=" slds-theme_brand" icon-position="left" variant="brand" type="button" label="Yes" onclick={handleYes}></lightning-button>
+                                                </div>
+                                                <div class="slds-button-group-item">
+                                                    <lightning-button class=" slds-theme_brand" icon-position="left" variant="brand" type="button" label="No" onclick={handleNo}></lightning-button>
+                                                </div>
+                                            </lightning-button-group>
+                                            <br><br>
+                                        </div>
+                                    </lightning-card>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops2"></div>
+                        </template>
+                        <!-- End Quit Popup -->
+                        <!-- popup end -->
+                        <template if:true={isStepThree}>
+                            <div class="slds-clearfix">
+                                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Capture Permanent Residential Address</label>
+                            </div>
+                            <label class="font_design_note">Choose any ONE document to upload</label>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <div class="slds-clearfix">
+                                </br>
+                                <div class="slds-p-top_medium slds-form slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_1-of-2 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={adharKYCUpload} disabled={disableAadharButton02}>
+                                                <img class="imgClass" src={aadhaarLogoURL}><span if:true={aadharButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={passportKYCUpload} disabled={disablePassportButton02}>
+                                                <img class="imgClass" src={passportLogoURL}><span if:true={passportButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={voterIdKYCUpload} disabled={disableVoterIdButton02}>
+                                                <img class="imgClass" src={voteridLogoURL}><span if:true={voterIdButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={dLKYCUpload} disabled={disableDLButton02}>
+                                                <img class="imgClass" src={dlLogoURL}><span if:true={drivingLicenseButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-top_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input  class="slds-form-element__control notPermanent" data-id="permanentAddress" type="checkbox"  label={label.permanentAddressOptionsMsg} name="Customer does not have permanent address on any of the above document" onchange={permanentAddressHandler} disabled={disablePermanentAddress}></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12"></div>
+                                <div class=" slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12"></div>
+                            </div>
+                            </br> </br>
+                        </template>
+                        <template if:true={isStepThreeV2}>
+                            <div class="slds-clearfix">
+                                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Capture Permanent Residential Address</label>
+                            </div>
+                            <label class="font_design_note">Choose any ONE document to upload</label>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <div class="slds-clearfix">
+                                </br>
+                                <div class="slds-p-top_medium slds-form slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_1-of-2 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={adharKYCUpload} disabled={disableAadharButton02}>
+                                                <img class="imgClass" src={aadhaarLogoURL}><span if:true={aadharButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={passportKYCUpload} disabled>
+                                                <img class="imgClass" src={passportLogoURL}><span if:true={passportButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={voterIdKYCUpload} disabled>
+                                                <img class="imgClass" src={voteridLogoURL}><span if:true={voterIdButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center" onclick={dLKYCUpload} disabled>
+                                                <img class="imgClass" src={dlLogoURL}><span if:true={drivingLicenseButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div class="slds-p-top_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input  class="slds-form-element__control notPermanent" data-id="permanentAddress" type="checkbox"  label={label.permanentAddressOptionsMsg} name="Customer does not have permanent address on any of the above document" onchange={permanentAddressHandler} disabled={disablePermanentAddress}></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12"></div>
+                                <div class=" slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12"></div>
+                            </div>
+                            </br> </br>
+                        </template>
+                        <template if:true={isStepFour}>
+                            <div class="slds-clearfix">
+                                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Capture PAN And Other KYC</label>
+                            </div>
+                            <label class="font_design_note">Choose any document to upload</label>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <div class="slds-clearfix">
+                                </br>
+                                <div class="slds-p-top_medium slds-form slds-grid slds-wrap">
+                                    <template if:false={isNonIndividualBorrower}>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center aadhar" onclick={adharKYCUpload} disabled={disableAadharButton03}>
+                                                <img class="imgClass" src={aadhaarLogoURL}>
+                                                <span if:true={aadharButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center passport" onclick={passportKYCUpload} disabled={disablePassportButton03}>
+                                                <img class="imgClass" src={passportLogoURL}>
+                                                <span if:true={passportButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center voter" onclick={voterIdKYCUpload} disabled={disableVoterIdButton03}>
+                                                <img class="imgClass" src={voteridLogoURL}>
+                                                <span if:true={voterIdButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center driver" onclick={dLKYCUpload} disabled={disableDLButton03}>
+                                                <img class="imgClass" src={dlLogoURL}>
+                                                <span if:true={drivingLicenseButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                            <button class="indusKycButton slds-button slds-align_absolute-center pan" onclick={panKYCUpload} disabled={disablePANButton}>
+                                                <img class="imgClass" src={panCardLogoURL}>
+                                                <span if:true={panButton}>&#x2714;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <template if:true={isNonIndividualBorrower}>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                                <button class="indusKycButton slds-button slds-align_absolute-center gst" data-id="GST CERTIFICATE" onclick={handleUpload}
+                                                    disabled={disableGST}>
+                                                    <img class="imgClass" src={gstLogoUrl}>
+                                                    <span if:true={gstButton}>&#x2714;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-p-bottom_small slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                                <button class="indusKycButton slds-button slds-align_absolute-center cin" data-id="cin" onclick={handleUpload}
+                                                    disabled={disableCIN}>
+                                                    <img class="imgClass" src={cinLogoUrl}>
+                                                    <span if:true={cinButton}>&#x2714;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>            
+                                </div>
+                            </div>
+                            </br></br>
+                        </template>
+                        <template if:true={isStepFive}>
+                            <div class="slds-clearfix">
+                                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Capture Customer Dedupe</label>
+                            </div>
+                            <div class="slds-clearfix">
+                                </br>
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+                                        <c-l-W-C_-L-O-S_-Customer-Dedupe current-stage={currentStage} record-id={currentOppRecordId} applicant-id={applicantId} cust-type={currenttab} onallownextstep={nextBtnActionFromDedupScreen}
+                                        checkleadaccess={checkleadaccess} onenablednextbutton={handleEnableNextForDedupe} ondisablenextbutton={handleDisableNext} current-stage-name={currentStageName} last-stage={lastStage}></c-l-W-C_-L-O-S_-Customer-Dedupe>
+                                    </div>
+                                </div>
+                            </div>
+                            </br></br>
+                        </template>
+                        <template if:true={isStepSix}>
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small">
+                                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+                                    <template if:false={isTractor}>
+                                        <c-l-W-C_-L-O-S_-Vehicle-Dedupe recordid={currentOppRecordId} applicant-id={applicantId} current-stage={currentStage} onverifychecked={verifyVehicleStatus} onvehicleverified={vehicleVerifiedStatus} onvehiclebutton={verifyButtonStatus} onvehicleselectedtype={vehicleSelectedType} current-stage-name={currentStageName} last-stage={lastStage}
+                                        checkleadaccess={checkleadaccess}></c-l-W-C_-L-O-S_-Vehicle-Dedupe>
+                                    </template>
+                                    <template if:true={isTractor}>
+                                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+                                            <c-l-W-C_-L-O-S_-Tractor-Vehicle-Dedupe recordid={currentOppRecordId} applicant-id={applicantId} currenttab={currenttab} current-stage={currentStage} onverifychecked={verifyVehicleStatus} onvehicleverified={vehicleVerifiedStatus} onvehiclebutton={verifyButtonStatus} onvehicleselectedtype={vehicleSelectedType} current-stage-name={currentStageName} last-stage={lastStage}
+                                            checkleadaccess={checkleadaccess}  ondisablenextbutton={handleDisableNext} onenablednextbutton={handleEnableNextForDedupe} is-top-up-loan={isTopUpChecked}></c-l-W-C_-L-O-S_-Tractor-Vehicle-Dedupe>
+                                        </div>
+                                    </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={isStepSeven}>
+                            <div class="slds-clearfix">
+                                <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Declared Income/Required Loan Amount</label>
+                            </div>
+                            <div class="slds-form slds-grid slds-wrap">
+                                </br><!-- <template if:true={isIncomeSource}> -->
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Income Source Available?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input type="toggle" variant="label-hidden" label="Income Source Available ?"
+                                                    message-toggle-active="Yes" class="incomSourceToggle" message-toggle-inactive="No" onchange={incomeSourceHandler} checked={checked} disabled={disableIncomeSourceAvailable} > 
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div><!-- </template> -->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Annual Declared Income<abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <!-- CISP-1205: Removed stap value from 0.01 to 0 -->
+                                <lightning-input class="slds-form-element__control incomeDec" variant="label-hidden" type="number" name="decIncome" label="Declared Income" value={declaredIncome} formatter="currency" placeholder="Enter Declared Income" step="0" data-id="incomeDec" onkeydown={validateIncomeField} onblur={validateInput} onfocusout={olaIncomeValidation} message-when-value-missing={label.incomeAmountMandatory} disabled={isDisabledDeclaredIncome} required></lightning-input>
+                                </div>
+                        </div>
+                    </div>
+                    <template if:true={showLoanAmount}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Loan Amount</label><abbr title="required" class="slds-required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <!-- CISP-1205: Removed stap value from 0.01 to 0 -->
+                                <lightning-input class="slds-form-element__control loanAmt" variant="label-hidden" type="number" name="loanAmount" label="Loan Amount" value={loanAmount} formatter="currency" placeholder="Enter Loan Amount" step="0" onkeydown={validateLoanAmountField} onblur={validateLoanAmt} message-when-value-missing={label.enterLoanAmount} required disabled={isDisabledLoanAmount}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    </template>
+                </div>
+                </br> </br>
+            </template>
+            <template if:true={isStepEight}>
+                <div class="slds-clearfix">
+                    <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Bank Account Check</label>
+                </div>
+                <div class="slds-clearfix">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label ">Do you have a bank account ?</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input type="toggle" class="haveBankAcct" onchange={bankAccountHandler} variant="label-hidden" message-toggle-active="Yes" data-id="toggle1" message-toggle-inactive="No" message-when-value-missing={label.bankAccountMandotory} disabled={disabledBankAcc} checked ></lightning-input> <!-- Ola Integration change -->
+                        </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label ">Do you have a bank account with IBL ?</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="toggle" onchange={accountWithIBLHandler} data-id="toggle2" variant="label-hidden" message-toggle-active="Yes" class="withIBLBankAccount" message-toggle-inactive="No" disabled={disabledBankAccWithIBL} unchecked></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                <!-- Added If Condition Based on SFTRAC-82. Added By Prashant -->
+                <template if:false={isTractor}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+                                <label class="slds-form-element__label ">Would you like to open a bank account with IBL?<lightning-helptext content="Aadhaar as KYC Document is mandatory for opening a Bank account with IBL" icon-name="utility:info"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="toggle" class="openBankAcct" value={WOULD_YOU_LIKE_TO_OPEN_A_BANK_ACCOUNT} onchange={openBankAccountHandler} variant="label-hidden" message-toggle-active="Yes" data-id="toggle3" message-toggle-inactive="No" message-when-value-missing={label.openNewBankAccountMsg} disabled={disabledOpenBankAcc} ></lightning-input>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col">
+                                    <label class="slds-form-element__label">AePS - Aadhaar enabled Payment Services</label>
+                                </div>
+                            </div>
+                            <div>
+                                <lightning-radio-group name="radioGroup"
+                          label="Radio Group"
+                          options={aepsOptions}
+                          value={aepsValue}
+                          variant="label-hidden" 
+                          type="radio"
+                          onchange={handleAepsChange}
+                          disabled={disableAeps}></lightning-radio-group>
+                            </div>
+                            <br/>
+                            <div class="slds-text-body_small">
+                               <p style="color: #011596">*Cash deposit, balance enquiry and mini-statement services would remain enabled on AePS</p>
+                            </div>
+                            <div class="slds-text-body_small">
+                                <p style="color: #011596">*Customer can enable / disable AePS by visiting branch or through digital channels</p>
+                            </div>
+                            </div>
+                    </template>
+
+                    <!--SFTRAC-33-->
+                    <template if:true={isTractor}>
+                        <template if:false={isNonIndividualBorrower}>  <!--SFTRAC-466-->
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label ">Literacy<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-combobox value={selectedLiteracyFieldOptionValue} placeholder="Select Option" options={literacyFieldOptionValue} onchange={handlePicklistValueChange} variant="label-hidden" disabled={disabledLiteracyField} data-id="Literacy" required></lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>  <!--SFTRAC-466-->
+                    </template>
+                    <!--SFTRAC-33-->
+                </div>
+                </br> </br>
+            </template>
+            <template if:true={isStepNine}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small">
+                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 ">
+                            <c-I-N-D_-L-W-C_-Gatting-And-Screening record-id={currentOppRecordId} applicant-id={applicantId} current-stage={currentStage} tab-type={currenttab} oncheckeligiblity={handleEligibility}  oncoborroweraddition={handleCoBorrower} onguarantoraddition={handleGuarantor} onbeneficiaryaddition={handleBeneficiary} onenablenextbtn={handleEnableNextButton} onaddscreen={handleScreen}  is-coborrower-exist={isCoborrowerExist} tab-list-count={tabCount}
+                            checkleadaccess={checkleadaccess}
+                            clearretrycount={clearretrycount}></c-I-N-D_-L-W-C_-Gatting-And-Screening>
+                            <!-- //CISP-2457 /CISP-2506 clearretrycount Added -->
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={isEnablePrev}>
+                <div class="slds-float_left">
+                    <button class="slds-button slds-button_brand prev" data-id="preNextbtn" onclick={handlePrev} disabled={disablePrev}>Prev</button>
+                    <!-- CISP-2382 -Added data id -->
+                </div>
+            </template>
+            <template if:true={isEnableNext}>
+                <div class="slds-float_right">
+                    <button class=" slds-button slds-button_brand next" data-id="preNextbtn" data-name="nextBtn" onclick={handleNext} disabled={disableNext}>Next</button>
+                    <!-- CISP-2382 -Added data id -->
+                </div>
+            </template>
+            <template if:false={isEnableNext}>
+            <template if:true={isEnableNextval}>
+                <div class="slds-float_right">
+                    <button class=" slds-button slds-button_brand next" onclick={handleOnfinish} disabled={disableNextBtn}>Next</button>  
+                </div>
+            </template>
+        </template>
+            <template if:true={isEnableFinish}>
+                <div class="slds-float_right">
+                    <button class=" slds-button slds-button_brand" onclick={handleFinish}>Submit</button>
+                </div>
+            </template>
+        </template>
+        <template if:true={addressProofUploadScreenFlag}>
+            <c-l-W-C_-L-O-S_-Scan-And-Upload type={kycType} is-non-individual-borrower={isNonIndividualBorrower} onkycdonesuccess={kycDoneSuccess} onclose={changeValue} onrefresh={refreshHandler} kycdocname={kycDocumentName}
+                            currentapplicationid={applicantId} currentoppid={currentOppRecordId} currentdocumentid={currentDocId} fieldsliststring={currentFieldStirng} customerimageid={documentRecordId} is-step-four={isStepFour} onupdateapplicantname={updateApplicantName} customer-name={customerFullName} istwowheeler={isTwoWheeler} is-step-three-v2={isStepThreeV2} entitytype={loan.Entity_Type__c} istractor={isTractor} isindividual={isIndividual}
+                            lead-source={leadSource}></c-l-W-C_-L-O-S_-Scan-And-Upload><!-- //Ola Integration changes -->
+                <!-- CISP-2967 Added onrefresh event and customerFullName-->
+                <!-- CISP-2630 -->
+                <!-- SFTRAC-535 -->
+        </template>
+    <template if:true={showJourneyRestartMsg}>
+        <lightning-card>
+            <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">
+                The journey for the Borrower/Co-Borrower has restarted because of CMU decisioning
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={isModalOpenForIncome}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>Income is less than required income, please confirm whether the captured income is as per the customer income</p>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={clearIncomedata} >No</button>
+                    <button class="slds-button slds-button_brand" onclick={stopJourney} >Yes</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+</template>

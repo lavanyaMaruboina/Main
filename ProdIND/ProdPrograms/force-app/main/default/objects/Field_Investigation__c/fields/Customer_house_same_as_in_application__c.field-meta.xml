@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_house_same_as_in_application__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Whether customer house located in the same address as in the application</description>
+    <label>Customer house same as in application</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

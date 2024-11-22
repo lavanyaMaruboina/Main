@@ -1,0 +1,1073 @@
+<template>
+    <template if:true={uploadViewDocPopup}>
+        <section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <template if:true={isLoading}>
+            <lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner>
+        </template>
+        <div class="slds-form custom-container-class" style="display: flex;position: relative;flex-direction: column;justify-content: center;">
+    <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={uploadImageClose}>
+                        <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+        <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+            {title}
+        </h2>
+    </header>
+    <lightning-card style="height:32rem; overflow-y:scroll; scrollbar-width:none;">
+        <div class="slds-card__body_inner">
+            <lightning-tabset active-tab-value="Upload">
+            <!-- JIRA ticket:  INDI-4678,  hideTabWhenPaymentGenerated attribute added-->
+            <template if:true={hideTabWhenPaymentGenerated}>
+                <lightning-tab label=Upload value="Upload" onactive={handleMainTab}>
+                    <lightning-tabset active-tab-value="Borrower">
+                        <lightning-tab if:true={borrowerVisible} label=Borrower value="Borrower" onactive={handleActive}>
+                            <div class="slds-container_center">
+                               <!-- <lightning-layout multiple-rows="true" horizontal-align="center">
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        Document Type
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        <template if:true={docTypes}>
+                                            <lightning-combobox class="slds-form-element__label insType"
+                                                variant="label-hidden" value={docType} onchange={handleDocType}
+                                                placeholder="-- Select --"
+                                                options={docTypePicklist} required>
+                                            </lightning-combobox>
+                                        </template>
+                                    </lightning-layout-item>
+                                    <template if:true={isTractor}> 
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        Document Number
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-input class="slds-form-element__control insType"
+                                                variant="label-hidden" value={documentNumber} onchange={handleDocNumber}>
+                                            </lightning-input>
+                                        </template>
+                                    </lightning-layout-item>
+                                </template> 
+                                </lightning-layout>-->
+                            </div>
+
+                            <div class="slds-container_center">
+                                <lightning-layout multiple-rows="true" horizontal-align="center">
+                                    <lightning-layout-item size="12" padding="around-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Document Type</label>
+                                            <div class="slds-form-element__control">
+                                                <template if:true={docTypePicklist}>
+                                                    <lightning-combobox class="custom-combobox"
+                                                                    variant="label-hidden"
+                                                                    value={docType}
+                                                                    onchange={handleDocType}
+                                                                    placeholder="-- Select --"
+                                                                    options={docTypePicklist}
+                                                                    required data-applicant="Borrower">
+                                                    </lightning-combobox>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </lightning-layout-item>
+
+                                    <template if:true={isTractor}>
+                                        <lightning-layout-item size="12" padding="around-small">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label">Document Number</label>
+                                                <div class="slds-form-element__control">
+                                                    <template if:true={documentTypeValues.data}>
+                                                        <lightning-input class="custom-input"
+                                                                     variant="label-hidden"
+                                                                     value={documentNumber}
+                                                                     onchange={handleDocNumber}
+                                                                     required>
+                                                        </lightning-input>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </template>
+                                </lightning-layout>
+                            </div>
+                            <div class="slds-m-top_small  slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_2-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a photocopy ?" value={isphotocopy} onchange={handlerIsPhotocopy} name="Is this a photocopy?" checked={isphotocopy} disabled={disabledIsPhotocopy}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                    <template if:true={showFrontBackUpload}>
+                                        <template if:true={webApp}>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-file-upload label="Upload Front" variant="brand" 
+                                                    class="slds-theme_brand slds-align_absolute-center " 
+                                                    name="fileUploader" accept={acceptedFormats} 
+                                                    record-id={documentRecordId} 
+                                                    file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Front" 
+                                                    onuploadfinished={handleFileUpload} 
+                                                    disabled={disabledFileUpload} >
+                                                </lightning-file-upload>
+                                            </div>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-file-upload label="Upload Back" variant="brand" 
+                                                    class="slds-theme_brand slds-align_absolute-center " 
+                                                    name="fileUploader" accept={acceptedFormats} 
+                                                    record-id={documentRecordId} 
+                                                    file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Back" 
+                                                    onuploadfinished={handleBackFileUpload} 
+                                                    onclick={disabledFileUpload}>
+                                                </lightning-file-upload>
+                                            </div>
+                                        </template>
+                                        <template if:true={mobileTabApp}>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                    type="button" label="Upload Front" onclick={captureFrontApp} disabled={disabledFileUpload}></lightning-button>
+                                                    <br>
+                                            </div>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                        type="button" label="Upload Back" onclick={captureBackApp} disabled={disabledFileUpload}></lightning-button>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:true={showFileUpload}>
+                                        <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <template if:true={webApp}>
+                                                    <template if:true={showFileUpload}>
+                                                        <lightning-file-upload label="Upload File" variant="brand"
+                                                            class="slds-theme_brand slds-align_absolute-center "
+                                                            name="fileUploader" accept={acceptedFormats}
+                                                            record-id={documentRecordId}
+                                                            onchange={createDocument}  
+                                                            file-field-name="Guest_Record_fileupload__c"
+                                                            file-field-value={encryptedToken}
+                                                            onuploadfinished={handleFileUpload} multiple
+                                                            disabled={disabledFileUpload}></lightning-file-upload>
+                                                    </template>
+                                            </template>
+                                            <template if:true={mobileTabApp}>
+                                                <template if:true={showFileUpload}>
+                                                    <lightning-button
+                                                        class="slds-theme_brand slds-align_absolute-center"
+                                                        icon-position="left" variant="brand" type="button"
+                                                        label="Capture" onclick={captureCustomerImageApp}>
+                                                    </lightning-button>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            </br>
+
+                            <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                                <lightning-button variant="brand" label="Done" title="Done" onclick={uploadDone} class="slds-m-left_x-small"></lightning-button>
+
+                                <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-m-left_x-small">
+                                </lightning-button>
+                            </div>
+                        </lightning-tab>
+                        <!--SFTRAC-49 Start-->
+                        <template if:true={isTractor}> 
+                            <template if:true={coBorrowerVisible}>
+                            <lightning-tab label ="Co-Borrower" value="Co-borrower" onactive={handleActive}>
+                                <lightning-tabset>
+                            <template for:each={coborrowerList} for:item="item">
+                                <div key={item.Id}>
+                        <lightning-tab label={item.Name} value={item.Id} onactive={handleActive}>
+                            <!--<div class="slds-container_center">
+                                <lightning-layout multiple-rows="true" horizontal-align="center">
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        Document Type
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-combobox class="slds-form-element__control insType"
+                                                variant="label-hidden" value={docType} onchange={handleDocType}
+                                                placeholder="-- Select --"
+                                                options={docTypePicklist} required>
+                                            </lightning-combobox>
+                                        </template>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        Document Number
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-input class="slds-form-element__control insType"
+                                                variant="label-hidden" value={documentNumber} onchange={handleDocNumber}>
+                                            </lightning-input>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>-->
+                            <div class="slds-container_center">
+                                <lightning-layout multiple-rows="true" horizontal-align="center">
+                                    <lightning-layout-item size="12" padding="around-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Document Type</label>
+                                            <div class="slds-form-element__control">
+                                                <template if:true={documentTypeValues.data}>
+                                                    <lightning-combobox class="custom-combobox"
+                                                                    variant="label-hidden"
+                                                                    value={docType}
+                                                                    onchange={handleDocType}
+                                                                    placeholder="-- Select --"
+                                                                    options={docTypes}
+                                                                    required data-applicant={item.Id}>
+                                                    </lightning-combobox>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </lightning-layout-item>
+
+                                        <lightning-layout-item size="12" padding="around-small">
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label">Document Number</label>
+                                                <div class="slds-form-element__control">
+                                                    <template if:true={documentTypeValues.data}>
+                                                        <lightning-input class="custom-input"
+                                                                     variant="label-hidden"
+                                                                     value={documentNumber}
+                                                                     onchange={handleDocNumber}>
+                                                        </lightning-input>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                            <div class="slds-m-top_small  slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_2-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a photocopy ?" value={isphotocopy} onchange={handlerIsPhotocopy} name="Is this a photocopy?" checked={isphotocopy} disabled={disabledIsPhotocopy}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                    <template if:true={showFrontBackUpload}>
+                                        <template if:true={webApp}>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-file-upload label="Upload Front" variant="brand" 
+                                                    class="slds-theme_brand slds-align_absolute-center " 
+                                                    name="fileUploader" accept={acceptedFormats} 
+                                                    record-id={documentRecordId} 
+                                                    file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Front" 
+                                                    onuploadfinished={handleFileUpload} 
+                                                    disabled={disabledFileUpload} >
+                                                </lightning-file-upload>
+                                            </div>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-file-upload label="Upload Back" variant="brand" 
+                                                    class="slds-theme_brand slds-align_absolute-center " 
+                                                    name="fileUploader" accept={acceptedFormats} 
+                                                    record-id={documentRecordId} 
+                                                    file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Back" 
+                                                    onuploadfinished={handleBackFileUpload} 
+                                                    onclick={disabledFileUpload}>
+                                                </lightning-file-upload>
+                                            </div>
+                                        </template>
+                                        <template if:true={mobileTabApp}>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                    type="button" label="Upload Front" onclick={captureFrontApp} disabled={disabledFileUpload}></lightning-button>
+                                                    <br>
+                                            </div>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                        type="button" label="Upload Back" onclick={captureBackApp} disabled={disabledFileUpload}></lightning-button>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:true={showFileUpload}>
+                                        <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <template if:true={webApp}>
+                                                    <template if:true={showFileUpload}>
+                                                        <lightning-file-upload label="Upload File" variant="brand"
+                                                            class="slds-theme_brand slds-align_absolute-center "
+                                                            name="fileUploader" accept={acceptedFormats}
+                                                            record-id={documentRecordId}
+                                                            onchange={createDocument}  
+                                                            file-field-name="Guest_Record_fileupload__c"
+                                                            file-field-value={encryptedToken}
+                                                            onuploadfinished={handleFileUpload} multiple
+                                                            disabled={disabledFileUpload}></lightning-file-upload>
+                                                    </template>
+                                            </template>
+                                            <template if:true={mobileTabApp}>
+                                                <template if:true={showFileUpload}>
+                                                    <lightning-button
+                                                        class="slds-theme_brand slds-align_absolute-center"
+                                                        icon-position="left" variant="brand" type="button"
+                                                        label="Capture" onclick={captureCustomerImageApp}>
+                                                    </lightning-button>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            </br>
+
+                            <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                                <lightning-button variant="brand" label="Done" title="Primary action" onclick={uploadDone} class="slds-m-left_x-small"></lightning-button>
+
+                                <lightning-button variant="brand" label="Cancel" title="Primary action" onclick={uploadImageClose} class="slds-m-left_x-small">
+                                </lightning-button>
+                            </div>
+                        </lightning-tab>           
+                    </div> 
+                </template>
+            </lightning-tabset>
+            </lightning-tab>
+            </template>
+            <template if:true={beneficiaryVisible}>
+                <lightning-tab label ="Beneficiary" value="Beneficiary" onactive={handleActive}>
+                    <lightning-tabset>
+                 <template for:each={beneficiaryList} for:item="item">
+                    <div key={item.Id}>
+                 <lightning-tab label={item.Name} value={item.Id} onactive={handleActive}>
+                 <!--<div class="slds-container_center">
+                    <lightning-layout multiple-rows="true" horizontal-align="center">
+                        <lightning-layout-item size="3" padding="around-small">
+                            Document Type
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small">
+                            <template if:true={documentTypeValues.data}>
+                                <lightning-combobox class="slds-form-element__control insType"
+                                    variant="label-hidden" value={docType} onchange={handleDocType}
+                                    placeholder="-- Select --"
+                                    options={docTypePicklist} required>
+                                </lightning-combobox>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small">
+                            Document Number
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small">
+                            <template if:true={documentTypeValues.data}>
+                                <lightning-input class="slds-form-element__control insType"
+                                    variant="label-hidden" value={documentNumber} onchange={handleDocNumber}>
+                                </lightning-input>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>-->
+                <div class="slds-container_center">
+                    <lightning-layout multiple-rows="true" horizontal-align="center">
+                        <lightning-layout-item size="12" padding="around-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label">Document Type</label>
+                                <div class="slds-form-element__control">
+                                    <template if:true={documentTypeValues.data}>
+                                        <lightning-combobox class="custom-combobox"
+                                                        variant="label-hidden"
+                                                        value={docType}
+                                                        onchange={handleDocType}
+                                                        placeholder="-- Select --"
+                                                        options={docTypes}
+                                                        required data-applicant={item.Id}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+
+                            <lightning-layout-item size="12" padding="around-small">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">Document Number</label>
+                                    <div class="slds-form-element__control">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-input class="custom-input"
+                                                         variant="label-hidden"
+                                                         value={documentNumber}
+                                                         onchange={handleDocNumber}>
+                                            </lightning-input>
+                                        </template>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div class="slds-m-top_small  slds-grid slds-grid_align-center slds-align–absolute-center">
+                    <div class="slds-col slds-size_2-of-1">
+                        <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a photocopy ?" value={isphotocopy} onchange={handlerIsPhotocopy} name="Is this a photocopy?" checked={isphotocopy} disabled={disabledIsPhotocopy}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <br>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                        <template if:true={showFrontBackUpload}>
+                            <template if:true={webApp}>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-file-upload label="Upload Front" variant="brand" 
+                                        class="slds-theme_brand slds-align_absolute-center " 
+                                        name="fileUploader" accept={acceptedFormats} 
+                                        record-id={documentRecordId} 
+                                        file-field-name="Document_Side_fileupload__c"
+                                        file-field-value="Front" 
+                                        onuploadfinished={handleFileUpload} 
+                                        disabled={disabledFileUpload} >
+                                    </lightning-file-upload>
+                                </div>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-file-upload label="Upload Back" variant="brand" 
+                                        class="slds-theme_brand slds-align_absolute-center " 
+                                        name="fileUploader" accept={acceptedFormats} 
+                                        record-id={documentRecordId} 
+                                        file-field-name="Document_Side_fileupload__c"
+                                        file-field-value="Back" 
+                                        onuploadfinished={handleBackFileUpload} 
+                                        onclick={disabledFileUpload}>
+                                    </lightning-file-upload>
+                                </div>
+                            </template>
+                            <template if:true={mobileTabApp}>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                        type="button" label="Upload Front" onclick={captureFrontApp} disabled={disabledFileUpload}></lightning-button>
+                                        <br>
+                                </div>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                            type="button" label="Upload Back" onclick={captureBackApp} disabled={disabledFileUpload}></lightning-button>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:true={showFileUpload}>
+                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                <template if:true={webApp}>
+                                        <template if:true={showFileUpload}>
+                                            <lightning-file-upload label="Upload File" variant="brand"
+                                                class="slds-theme_brand slds-align_absolute-center "
+                                                name="fileUploader" accept={acceptedFormats}
+                                                record-id={documentRecordId}
+                                                onchange={createDocument}  
+                                                file-field-name="Guest_Record_fileupload__c"
+                                                file-field-value={encryptedToken}
+                                                onuploadfinished={handleFileUpload} multiple
+                                                disabled={disabledFileUpload}></lightning-file-upload>
+                                        </template>
+                                </template>
+                                <template if:true={mobileTabApp}>
+                                    <template if:true={showFileUpload}>
+                                        <lightning-button
+                                            class="slds-theme_brand slds-align_absolute-center"
+                                            icon-position="left" variant="brand" type="button"
+                                            label="Capture" onclick={captureCustomerImageApp}>
+                                        </lightning-button>
+                                    </template>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                </br>
+
+                <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                    <lightning-button variant="brand" label="Done" title="Primary action" onclick={uploadDone} class="slds-m-left_x-small"></lightning-button>
+
+                    <lightning-button variant="brand" label="Cancel" title="Primary action" onclick={uploadImageClose} class="slds-m-left_x-small">
+                    </lightning-button>
+                </div>
+            </lightning-tab>           
+        </div> 
+    </template>
+</lightning-tabset>
+</lightning-tab>
+            </template>
+            <lightning-tab if:true={guarantorVisible} label="Guarantor" value="Guarantor" onactive={handleActive}>
+                <!--<div class="slds-container_center">
+                    <lightning-layout multiple-rows="true" horizontal-align="center">
+                        <lightning-layout-item size="3" padding="around-small">
+                            Document Type
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small">
+                            <template if:true={documentTypeValues.data}>
+                                <lightning-combobox class="slds-form-element__control insType"
+                                    variant="label-hidden" value={docType} onchange={handleDocType}
+                                    placeholder="-- Select --"
+                                    options={docTypePicklist} required>
+                                </lightning-combobox>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small">
+                            Document Number
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" padding="around-small">
+                            <template if:true={documentTypeValues.data}>
+                                <lightning-input class="slds-form-element__control insType"
+                                    variant="label-hidden" value={documentNumber} onchange={handleDocNumber}>
+                                </lightning-input>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>-->
+                <div class="slds-container_center">
+                    <lightning-layout multiple-rows="true" horizontal-align="center">
+                        <lightning-layout-item size="12" padding="around-small">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label">Document Type</label>
+                                <div class="slds-form-element__control">
+                                    <template if:true={documentTypeValues.data}>
+                                        <lightning-combobox class="custom-combobox"
+                                                        variant="label-hidden"
+                                                        value={docType}
+                                                        onchange={handleDocType}
+                                                        placeholder="-- Select --"
+                                                        options={docTypes}
+                                                        required data-applicant="Guarantor">
+                                        </lightning-combobox>
+                                    </template>  
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+
+                            <lightning-layout-item size="12" padding="around-small">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">Document Number</label>
+                                    <div class="slds-form-element__control">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-input class="custom-input"
+                                                         variant="label-hidden"
+                                                         value={documentNumber}
+                                                         onchange={handleDocNumber}>
+                                            </lightning-input>
+                                        </template>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div class="slds-m-top_small  slds-grid slds-grid_align-center slds-align–absolute-center">
+                    <div class="slds-col slds-size_2-of-1">
+                        <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a photocopy ?" value={isphotocopy} onchange={handlerIsPhotocopy} name="Is this a photocopy?" checked={isphotocopy} disabled={disabledIsPhotocopy}>
+                        </lightning-input>
+                    </div>
+                </div>
+                <br>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                        <template if:true={showFrontBackUpload}>
+                            <template if:true={webApp}>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-file-upload label="Upload Front" variant="brand" 
+                                        class="slds-theme_brand slds-align_absolute-center " 
+                                        name="fileUploader" accept={acceptedFormats} 
+                                        record-id={documentRecordId} 
+                                        file-field-name="Document_Side_fileupload__c"
+                                        file-field-value="Front" 
+                                        onuploadfinished={handleFileUpload} 
+                                        disabled={disabledFileUpload} >
+                                    </lightning-file-upload>
+                                </div>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-file-upload label="Upload Back" variant="brand" 
+                                        class="slds-theme_brand slds-align_absolute-center " 
+                                        name="fileUploader" accept={acceptedFormats} 
+                                        record-id={documentRecordId} 
+                                        file-field-name="Document_Side_fileupload__c"
+                                        file-field-value="Back" 
+                                        onuploadfinished={handleBackFileUpload} 
+                                        onclick={disabledFileUpload}>
+                                    </lightning-file-upload>
+                                </div>
+                            </template>
+                            <template if:true={mobileTabApp}>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                        type="button" label="Upload Front" onclick={captureFrontApp} disabled={disabledFileUpload}></lightning-button>
+                                        <br>
+                                </div>
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                    <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                            type="button" label="Upload Back" onclick={captureBackApp} disabled={disabledFileUpload}></lightning-button>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:true={showFileUpload}>
+                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                <template if:true={webApp}>
+                                        <template if:true={showFileUpload}>
+                                            <lightning-file-upload label="Upload File" variant="brand"
+                                                class="slds-theme_brand slds-align_absolute-center "
+                                                name="fileUploader" accept={acceptedFormats}
+                                                record-id={documentRecordId}
+                                                onchange={createDocument}  
+                                                file-field-name="Guest_Record_fileupload__c"
+                                                file-field-value={encryptedToken}
+                                                onuploadfinished={handleFileUpload} multiple
+                                                disabled={disabledFileUpload}></lightning-file-upload>
+                                        </template>
+                                </template>
+                                <template if:true={mobileTabApp}>
+                                    <template if:true={showFileUpload}>
+                                        <lightning-button
+                                            class="slds-theme_brand slds-align_absolute-center"
+                                            icon-position="left" variant="brand" type="button"
+                                            label="Capture" onclick={captureCustomerImageApp}>
+                                        </lightning-button>
+                                    </template>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                </br>
+
+                <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                    <lightning-button variant="brand" label="Done" title="Primary action" onclick={uploadDone} class="slds-m-left_x-small"></lightning-button>
+
+                    <lightning-button variant="brand" label="Cancel" title="Primary action" onclick={uploadImageClose} class="slds-m-left_x-small">
+                    </lightning-button>
+                </div>
+            </lightning-tab>
+                        </template>
+                        <!--SFTRAC-49 End-->
+                        <template if:false={isTractor}> 
+                        <lightning-tab if:true={coBorrowerVisible} label=Co-Borrower value="Co-borrower" onactive={handleActive}>
+                            <!--<div class="slds-container_center">
+                                <lightning-layout multiple-rows="true" horizontal-align="center">
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        Document Type
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" padding="around-small">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-combobox class="slds-form-element__control insType"
+                                                variant="label-hidden" value={docType} onchange={handleDocType}
+                                                placeholder="-- Select --"
+                                                options={docTypePicklist} required>
+                                            </lightning-combobox>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>-->
+                            <div class="slds-container_center">
+                                <lightning-layout multiple-rows="true" horizontal-align="center">
+                                    <lightning-layout-item size="12" padding="around-small">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Document Type</label>
+                                            <div class="slds-form-element__control">
+                                                <template if:true={docTypePicklist}>
+                                                    <lightning-combobox class="custom-combobox"
+                                                                    variant="label-hidden"
+                                                                    value={docType}
+                                                                    onchange={handleDocType}
+                                                                    placeholder="-- Select --"
+                                                                    options={docTypePicklist}
+                                                                    required>
+                                                    </lightning-combobox>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                            <div class="slds-m-top_small  slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_2-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a photocopy ?" value={isphotocopy} onchange={handlerIsPhotocopy} name="Is this a photocopy?" checked={isphotocopy} disabled={disabledIsPhotocopy}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="slds-clearfix">
+                                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                    <template if:true={showFrontBackUpload}>
+                                        <template if:true={webApp}>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-file-upload label="Upload Front" variant="brand" 
+                                                    class="slds-theme_brand slds-align_absolute-center " 
+                                                    name="fileUploader" accept={acceptedFormats} 
+                                                    record-id={documentRecordId} 
+                                                    file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Front" 
+                                                    onuploadfinished={handleFileUpload} 
+                                                    disabled={disabledFileUpload} >
+                                                </lightning-file-upload>
+                                            </div>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-file-upload label="Upload Back" variant="brand" 
+                                                    class="slds-theme_brand slds-align_absolute-center " 
+                                                    name="fileUploader" accept={acceptedFormats} 
+                                                    record-id={documentRecordId} 
+                                                    file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Back" 
+                                                    onuploadfinished={handleBackFileUpload} 
+                                                    onclick={disabledFileUpload}>
+                                                </lightning-file-upload>
+                                            </div>
+                                        </template>
+                                        <template if:true={mobileTabApp}>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                    type="button" label="Upload Front" onclick={captureFrontApp} disabled={disabledFileUpload}></lightning-button>
+                                                    <br>
+                                            </div>
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                        type="button" label="Upload Back" onclick={captureBackApp} disabled={disabledFileUpload}></lightning-button>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template if:true={showFileUpload}>
+                                        <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <template if:true={webApp}>
+                                                    <template if:true={showFileUpload}>
+                                                        <lightning-file-upload label="Upload File" variant="brand"
+                                                            class="slds-theme_brand slds-align_absolute-center "
+                                                            name="fileUploader" accept={acceptedFormats}
+                                                            record-id={documentRecordId}
+                                                            onchange={createDocument}  
+                                                            file-field-name="Guest_Record_fileupload__c"
+                                                            file-field-value={encryptedToken}
+                                                            onuploadfinished={handleFileUpload} multiple
+                                                            disabled={disabledFileUpload}></lightning-file-upload>
+                                                    </template>
+                                            </template>
+                                            <template if:true={mobileTabApp}>
+                                                <template if:true={showFileUpload}>
+                                                    <lightning-button
+                                                        class="slds-theme_brand slds-align_absolute-center"
+                                                        icon-position="left" variant="brand" type="button"
+                                                        label="Capture" onclick={captureCustomerImageApp}>
+                                                    </lightning-button>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            </br>
+
+                            <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                                <lightning-button variant="brand" label="Done" title="Done" onclick={uploadDone} class="slds-m-left_x-small"></lightning-button>
+
+                                <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-m-left_x-small">
+                                </lightning-button>
+                            </div>
+                        </lightning-tab>
+                    </template>
+                    </lightning-tabset>
+                </lightning-tab>
+            </template>
+                <lightning-tab label="View" value="View" onactive={handleMainTab}>
+                    <lightning-tabset active-tab-value="Borrower">
+                        <lightning-tab if:true={borrowerVisible} label=Borrower value="Borrower" onactive={handleViewTab}>
+                            <div class="slds-box slds-box_xx-small">
+                                <template if:true={noDocsFound}>
+                                    No Documents found for this applicant.
+                                </template>
+                                <template if:false={noDocsFound}>
+                                    <div class="slds-container_center">
+                                        <lightning-layout multiple-rows="true" horizontal-align="center">
+                                            <lightning-layout-item size="12" padding="around-small">
+                                                <div class="slds-form-element">
+                                                    <label class="slds-form-element__label">Document Type</label>
+                                                    <div class="slds-form-element__control">
+                                                        <template if:true={docTypePicklist}>
+                                                            <lightning-combobox class="custom-combobox"
+                                                                            variant="label-hidden"
+                                                                            value={docType}
+                                                                            onchange={handleDocTypeFromView}
+                                                                            placeholder="-- Select --"  data-applicant="Borrower"
+                                                                            options={docTypePicklist}>
+                                                            </lightning-combobox>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                    <!--<lightning-layout multiple-rows="true" horizontal-align="center">
+                                        <lightning-layout-item size="3" padding="around-small">
+                                            Document Type
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="3" padding="around-small">
+                                            <template if:true={documentTypeValues.data}>
+                                                <lightning-combobox class="slds-form-element__control insType"
+                                                    variant="label-hidden" value={docType} onchange={handleDocTypeFromView}
+                                                    data-applicant="Borrower"
+                                                    placeholder="-- Select --"
+                                                    options={docTypePicklist}>
+                                                </lightning-combobox>
+                                            </template>
+                                        </lightning-layout-item>
+                                    </lightning-layout>-->
+                                    <div class=" slds-table-responsive slds-scrollable_y" style="height:20rem" tabindex="0">
+                                    <c-l-W-C_-L-O-S_-Data-table-S-F data-id="documents" config={documentsConfig} query-filters={documentsConfig.queryFilters} onrowaction={handleRowAction} keycolumn="ContentDocumentId">
+                                    </c-l-W-C_-L-O-S_-Data-table-S-F>
+                                    <template if:true={mobileTabApp}>
+                                        <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-theme_brand slds-align_absolute-center"></lightning-button>
+                                    </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </lightning-tab>
+                        <template if:true={isTractor}> 
+                            <template if:true={coBorrowerVisible}>
+                            <lightning-tab label ="Co-Borrower" value="Co-borrower" onactive={handleViewTab}>
+                                <lightning-tabset>
+                            <template for:each={coborrowerList} for:item="item">
+                                <div key={item.Id}>
+                        <lightning-tab label={item.Name} value={item.Id} onactive={handleViewTab}>
+                            <div class="slds-box slds-box_xx-small">
+                                <template if:true={noDocsFound}>
+                                    No Documents found for this applicant.
+                                </template>
+                                <template if:false={noDocsFound}>
+                                    <div class="slds-container_center">
+                                        <lightning-layout multiple-rows="true" horizontal-align="center">
+                                            <lightning-layout-item size="12" padding="around-small">
+                                                <div class="slds-form-element">
+                                                    <label class="slds-form-element__label">Document Type</label>
+                                                    <div class="slds-form-element__control">
+                                                        <template if:true={documentTypeValues.data}>
+                                                            <lightning-combobox class="custom-combobox"
+                                                                            variant="label-hidden"
+                                                                            value={docType}
+                                                                            onchange={handleDocTypeFromView}
+                                                                            placeholder="-- Select --" data-applicant={item.Id}
+                                                                            options={docTypes}>
+                                                            </lightning-combobox>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                    <!--<lightning-layout multiple-rows="true" horizontal-align="center">
+                                        <lightning-layout-item size="3" padding="around-small">
+                                            Document Type
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="3" padding="around-small">
+                                            <template if:true={documentTypeValues.data}>
+                                                <lightning-combobox class="slds-form-element__control insType"
+                                                    variant="label-hidden" value={docType} onchange={handleDocTypeFromView}
+                                                    placeholder="-- Select --"
+                                                    data-applicant="Co-borrower"
+                                                    options={docTypePicklist}>
+                                                </lightning-combobox>
+                                            </template>
+                                        </lightning-layout-item>
+                                    </lightning-layout>-->
+                                    <c-l-W-C_-L-O-S_-Data-table-S-F data-id="documents" config={documentsConfig} query-filters={documentsConfig.queryFilters} onrowaction={handleRowAction} keycolumn="ContentDocumentId">
+                                    </c-l-W-C_-L-O-S_-Data-table-S-F>
+                                    <template if:true={mobileTabApp}>
+                                        <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-theme_brand slds-align_absolute-center"></lightning-button>
+                                    </template>
+                                </template>
+                            </div>
+                        </lightning-tab>
+                            </div>
+                            </template>
+                            </lightning-tabset>
+                            </lightning-tab>
+                            </template>
+                            <template if:true={beneficiaryVisible}>
+                                <lightning-tab label ="Beneficiary" value="Beneficiary" onactive={handleViewTab}>
+                                    <lightning-tabset>
+                                <template for:each={beneficiaryList} for:item="item">
+                                    <div key={item.Id}>
+                            <lightning-tab label={item.Name} value={item.Id} onactive={handleViewTab}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <template if:true={noDocsFound}>
+                                        No Documents found for this applicant.
+                                    </template>
+                                    <template if:false={noDocsFound}>
+                                        <div class="slds-container_center">
+                                            <lightning-layout multiple-rows="true" horizontal-align="center">
+                                                <lightning-layout-item size="12" padding="around-small">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Document Type</label>
+                                                        <div class="slds-form-element__control">
+                                                            <template if:true={documentTypeValues.data}>
+                                                                <lightning-combobox class="custom-combobox"
+                                                                                variant="label-hidden"
+                                                                                value={docType}
+                                                                                onchange={handleDocTypeFromView}
+                                                                                placeholder="-- Select --" data-applicant={item.Id}
+                                                                                options={docTypes}>
+                                                                </lightning-combobox>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </div>
+                                        <!--<lightning-layout multiple-rows="true" horizontal-align="center">
+                                            <lightning-layout-item size="3" padding="around-small">
+                                                Document Type
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="3" padding="around-small">
+                                                <template if:true={documentTypeValues.data}>
+                                                    <lightning-combobox class="slds-form-element__control insType"
+                                                        variant="label-hidden" value={docType} onchange={handleDocTypeFromView}
+                                                        placeholder="-- Select --"
+                                                        data-applicant="Beneficiary"
+                                                        options={docTypes}>
+                                                    </lightning-combobox>
+                                                </template>
+                                            </lightning-layout-item>
+                                        </lightning-layout>-->
+                                        <c-l-W-C_-L-O-S_-Data-table-S-F data-id="documents" config={documentsConfig} query-filters={documentsConfig.queryFilters} onrowaction={handleRowAction} keycolumn="ContentDocumentId">
+                                        </c-l-W-C_-L-O-S_-Data-table-S-F>
+                                        <template if:true={mobileTabApp}>
+                                            <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-theme_brand slds-align_absolute-center"></lightning-button>
+                                        </template>
+                                    </template>
+                                </div>
+                                </lightning-tab>
+                                </div>
+                                </template>
+                                </lightning-tabset>
+                                </lightning-tab>
+                            </template>
+                            <lightning-tab if:true={guarantorVisible} label=Guarantor value="Guarantor" onactive={handleViewTab}>
+                                <div class="slds-box slds-box_xx-small">
+                                    <template if:true={noDocsFound}>
+                                        No Documents found for this applicant.
+                                    </template>
+                                    <template if:false={noDocsFound}>
+                                        <div class="slds-container_center">
+                                            <lightning-layout multiple-rows="true" horizontal-align="center">
+                                                <lightning-layout-item size="12" padding="around-small">
+                                                    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label">Document Type</label>
+                                                        <div class="slds-form-element__control">
+                                                            <template if:true={documentTypeValues.data}>
+                                                                <lightning-combobox class="custom-combobox"
+                                                                                variant="label-hidden"
+                                                                                value={docType}
+                                                                                onchange={handleDocTypeFromView}
+                                                                                placeholder="-- Select --" data-applicant="Guarantor"
+                                                                                options={docTypes}>
+                                                                </lightning-combobox>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </div>
+                                        <!--<lightning-layout multiple-rows="true" horizontal-align="center">
+                                            <lightning-layout-item size="3" padding="around-small">
+                                                Document Type
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="3" padding="around-small">
+                                                <template if:true={documentTypeValues.data}>
+                                                    <lightning-combobox class="slds-form-element__control insType"
+                                                        variant="label-hidden" value={docType} onchange={handleDocTypeFromView}
+                                                        placeholder="-- Select --"
+                                                        data-applicant="Guarantor"
+                                                        options={docTypes}>
+                                                    </lightning-combobox>
+                                                </template>
+                                            </lightning-layout-item>
+                                        </lightning-layout>-->
+                                        <c-l-W-C_-L-O-S_-Data-table-S-F data-id="documents" config={documentsConfig} query-filters={documentsConfig.queryFilters} onrowaction={handleRowAction} keycolumn="ContentDocumentId">
+                                        </c-l-W-C_-L-O-S_-Data-table-S-F>
+                                        <template if:true={mobileTabApp}>
+                                            <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-theme_brand slds-align_absolute-center"></lightning-button>
+                                        </template>
+                                    </template>
+                                </div>
+                            </lightning-tab>  
+                            </template>
+                            <template if:false={isTractor}> 
+                        <lightning-tab if:true={coBorrowerVisible} label=Co-Borrower value="Co-borrower" onactive={handleViewTab}>
+                            <div class="slds-box slds-box_xx-small">
+                                <template if:true={noDocsFound}>
+                                    No Documents found for this applicant.
+                                </template>
+                                <template if:false={noDocsFound}>
+                                    <div class="slds-container_center">
+                                        <lightning-layout multiple-rows="true" horizontal-align="center">
+                                            <lightning-layout-item size="12" padding="around-small">
+                                                <div class="slds-form-element">
+                                                    <label class="slds-form-element__label">Document Type</label>
+                                                    <div class="slds-form-element__control">
+                                                        <template if:true={docTypePicklist}>
+                                                            <lightning-combobox class="custom-combobox"
+                                                                            variant="label-hidden"
+                                                                            value={docType}
+                                                                            onchange={handleDocTypeFromView}
+                                                                            placeholder="-- Select --" data-applicant="Co-borrower"
+                                                                            options={docTypePicklist}>
+                                                            </lightning-combobox>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </div>
+                                    <!--<lightning-layout multiple-rows="true" horizontal-align="center">
+                                        <lightning-layout-item size="3" padding="around-small">
+                                            Document Type
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="3" padding="around-small">
+                                            <template if:true={documentTypeValues.data}>
+                                                <lightning-combobox class="slds-form-element__control insType"
+                                                    variant="label-hidden" value={docType} onchange={handleDocTypeFromView}
+                                                    placeholder="-- Select --"
+                                                    data-applicant="Co-borrower"
+                                                    options={docTypes}>
+                                                </lightning-combobox>
+                                            </template>
+                                        </lightning-layout-item>
+                                    </lightning-layout>-->
+                                    <c-l-W-C_-L-O-S_-Data-table-S-F data-id="documents" config={documentsConfig} query-filters={documentsConfig.queryFilters} onrowaction={handleRowAction} keycolumn="ContentDocumentId">
+                                    </c-l-W-C_-L-O-S_-Data-table-S-F>
+                                    <template if:true={mobileTabApp}>
+                                        <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={uploadImageClose} class="slds-theme_brand slds-align_absolute-center"></lightning-button>
+                                    </template>
+                                </template>
+                            </div>
+                        </lightning-tab>
+                        </template>
+                    </lightning-tabset>
+                </lightning-tab>
+            </lightning-tabset>
+        </div>
+    </lightning-card>
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 500vh !important;" id="modalBackdrops1">
+</div>
+</template>
+<template if:true={isPreview}>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="background-color: grey;">
+                    <!-- modal header start -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={hideModalBox}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+                    <!-- modal body start -->
+                    <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+                    <!-- modal footer start-->
+                    <footer class="slds-modal__footer">
+                        <!--<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>-->
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 500vh !important;"></div>
+    </template>
+</template>

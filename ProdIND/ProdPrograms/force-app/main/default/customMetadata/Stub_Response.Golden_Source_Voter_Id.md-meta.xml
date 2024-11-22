@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Golden Source Voter Id</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;RequestId&quot;:&quot;22032022155023337&quot;,&quot;ResponseData&quot;:{&quot;Status&quot;:&quot;Success&quot;,&quot;ResponseInfo&quot;:{&quot;ApplicationId&quot;:28251684,&quot;SolutionSetInstanceId&quot;:&quot;cb4ee4b2-5ea9-46ac-9f89-ee04684e4705&quot;},&quot;Fields&quot;:{&quot;Applicants&quot;:{&quot;Applicant&quot;:{&quot;Services&quot;:{&quot;Service&quot;:[{&quot;Id&quot;:&quot;SDE034&quot;,&quot;Name&quot;:&quot;SDE034&quot;,&quot;Operations&quot;:{&quot;Operation&quot;:[{&quot;Id&quot;:&quot;SDE034P001&quot;,&quot;Params&quot;:{&quot;Param&quot;:[]},&quot;Data&quot;:{&quot;Response&quot;:{&quot;RawResponse&quot;:&quot;{\&quot;request_id\&quot;:\&quot;28251684\&quot;,\&quot;status\&quot;:\&quot;101\&quot;,\&quot;timestamp\&quot;:\&quot;3/22/2022 3:50:27 PM\&quot;,\&quot;description\&quot;:\&quot;Sucess\&quot;,\&quot;result\&quot;:[{\&quot;name\&quot;:\&quot;KARTHI\&quot;,\&quot;gender\&quot;:\&quot;M\&quot;,\&quot;age\&quot;:\&quot;30\&quot;,\&quot;ac_name\&quot;:\&quot;ANDIPATTI\&quot;,\&quot;epic_no\&quot;:\&quot;NNH0936989\&quot;,\&quot;ps_lat_long\&quot;:\&quot;10.00098542,77.6499882\&quot;,\&quot;email_id\&quot;:\&quot;\&quot;,\&quot;rln_type\&quot;:\&quot;F\&quot;,\&quot;rln_name\&quot;:\&quot;MANIKANDASAMY\&quot;,\&quot;district\&quot;:\&quot;\&quot;,\&quot;state\&quot;:\&quot;TAMIL NADU\&quot;,\&quot;ac_no\&quot;:\&quot;198\&quot;,\&quot;house_no\&quot;:\&quot;4-141A\&quot;,\&quot;mob_no\&quot;:\&quot;9952777475\&quot;,\&quot;pincode\&quot;:\&quot;625536\&quot;,\&quot;ps_name\&quot;:\&quot;GOVT.HIGHER SEC. SCHOOL, CLASS ROOM 10B FACING SOUTH T SUBBULAPURAM\&quot;,\&quot;pc_name\&quot;:\&quot;THENI\&quot;,\&quot;dob_derived\&quot;:\&quot;27/03/1988\&quot;,\&quot;part_name\&quot;:\&quot;GOVT.HIGHER SEC. SCHOOL\&quot;,\&quot;part_no\&quot;:\&quot;17\&quot;,\&quot;pc_no\&quot;:\&quot;33\&quot;,\&quot;dist_name\&quot;:\&quot;THENI\&quot;,\&quot;st_code\&quot;:\&quot;S22\&quot;,\&quot;last_update\&quot;:\&quot;WED JUN 19 14:44:11 IST 2019\&quot;}]}&quot;}},&quot;Status&quot;:&quot;Pass&quot;}]},&quot;Status&quot;:&quot;Pass&quot;}]},&quot;Identifiers&quot;:{&quot;Identifier&quot;:{&quot;IdNumber&quot;:&quot;NNH0936989&quot;,&quot;IdType&quot;:&quot;03&quot;}},&quot;ApplicantIdentifier&quot;:&quot;40cbe05a-224f-4c81-91f6-7e50fcb8fa8a&quot;}},&quot;ApplicationData&quot;:{&quot;Services&quot;:{&quot;Service&quot;:{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;SDE034&quot;,&quot;Skip&quot;:&quot;N&quot;,&quot;Consent&quot;:&quot;true&quot;,&quot;EnableSimulation&quot;:&quot;&quot;}}},&quot;Decision&quot;:&quot;Pass&quot;,&quot;ApplicationId&quot;:&quot;28251684&quot;}}}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Voter Id – Golden source</value>
+    </values>
+</CustomMetadata>

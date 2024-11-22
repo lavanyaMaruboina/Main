@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Complete__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This will be updated to True if user clicks on Submit against assigned Module.</description>
+    <inlineHelpText>This will be updated to True if user clicks on Submit against assigned Module.</inlineHelpText>
+    <label>Is Complete</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

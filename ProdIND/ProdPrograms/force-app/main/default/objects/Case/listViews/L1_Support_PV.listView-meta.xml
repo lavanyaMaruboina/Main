@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>L1_Support_PV</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>NAME</columns>
+    <columns>CASES.SUBJECT</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>CASES.PRIORITY</columns>
+    <columns>CASES.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Case_Owner_Custom__c</columns>
+    <columns>Agent_BL_Code__c</columns>
+    <columns>Affected_User__c</columns>
+    <columns>Loan_Application__c</columns>
+    <columns>IncidentManagement_State__c</columns>
+    <columns>LOB_formulae__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Case_Owner_Custom__c</field>
+        <operation>equals</operation>
+        <value>KARTHICK M</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed</value>
+    </filters>
+    <filters>
+        <field>IncidentManagement_State__c</field>
+        <operation>equals</operation>
+        <value>,TAMILNADU,Andhra R &amp; T,TAMILNADU_SOUTH,KERALA,Chhattisgarh</value>
+    </filters>
+    <label>L1 Support PV</label>
+    <sharedTo>
+        <group>L1_Support_group</group>
+    </sharedTo>
+</ListView>

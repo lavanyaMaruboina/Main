@@ -1,0 +1,10 @@
+<!--SFTRAC-263 -->
+<template>
+    <lightning-card title="Applicant" icon-name="standard:people">
+        <template if:true={data}>
+            <lightning-datatable key-field="Id" data={data} columns={columns} hide-checkbox-column="true"
+                onrowaction={callRowAction}>
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

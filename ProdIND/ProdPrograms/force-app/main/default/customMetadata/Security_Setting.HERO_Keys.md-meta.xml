@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>HERO Keys</label>
+    <protected>false</protected>
+    <values>
+        <field>Client_Id__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Client_Secret__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IV_Key__c</field>
+        <value xsi:type="xsd:string">SbCRKXLZI7bbkNtM</value>
+    </values>
+    <values>
+        <field>Private_Key__c</field>
+        <value xsi:type="xsd:string">DSc4YVpOVzZDSO74SD5hTEF2QkLrKT89</value>
+    </values>
+</CustomMetadata>

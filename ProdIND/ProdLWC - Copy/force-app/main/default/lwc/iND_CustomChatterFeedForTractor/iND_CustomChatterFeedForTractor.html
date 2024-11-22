@@ -1,0 +1,53 @@
+<template>
+    <lightning-card title="Queries">
+        <lightning-button label="Ask Query" onclick={handleClick} slot="actions"></lightning-button>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item padding="around-small" class="slds-wrap">
+                    <lightning-datatable key-field="id" 
+                    data={data} 
+                    columns={columns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </lightning-layout-item>
+            <div>
+                <template if:true={isQuery}>
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <div class="slds-modal__header">
+                                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Ask Query</h1>
+                            </div>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <div>
+                                    <lightning-textarea  label="Query" placeholder="Ask your query..." onchange={handleChangeQuery}></lightning-textarea>
+                                    <!-- <lightning-input-rich-text label="Query" onkeyup={handleKeyUpQuery}></lightning-input-rich-text> -->
+                                </div>
+                                <br/>
+                                <div>
+                                    <label class="slds-form-element__label">User</label>
+                                    <c-generic-custom-lookup selected-name={selectedUser} object-name="AccountTeamMember"
+                                        fetch-field={fetchField} small-input=true search-field={searchField} filter-field={filterField}
+                                        filter-term={filterTerm} onlookupselected={selectHandler}
+                                        onclearvalue={clearEmpAppHandler} select-field-name="User" switch-code="userCode" icon-name="standard:user"
+                                        filter-multiple-field-name={filterMultipleFieldName} filter-multiple-term={filterMultipleTerm}>
+                                    </c-generic-custom-lookup>
+                                </div>
+                            </div>
+                            <div class="slds-modal__footer slds-modal__footer_directional">
+                                <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                                <button class="slds-button slds-button_brand" onclick={handleSubmit}>Save</button>
+                            </div>
+                        </div>
+                    </section>
+                        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;" role="presentation"></div>
+                </template>
+            </div>
+        </lightning-layout>
+    </lightning-card>
+</template>

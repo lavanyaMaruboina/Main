@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_not_allow_Case_Change_to_CMU_user</fullName>
+    <active>true</active>
+    <description>Not allow CMU user to change the case owner whereas CMU Team Lead can change the Owner</description>
+    <errorConditionFormula>AND(
+ISCHANGED( OwnerId ),
+$RecordType.Name = &apos;CMU Request&apos;,
+$Profile.Name = &apos;CMU&apos;,
+NOT(OR($Permission.Change_CMU_case_owner_and_view_AML_case_detail_and_history_access,  $Profile.Name == &quot;System Administrator&quot;)),
+ISPICKVAL(Status, &quot;Pending with CMU&quot;),
+NOT(ISCHANGED(Status))
+)</errorConditionFormula>
+    <errorMessage>You are not allowed to change the Case Owner, Please contact your Team Lead to change the Owner.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,915 @@
+<template>
+    <template if:true={isCheckBoxSectionOpen}>
+        <div class="slds-align_absolute-center slds-p-around_small" style="border: 1px solid;">
+            <h3>Note : “Please check if any of the below documents are applicable for the application. Please upload the
+                same if applicable.”</h3>
+        </div>
+        <div class="slds-align_absolute-center slds-p-around_large slds-m-left_xx-large slds-m-right_xx-large">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Updated RC Document" name="RC Document"
+                            onchange={onRCClick} class="chkBox" disabled={isReadOnly}
+                            checked={isRCVisible}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled Cheque: Co-borrower bank account"
+                            name="Co-Borrower's Cancel Cheque" class="chkBox" onchange={handleCoboroowercancelChqCo}
+                            disabled={coBorrowerReadOnly} checked={isCoborrowercancelCheq}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                        <lightning-input type="checkbox" label="DD for closing existing loan"
+                            name="DD for closing existing loan" class="chkBox" onchange={handleDDforClosing}
+                            disabled={isD2CDisabled} checked={isBankTransfer}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                        <!--CISP-2432--> <lightning-input type="checkbox" label="Buyer-Seller undertaking  letter"
+                            name="Buyer-Seller Undertaking letter" class="chkBox" onchange={handleBuyerSeller}
+                            disabled={isD2CDisabled} checked={isBuyerSeller}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!--CISP-2432--> <lightning-input type="checkbox"
+                            label="Customer undertaking letter (indemnity)" class="chkBox" name="Indemnity letter"
+                            onchange={handleindemnity} disabled={isReadOnly} checked={isIndemnityLetter}>
+                        </lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Passbook: Seller bank account" name="Seller's Passbook"
+                            class="chkBox" onchange={handleSellerPassbook} disabled={isReadOnly}
+                            checked={isSellerPassbook}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Bank statement: Seller bank account" class="chkBox"
+                            name="Seller's Bank Statement" onchange={handlesellerBankState} disabled={isReadOnly}
+                            checked={issellerBankState}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled cheque: Seller bank account" class="chkBox"
+                            name="Seller's Cancel Cheque" onchange={handlesellerChqCancel} disabled={isReadOnly}
+                            checked={issellerChqCancel}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled NOC" name="NOC" onchange={handleNOC}
+                            class="chkBox" checked={isNOC} disabled={isNOCMandatory}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Bank statement: Borrower bank account"
+                            name="Borrower's Bank Statement" class="chkBox" onchange={handleborrowerBankState}
+                            disabled={isReadOnly} checked={isborrowerBankState}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <!-- Modified disabled condition for d2c check -->
+                        <lightning-input type="checkbox" label="Branch undertaking letter"
+                            name="Branch Undertaking letter" class="chkBox" onchange={handleBranchUndertake}
+                            disabled={isD2CDisabled} checked={isBranchUndertake}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Canceled cheque: Borrower bank account" class="chkBox"
+                            name="Borrower's Cancel Cheque" onchange={handleborrowercancelCheq} disabled={isReadOnly}
+                            checked={isborrowercancelCheq}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Declaration of Good Health (borrower)" class="chkBox"
+                            name="Declaration of Borrower Good Health" checked={isBorrowerDeclare}
+                            onchange={handleBorrowerDeclare} disabled={isBorrowerMandetory}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Declaration of Good Health (co-borrower)" class="chkBox"
+                            checked={isCoBorrowerDeclare} name="Declaration of Co-Borrower Good Health"
+                            onchange={handleCoBorrowerDeclare} disabled={isCoBorrowerMandetory}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Bank statement: Co-borrower bank account" class="chkBox"
+                            name="Co-Borrower's Bank Statement" onchange={handleCoborrowerBankState}
+                            disabled={coBorrowerReadOnly} checked={isCoborrowerBankState}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Banker's signature verification" class="chkBox"
+                            name="Banker's signature verification" onchange={handleOnChange}
+                            disabled={isReadOnly}
+                            checked={BankerSignatureVerificationVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Invoice Copy" name="Invoice Copy" class="chkBox" onchange={handleTaxInvoice} disabled={isReadOnly} checked={isTaxInvoice}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                
+                                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Insurance Cover Note" class="chkBox"
+                            name="Insurance Cover Note" onchange={handleOnChange} disabled={isReadOnly}
+                            checked={InsuranceCoverNoteVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Insurance Policy Doc" class="chkBox" name="Insurance Policy Doc"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={InsurancePolicyVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Delivery challan" class="chkBox" name="Delivery challan"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={DeliveryChallanVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox"
+                            label="Customer declaration letter for payment to Co-borrower/Dealer/ DSA" class="chkBox"
+                            name="Customer declaration letter for payment to Co-borrower/Dealer/ DSA" onchange={handleOnChange}
+                            disabled={isReadOnly}
+                            checked={PaymentToCoBorrowerDealerDSAVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Existing loan settlement copy for refinance"
+                            class="chkBox" name="Existing loan settlement copy for refinance" onchange={handleOnChange}
+                            disabled={isReadOnly}
+                            checked={ExistingLoanSettlementVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Affidavit" class="chkBox" name="Affidavit"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={AffidavitVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Enach" class="chkBox" name="Enach"
+                            onchange={handleOnChange} disabled={isReadOnly} checked={EnachVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Debit Authorisation letter for closing existing loan"
+                            class="chkBox" name="Debit Authorisation letter for closing existing loan" onchange={handleOnChange}
+                            disabled={isReadOnly} checked={DebitAuthorisationVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="DSA letter" class="chkBox" name="DSA letter"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={DSALetterVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Dealer letter" class="chkBox" name="Dealer letter"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={DealerLetterVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="SDPC / ACH Form" class="chkBox" name="SDPC / ACH Form"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={SDPCACHFormVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Talathi/Sarpanch Certificate" class="chkBox"
+                            name="Talathi/Sarpanch Certificate" onchange={handleOnChange}
+                            disabled={isReadOnly}
+                            checked={TalathiSarpanchCertificateVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Vahan Extract" class="chkBox" name="Vahan Extract"
+                            onchange={handleOnChange} disabled={isReadOnly}
+                            checked={VahanExtractVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div class="page-section page-header">
+                        <lightning-input type="checkbox" label="Fund Utilisation letter for Refinance" class="chkBox"
+                            name="Fund Utilisation letter for Refinance" onchange={handleOnChange}
+                            disabled={isReadOnly} checked={FundUtilisationVal}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </div>
+    </template>
+    <template if:true={isadditionDocSectionOpen}>
+        <lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}
+                class="slds-size_12-of-12">
+                <template if:true={noDocSelected}><template if:false={isCheckBoxSectionOpen}> <c-i-n-d_-l-w-c_-additional-documents-child record-id={recordId} ondisablesubmit={childChange} deal-id={dealId}></c-i-n-d_-l-w-c_-additional-documents-child></template></template>
+                <template if:true={isRCVisible}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="RC">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} value="RC Document" disabled={disableCaptureChassisNumber}>
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="RC Document" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents  field-label="RC in name of " data-id="RCOwner" field-name="RCOwner" onchangeval={handleInputFieldChange} field-val={rcDoumentData.RC_Owner__c} is-picklist="false" field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Hypothecation available"  data-id="Hypothecationavailable" field-name="Hypothecationavailable" onchangeval={handleInputFieldChange} field-val={rcDoumentData.Hypothecation_available__c} is-picklist="true" field-options={optionsYesOrNo} field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Hypothecation in name of" data-id="hypothecationNameRc" field-name="hypothecationNameRc" onchangeval={handleInputFieldChange} field-val={rcDoumentData.Hypothecation_in_name_of__c} is-picklist="true" field-options={hypothecationName} field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="enteredDetailsAsPerDocRC" field-name="enteredDetailsAsPerDocRC" onchangeval={handleInputFieldChange} field-val={rcDoumentData.Are_enter_details_as_per_RC_doc_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is RC Document legible ?" data-id="isRCDocLegible" field-name="isRCDocLegible" onchangeval={handleInputFieldChange} field-val={rcDoumentData.Are_entered_details_as_per_document_uplo__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="remarksRCDoc" field-name="remarksRCDoc" onchangeval={handleInputFieldChange} field-val={rcDoumentData.Remarks_for_RC_Upload__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isCoBorrower}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Co-Borrower Bank Details  ">
+                        
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Bank name" data-id="coBorrowerBankName" field-name="coBorrowerBankName" onchangeval={handleInputFieldChange} field-val={coBorrowerData.CoBorrower_Bank_name__c} is-picklist="true" field-required="true" field-options={bankNameList} field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Account number" data-id="coBorrowerAccountNumber" field-name="coBorrowerAccountNumber" onchangeval={handleInputFieldChange} field-val={coBorrowerData.CoBorrower_Account_number__c} is-picklist="false" field-type="text" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Name of account holder" data-id="coBorrowerAccountHolder" field-name="coBorrowerAccountHolder" onchangeval={handleInputFieldChange} field-val={coBorrowerData.Name_of_CoBorrower_account_holder__c} is-picklist="false" field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="IFSC code" data-id="ifscCodeCoBorrower" field-name="ifscCodeCoBorrower" onchangeval={handleInputFieldChange} field-val={coBorrowerData.IFSC_code_CoBorrower__c} is-picklist="false" field-type="text" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                        <template if:true={isCoborrowerBankState}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Statement">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Co-Borrower's Bank Statement">
+                                            Upload Bank Statment <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Co-Borrower's Bank Statement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per bank statement uploaded?" data-id="isCoBorrowerEnteredDetailsUploaded" field-name="isCoBorrowerEnteredDetailsUploaded" onchangeval={handleInputFieldChange} field-val={coBorrowerData1.DETLS_asper_COBWR_bank_STMT_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is bank statement legible ?" data-id="isCoBorrowerBankStatementLegible" field-name="isCoBorrowerBankStatementLegible" onchangeval={handleInputFieldChange} field-val={coBorrowerData1.Is_bank_statement_legible_for_CoBorrowe__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="coBorrowerBankStatementRemarks" field-name="coBorrowerBankStatementRemarks" onchangeval={handleInputFieldChange} field-val={coBorrowerData1.Bank_Statement_Remarks_for_CoBorrower__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isCoborrowercancelCheq}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Cancelled Cheque">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Co-Borrower's Cancel Cheque">
+                                            Upload Canceled Cheque <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Co-Borrower's Cancel Cheque" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per cancelled cheque uploaded?" data-id="isCoBorrowerCanCheq" field-name="isCoBorrowerCanCheq" onchangeval={handleInputFieldChange} field-val={coBorrowerData2.DETLS_asper_COBWR_canc_chq_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is cancelled cheque legible ?" data-id="isCoBorrowerCanCheqLegible" field-name="isCoBorrowerCanCheqLegible" onchangeval={handleInputFieldChange} field-val={coBorrowerData2.Is_cancelled_cheque_legible_CoBorrower__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="coBorrowerCanCheqRemarks" field-name="coBorrowerCanCheqRemarks" onchangeval={handleInputFieldChange} field-val={coBorrowerData2.Cancelled_cheque_Remarks_for_CoBorrower__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBankTransfer}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Transfer">
+                        <template if:true={isDDforClosing}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="DD for closing existing loan">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="DD for closing existing loan">
+                                            Upload <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="DD for closing existing loan" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is sale DD legible ?" data-id="isSaleLegibleDD" field-name="isSaleLegibleDD" onchangeval={handleInputFieldChange} field-val={bankTransfer.Is_sale_DD_legible__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="remarksSaleLegibleDD" field-name="remarksSaleLegibleDD" onchangeval={handleInputFieldChange} field-val={bankTransfer.Remarks_for_DD__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBuyerSeller}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Buyer-Seller Undertaking Letter">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Buyer-Seller Undertaking letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Buyer-Seller Undertaking letter" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Buyer-Seller Undertaking Letter legible ?" data-id="Buyer-SellerUndertakingletter" field-name="Buyer-SellerUndertakingletter" onchangeval={handleInputFieldChange} field-val={buyerSellerData.Buyer_Seller_Undertaking_Letter_legib__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="buyerSellerUndertakingLetterRemarks" field-name="buyerSellerUndertakingLetterRemarks" onchangeval={handleInputFieldChange} field-val={buyerSellerData.Buyer_Seller_Undertaking_Letter_Remarks__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isIndemnityLetter}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Indemnity Letter">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <!-- Modified disabled condition for d2c check -->
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumberWithD2C} value="Indemnity letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Indemnity letter" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Indemnity Letter legible ?" data-id="IsIndemnityLetterLegible" field-name="IsIndemnityLetterLegible" onchangeval={handleInputFieldChange} field-val={indemnityLetterData.Buy_Seller_Indemnity_LTR_legible__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="indemnityLetterRemarks" field-name="indemnityLetterRemarks" onchangeval={handleInputFieldChange} field-val={indemnityLetterData.Indemnity_Remarks__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isSeller}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Seller Bank Details ">
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Bank name" data-id="sellerBankName" field-name="sellerBankName" onchangeval={handleInputFieldChange} field-val={sellerData.Seller_Bank_name__c} is-picklist="true" field-options={bankNameList} field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Account number" data-id="sellerAccountNumber" field-name="sellerAccountNumber" onchangeval={handleInputFieldChange} field-val={sellerData.Seller_Account_number__c} is-picklist="false" field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Name of account holder" data-id="sellerAccountHolder" field-name="sellerAccountHolder" onchangeval={handleInputFieldChange} field-val={sellerData.Name_of_Seller_account_holder__c} is-picklist="false" field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="IFSC code" data-id="ifscCodeSeller" field-name="ifscCodeSeller" onchangeval={handleInputFieldChange} field-val={sellerData.IFSC_code_Seller__c} is-picklist="false" field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        <template if:true={isSellerPassbook}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Passbook">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Seller's Passbook">
+                                            Upload PassBook <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Seller's Passbook" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per passbook uploaded?" data-id="isSellerPassbookUploaded" field-name="isSellerPassbookUploaded" onchangeval={handleInputFieldChange} field-val={sellerData.entered_details_asper_passbook_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is passbook legible ?" data-id="isSellerPassbookLegible" field-name="isSellerPassbookLegible" onchangeval={handleInputFieldChange} field-val={sellerData.Is_passbook_legible_for_Seller__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="sellerPassbookRemarks" field-name="sellerPassbookRemarks" onchangeval={handleInputFieldChange} field-val={sellerData.Passbook_Remarks_for_Seller__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={issellerBankState}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Statement">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Seller's Bank Statement">
+                                            Upload Bank Statment <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Seller's Bank Statement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per bank statement uploaded?" data-id="isSellerEnteredDetailsUploaded" field-name="isSellerEnteredDetailsUploaded" onchangeval={handleInputFieldChange} field-val={sellerData1.enter_details_asper_bank_STMT_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is bank statement legible ?" data-id="isSellerBankStatementLegible" field-name="isSellerBankStatementLegible" onchangeval={handleInputFieldChange} field-val={sellerData1.Is_bank_statement_legible_for_Seller__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="sellerBankStatementRemarks" field-name="sellerBankStatementRemarks" onchangeval={handleInputFieldChange} field-val={sellerData1.Bank_Statement_Remarks_for_Seller__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={issellerChqCancel}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Cancelled Cheque">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Seller's Cancel Cheque">
+                                            Upload Canceled Cheque <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Seller's Cancel Cheque" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per cancelled cheque uploaded?" data-id="isSellerCanCheq" field-name="isSellerCanCheq" onchangeval={handleInputFieldChange} field-val={sellerData2.enter_details_as_per_canc_chq_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is cancelled cheque legible ?" data-id="isSellerCanCheqLegible" field-name="isSellerCanCheqLegible" onchangeval={handleInputFieldChange} field-val={sellerData2.Is_cancelled_cheque_legible_for_Seller__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="sellerCanCheqRemarks" field-name="sellerCanCheqRemarks" onchangeval={handleInputFieldChange} field-val={sellerData2.cancelled_cheque_Remarks_for_Seller__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isNOC}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" NOC ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="NOC">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="NOC" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Hologram no. as per NOC" data-id="hologramAsperNOC" field-name="hologramAsperNOC" onchangeval={handleInputFieldChange} field-val={nocData.Hologram_no_as_per_NOC__c} is-picklist="false" field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="NOC ref no. as per journey" data-id="NOCrefNo" field-name="NOCrefNo" field-val={nocNumberOfLA} is-picklist="false" field-type="number" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Has NOC been cancelled?" data-id="hasNOcCancel" field-name="hasNOcCancel" onchangeval={handleInputFieldChange} field-val={nocData.Has_NOC_been_canceled__c} is-picklist="true" field-options={optionsYesOrNo} field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="isNOCDetailsDocUpload" field-name="isNOCDetailsDocUpload" onchangeval={handleInputFieldChange} field-val={nocData.Are_enter_details_asper_NOC_doc_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Cancelled NOC legible ?" data-id="isCancelNOCLegible" field-name="isCancelNOCLegible" onchangeval={handleInputFieldChange} field-val={nocData.Is_Cancelled_NOC_legible__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="nOCRemarks" field-name="nOCRemarks" onchangeval={handleInputFieldChange} field-val={nocData.NOC_Remarks__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBranchUndertake}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Branch Undertaking ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Branch Undertaking letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="previewBranchUndertaking" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Branch Undertaking Letter legible ?" data-id="isBranchUndertakLetterLegible" field-name="isBranchUndertakLetterLegible" onchangeval={handleInputFieldChange} field-val={branchUndertakingData.Is_Branch_Undertaking_Letter_legible__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="branchUndertakRemarks" field-name="branchUndertakRemarks" onchangeval={handleInputFieldChange} field-val={branchUndertakingData.Branch_Undertaking_Remarks__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBorrower}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Borrower Bank Details  ">
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Bank name" data-id="borrowerBankName" field-name="borrowerBankName" onchangeval={handleInputFieldChange} field-val={borrowerData.Borrower_Bank_name__c} is-picklist="true" field-options={bankNameList} field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Account number" data-id="borrowerAccountNumber" field-name="borrowerAccountNumber" onchangeval={handleInputFieldChange} field-val={borrowerData.Borrower_Account_number__c} field-type="text" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Name of account holder" data-id="borrowerAccountHolder" field-name="borrowerAccountHolder" onchangeval={handleInputFieldChange} field-val={borrowerData.Name_of_Borrower_account_holder__c} is-picklist="false" field-required="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="IFSC coder" data-id="ifscCodeBorrower" field-name="ifscCodeBorrower" onchangeval={handleInputFieldChange} field-val={borrowerData.IFSC_code_Borrower__c} is-picklist="false"  field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        <template if:true={isborrowerBankState}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Bank Statement">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:100px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Borrower's Bank Statement">
+                                            Upload Bank Statment <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Borrower's Bank Statement" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per bank statement uploaded?" data-id="isBorrowerEnteredDetailsUploaded" field-name="isBorrowerEnteredDetailsUploaded" onchangeval={handleInputFieldChange} field-val={borrowerData1.enter_DETLS_asper_BWR_bank_STMT_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is bank statement legible ?" data-id="isBorrowerBankStatementLegible" field-name="isBorrowerBankStatementLegible" onchangeval={handleInputFieldChange} field-val={borrowerData1.Is_bank_statement_legible_for_Borrower__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="borrowerBankStatementRemarks" field-name="borrowerBankStatementRemarks" onchangeval={handleInputFieldChange} field-val={borrowerData1.Bank_Statement_Remarks_for_Borrower__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <template if:true={isborrowercancelCheq}>
+                            <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Cancelled Cheque">
+                                <template if:true={stageCheck}>
+                                    <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Borrower's Cancel Cheque">
+                                            Upload Canceled Cheque <span if:true={iconButton}>&#x2714;</span></button>
+                                    </div>
+                                </template>
+                                <template if:false={stageCheck}>
+                                    <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Borrower's Cancel Cheque" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per cancelled cheque uploaded?" data-id="isBorrowerCanCheq" field-name="isBorrowerCanCheq" onchangeval={handleInputFieldChange} field-val={borrowerData2.enter_DETLS_as_per_BWR_canc_chq_upload__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is cancelled cheque legible?" data-id="isBorrowerCanCheqLegible" field-name="isBorrowerCanCheqLegible" onchangeval={handleInputFieldChange} field-val={borrowerData2.Is_cancelled_cheque_legible_for_Borrower__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                    <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="borrowerCanCheqRemarks" field-name="borrowerCanCheqRemarks" onchangeval={handleInputFieldChange} field-val={borrowerData2.Cancelled_cheque_Remarks_for_Borrower__c} is-picklist="false" field-type="text" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isBorrowerDeclare}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Declaration of Good Health(borrower) ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Declaration of Borrower Good Health">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Declaration of Borrower Good Health" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Declaration of Good Health(borrower) legible" data-id="isDecGoodBorrowerLegible" field-name="isDecGoodBorrowerLegible" onchangeval={handleInputFieldChange} field-val={borrowerHealthData.Doc_for_Good_Health_borrower_legible__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="decGoodBorrowerRemarks" field-name="decGoodBorrowerRemarks" onchangeval={handleInputFieldChange} field-val={coBorrowerHealthData.Borrower_Good_Health_Dec_Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isCoBorrowerDeclare}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Declaration of Good Health(co-borrower) ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Declaration of Co-Borrower Good Health">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Declaration of Co-Borrower Good Health" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Declaration of Good Health(co-borrower) legible" data-id="isDecGoodCoBorrower" field-name="isDecGoodCoBorrower" onchangeval={handleInputFieldChange} field-val={coBorrowerHealthData.Doc_for_Good_Health_coborrower_legible__c} is-picklist="true" field-options={optionsYesOrNo} field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="decGoodCoBorrowerRemarks" field-name="decGoodCoBorrowerRemarks" onchangeval={handleInputFieldChange} field-val={coBorrowerHealthData.CoBorrower_Good_Health_Declaration_Remak__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={BankerSignatureVerificationVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Banker's signature verification">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Banker's signature verification">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Banker's signature verification" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Signature Verification Bank Name" data-id="signatureVerificationBankName" field-name="signatureVerificationBankName" onchangeval={handleInputFieldChange} field-val={bankersSignatureData.Signature_Verification_Bank_Name__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Signature verification for" data-id="SignatureVerificationFor" field-name="SignatureVerificationFor" onchangeval={handleInputFieldChange} field-val={bankersSignatureData.Signature_verification_for__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Signature tallying with other documents?" data-id="isSignatureTallyWithOtherDocuments" field-name="isSignatureTallyWithOtherDocuments" onchangeval={handleInputFieldChange} field-val={bankersSignatureData.Is_Signature_tally_with_other_documents__c}  is-picklist="true" field-disabled={disabledFields} field-options={optionsYesOrNo} field-required="true"></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Signature verification legible ?" data-id="isSignatureVerificationLegible" field-name="isSignatureVerificationLegible" onchangeval={handleInputFieldChange} field-val={bankersSignatureData.Is_Signature_verification_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="signatureRemarks" field-name="signatureRemarks" onchangeval={handleInputFieldChange} field-val={bankersSignatureData.CoBorrower_Good_Health_Declaration_Remak__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isTaxInvoice}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label=" Tax invoice ">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Tax Invoice">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Tax Invoice" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Invoice number" data-id="invoiceNumber" field-name="invoiceNumber" onchangeval={handleInputFieldChange} field-val={taxInvoice.Invoice_number__c} field-type="number" is-picklist="false" field-disabled={isNotPreDisbursement} field-required="true"></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Invoice date" data-id="invoiceDate" field-name="invoiceDate" onchangeval={handleInputFieldChange} field-val={taxInvoice.Invoice_date__c} field-type="Date" is-picklist="false" field-disabled={isNotPreDisbursement} field-required="true"></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Invoice amount" data-id="invoiceAmount" field-name="invoiceAmount" onchangeval={handleInputFieldChange} field-val={taxInvoice.Invoice_amount__c} field-type="number" is-picklist="false" field-disabled={isNotPreDisbursement} field-required="true"></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="isTaxInvoiceDcoUploaded" field-name="isTaxInvoiceDcoUploaded" onchangeval={handleInputFieldChange} field-val={taxInvoice.enter_details_asper_Tax_Invoice_upload__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Tax Invoice legible ?" data-id="isTaxInvoiceLegible" field-name="isTaxInvoiceLegible" onchangeval={handleInputFieldChange} field-val={taxInvoice.Is_Tax_Invoice_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="insuranceRemarkstax" field-name="insuranceRemarkstax" onchangeval={handleInputFieldChange} field-val={taxInvoice.Tax_Invoice_Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={InsuranceCoverNoteVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Insurance Cover Note">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Insurance Cover Note">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Insurance Cover Note" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Insurance cover note number" data-id="InsuranceCoverNoteNumber" field-name="InsuranceCoverNoteNumber" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Insurance_cover_note_number__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Insurance cover note Date" data-id="InsuranceCoverNoteDate" field-name="InsuranceCoverNoteDate" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Insurance_cover_note_Date__c} field-type="Date" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Insurance declared value" data-id="InsuranceDeclaredValue" field-name="InsuranceDeclaredValue" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Insurance_declared_value__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Hypothecation available" data-id="isHypothecationAvaialble" field-name="isHypothecationAvaialble" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Is_Hypothecation_available__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="EnteredDetailsAsPerDocUploaded" field-name="EnteredDetailsAsPerDocUploaded" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Insurance cover note legible ?" data-id="insuranceCoverNoteLegible" field-name="insuranceCoverNoteLegible" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Is_Insurance_cover_note_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="insuranceRemarkscovernote" field-name="insuranceRemarkscovernote" onchangeval={handleInputFieldChange} field-val={insuranceCoverNoteData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                
+                <template if:true={InsurancePolicyVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Insurance Policy Doc">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Insurance Policy Doc">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Insurance Policy Doc" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Insurance Policy Doc number" data-id="InsurancePolicyNumber" field-name="InsurancePolicyNumber" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Insurance_Policy_number__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Insurance Policy Doc Date" data-id="InsurancePolicyDate" field-name="InsurancePolicyDate" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Insurance_Policy_Date__c} field-type="Date" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Insurance declared value" data-id="InsurancePolDeclaredValue" field-name="InsurancePolDeclaredValue" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Insurance_declared_value__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Hypothecation available" data-id="isHypothecationAvaialble" field-name="isHypothecationAvaialble" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Is_Hypothecation_available__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="EnteredDetailsAsPerDocUploaded" field-name="EnteredDetailsAsPerDocUploaded" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Insurance Policy Doc legible ?" data-id="insuranceCoverNoteLegible" field-name="insuranceCoverNoteLegible" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Is_Insurance_Policy_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="insuranceRemarksPolicy" field-name="insuranceRemarksPolicy" onchangeval={handleInputFieldChange} field-val={insurancePolicyData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+                
+                <template if:true={DeliveryChallanVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Delivery challan">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Delivery challan">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Delivery challan" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Delivery Date of Asset" data-id="DeliveryDateOfAsset" field-name="DeliveryDateOfAsset" onchangeval={handleInputFieldChange} field-val={deliveryChallanData.Delivery_Date_of_Asset__c} field-type="Date" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is customer signature available" data-id="IsCustomerSignatureAvailable" field-name="IsCustomerSignatureAvailable" onchangeval={handleInputFieldChange} field-val={deliveryChallanData.Is_customer_signature_available__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Asset details matching with Invoice" data-id="IsAssetDetailsMatching" field-name="IsAssetDetailsMatching" onchangeval={handleInputFieldChange} field-val={deliveryChallanData.Is_Asset_details_matching_with_Invoice__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Delivery Challan legible ?" data-id="isDeliveryChallanLegible" field-name="isDeliveryChallanLegible" onchangeval={handleInputFieldChange} field-val={deliveryChallanData.Is_Delivery_Challan_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="deliveryRemarks" field-name="deliveryRemarks" onchangeval={handleInputFieldChange} field-val={deliveryChallanData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+                
+                <template if:true={PaymentToCoBorrowerDealerDSAVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Customer declaration letter for payment to Co-borrower/Dealer/ DSA">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="payment to Co-borrower/Dealer/ DSA">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Customer declaration letter for payment to Co-borrower/Dealer/ DSA" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is customer declaration letter legible ?" data-id="IsCustomerDeclarationLetterLegible" field-name="IsCustomerDeclarationLetterLegible" onchangeval={handleInputFieldChange} field-val={paymentToCoborrowerDealerData.Is_customer_declaration_letter_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="payementToCoBoRemarks" field-name="payementToCoBoRemarks" onchangeval={handleInputFieldChange} field-val={paymentToCoborrowerDealerData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+                
+                <template if:true={ExistingLoanSettlementVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Existing loan settlement copy for refinance">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="loan settlement">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Existing loan settlement copy for refinance" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is the settlement date correct" data-id="IsTheSettlementDateCorrect" field-name="IsTheSettlementDateCorrect" onchangeval={handleInputFieldChange} field-val={existingLoanSettlementData.Delivery_Date_of_Asset__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedloanSettlement" field-name="areEnteredDetailsAsPerDocUploadedloanSettlement" onchangeval={handleInputFieldChange} field-val={existingLoanSettlementData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is existing loan settlement copy legible ?" data-id="IsExistingLoanSettlementCopyLegible" field-name="IsExistingLoanSettlementCopyLegible" onchangeval={handleInputFieldChange} field-val={existingLoanSettlementData.Is_existing_loan_settlement_copy_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="ExistingLoanSettlementRemarks" field-name="ExistingLoanSettlementRemarks" onchangeval={handleInputFieldChange} field-val={existingLoanSettlementData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={AffidavitVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Affidavit">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Affidavit">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Affidavit" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedAffidavit" field-name="areEnteredDetailsAsPerDocUploadedAffidavit" onchangeval={handleInputFieldChange} field-val={affidavitData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Affidavit legible ?" data-id="IsAffidavitLegible" field-name="IsAffidavitLegible" onchangeval={handleInputFieldChange} field-val={affidavitData.Is_Affidavit_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="AffidavitRemarks" field-name="AffidavitRemarks" onchangeval={handleInputFieldChange} field-val={affidavitData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={EnachVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Enach">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Enach">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Enach" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is ENACH form completely filled" data-id="isEnachFormCompletelyFilled" field-name="isEnachFormCompletelyFilled" onchangeval={handleInputFieldChange} field-val={enachData.Is_ENACH_form_completely_filled__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is ENACH form signed by customer" data-id="isEnachFormSignedByCustomer" field-name="isEnachFormSignedByCustomer" onchangeval={handleInputFieldChange} field-val={enachData.Is_ENACH_form_signed_by_customer__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedEnach" field-name="areEnteredDetailsAsPerDocUploadedEnach" onchangeval={handleInputFieldChange} field-val={enachData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is ENACH Form legible ?" data-id="IsEnachFormLegible" field-name="IsEnachFormLegible" onchangeval={handleInputFieldChange} field-val={enachData.Is_ENACH_Form_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="EnachRemarks" field-name="EnachRemarks" onchangeval={handleInputFieldChange} field-val={enachData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                       
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={DebitAuthorisationVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Debit Authorisation letter for closing existing loan">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Debit Authorisation">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Debit Authorisation letter for closing existing loan" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Debit Authorisation letter completely filled" data-id="isDebitAuthorisationCompletelyFilled" field-name="isDebitAuthorisationCompletelyFilled" onchangeval={handleInputFieldChange} field-val={DebitAuthData.Is_Debit_Authorisation_letter_completely__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Debit Authorisation letter signed by customer" data-id="isDebitAuthorisationSignedByCustomer" field-name="isDebitAuthorisationSignedByCustomer" onchangeval={handleInputFieldChange} field-val={DebitAuthData.Is_Debit_Authorisation_letter_signed_by__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedDebit" field-name="areEnteredDetailsAsPerDocUploadedDebit" onchangeval={handleInputFieldChange} field-val={DebitAuthData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Debit Authorisation letter legible ?" data-id="IsDebitAuthorisationLegible" field-name="IsDebitAuthorisationLegible" onchangeval={handleInputFieldChange} field-val={DebitAuthData.Is_Debit_Authorisation_letter_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="DebitAuthRemarks" field-name="DebitAuthRemarks" onchangeval={handleInputFieldChange} field-val={DebitAuthData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={DSALetterVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="DSA letter">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="DSA letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="DSA letter" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedDSA" field-name="areEnteredDetailsAsPerDocUploadedDSA" onchangeval={handleInputFieldChange} field-val={DSALetterData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is DSA Letter legible ?" data-id="IsDSALetterLegible" field-name="IsDSALetterLegible" onchangeval={handleInputFieldChange} field-val={DSALetterData.Is_DSA_Letter_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="DSALetterRemarks" field-name="DSALetterRemarks" onchangeval={handleInputFieldChange} field-val={DSALetterData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={DealerLetterVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Dealer Letter">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Dealer Letter">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Dealer Letter" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedDealer" field-name="areEnteredDetailsAsPerDocUploadedDealer" onchangeval={handleInputFieldChange} field-val={DealerLetterData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Dealer Letter legible ?" data-id="IsDealerLetterLegible" field-name="IsDealerLetterLegible" onchangeval={handleInputFieldChange} field-val={DealerLetterData.Is_Dealer_Letter_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="DealerLetterRemarks" field-name="DealerLetterRemarks" onchangeval={handleInputFieldChange} field-val={DealerLetterData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={SDPCACHFormVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="SDPC / ACH Form">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="SDPC / ACH Form">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="SDPC / ACH Form" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        
+                    </lightning-accordion-section>
+                </template>
+                
+                <template if:true={TalathiSarpanchCertificateVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Talathi/Sarpanch Certificate">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Talathi/Sarpanch Certificate">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Talathi/Sarpanch Certificate" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedTalathi" field-name="areEnteredDetailsAsPerDocUploadedTalathi" onchangeval={handleInputFieldChange} field-val={TalathiSarpanchData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Talathi/Sarpanch certificate legible?" data-id="IsTalathiCertLegible" field-name="IsTalathiCertLegible" onchangeval={handleInputFieldChange} field-val={TalathiSarpanchData.Is_Talathi_Sarpanch_certificate_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="talathiSarpanchRemarks" data-id="talathiSarpanchRemarks" field-name="talathiSarpanchRemarks" onchangeval={handleInputFieldChange} field-val={TalathiSarpanchData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={VahanExtractVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Vahan Extract">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Vahan Extract">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Vahan Extract" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="RC in the Name of?" data-id="rcInTheNameOf" field-name="rcInTheNameOf" onchangeval={handleInputFieldChange} field-val={vahanData.RC_Owner__c} field-type="text" is-picklist="false" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Hypothecation in name of?" data-id="hypothecationInNameOfVahan" field-name="hypothecationInNameOfVahan" onchangeval={handleInputFieldChange} field-val={vahanData.Hypothecation_in_name_of__c} field-options={hypothecationName} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedVahan" field-name="areEnteredDetailsAsPerDocUploadedVahan" onchangeval={handleInputFieldChange} field-val={vahanData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Vahan legible ?" data-id="IsVahanLegible" field-name="IsVahanLegible" onchangeval={handleInputFieldChange} field-val={vahanData.Is_Vahan_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="vahanRemarks" field-name="vahanRemarks" onchangeval={handleInputFieldChange} field-val={vahanData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+                <template if:true={FundUtilisationVal}>
+                    <lightning-accordion-section class="slds-accordion__summary-heading headingtext" label="Fund Utilisation letter for Refinance">
+                        <template if:true={stageCheck}>
+                            <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleUploadDocument} disabled={disableCaptureChassisNumber} value="Fund Utilisation letter for Refinance">
+                                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                            </div>
+                        </template>
+                        <template if:false={stageCheck}>
+                            <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" name="Fund Utilisation letter for Refinance" title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}></lightning-button-icon>
+                        </template>
+                        <div class="slds-form slds-grid slds-wrap">
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Fund utilisation letter completely filled" data-id="fundUtilLetterFilledCompletely" field-name="fundUtilLetterFilledCompletely" onchangeval={handleInputFieldChange} field-val={FundUtilisationData.Is_Fund_utilisation_letter_filled__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Fund utilisation letter signed by customer" data-id="fundUtilLetterSignedByCust" field-name="fundUtilLetterSignedByCust" onchangeval={handleInputFieldChange} field-val={FundUtilisationData.Is_Fund_utilisation_signed_by_customer__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={isNotPreDisbursement}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Are entered details as per document uploaded?" data-id="areEnteredDetailsAsPerDocUploadedFun" field-name="areEnteredDetailsAsPerDocUploadedFun" onchangeval={handleInputFieldChange} field-val={FundUtilisationData.Are_entered_details_asper_doc_uploaded__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Is Fund utilisation letter legible ?" data-id="IsFundLegible" field-name="IsFundLegible" onchangeval={handleInputFieldChange} field-val={FundUtilisationData.Is_Fund_utilisation_letter_legible__c} field-options={optionsYesOrNo} is-picklist="true" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                            <c-i-n-d_-l-w-c_-input-field-for-additional-documents field-label="Remarks" data-id="fundRemarks" field-name="fundRemarks" onchangeval={handleInputFieldChange} field-val={FundUtilisationData.Remarks__c} field-type="text" is-picklist="false" field-disabled={disabledFields}></c-i-n-d_-l-w-c_-input-field-for-additional-documents>
+                        </div>
+                        
+                    </lightning-accordion-section>
+                </template>
+
+
+
+            </lightning-accordion>
+            <template if:true={uploadViewDocFlag}>
+                <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue} currentloanapplicationid={recordId} currentapplicantid={applicantId} uploadviewdocpopup={uploadViewDocFlag} doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentRecordId} onfileuploadstatus={docUploadSuccessfully}>
+                </c-l-W-C_-L-O-S_-Upload-And-View-Document>
+            </template>
+            <template if:true={uploadAdditionalDocFlag}>
+                <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValue} currentloanapplicationid={recordId} currentapplicantid={applicantid} uploadviewdocpopup={uploadAdditionalDocFlag} createdoconparentbutton="false" title="Upload Additional Document" doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType} documentrecordidfromparent={documentRecordId} currentvehiclerecordid={vehiclerecordid} onfileuploadstatus={docUploadSuccessfully} additionaldocument="true" iscommunityuser = {isCommunityUser}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+            </template>
+        </lightning-layout>
+    </template>
+    <template if:true={isBEVisible}>
+        <div class="slds-m-bottom_medium  slds-m-top_small slds-large-size_12-of-12 slds-clearfix"> <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleSubmit} disabled={isSubmitDisabled}> Submit </button></div>
+    </template>
+    <template if:true={isPreview}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="background-color: grey;">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                        <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+                        <footer class="slds-modal__footer">
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+    <template if:true={isLoadingSpinner}><div class="spinner"><lightning-spinner alternative-text="Loading" size="large"></lightning-spinner> </div> </template>
+</template>

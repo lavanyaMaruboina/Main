@@ -1,0 +1,29 @@
+<template>
+    <!--<lightning-tabset active-tab-value={activeTab}>
+        <template for:each={tabList} for:item="tab">
+            <lightning-tab label={tab} value={tab} key={tab} onactive={handleActive}>
+                <template if:true={fieldInvestigation}>
+                    <div class="slds-m-left_small slds-m-right_small">
+                        <c-l-w-c-_-office-fi isborrowerincomeavailable={borroweIncomeSource} recordid={recordId} currenttab={tab}
+                            onchangetocoborrower={toCoborrower} onborrowerincomesource={handleBorrowerIncomeSource} is-captur-image-success={isCapturImageSuccess}
+                            onaddscreendata={switchScreen}></c-l-w-c-_-office-fi>
+                    </div>
+               </template>
+            </lightning-tab>
+
+        </template>
+    </lightning-tabset> -->
+
+  
+        <lightning-tabset>
+            <lightning-tab label="Borrower">
+                <c-lwc_-office-fi></c-lwc_-office-fi>
+            </lightning-tab>
+           <!---- <template if:true={isCoBorrowerPresent}> -->
+            <lightning-tab label="Co-Borrower" >
+                <c-lwc_-office-fi></c-lwc_-office-fi>
+            </lightning-tab>
+      <!---- </template> -->
+        </lightning-tabset>
+        
+</template>

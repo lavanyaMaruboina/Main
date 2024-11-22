@@ -1,0 +1,259 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+    <lightning-card>
+        <div>
+            <lightning-accordion allow-multiple-sections-open active-section-name="A" >
+                <lightning-accordion-section name="A" label="Details">
+                    <div class="slds-grid slds-wrap slds-gutters_large">     
+                        <template for:each={filterList} for:item="filterData" for:index="index">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-p-horizontal_xx-large slds-p-vertical_x-small" key={filterData}>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3 slds-p-top_x-small" style="overflow-wrap: break-word;">
+                                        <b>{filterData.label}:</b>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3 slds-p-top_x-small" style="overflow-wrap: break-word;">
+                                        {filterData.value}
+                                    </div>
+                                    <template if:true={filterData.isPicklist}>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <lightning-combobox
+                                            data-name={filterData.name}
+                                            data-index={index}
+                                            name={filterData.name}
+                                            value={filterData.verification}
+                                            placeholder="Remarks"
+                                            options={picklistOptions}
+                                            onchange={handleChange} variant="label-hidden" required></lightning-combobox>
+                                        </div>
+                                    </template>
+                                    <template if:true={filterData.isText}>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <lightning-input data-name={filterData.name} data-index={index} name={filterData.name} type="text" value={filterData.verification}
+                                            onchange={handleChange} variant="label-hidden" required>
+                                            </lightning-input>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="B" label="Asset Details">
+                    <template if:true = {isAssetsAvailable}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                                aria-labelledby="element-with-table-label other-element-with-table-label">
+                                <thead>
+                                <tr>
+                                    <template for:each={assetTableHead} for:item="asset">
+                                    <th key={asset}>{asset}</th>
+                                    </template>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={assetDetailsLst} for:item="asset">
+                                        <tr key={asset}>
+                                            <td>
+                                                {asset.make}
+                                            </td>
+                                            <td>
+                                                {asset.model}
+                                            </td>
+                                            <td>
+                                                {asset.invoicePrice}
+                                            </td>
+                                            <td>
+                                                {asset.loanAmount}
+                                            </td>
+                                            <td>
+                                                {asset.tenure}
+                                            </td>
+                                            <td>
+                                                {asset.crmIRR}
+                                            </td>
+                                            <td>
+                                                {asset.installmentFrequency}
+                                            </td>
+                                            <td>
+                                                {asset.emiAmount}
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                                </table>
+                            </div>
+                            <br/><br/>
+                                <div class="slds-col slds-medium-size_2-of-12 ">
+                                    <lightning-combobox
+                                    data-name="Asset_Details"
+                                    name="Asset_Details"
+                                    options={picklistOptions}
+                                    onchange={handleChange} variant="label-hidden" value={Asset_Details_Verification_Value} required></lightning-combobox>
+                                </div>
+                        </div>
+                    </template>
+                    <template if:false = {isAssetsAvailable}>
+                        {noAssetDetailsMessage}
+                    </template>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="C" label="Co-Applicant Details">
+                    <template if:true = {isCoApplicantAvailable}>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                                aria-labelledby="element-with-table-label other-element-with-table-label">
+                                <thead>
+                                <tr>
+                                    <template for:each={applicantTableHead} for:item="applicant">
+                                    <th key={applicant}>{applicant}</th>
+                                    </template>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={applicantLst} for:item="applicant">
+                                        <tr key={applicant}>
+                                            <td>
+                                                {applicant.name}
+                                            </td>
+                                            <td>
+                                                {applicant.type}
+                                            </td>
+                                            <td>
+                                                {applicant.relation}
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                                </table>
+                            </div>
+                            <br/><br/>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                                    <lightning-combobox
+                                    data-name="CoApplicant_Details"
+                                    name="CoApplicant_Details"
+                                    options={picklistOptions}
+                                    onchange={handleChange} variant="label-hidden" value={CoApplicant_Verification_Value} required></lightning-combobox>
+                                </div>
+                        </div>
+                    </template>
+                    <template if:false={isCoApplicantAvailable}>
+                        <div>
+                            {noCoApplicantMessage}
+                        </div>
+                    </template>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="D" label="Current Residential Address">
+                    <div class="slds-grid slds-wrap slds-gutters">     
+                        <template for:each={currentFilterList} for:item="filterData" for:index="index">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"  key={filterData}>
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            {filterData.label}
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            {filterData.value}
+                                        </div>
+                                    </div>
+                                </div>
+                        </template>
+                        <br/><br/>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                            <lightning-combobox
+                            data-name="Current_Address"
+                            name="Current_Address"
+                            options={picklistOptions}
+                            onchange={handleChange} variant="label-hidden" value={Customer_Current_Address_Verification_Value} required></lightning-combobox>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="E" label="permanent Residential Address">
+                    <div class="slds-grid slds-wrap slds-gutters">     
+                        <template for:each={permanentFilterList} for:item="filterData" for:index="index">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"  key={filterData}>
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        {filterData.label}
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        {filterData.value}
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <br/><br/>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                            <lightning-combobox
+                            data-name="permanent_Address"
+                            name="Permanent_Address"
+                            options={picklistOptions}
+                            onchange={handleChange} variant="label-hidden" value={Customer_Permanent_Address_Verification_Value} required></lightning-combobox>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="F" label="Remarks">
+                    <div class="slds-grid slds-wrap slds-gutters_large slds-p-around_small"> 
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    TVR Observation
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input data-name="TVR_Observation" name="TVR_Observation" type="text"
+                                            onchange={handleChange} variant="label-hidden" value={TVR_Observation_Value} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    TVR Status
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-combobox
+                                    data-name="TVR_Status"
+                                    name="TVR_Status"
+                                    options={tvrStatusLst}
+                                    onchange={handleChange} variant="label-hidden" value={TVR_Status_Value} required></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    Margin Money Paid
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input data-name="Margin_Money_Paid" name="Margin_Money_Paid" type="text"
+                                            onchange={handleChange} variant="label-hidden" value={Margin_Money_Paid_Verification_Value} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    Margin Money Paid by
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input data-name="Margin_Money_Paid_by" name="Margin_Money_Paid_by" type="text"
+                                            onchange={handleChange} variant="label-hidden" value={Margin_Money_Paid_by_Verification_Value} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                </lightning-accordion-section>
+            </lightning-accordion>
+            <div class="slds-grid slds-gutters slds-grid_align-center">
+                <div class="slds-col">
+                    <lightning-button onclick={handleSubmit} variant="brand" label="Submit"
+                    alternative-text="Submit" class=" slds-float_right indusPrimaryVehicleButton slds-action-overflow_touch__body slds-align_absolute-center">
+                </lightning-button>
+                </div>
+            </div>
+            <br/><br/><br/>
+        </div>
+    </lightning-card>
+</template>

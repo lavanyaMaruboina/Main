@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Call_the_API_and_send_the_Reverse_Status</name>
+        <label>Call the API and send the Reverse Status</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>IntegrationEngine</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>LoanId</name>
+            <value>
+                <elementReference>$Record.Loan_Application_ID__r.Lead_number__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>status</name>
+            <value>
+                <stringValue>Loan Agreement Signed</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>IntegrationEngine</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>Lead_Source</name>
+        <label>Lead Source</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Lead_Source_OLA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Loan_Application_ID__r.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OLA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Submitted_Flag__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_the_API_and_send_the_Reverse_Status</targetReference>
+            </connector>
+            <label>Is Lead Source OLA</label>
+        </rules>
+    </decisions>
+    <description>OLA UAT Bugfix.</description>
+    <environments>Default</environments>
+    <interviewLabel>Ola Agreement Signed Reverse Status Call {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Ola Agreement Signed Reverse Status Call</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Lead_Source</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Screen__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Loan Agreement</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Module_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Post Sanction Checks and Documentation</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Module__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Post Sanction Checks and Documentation</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Submitted_Flag__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Loan_Application_Transaction_History__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

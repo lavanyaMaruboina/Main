@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DocUploaded_if_Current_KYC_Addre_Diff__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Upload document if Current Address and KYC is marked as different on FI screen</description>
+    <label>DocUploaded_if_Current&amp;KYC_Addre_Diff</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

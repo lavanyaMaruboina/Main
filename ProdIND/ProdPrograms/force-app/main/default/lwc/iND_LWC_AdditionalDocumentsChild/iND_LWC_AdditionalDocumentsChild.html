@@ -1,0 +1,28 @@
+<template>
+    <!--CISP-3726-->
+     <div class="slds-form slds-grid slds-wrap">
+         <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+             <div class="slds-form-element  slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-2">
+                     <label class="slds-form-element__label slds-var-m-right_medium">User has not provided any documents in additional documents module. Are you good to proceed ?</label>
+                 </div>
+                 <div class="slds-col slds-size_1-of-2" style="width:100px">
+                     <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} data-id="noDoc" name="Not Provided Documents"   label="User has not provided any documents in additional documents module. Are you good to proceed ?" variant="label-hidden" options={docOptions} value={notProvidedDoc} disabled={notProvidedocdisabled} required></lightning-combobox>
+                 </div>
+             </div>
+         </div>
+         <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+             <div class="slds-form-element  slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-2">
+                     <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                 </div>
+                 <div class="slds-col slds-size_1-of-2" style="width:100px">
+                     <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange} data-id="remark" name="IND_Remark"  label="Remarks" variant="label-hidden" value={remark} type="text" disabled={remarkdisabled} required></lightning-input>
+                 </div>
+             </div>
+         </div>
+     </div> 
+     <div class="slds-m-bottom_medium  slds-m-top_small slds-large-size_12-of-12 slds-clearfix"> <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style="width:300px" onclick={handleSubmit} disabled={isSubmitDisabled}> Submit </button></div>
+ 
+ <!--CISP-3726  iND_LWC_AdditionalDocumentsChild-->  
+ </template>

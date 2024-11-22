@@ -1,0 +1,200 @@
+<template>
+    <lightning-accordion-section name="A" label="VEHICLE DETAILS">
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Manufacturer Year, Month</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="manufacturerYearMonth" data-id={index}
+                            value={eachApplicant.manufacturerYearMonth} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">RC/ Last Owner name</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="lastOwnerName" data-id={index}
+                            value={eachApplicant.lastOwnerName} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Number of ownerships</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="numberOfOwnerships" data-id={index}
+                            value={eachApplicant.numberOfOwnerships} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Engine number</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="engineNumber" data-id={index}
+                            value={eachApplicant.engineNumber} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Chassis number</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="chassisNumber" data-id={index}
+                            value={eachApplicant.chassisNumber} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Lien in favor of</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="lienInFavorOf" data-id={index}
+                            value={eachApplicant.lienInFavorOf} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">RC retention applicable</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">                        
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="rcRetentionApplicable" data-id={index}
+                            value={eachApplicant.rcRetentionApplicable} read-only>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+</lightning-accordion-section>
+    <lightning-accordion-section name="B" label="VEHICLE INSURANCE">
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Insurance Number</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="insuranceNumber" data-id={index}
+                            value={eachApplicant.insuranceNumber} read-only>
+                    </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Insurer Name</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="insurerName" data-id={index}
+                            value={eachApplicant.insurerName} read-only>
+                    </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Insurance Type</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                    name="insuranceType" data-id={index}
+                        value={eachApplicant.insuranceType} read-only>
+                </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Insurance declared value</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="insuranceDeclaredValue" data-id={index}
+                            value={eachApplicant.insuranceDeclaredValue} read-only>
+                    </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Ins Issuance Date</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                    name="insIssuanceDate" data-id={index}
+                        value={eachApplicant.insIssuanceDate} read-only>
+                </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Ins. Expiry date</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="insExpiryDate" data-id={index}
+                            value={eachApplicant.insExpiryDate} read-only>
+                    </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Insurance expiring within 60 days</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="insExpiringWhithin60Days" data-id={index} type="checkbox"
+                        checked={eachApplicant.insExpiringWhithin60Days} disabled>
+                    </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </lightning-accordion-section>
+</template>

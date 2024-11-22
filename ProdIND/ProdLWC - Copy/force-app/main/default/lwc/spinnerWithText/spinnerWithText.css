@@ -1,0 +1,32 @@
+.spinner-small::after { 
+    position: absolute;
+    content: attr(data-text);
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 1em);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.3em;
+    color: #5A5A5A;
+}
+
+.spinner-medium::after {
+    position: absolute;
+    content: attr(data-text);
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 2em);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.3em;
+    color: #5A5A5A;
+}
+
+.spinner-large::after {
+    position: absolute;
+    content: attr(data-text);
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.3em;
+    color: #5A5A5A;
+}

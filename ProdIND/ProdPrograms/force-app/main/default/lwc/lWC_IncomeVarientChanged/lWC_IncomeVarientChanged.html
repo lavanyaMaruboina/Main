@@ -1,0 +1,195 @@
+<template>
+    <lightning-accordion class="example-accordion" allow-multiple-sections-open active-section-name={activeSections}>
+        <lightning-accordion-section name="Variant Selected" label={assetLabel}>
+   <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Vehicle registration number<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input variant="label-hidden"
+                        value={VehicleRegistrationNumber} disabled=True>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Vehicle type<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" data-id="insDecVal"
+                            value={VehicleType} formatter="currency"
+                            disabled=True>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label">Vehicle sub category code<abbr title="required"
+                        class="slds-required">*</abbr></label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input variant="label-hidden" data-id="insDecVal"
+                        value={VehicleSubCategory} disabled=True>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="slds-form slds-grid slds-wrap">
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label">Parent deal number		
+                    <abbr title="required"
+                        class="slds-required">*</abbr></label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-input variant="label-hidden" data-id="insDecVal"
+                    value={ParentDealnumber} disabled=True>
+                </lightning-input>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label">Make<abbr title="required"
+                        class="slds-required">*</abbr></label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input variant="label-hidden" data-id="insDecVal"
+                        value={Make} formatter="currency"
+                        disabled=True>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Model<abbr title="required"
+                    class="slds-required">*</abbr></label>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-input variant="label-hidden" data-id="insDecVal"
+                    value={Model} disabled=True>
+                </lightning-input>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="slds-form slds-grid slds-wrap">
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Variant<abbr title="required"
+                    class="slds-required">*</abbr></label>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <lightning-input variant="label-hidden" data-id="insDecVal"
+                value={Variant} disabled=True>
+            </lightning-input>
+        </div>
+    </div>
+</div>
+
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Valuation Price<abbr title="required"
+                    class="slds-required">*</abbr></label>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-input variant="label-hidden" data-id="insDecVal"
+                    value={Valuationprice} formatter="currency"
+                    disabled=True>
+                </lightning-input>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+<div class="slds-form-element slds-grid slds-wrap">
+    <div class="slds-col slds-size_1-of-3">
+        <label class="slds-form-element__label">Insurance declared value<abbr title="required"
+                class="slds-required">*</abbr></label>
+    </div>
+    <div class="slds-col slds-size_2-of-3">
+        <div class="slds-col slds-size_2-of-3">
+            <lightning-input variant="label-hidden" data-id="insDecVal"
+                value={Insurancedeclaredvalue} disabled=True>
+            </lightning-input>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="slds-form slds-grid slds-wrap">
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+            <label if:false={isTractorLead} class="slds-form-element__label">Grid value<abbr title="required"
+                class="slds-required">*</abbr></label>  <!--Added if:false to show Grid Value for non tractor leads : SFTRAC-92-->
+            <label if:true={isUsedTractorLead} class="slds-form-element__label">RSV Value<abbr title="required"
+                    class="slds-required">*</abbr></label>  <!--Added if:true to show RSV Value for tractor leads : SFTRAC-92-->
+            <label if:true={isNewTractorLead} class="slds-form-element__label">DLP Value<abbr title="required"
+                    class="slds-required">*</abbr></label>  <!--Added if:true to show DLP Value for tractor leads : SFTRAC-92-->
+            
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <lightning-input variant="label-hidden" data-id="insDecVal"
+                value={Gridvalue} disabled=True>
+            </lightning-input>
+        </div>
+    </div>
+</div>
+
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Selling Price<abbr title="required"
+                    class="slds-required">*</abbr></label>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-input variant="label-hidden" data-id="insDecVal"
+                    value={SellingPrice} formatter="currency"
+                    disabled=True>
+                </lightning-input>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+<div class="slds-form-element slds-grid slds-wrap">
+</div>
+</div>
+</div>
+</lightning-accordion-section>
+</lightning-accordion>
+</template>

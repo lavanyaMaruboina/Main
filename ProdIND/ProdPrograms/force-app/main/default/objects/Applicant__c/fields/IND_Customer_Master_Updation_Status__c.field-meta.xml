@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IND_Customer_Master_Updation_Status__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>To check if Customer Master Updation API is success or Failure</description>
+    <label>Customer Master Updation Status</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

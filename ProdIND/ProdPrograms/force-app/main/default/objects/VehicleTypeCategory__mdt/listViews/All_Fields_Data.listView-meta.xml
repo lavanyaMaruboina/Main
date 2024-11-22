@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Fields_Data</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>NamespacePrefix</columns>
+    <columns>vehicleCategoryCode__c</columns>
+    <columns>Product_Code__c</columns>
+    <columns>vehicleType__c</columns>
+    <columns>productType__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Fields Data</label>
+</ListView>

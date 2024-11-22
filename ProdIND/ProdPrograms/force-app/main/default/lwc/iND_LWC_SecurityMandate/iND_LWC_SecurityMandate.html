@@ -1,0 +1,292 @@
+<template>
+    <lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} class="slds-size_12-of-12">
+    <lightning-accordion-section class= "slds-accordion__summary-heading headingtext" label=" Security Mandate">
+    <div class="slds-form slds-grid slds-wrap">
+    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element  slds-grid slds-wrap">
+    <div class="slds-col slds-size_2-of-4">
+    <label class="slds-form-element__label ">No. of cheques to be collected</label>
+    </div>
+    <div class="slds-col slds-size_1-of-3" style="width:120px">
+    <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+    name="noofChequesField" value={chequeCount} label="No. of cheques to be collected" variant="label-hidden"
+    type="number" data-id="noofChequesId" disabled style="text-align: center;">
+    </lightning-input>
+    <!--<lightning-formatted-text class="slds-box slds-box_x-small slds-form-element__control" value={noofCheques}></lightning-formatted-text>-->
+    </div>
+    </div>
+    </div>
+
+    <template lwc:if={isProductTypeTF}>
+        <div
+            class="slds-p-around_small slds-size_1-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning-input type="checkbox" data-id="SecurityACH" label="Security ACH"
+                        class="allCheque" onchange={handleCheckbox} disabled={isCheckBox}
+                        checked={isSecurityACH}></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="slds-p-around_small slds-size_1-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning-input type="checkbox" data-id="BankerSignatureVerification"
+                        label="Banker signature verification" class="allCheque"
+                        onchange={handleCheckbox} disabled={isCheckBox}
+                        checked={isBankersignatureverification}></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="slds-p-around_small slds-size_1-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning-input type="checkbox" data-id="AccountStatement"
+                        label="Account statement" class="allCheque" onchange={handleCheckbox}
+                        disabled={isCheckBox} checked={isAccountstatement}></lightning-input>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    
+    <div class="slds-p-around_small slds-size_1-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_12-of-12">
+            <lightning-input type="checkbox" label="I acknowledge that all cheques are from the same bank" class="allCheque" onchange={handleChangeCheckbox} disabled={isCheckBox} checked={isChequeSameBank}></lightning-input>
+        </div>
+    </div>
+    </div>
+    <div class="slds-p-around_small slds-size_1-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+    <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_12-of-12">
+            <b><label class="slds-form-element__label ">Number of SPDC to be allowed : {chequeBasedOnProduct}</label></b> 
+        </div>
+    </div>
+    </div>
+    </div>
+    <table class="slds-table slds-table_cell-buffer slds-no-row-hover">
+    <thead>
+    <tr class="slds-line-height_reset">
+        <th class="" scope="col" style="text-align: center;">
+            <div class="slds-truncate" title="Cheque Sequence">Cheque Sequence</div>
+        </th>
+        <th class="" scope="col" style="text-align: center;">
+            <div class="slds-truncate" title="Cheque Number">Cheque Number</div>
+        </th>
+        <template if:false={stageCheck}> 
+        <th class="" scope="col" style="text-align: center;">
+            <div class="slds-truncate" title="Cheque Image">Cheque Image</div>
+        </th>
+        </template>
+        <th class="" scope="col" style="text-align: center;">
+            <div class="slds-truncate" title="Preview Cheque">Preview Cheque</div>
+        </th>
+        <th class="" scope="col" style="text-align: center;">
+            <div class="slds-truncate" title="Cheque Legible">Cheque Legible</div>
+        </th>
+        <th class="" scope="col" style="text-align: center;">
+            <div class="slds-truncate" title="Remarks">Remarks</div>
+        </th>
+        <th class="" scope="col" style="text-align: center;">
+            
+            <div class="slds-truncate" title="Add Row"> 
+                <template if:false={stageCheck}>
+                <button class=" slds-button slds-button_brand addBtn1" onclick={addRow} disabled={isReadOnly}>
+                Add
+            </button>
+            </template>
+        </div>
+            
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <template for:each={chequeList} for:item="item" for:index="index">
+        <tr key={item.id} class="slds-hint-parent">
+            <td data-label="ChequeSequence" style="text-align: center;padding-top: 2rem">
+                <div class="slds-truncate">{item.chequeSeq}</div>
+            </td>
+    
+            <template if:false={stageCheck}> 
+            <td data-label="ChequeNumber" style="text-align: center;">
+                <div class="slds-truncate"><lightning-input  max-length="16" label="" name="chequeNumber" value={item.chequeNo} id={index} class="validate chqNO" data-target-id={index} onchange={handleInputFieldChange} disabled={isReadOnly}> 
+                </lightning-input></div>
+            </td>
+            </template>
+            <template if:true={stageCheck}> 
+                <td data-label="ChequeNumber" style="text-align: center;">
+                    <div class="slds-truncate"><lightning-input  label="" name="chequeNumber" value={item.chequeNo} id={item.id} class="validate chqNO" data-target-id={item.chequeSeq} onchange={handleChequeNoChange} disabled> 
+                    </lightning-input></div>
+                </td>
+                </template>
+                <template if:false={stageCheck}>
+            <td data-label="ChequeDocument" style="text-align: center;">
+                
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center slds-m-top_medium" 
+            onclick={handleUploadViewAndDelete} data-target-id={index} value={item.chequeUnique} disabled={isReadOnly}>
+            Upload Cheque<span if:true={iconButton}>&#x2714;</span></button>
+        </td>   
+        </template>
+            
+            <td data-label="ChequePreview" style="text-align: center;">
+                <lightning-button-icon icon-name="utility:preview" alternative-text="Preview" value={item.chequePreview} data-target-id={index} title="Preview" class="slds-m-top_medium slds-align_absolute-center" size="small" onclick={handlePreview} ></lightning-button-icon>
+            </td>
+    
+            <template if:false={stageCheck}>
+            <td data-label="ChequeLegible" style="text-align: center;">
+    
+            
+            <lightning-input  label="" name="chequeLegible" class="validate" value={item.chequeLegible} data-target-id={index} disabled></lightning-input>
+        </td>
+        </template>  
+        <template if:true={stageCheck}>
+            <td data-label="ChequeLegible" style="text-align: center;">
+            <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+            label=""   value={item.chequeLegible} data-target-id={index} id={item.id} placeholder="-- Select --" 
+            name="chequeLegible"
+            options={docsChequeLegibleOptions} disabled={isReadOnly}> </lightning-combobox>
+        </td>    
+        </template> 
+        <template if:false={stageCheck}>
+            <td data-label="chequeRemarks" style="text-align: center;">
+                
+                <lightning-input  label="" name="Remarks"   class="validate" value={item.chequeRemarks} data-target-id={index} disabled></lightning-input>
+            </td>
+            </template>
+            <template if:true={stageCheck}>
+                <td data-label="chequeRemarks" style="text-align: center;">
+            <lightning-input  label="" name="chequeRemarks"   class="validate" value={item.chequeRemarks} data-target-id={index} onchange={handleInputFieldChange} disabled={isReadOnly}></lightning-input>
+        </td>
+        </template>
+    
+        <template if:false={stageCheck}>
+            <td data-label="Delete" style="text-align: center;">
+                
+                <lightning-button-icon data-target-id={index} value={item.docId} onclick={deleteRow} id={index} icon-name="utility:delete" alternative-text="Delete Row" title="Delete Row" class="slds-m-top_medium slds-align_absolute-center" size="small" disabled={isReadOnly}></lightning-button-icon>
+            </td>
+            </template>
+            
+        </tr>
+    </template>
+    </tbody>
+    </table>
+    
+    
+    
+    <div class="slds-form slds-grid slds-wrap">
+    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+    </div>
+    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-2" >
+                <label class="slds-form-element__label slds-var-m-right_medium">{approvalLabel}</label>
+            </div>
+            <div class="slds-col slds-size_1-of-2" >
+                <template if:false={stageCheck}>
+                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                name="Is sale DD legible ?" value={CVOSPDCDoc} label="Final decision by CVO" variant="label-hidden"
+                
+                type="text" data-id="engineNumberCapturedId" disabled></lightning-input>
+                </template>
+                <template if:true={stageCheck}>
+    
+                    <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                    name="Is sale DD legible ?" value={CVOSPDCDoc} label="Final decision by CVO" variant="label-hidden"
+                    placeholder="-- Select --" options={docsApprovedOptions}
+                    data-id="engineNumberCapturedId" disabled={isReadOnly}> </lightning-combobox>
+    
+                </template>
+    
+                </div>
+        </div>
+    </div>
+    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+    </div>
+    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+    </div>
+    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-2">
+                <label class="slds-form-element__label slds-var-m-right_medium">Approval/Rejection Remarks</label>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <template if:false={stageCheck}>
+                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                    name="chassisNumberFieldCapturedIntially" value={CVORemaeks} label="Remarks" variant="label-hidden"
+                    type="text" data-id="chassisNumberCapturedId" disabled></lightning-input>
+                    </template>
+                    <template if:true={stageCheck}>
+                        <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                            name="chassisNumberFieldCapturedIntially" value={CVORemaeks} label="Remarks" variant="label-hidden"
+                            type="text" data-id="chassisNumberCapturedId" disabled={isReadOnly}></lightning-input>
+                            </template>
+            </div>
+        </div>
+    </div>
+    <div class="slds-var-p-around_small slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+    </div>
+    </div>
+    
+    
+    
+    
+        <template if:true={isBEVisible}>
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center submitBtn1" style = "width:300px" 
+                onclick={handleSubmit} disabled={isSubmitDisabled}>
+                Submit <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+        </template>
+    </lightning-accordion-section>
+    
+    </lightning-accordion>
+    
+    <template if:true={uploadViewDocFlag}>
+    <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+    currentloanapplicationid={recordId} currentapplicantid={applicantId}
+    uploadviewdocpopup={uploadViewDocFlag} doctype={docType} showdocview={showDocView}
+    isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+    documentrecordidfromparent={documentRecordId} onfileuploadstatus={docUploadSuccessfully}>
+    </c-l-W-C_-L-O-S_-Upload-And-View-Document>
+    </template>
+    <template if:true={uploadChequeDocFlag}>
+    <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValue}
+        currentloanapplicationid={recordId} currentapplicantid={applicantid}
+        uploadviewdocpopup={uploadChequeDocFlag} createdoconparentbutton= "false" title="Upload Cheque"
+        doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+        docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+        documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehiclerecordid}
+        onfileuploadstatus={docUploadSuccessfully} ischequeclose = true
+            ></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+    </template>
+    </lightning-layout>
+    <template if:true={isPreview}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="background-color: grey;">
+                        <!-- modal header start -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                        <!-- modal body start -->
+                        <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+                        <!-- modal footer start-->
+                        <footer class="slds-modal__footer">
+                            <!--<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>-->
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </template>

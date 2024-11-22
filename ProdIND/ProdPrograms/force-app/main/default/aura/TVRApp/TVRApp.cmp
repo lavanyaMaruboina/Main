@@ -1,0 +1,17 @@
+<aura:component controller="IND_TeleverificationDetails" implements="flexipage:availableForRecordHome,force:lightningQuickAction,force:hasRecordId,force:hasSObjectName,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="recordId" type="String" access="global" />
+    <aura:attribute name="isTractor" type="Boolean" default="false" />
+    <aura:attribute name="isLoaded" type="Boolean" default="false" />
+    <aura:attribute name="TVRId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}"/>
+  
+    <aura:if isTrue="{!v.isLoaded}">
+      <aura:if isTrue="{!v.isTractor}">
+        <c:lWC_LOS_TF_TVR aura:id="lWCComponent3" recordId="{!v.TVRId}"></c:lWC_LOS_TF_TVR>
+        <aura:set attribute="else">
+          <c:iND_LWC_TVR aura:id="lWCComponent2" recordId="{!v.recordId}"></c:iND_LWC_TVR>
+        </aura:set>
+      </aura:if>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reject_Reason_for_Form_60</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(CMU_Accept_Reject__c , &apos;Reject&apos;), ISPICKVAL( Document_Type__c , &apos;Form 60&apos;), NOT(OR(INCLUDES( CMU_Rejection_Reason__c ,&apos;Signature missing&apos;),INCLUDES( CMU_Rejection_Reason__c ,&apos;Date of birth not available&apos;),INCLUDES( CMU_Rejection_Reason__c ,&apos;Form 60 not filled properly&apos;),INCLUDES( CMU_Rejection_Reason__c ,&apos;Form 60 image not clear&apos;),INCLUDES( CMU_Rejection_Reason__c ,&apos;Form 60 details not tallying with data points&apos;),INCLUDES(CMU_Rejection_Reason__c ,&apos;Blank form 60 attached&apos;),INCLUDES(CMU_Rejection_Reason__c ,&apos;PAN acknowledgement number incorrect / incomplete in Form 60&apos;))))</errorConditionFormula>
+    <errorMessage>Please select appropriate rejection reason for Form 60 document.</errorMessage>
+</ValidationRule>

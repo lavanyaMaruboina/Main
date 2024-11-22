@@ -1,0 +1,158 @@
+:host{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    --slds-c-input-color-border-focus: #832625;
+    --slds-c-input-shadow-focus: #832625 0 0 3px;
+}
+
+.cardTitle {
+    width: 100%;
+    font-size: 2em;
+}
+
+.ltngLayout{
+    border: 1px solid lightgray;
+}
+
+.page-header{
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    font-size: 2em;
+    color: #832625;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+}
+
+.dsa-checkboxgroup{
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.lli-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.ibl-btn-red{
+    background-color: #832625;
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-red_disabled{
+    background-color: #c9c7c5;
+    border-color: #c9c7c5;
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-red_secondary{
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #832625;
+    color: #832625;
+    font-weight: bold;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ibl-btn-ochre{
+    background-color: #F7A31E;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cblabel{
+    font-size: 0.75rem;
+    color: #5a5a5a;
+}
+.slds-modal__content{
+    height: 35%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    .dob-div{
+        display: flex;
+        justify-content: center;
+    }
+
+    .responsive-btn{
+        width: 50%;
+    }
+
+    .container-div{
+        width: 100%;
+        margin: auto;
+    }
+
+    .coborr-input{
+        width: 300px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    .dob-div{
+        display: flex;
+        padding-left: 55px;
+    }
+
+    .responsive-btn{
+        width: 12%;
+    }
+
+    .container-div{
+        width: 50%;
+        margin: auto;
+    }
+
+    .coborr-input{
+        width: 300px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+    .dob-div{
+        display: flex;
+        padding-left: 55px;
+    }
+
+    .responsive-btn{
+        width: 12%;
+    }
+
+    .container-div{
+        width: 50%;
+        margin: auto;
+    }
+
+    .coborr-input{
+        width: 300px;
+    }
+}

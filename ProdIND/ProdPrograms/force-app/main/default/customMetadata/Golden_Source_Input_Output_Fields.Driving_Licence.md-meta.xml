@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Driving Licence</label>
+    <protected>false</protected>
+    <values>
+        <field>Input_Fields__c</field>
+        <value xsi:type="xsd:string">kyc NO.;KYC DOB</value>
+    </values>
+    <values>
+        <field>KYC_Type__c</field>
+        <value xsi:type="xsd:string">Driving Licence</value>
+    </values>
+    <values>
+        <field>Output_Fields__c</field>
+        <value xsi:type="xsd:string">KYC name;KYC NO.;KYC DOB;KYC Address Line 1</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,178 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+    <lightning-layout>
+       <lightning-layout-item size="12">
+         <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+             onclick={handleAddRow} disabled={disableAddRows}>
+          </lightning-button>
+          <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Save"
+             onclick={saveRows} disabled={disableSave}>
+          </lightning-button>
+       </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+       <lightning-layout-item size="12" class={className}>
+           <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+             aria-labelledby="element-with-table-label other-element-with-table-label">
+             <thead>
+                <tr>
+                   <th>Sr No.</th>
+                   <th>Asset Type</th>
+                   <th>Asset Name</th>
+                   <th>Rc No.</th>
+                   <th>YOM </th>
+                   <th>Owner Name</th>
+                   <th>Hypothecation</th>
+                   <th>Financier Name</th>
+                   <th>Loan Amount</th>
+                   <th></th>
+                </tr>
+             </thead>
+             <tbody>
+                <template for:each={filterList} for:item="filterData" for:index="index">
+                  <template if:false = {filterData.isValid}>
+                   <tr key={filterData}>
+                     <td>
+                         {filterData.srNo}
+                      </td>
+                      <td>
+                        <template if:true={assettypeOption}>
+                           
+
+                            <template if:true={isDesktop}>
+                              <lightning-combobox name="Asset_Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                placeholder="" onchange={handleChange} value={filterData.assetType}
+                                options={assettypeOption} required>
+                            </lightning-combobox>
+                           </template>
+
+                          
+                           <template if:false={isDesktop}>
+                              <div class="slds-form-element">
+                                 <div class="slds-form-element__control">
+                                   <div class="slds-select_container">
+                                    <select name="Asset_Type__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.assetType} required>
+                                       <option value="">-None-</option>
+                                       <template for:each={assettypeOption} for:item="item">
+         
+                                          <option key={item.value} value={item.value}>{item.label}</option>
+         
+                                       </template>
+                                    </select>
+                                   </div>
+                                 </div>
+                               </div>
+                           </template>
+
+                        </template>
+                     </td>
+                      <td>
+                        <lightning-input type="text" name="Asset_Name__c" data-index={index} data-id={filterData.id}
+                        value={filterData.assetName} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="number" name="RC_no__c" data-index={index} data-id={filterData.id}
+                        value={filterData.rcNo} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="text" name="YOM__c" data-index={index} data-id={filterData.id}
+                        value={filterData.yom} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="text" name="Owner_Name__c" data-index={index} data-id={filterData.id}
+                        value={filterData.ownerName} variant="label-hidden" onchange={handleChange} required>
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <template if:true={hypothecationTypeOptions}>
+                           
+
+                            <template if:true={isDesktop}>
+                              <lightning-combobox name="Hypothecation__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                              placeholder="" onchange={handleChange} value={filterData.hypothecation}
+                              options={hypothecationTypeOptions} required>
+                          </lightning-combobox>
+                           </template>
+
+                          
+                           <template if:false={isDesktop}>
+                              <div class="slds-form-element">
+                                 <div class="slds-form-element__control">
+                                   <div class="slds-select_container">
+                                    <select name="Hypothecation__c" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.hypothecation} required>
+                                       <option value="">-None-</option>
+                                       <template for:each={hypothecationTypeOptions} for:item="item">
+         
+                                          <option key={item.value} value={item.value}>{item.label}</option>
+         
+                                       </template>
+                                    </select>
+                                   </div>
+                                 </div>
+                               </div>
+                           </template>
+                        </template>
+                      </td>
+                      <td>
+                        <lightning-input type="text" name="Financier_Name__c" data-index={index} data-id={filterData.id}
+                        value={filterData.financierName} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="number" name="Loan__c" data-index={index} data-id={filterData.id}
+                        value={filterData.loan} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                         <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                            icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                      </td>
+                   </tr>
+                   </template>
+                   <template if:true={filterData.isValid}>
+                     <tr key={filterData}>
+                        <td>
+                            {filterData.srNo}
+                         </td>
+                         <td>
+                            {filterData.assetType}
+                         </td>
+                         <td>
+                            {filterData.assetName}
+                         </td>
+                         <td>
+                            {filterData.rcNo}
+                         </td>
+                         <td>
+                            {filterData.yom}
+                         </td>
+                         <td>
+                            {filterData.ownerName}
+                         </td>
+                         <td>
+                            {filterData.hypothecation}
+                         </td>
+                         <td>
+                            {filterData.financierName}
+                         </td>
+                         <td>
+                            {filterData.loan}
+                         </td>
+                         <td>
+                             <template if:false = {filterData.isDatabase}>
+                              <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                 icon-name="action:delete" onclick={handleRemoveRow}>
+                              </lightning-button-icon>
+                              </template>  
+                         </td>
+                      </tr>
+                  </template>
+                </template>
+             </tbody>
+          </table>
+       </lightning-layout-item>
+    </lightning-layout>
+</template>

@@ -1,0 +1,17 @@
+.slds-accordion__summary-content, .accordion_Header{
+    background-color:#84181f;
+} 
+:host{
+   /* --sds-c-accordion-summary-color-background: #84181F;*/
+   --sds-c-accordion-heading-text-color: black;
+   --sds-c-accordion-heading-text-color-hover: #84181F;
+}
+
+.THIS .slds-accordion__summary-heading{
+    font-weight: bold;
+    color: white;
+}
+
+.THIS.slds-border {
+    border: 4px solid black;
+}

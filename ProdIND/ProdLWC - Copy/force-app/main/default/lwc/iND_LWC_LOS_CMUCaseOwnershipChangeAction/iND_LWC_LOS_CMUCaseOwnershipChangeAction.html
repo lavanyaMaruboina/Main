@@ -1,0 +1,15 @@
+<template>
+    <div>
+        <lightning-card title="Change Owner" icon-name="standard:user">
+            <div class="slds-grid slds-wrap slds-p-top_large" style="height:260px;">
+                <div class="slds-p-around_medium slds-m-left_large slds-col slds-size_6-of-12">
+                    <lightning-combobox name="userList" lebel='User' variant="label-hidden" placeholder="Select User" value={selectedUser} options={userOptionsList} onchange={handleUserChange}></lightning-combobox>
+                </div>
+            </div>
+
+            <p slot="footer">
+                <lightning-button variant="brand" label="Submit" title="Submit" class="slds-m-left_x-small" onclick={updateOwner}></lightning-button>
+            </p>
+        </lightning-card>
+    </div>
+</template>

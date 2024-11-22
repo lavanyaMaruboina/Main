@@ -1,0 +1,7 @@
+.slds-textarea{
+  border: none !important;
+  background-color: white !important;
+  padding: 0.5rem 0rem !important;
+  font-size: 1rem;
+  cursor: initial;
+}

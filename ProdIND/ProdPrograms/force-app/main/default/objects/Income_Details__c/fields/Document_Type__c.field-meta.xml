@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Type__c</fullName>
+    <label>Document Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ITR-V</fullName>
+                <default>false</default>
+                <label>ITR-V</label>
+            </value>
+            <value>
+                <fullName>ITR-Forms</fullName>
+                <default>false</default>
+                <label>ITR-Forms</label>
+            </value>
+            <value>
+                <fullName>Form26As</fullName>
+                <default>false</default>
+                <label>Form26As</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

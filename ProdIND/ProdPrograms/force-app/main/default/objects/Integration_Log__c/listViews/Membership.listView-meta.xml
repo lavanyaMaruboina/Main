@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Membership</fullName>
+    <columns>NAME</columns>
+    <columns>Service_Name__c</columns>
+    <columns>Encrypted_request__c</columns>
+    <columns>Original_request__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Encrypted_response__c</columns>
+    <columns>Original_response__c</columns>
+    <columns>ReferenceId__c</columns>
+    <columns>Uuid__c</columns>
+    <columns>Elapsed_Time__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Service_Name__c</field>
+        <operation>contains</operation>
+        <value>MSIL Request</value>
+    </filters>
+    <label>Membership</label>
+</ListView>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Income_Ca__c</fullName>
+    <label>Income Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SEP</fullName>
+                <default>false</default>
+                <label>SEP</label>
+            </value>
+            <value>
+                <fullName>SENP</fullName>
+                <default>false</default>
+                <label>SENP</label>
+            </value>
+            <value>
+                <fullName>SAL</fullName>
+                <default>false</default>
+                <label>SAL</label>
+            </value>
+            <value>
+                <fullName>NE</fullName>
+                <default>false</default>
+                <label>NE</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DEPLOYMENT_OF_ASSET__c</fullName>
+    <label>DEPLOYMENT OF ASSET</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AGRICULTURE USES</fullName>
+                <default>false</default>
+                <label>AGRICULTURE USES</label>
+            </value>
+            <value>
+                <fullName>AGRI CUM COMMERCIAL</fullName>
+                <default>false</default>
+                <label>AGRI CUM COMMERCIAL</label>
+            </value>
+            <value>
+                <fullName>AGRI HIRING</fullName>
+                <default>false</default>
+                <label>AGRI HIRING</label>
+            </value>
+            <value>
+                <fullName>COMMERCIAL</fullName>
+                <default>false</default>
+                <label>COMMERCIAL</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel_Name__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Channel Name</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>High Payload Request</fullName>
+                <default>false</default>
+                <label>High Payload Request</label>
+            </value>
+            <value>
+                <fullName>Low Payload Request</fullName>
+                <default>false</default>
+                <label>Low Payload Request</label>
+            </value>
+            <value>
+                <fullName>High Payload Response</fullName>
+                <default>false</default>
+                <label>High Payload Response</label>
+            </value>
+            <value>
+                <fullName>Low Payload Response</fullName>
+                <default>false</default>
+                <label>Low Payload Response</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MyOpportunities</fullName>
+    <columns>IModuleId__c</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.LAST_UPDATE</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Sub_Stage__c</columns>
+    <columns>Vehicle_Type__c</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Product_Type__c</columns>
+    <columns>VKYC_Doc_Downloaded__c</columns>
+    <columns>VKYC_Doc_Urls__c</columns>
+    <columns>VKYC_status__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>My Loan Applications</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+        <portalRole>IMFSPartnerUser</portalRole>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,289 @@
+<template>
+    <template if:false={showRepaymentMandateComponent}>
+    <template if:true={showSpinner} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={isViewable}>
+        <div class="slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+                <b></b>
+            </label>
+        </div>
+
+        <div class="slds-align_absolute-center ">
+            <div class="exampleHolder">
+                <template if:true={loaded}>
+                    <lightning-icon icon-name={iconname} class={isloanstatus} alternative-text="Utility image">
+                    </lightning-icon>
+                </template>
+                <template if:false={loaded}>
+                    <div class="demo-only demo-only" style="height:6rem;position:relative">
+                        <lightning-icon  icon-name="utility:spinner" class={isloanstatus} size="large" variant="brand" alternative-text="Loading!" title="Loading"></lightning-icon>
+                        <!-- <div class="slds-spinner_container">
+                            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <br/>
+                </template>
+            </div>
+        </div>
+        <!--//CISP-42-->
+        <div class="slds-m-bottom_large slds-clearfix">
+            <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+                alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton" disabled={isUploadViewDisabled}>
+            </lightning-button>
+        </div>
+
+        <div>
+            <template if:true={loaded}>
+                <p>{strmsg}</p>
+            </template>
+            <template if:false={loaded}>
+                <p>{loadingtnksmsg} {applicant_name}</p>
+                <p>{label.OfferPagefailuremsg}</p>
+            </template>
+            <p>Please find below details related to the loan–</p>
+            <br>
+        </div>
+            <!--For Product type Tractor-->
+            <template lwc:if={isProductTypeTractor}>
+                <lightning-accordion active-section-name="1">
+                    <template for:each={finalOfferRecordsForTractor} for:item="fnloffRec">
+                        <lightning-accordion-section key={fnloffRec.key} name={index} label={fnloffRec.key}>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout" aria-labelledby="element-with-table-label other-element-with-table-label">
+                                <tbody>
+                                    <template for:each={fnloffRec.value} for:item="fnlOffRecValue">
+                                        <tr key={fnlOffRecValue.key}>
+                                            <th scope="col" >
+                                                <div class="mobile-wrap">
+                                                    <b> {fnlOffRecValue.key}</b>
+                                                </div>
+                                            </th>
+                                            <th scope="col" >
+                                                <div class="slds-box mobile-wrap">{fnlOffRecValue.value}</div>
+                                            </th>
+                                        </tr>
+                                    </template>
+                                    <template if:true={showInitiateENACH}>
+                                        <tr>
+                                            <th scope="col">
+                                                <div>
+                                                    <b>Do you want to initiate e-NACH for this loan application?</b>
+                                                </div>
+                                            </th>
+                                            <th scope="col" >
+                                                <div class="slds-box">
+                                                    <lightning-radio-group name="eNACHField" options={eNachOptions}
+                                                        value={eNachValue} onchange={handleEnachChange} variant="label-stacked"
+                                                        type="radio">
+                                                    </lightning-radio-group>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </lightning-accordion-section>
+                    </template>
+                </lightning-accordion>
+            </template> 
+            <!--For Product type PV/TW-->
+            <template lwc:else>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                    aria-labelledby="element-with-table-label other-element-with-table-label">
+            <tbody>
+                <template for:each={lstRecords} for:item="keyValue">
+                    <tr key={keyValue.key}>
+                        <th scope="col" height="35">
+                            <!--<li key={keyValue.key}>-->
+                            <div>
+                                <b> {keyValue.key}</b>
+                            </div>
+                        </th>
+                        <th scope="col" height="35">
+                            <div class="slds-box">{keyValue.value}</div>
+                            <!--</li>-->
+                        </th>
+                    </tr>
+                </template>
+                <!--CISP-4181 Added 'Do you want to initiate e-NACH for this loan application' field and radio button-->
+                <template if:true={showInitiateENACH}>
+                    <tr>
+                        <th scope="col" height="35">
+                            <div>
+                                <b>Do you want to initiate e-NACH for this loan application?</b>
+                            </div>
+                        </th>
+                        <th scope="col" height="35">
+                            <div class="slds-box">
+                                <lightning-radio-group name="eNACHField" options={eNachOptions} value={eNachValue} 
+                                onchange={handleEnachChange} variant="label-hidden" type="radio">
+                                </lightning-radio-group>
+                            </div>
+                        </th>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+            </template>
+        <p>{label.OfferPageconsent}</p>
+        <br>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand " title="Resend SMS Action" type="button" label="Resend SMS"
+                                disabled={creditval} onclick={handleSms}>
+                                Resend SMS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template if:true={visibleFIButton}>
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                        <div style="display: flex; justify-content:center; align-items:center;">
+                            <div style="width:220px; box-sizing:border-box; margin:0px;">
+                                <button class="indusPrimaryButton slds-button slds-button_brand " title="FI Trigger" type="button"
+                                    disabled={disableFiTriggerbutton} onclick={handleFiTrigger}>
+                                    FI Trigger
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-button slds-button_brand " title="Submit Action" type="button" label="Submit" disabled={creditval}
+                                onclick={handleSubmit}>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  <div class="slds-align_absolute-center ">
+            <lightning-button title="Resend SMS Action"  type="button" label="Resend SMS" disabled={creditval} onclick={handleSms}></lightning-button>
+        </div>
+        <br>
+        <div class="slds-align_absolute-center ">
+            <lightning-button title="Submit Action"  type="button" label="Submit" disabled={creditval} onclick={handleSubmit}></lightning-button>
+        </div>-->
+    </template>
+
+    <template if:true={isView}>
+        <c-i-N-D_-F-I_-Assignment record-id={recordId} product-type={ProductType} object-api-name={objName}>
+        </c-i-N-D_-F-I_-Assignment>
+    </template>
+    <template if:true={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinish}>
+            Next
+        </button>
+    </template>
+    <template if:true={showFiStatusModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  slds-modal_large">
+            <div class="slds-modal__container" style="max-width: 30%!important;">
+                <header class="slds-modal__header" style="background: #8C3137;">
+                    <button style="background-color: grey"
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closebtn" title="Close"
+                        onclick={cancelFiStatusModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <div>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"
+                            style="color: white;margin-block: -9px">
+                            FI Status
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable_x slds-grid"
+                    style="overflow-y: auto;" id="modal-content-id-12">
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1">
+                                <p>FI status of the parent lead <b>{fiCaseData.parentLoanAppName}</b>.</p>
+                            </div>
+                        <br>
+                        <br>
+                            <table class="slds-table slds-table_bordered slds-p-around_medium">
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <th>Detail</th>
+                                        <th>Borrower</th>
+                                        <template if:true={fiCaseData.coborrowerPresent}>
+                                            <th>Coborrower</th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{fiCaseData.currentResidenceName}</td>
+                                        <td>{fiCaseData.bo_CaseResiStatus}</td>
+                                        <template if:true={fiCaseData.coborrowerPresent}>
+                                            <td>{fiCaseData.CB_CaseResiStatus}</td>
+                                        </template>
+                                    </tr>
+                                    <tr>
+                                        <td>{fiCaseData.casePermanentName}</td>
+                                        <td>{fiCaseData.bo_CasePerStatus}</td>
+                                        <template if:true={fiCaseData.coborrowerPresent}>
+                                            <td>{fiCaseData.CB_CasePerStatus}</td>
+                                        </template>
+                                    </tr>
+                                    <tr>
+                                        <td>{fiCaseData.caseOfficeName}</td>
+                                        <td>{fiCaseData.bo_CaseOffStatus}</td>
+                                        <template if:true={fiCaseData.coborrowerPresent}>
+                                            <td>{fiCaseData.CB_CaseOffStatus}</td>
+                                        </template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>As the journey has got restarted/revoked,</p>
+                        <br>
+                        <p>Please select "Yes" if FI needs to be re-done for the completed FI. (OR)</p>
+                        <br>
+                        <p>Please select "No" if the completed FI already holds good and does not need to be re-done.</p>
+                        <br>
+                        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center slds-m-bottom_medium">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                onclick={handleYesClick} disabled={disableFIbutton}>
+                                YES
+                            </button>
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-m-top_small closebtn"
+                                onclick={handleNoClick} disabled={disableFIbutton}>
+                                NO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+</template>
+<!--CISP-4181 Added repayment mandate component in final offer screen-->
+    <template if:true={showRepaymentMandateComponent}>
+        <c-i-N-D-_-L-W-C-_-Repayment-Mandate-Parent current-step={currentStep} record-id={recordId} is-invoked-from-final-offer={isInvokedFromFinalOffer} 
+        is-revoked-loan-application={isRevokedLoanApplication} onopenfinalofferpage={handleOpenFinalOfferPage} onupdatefinaltermrecord={handleUpdateFinalTermRecord}>
+        </c-i-N-D-_-L-W-C-_-Repayment-Mandate-Parent>
+    </template>
+</template>

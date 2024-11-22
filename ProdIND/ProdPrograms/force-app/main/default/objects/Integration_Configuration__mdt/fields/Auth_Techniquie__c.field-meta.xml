@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auth_Techniquie__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Auth Technique for making the integration call to external system</inlineHelpText>
+    <label>Auth Techniquie</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
+                <label>Not Applicable</label>
+            </value>
+            <value>
+                <fullName>Named Credentials</fullName>
+                <default>false</default>
+                <label>Named Credentials</label>
+            </value>
+            <value>
+                <fullName>Username and Password</fullName>
+                <default>false</default>
+                <label>Username and Password</label>
+            </value>
+            <value>
+                <fullName>Token</fullName>
+                <default>false</default>
+                <label>Token</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

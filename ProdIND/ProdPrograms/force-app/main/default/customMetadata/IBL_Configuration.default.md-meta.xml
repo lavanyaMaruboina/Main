@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>default</label>
+    <protected>false</protected>
+    <values>
+        <field>Check_for_Mandatory_Role__c</field>
+        <value xsi:type="xsd:string">NPH</value>
+    </values>
+    <values>
+        <field>Highest_Authority_Role_TW__c</field>
+        <value xsi:type="xsd:string">NPH,CH,OH,NCM</value>
+    </values>
+    <values>
+        <field>Highest_Authority_Role__c</field>
+        <value xsi:type="xsd:string">ZH,PVNSM,UPVNSM,PVNSM/UPVNSM,NCM,NPH,CH,OH,HCFD</value>
+    </values>
+    <values>
+        <field>Incident_Access_Profile_List__c</field>
+        <value xsi:type="xsd:string">IBL Business Executive,IBL Marketing Officer,IBL Partner Community Counter Staff,IBL Partner Community Marketing Agent,IBL Partner Community Marketing Officer,IBL CVO,IBL Partner Community CVO,Sales FI,CMU,FI Partner Community Users,IBL Area Credit Manager,IBL Branch Head,IBL Credit Analyst,IBL Credit Head,IBL Head CFD,IBL Hub Head,IBL Junior Credit Manager,IBL National Credit Manager,IBL National Product Head,IBL National Sales Manager,IBL Operation Head,IBL Product Executive,IBL Regional Credit Manager,IBL State Credit Manager,IBL State Head,IBL Supervisor Credit_Banking,IBL Zonal Head,System Admin,System Administrator</value>
+    </values>
+    <values>
+        <field>JourneyStatusToRestrictCAMAndApproval__c</field>
+        <value xsi:type="xsd:string">Stop</value>
+    </values>
+    <values>
+        <field>Mandatory_Forward_Role__c</field>
+        <value xsi:type="xsd:string">NCM</value>
+    </values>
+    <values>
+        <field>Opportunity_Case_Edit_Access__c</field>
+        <value xsi:type="xsd:string">IBL Business Executive,IBL CVO,IBL Partner Community CVO,IBL Partner Community Business Executive,IBL Partner Community BE,IBL Marketing Officer,IBL Partner Community Marketing Agent,IBL Partner Community Marketing Officer,IBL Partner Community Counter Staff,IBL Business Executive TW</value>
+    </values>
+    <values>
+        <field>Opportunity_Case_Read_Access__c</field>
+        <value xsi:type="xsd:string">IBL State Credit Manager,IBL Area Credit Manager,IBL Branch Head,IBL Credit Analyst,IBL Credit Head,IBL Head CFD,IBL Hub Head,IBL Junior Credit Manager,IBL National Product Head,IBL National Sales Manager,IBL Operation Head,IBL Product Executive,IBL Regional Credit Manager,IBL State Head,IBL Supervisor Credit &amp; Banking,IBL Zonal Head,IBL National Credit Manager,IBL Regional Product Manager,IBL Supervisor Credit_Banking</value>
+    </values>
+    <values>
+        <field>PreDisbursementCheckProfiles__c</field>
+        <value xsi:type="xsd:string">IBL CVO,IBL Partner Community CVO</value>
+    </values>
+    <values>
+        <field>Profile_Name_for_CAM_Access__c</field>
+        <value xsi:type="xsd:string">IBL Business Executive,IBL CVO,IBL Partner Community CVO,IBL State Credit Manager,IBL Area Credit Manager,IBL Branch Head,IBL Credit Analyst,IBL Credit Head,IBL Head CFD,IBL Hub Head,IBL Junior Credit Manager,IBL National Product Head,IBL National Sales Manager,IBL Operation Head,IBL Product Executive,IBL Regional Credit Manager,IBL State Head,IBL Supervisor Credit &amp; Banking,IBL Zonal Head,IBL National Credit Manager,IBL Regional Product Manager,System Administrator,IBL Supervisor Credit_Banking,IBL Partner Community TF CVO,IBL TF CVO,IBL Zonal Credit Manager</value>
+    </values>
+    <values>
+        <field>RolesToSkipInForwardTo__c</field>
+        <value xsi:type="xsd:string">CS,BE,MA,MO,FI,RCU_M,PME</value>
+    </values>
+    <values>
+        <field>Roles_for_PV__c</field>
+        <value xsi:type="xsd:string">SCM,SH,NCM</value>
+    </values>
+    <values>
+        <field>Roles_for_TF__c</field>
+        <value xsi:type="xsd:string">HHEAD,ACM,SCM,SH,ZH,ZCM,NPH,NCM,OH,CH</value>
+    </values>
+    <values>
+        <field>Roles_for_TW__c</field>
+        <value xsi:type="xsd:string">PE,RPM,SCB,SH,ZH,NPH,NCM,OH,CH</value>
+    </values>
+    <values>
+        <field>Sales_Cap_Role__c</field>
+        <value xsi:type="xsd:string">NPH</value>
+    </values>
+</CustomMetadata>

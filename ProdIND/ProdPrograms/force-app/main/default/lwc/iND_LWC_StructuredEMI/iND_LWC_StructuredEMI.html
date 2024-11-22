@@ -1,0 +1,253 @@
+<template>
+<template if:false={isTractor}>
+    <template if:true={isStructuredType}>
+        <template if:false={forIncomeScreen}>
+            <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+            <b>Structured EMI</b>
+            </div>
+        </template>
+<!-- Commented BY Poonam-->
+
+<!--lightning-card>
+<div class="slds-text-title" style="font-size:medium;">Finance Amount-{financeAmount}</div>
+<div class="slds-text-title" style="font-size:medium;">CRM IRR-{cRMIRR}</div>
+<div class="slds-text-title" style="font-size:medium;">Tenure-{tenure}</div>
+</lightning-card><br/-->
+<template if:false={readOnly}>
+<lightning-card>
+    <h3 style="color: #84181F;font-size:medium;" class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+        EMI Table
+    </h3>
+    <lightning-layout >
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                padding="around-small">
+                    <lightning-input type="number" label={fromLabel} class="textInput" value={fromMonth} disabled="true" style="font-size: large;">
+                    </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                padding="around-small">
+                <lightning-input type="number" label={toLabel} class="textInput" value={toMonth} disabled="true" >
+                </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                padding="around-small">
+                <lightning-input type="number" label="# of Installments" class="textInput" value={installments}  disabled="true">
+                </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                padding="around-small">
+                <lightning-input type="number" label="EMI Amount" value={emi}  class="textInput" disabled="true" >
+                </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                padding="around-small">
+                <div class="slds-p-top_medium">
+                </div>
+            </lightning-layout-item>
+    </lightning-layout>
+    <template for:each={itemList} for:item="item" for:index="index">
+        <div key={item}>
+        <lightning-layout  multiple-rows>
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                        <lightning-input  label="" name="fromMon" value={item.fromMonth} class="validate fromCmp" data-target-id={index} required onchange={changeHandlerOnFromMonth} disabled>
+                        </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input  label="" name="toMon" value={item.toMonth} onchange={changeHandlerOnToMonth} class="validate toCmp" data-target-id={index} required>
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input  label="" name="installment" value={item.installments} onchange={changeHandlerOnInstallment}  class="validate" data-target-id={index} disabled>
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input  label="" name="emi" value={item.emi} onchange={changeHandlerOnEMI} class="validate" data-target-id={index} required>
+                    </lightning-input>
+                </lightning-layout-item>
+                
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <div class="slds-p-top_medium">
+                        <!--<lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                            alternative-text="Add Row" size="small" title="Add Row" onclick={addRow} data-target-id={index}>
+                        </lightning-icon>-->
+                        <button class=" slds-button slds-button_brand " onclick={addRow} data-target-id={index}>
+                            Add
+                        </button>
+                        <button class=" slds-button slds-button_brand " onclick={removeRow} data-target-id={index} id={index} >
+                            Delete
+                        </button>
+                        <!--<lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                            alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow} data-target-id={index}>
+                        </lightning-icon>-->
+                    </div>
+                </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    </template>
+    </br>
+    <template if:true={discreapancyScreen}>
+        <div><b>Loan Amount Check</b></div>
+        <div><b>Expected : {financeAmount}</b></div>
+        <div><b>Tenure : {tenure}</b></div>
+        <div><b>As Per above EMI's : {finalNPR}</b></div>
+        <!--div>Please match loan amount to continue with the journey.</div-->
+    </template>
+
+    <lightning-layout>
+        <div class="slds-align_absolute-center">
+            <button class=" slds-button slds-button_brand " disabled={isSubmitDisabled} onclick={handleSubmit}>
+                Submit
+                </button>
+        </div>
+    </lightning-layout>
+</lightning-card>
+</template>
+<template if:true={readOnly}>
+    <lightning-card>
+        <h3 style="color: #84181F;font-size:medium;" class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+            EMI Table
+        </h3>
+        <lightning-layout >
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                        <lightning-input type="number" label="From Month " value={fromMonth} disabled="true" >
+                        </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input type="number" label="To Month " value={toMonth} disabled="true" >
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input type="number" label="# of Installments" value={installments}  disabled="true">
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input type="number" label="EMI Amount " value={emi}  disabled="true" >
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <div class="slds-p-top_medium">
+                        <!--<lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                            alternative-text="Add Row" size="small" title="Add Row" onclick={addRow}>
+                        </lightning-icon>
+                        <lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                            alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow}>
+                        </lightning-icon>-->
+                    </div>
+                </lightning-layout-item>
+        </lightning-layout>
+        <template for:each={itemList} for:item="item" for:index="index">
+            <div key={item}>
+            <lightning-layout  multiple-rows>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                            <lightning-input  label="" name="fromMon" value={item.fromMonth} class="validate" data-target-id={index} disabled="true" >
+                            </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input  label="" name="toMon" value={item.toMonth} onblur={changeHandlerOnToMonth} class="validate" data-target-id={index} disabled="true" >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input  label="" name="installment" value={item.installments} onblur={changeHandlerOnInstallment} class="validate" data-target-id={index} disabled="true" >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="Number" label="" name="emi" value={item.emi}  data-target-id={index} disabled="true" >
+                        </lightning-input>
+                    </lightning-layout-item>
+                   
+            </lightning-layout>
+        </div>
+        </template>
+        </br>
+        
+    </lightning-card>
+    </template>
+</template>
+<template if:false={isStructuredType}>
+    This Loan Application is not Eligible for Structured EMI Because Installment type is Equated.
+</template>
+</template>
+    <!-- SFTRAC-100 Added Tractor check for structured emi :Sahil -->
+    <template if:true={isTractor}>
+        <template if:true={isStructuredType}>
+        <lightning-card>
+            <h3 style="color: #84181F;font-size:medium;" class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+                EMI Table
+            </h3>
+            <lightning-layout >
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                            <lightning-input type="number" label="From Month " value={fromMonth} disabled="true" >
+                            </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="number" label="To Month " value={toMonth} disabled="true" >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="number" label="# of Installments" value={installments}  disabled="true">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="number" label="EMI Amount " value={emi}  disabled="true" >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <div class="slds-p-top_medium">
+                        </div>
+                    </lightning-layout-item>
+            </lightning-layout>
+            <template for:each={itemList} for:item="item" for:index="index">
+                <div key={item}>
+                <lightning-layout  multiple-rows>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                                <lightning-input  label="" name="fromMon" value={item.fromMonth} class="validate" data-target-id={index} disabled="true" >
+                                </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input  label="" name="toMon" value={item.toMonth} onblur={changeHandlerOnToMonth} class="validate" data-target-id={index} disabled="true" >
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input  label="" name="installment" value={item.installments} onblur={changeHandlerOnInstallment} class="validate" data-target-id={index} disabled="true" >
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                            padding="around-small">
+                            <lightning-input type="Number" label="" name="emi" value={item.emi}  data-target-id={index} disabled="true" >
+                            </lightning-input>
+                        </lightning-layout-item>
+                    
+                </lightning-layout>
+            </div>
+            </template>
+            </br>
+            
+        </lightning-card>
+        </template>
+        <template if:false={isStructuredType}>
+            This Loan Application is not Eligible for Structured EMI Because Installment type is Equated.
+            </template>
+    </template>
+</template>

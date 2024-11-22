@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Loan Agreement</fullName>
+                <default>false</default>
+                <label>Loan Agreement</label>
+            </value>
+            <value>
+                <fullName>POA</fullName>
+                <default>false</default>
+                <label>POA</label>
+            </value>
+            <value>
+                <fullName>Additional LA</fullName>
+                <default>false</default>
+                <label>Additional LA</label>
+            </value>
+            <value>
+                <fullName>Additional POA</fullName>
+                <default>false</default>
+                <label>Additional POA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

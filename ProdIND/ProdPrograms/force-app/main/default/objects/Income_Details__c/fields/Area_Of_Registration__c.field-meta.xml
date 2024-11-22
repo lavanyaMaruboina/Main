@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Area_Of_Registration__c</fullName>
+    <label>Area Of Registration</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Andhra Pradesh Medical Council</fullName>
+                <default>false</default>
+                <label>Andhra Pradesh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Arunachal Pradesh Medical Council</fullName>
+                <default>false</default>
+                <label>Arunachal Pradesh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Assam Medical Council</fullName>
+                <default>false</default>
+                <label>Assam Medical Council</label>
+            </value>
+            <value>
+                <fullName>Bareilly Medical Council</fullName>
+                <default>false</default>
+                <label>Bareilly Medical Council</label>
+            </value>
+            <value>
+                <fullName>Bhopal Medical Council</fullName>
+                <default>false</default>
+                <label>Bhopal Medical Council</label>
+            </value>
+            <value>
+                <fullName>Bihar Medical Council</fullName>
+                <default>false</default>
+                <label>Bihar Medical Council</label>
+            </value>
+            <value>
+                <fullName>Bombay Medical Council</fullName>
+                <default>false</default>
+                <label>Bombay Medical Council</label>
+            </value>
+            <value>
+                <fullName>Chandigarh Medical Council</fullName>
+                <default>false</default>
+                <label>Chandigarh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Chattisgarh Medical Council</fullName>
+                <default>false</default>
+                <label>Chattisgarh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Delhi Medical Council</fullName>
+                <default>false</default>
+                <label>Delhi Medical Council</label>
+            </value>
+            <value>
+                <fullName>Dental Council of India</fullName>
+                <default>false</default>
+                <label>Dental Council of India</label>
+            </value>
+            <value>
+                <fullName>General Medical Council</fullName>
+                <default>false</default>
+                <label>General Medical Council</label>
+            </value>
+            <value>
+                <fullName>Goa Medical Council</fullName>
+                <default>false</default>
+                <label>Goa Medical Council</label>
+            </value>
+            <value>
+                <fullName>Gujarat Medical Council</fullName>
+                <default>false</default>
+                <label>Gujarat Medical Council</label>
+            </value>
+            <value>
+                <fullName>Haryana Dental &amp;amp; Medical Councils</fullName>
+                <default>false</default>
+                <label>Haryana Dental &amp;amp; Medical Councils</label>
+            </value>
+            <value>
+                <fullName>Himanchal Pradesh Medical Council</fullName>
+                <default>false</default>
+                <label>Himanchal Pradesh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Hyderabad Medical Council</fullName>
+                <default>false</default>
+                <label>Hyderabad Medical Council</label>
+            </value>
+            <value>
+                <fullName>Jammu &amp;amp; Kashmir Medical Council</fullName>
+                <default>false</default>
+                <label>Jammu &amp;amp; Kashmir Medical Council</label>
+            </value>
+            <value>
+                <fullName>Jharkhand Medical Council</fullName>
+                <default>false</default>
+                <label>Jharkhand Medical Council</label>
+            </value>
+            <value>
+                <fullName>Karnataka Medical Council</fullName>
+                <default>false</default>
+                <label>Karnataka Medical Council</label>
+            </value>
+            <value>
+                <fullName>Kerala Medical Council</fullName>
+                <default>false</default>
+                <label>Kerala Medical Council</label>
+            </value>
+            <value>
+                <fullName>Madhya Pradesh Medical Council</fullName>
+                <default>false</default>
+                <label>Madhya Pradesh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Madras Medical Council</fullName>
+                <default>false</default>
+                <label>Madras Medical Council</label>
+            </value>
+            <value>
+                <fullName>Mahakoshal Medical Council</fullName>
+                <default>false</default>
+                <label>Mahakoshal Medical Council</label>
+            </value>
+            <value>
+                <fullName>Maharashtra Medical Council</fullName>
+                <default>false</default>
+                <label>Maharashtra Medical Council</label>
+            </value>
+            <value>
+                <fullName>Manipur Medical Council</fullName>
+                <default>false</default>
+                <label>Manipur Medical Council</label>
+            </value>
+            <value>
+                <fullName>Medical Council of India</fullName>
+                <default>false</default>
+                <label>Medical Council of India</label>
+            </value>
+            <value>
+                <fullName>Medical Council of Tanganyika</fullName>
+                <default>false</default>
+                <label>Medical Council of Tanganyika</label>
+            </value>
+            <value>
+                <fullName>Mizoram Medical Council</fullName>
+                <default>false</default>
+                <label>Mizoram Medical Council</label>
+            </value>
+            <value>
+                <fullName>Mysore Medical Council</fullName>
+                <default>false</default>
+                <label>Mysore Medical Council</label>
+            </value>
+            <value>
+                <fullName>Nagaland Medical Council</fullName>
+                <default>false</default>
+                <label>Nagaland Medical Council</label>
+            </value>
+            <value>
+                <fullName>Orissa Council of Medical Registration</fullName>
+                <default>false</default>
+                <label>Orissa Council of Medical Registration</label>
+            </value>
+            <value>
+                <fullName>Pondicherry Medical Council</fullName>
+                <default>false</default>
+                <label>Pondicherry Medical Council</label>
+            </value>
+            <value>
+                <fullName>Punjab Medical Council</fullName>
+                <default>false</default>
+                <label>Punjab Medical Council</label>
+            </value>
+            <value>
+                <fullName>Rajasthan Medical Council</fullName>
+                <default>false</default>
+                <label>Rajasthan Medical Council</label>
+            </value>
+            <value>
+                <fullName>Sikkim Medical Council</fullName>
+                <default>false</default>
+                <label>Sikkim Medical Council</label>
+            </value>
+            <value>
+                <fullName>Tamil Nadu Medical Council</fullName>
+                <default>false</default>
+                <label>Tamil Nadu Medical Council</label>
+            </value>
+            <value>
+                <fullName>Telangana State Medical Council</fullName>
+                <default>false</default>
+                <label>Telangana State Medical Council</label>
+            </value>
+            <value>
+                <fullName>Travancore Cochin Medical Council</fullName>
+                <default>false</default>
+                <label>Travancore Cochin Medical Council</label>
+            </value>
+            <value>
+                <fullName>Travancore Cochin Medical Council, Trivandrum</fullName>
+                <default>false</default>
+                <label>Travancore Cochin Medical Council, Trivandrum</label>
+            </value>
+            <value>
+                <fullName>Tripura State Medical Council</fullName>
+                <default>false</default>
+                <label>Tripura State Medical Council</label>
+            </value>
+            <value>
+                <fullName>Uttar Pradesh Medical Council</fullName>
+                <default>false</default>
+                <label>Uttar Pradesh Medical Council</label>
+            </value>
+            <value>
+                <fullName>Uttarakhand Medical Council</fullName>
+                <default>false</default>
+                <label>Uttarakhand Medical Council</label>
+            </value>
+            <value>
+                <fullName>Vidharba Medical Council</fullName>
+                <default>false</default>
+                <label>Vidharba Medical Council</label>
+            </value>
+            <value>
+                <fullName>West Bengal Medical Council</fullName>
+                <default>false</default>
+                <label>West Bengal Medical Council</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

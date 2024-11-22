@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Name_Edit</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISCHANGED(Name) || ISCHANGED( CloseDate )</errorConditionFormula>
+    <errorMessage>Sorry, you are not allowed to change the details.</errorMessage>
+</ValidationRule>

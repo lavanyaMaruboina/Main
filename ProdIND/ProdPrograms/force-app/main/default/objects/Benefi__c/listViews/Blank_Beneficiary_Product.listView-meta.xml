@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Blank_Beneficiary_Product</fullName>
+    <columns>NAME</columns>
+    <columns>Beneficiary__c</columns>
+    <columns>Ben_code__c</columns>
+    <columns>Dealer_Code__c</columns>
+    <columns>Status_Flag__c</columns>
+    <columns>Pseudo_DSM__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>Blank Beneficiary Product</label>
+</ListView>

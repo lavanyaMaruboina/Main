@@ -1,0 +1,26 @@
+@istest
+public class WS_RS_MobileIntegrationTest {
+    
+    @isTest
+    public static void verifyFetchDetails(){
+        Account testAccount = TestDataUtility.createTestAccount(true);
+        
+        Opportunity opp = TestDataUtility.createTestOpportunity(false);
+        opp.AccountId = testAccount.Id;
+        insert opp;
+        
+        Applicant__c applicant = TestDataUtility.createTestApplicant(false);
+        applicant.Opportunity__c=opp.Id;
+        insert applicant;
+        
+        WS_RS_MobileIntegration.userdetails objRequest = new   WS_RS_MobileIntegration.userdetails();
+        objRequest.applicant = applicant.Id;
+        objRequest.name = applicant.name;
+        objRequest.loanApplication = opp.Id;
+        objRequest.selfieImage = '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';
+        
+        WS_RS_MobileIntegration.statusrep objResult = WS_RS_MobileIntegration.fetchDetails(objRequest);
+        System.assert(String.isNotBlank(objResult.status));
+    }
+    
+}

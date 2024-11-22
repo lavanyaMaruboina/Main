@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Relationship__c</fullName>
+    <label>Relationship</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>FATHER</fullName>
+                <default>false</default>
+                <label>FATHER</label>
+            </value>
+            <value>
+                <fullName>BROTHER - IN LAW</fullName>
+                <default>false</default>
+                <label>BROTHER - IN LAW</label>
+            </value>
+            <value>
+                <fullName>BROTHER - INCLUDING STEP BROTHER</fullName>
+                <default>false</default>
+                <label>BROTHER - INCLUDING STEP BROTHER</label>
+            </value>
+            <value>
+                <fullName>GRANDDAUGHTER</fullName>
+                <default>false</default>
+                <label>GRANDDAUGHTER</label>
+            </value>
+            <value>
+                <fullName>GRANDSON</fullName>
+                <default>false</default>
+                <label>GRANDSON</label>
+            </value>
+            <value>
+                <fullName>HUSBAND OF GRANDDAUGHTER</fullName>
+                <default>false</default>
+                <label>HUSBAND OF GRANDDAUGHTER</label>
+            </value>
+            <value>
+                <fullName>HUSBAND OF SISTER</fullName>
+                <default>false</default>
+                <label>HUSBAND OF SISTER</label>
+            </value>
+            <value>
+                <fullName>SISTER - INCLUDING STEP SISTER</fullName>
+                <default>false</default>
+                <label>SISTER - INCLUDING STEP SISTER</label>
+            </value>
+            <value>
+                <fullName>WIFE OF GRANDSON</fullName>
+                <default>false</default>
+                <label>WIFE OF GRANDSON</label>
+            </value>
+            <value>
+                <fullName>WIFE OF BROTHER</fullName>
+                <default>false</default>
+                <label>WIFE OF BROTHER</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

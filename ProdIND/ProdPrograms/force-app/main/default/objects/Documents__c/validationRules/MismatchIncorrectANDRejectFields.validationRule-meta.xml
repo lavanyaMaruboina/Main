@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MismatchIncorrectANDRejectFields</fullName>
+    <active>true</active>
+    <description>This validation Rule check if Rejection Reason is not Incorrect Fields and Reject Field is selected.</description>
+    <errorConditionFormula>AND(NOT((INCLUDES( CMU_Rejection_Reason__c, &quot;Incorrect fields&quot;))), NOT((INCLUDES( CMU_Rejection_Reason__c, &quot;Documents reject or Customer Photo reject&quot;))), NOT((INCLUDES( CMU_Rejection_Reason__c, &quot;Incorrect document&quot;))),NOT(ISBLANK(Rejection_Fields__c)))</errorConditionFormula>
+    <errorMessage>If Rejection Reason is not Incorrect Fields, you can not select Rejection Fields.</errorMessage>
+</ValidationRule>

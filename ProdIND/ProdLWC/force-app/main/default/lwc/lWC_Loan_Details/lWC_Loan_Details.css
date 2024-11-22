@@ -1,0 +1,23 @@
+.button{
+    background-color:rgb(152, 39, 42);
+    color: white;
+    padding: 10px 10px;
+    text-align: right;
+    display: inline-block;
+    font-size: 16px;
+    margin: 3px 2px;
+    cursor: pointer;
+}
+.THIS .myCustomClass input { 
+    text-align: right;
+}
+.THIS .required input:after { content:"*"; }
+.THIS .slds-tabs--default__nav li.slds-active{
+    background: red;
+}
+.THIS.slds-required{
+    display: none !important;
+  }
+  .THIS .slds-checkbox {
+    display: inline !important;
+}

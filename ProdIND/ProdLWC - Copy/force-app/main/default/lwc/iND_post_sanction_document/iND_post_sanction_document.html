@@ -1,0 +1,39 @@
+<template> 
+    <lightning-card>
+        <div class="slds-card slds-m-around_large">
+            <p class="post-sanction slds-p-around_medium"><strong>Upload Documents</strong></p>
+        </div>
+        <div class="slds-align_absolute-center" style="overflow-x:auto;">
+            <table>
+                <template for:each={docType} for:item="docType">
+                    <tr key={docType.name}>
+                        <th>{docType.name}</th>
+                        <th>
+                            <lightning-file-upload data-target-id={docType.name} data-name={docType.className} 
+                                name="fileUploader" accept={acceptedFormats} onuploadfinished={handleUploadFinished}
+                                onclick={handleClick} ondrop={handleDrop}>
+                            </lightning-file-upload>
+                            <span class={docType.className}>
+                                <p class="uploadMessageclr">Document Uploaded Successfully</p>
+                            </span>
+                        </th>
+                        <th>
+                            <lightning-button-icon data-target-id={docType.name} icon-name="utility:preview"
+                                 alternative-text="Preview" class="Preview slds-m-left_xx-small" title="Preview"
+                                onclick={showfile}></lightning-button-icon>
+                        </th>
+                        <th>
+                            <lightning-button-icon data-target-id={docType.name} data-name={docType.className} icon-name="utility:delete"
+                                alternative-text="Delete" class="slds-m-left_xx-small" title="Delete"
+                                onclick={deleteFile}></lightning-button-icon>
+                        </th>
+                    </tr>
+                </template>
+            </table>
+        </div>
+        <div class="slds-align_absolute-center slds-p-around_small">
+            <lightning-button label="Return" name="Return" variant="brand" class="ibl-btn-red" onclick={handleReturn}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>

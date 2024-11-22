@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expenses_and_Investment_Type__c</fullName>
+    <label>Expenses and Investment Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Expenses for higher education of son / Daughter / Family member</fullName>
+                <default>false</default>
+                <label>Expenses for higher education of son / Daughter / Family member</label>
+            </value>
+            <value>
+                <fullName>Approx Medical Expenses</fullName>
+                <default>false</default>
+                <label>Approx Medical Expenses</label>
+            </value>
+            <value>
+                <fullName>Existing vehicle maintenance</fullName>
+                <default>false</default>
+                <label>Existing vehicle maintenance</label>
+            </value>
+            <value>
+                <fullName>Upcoming Marriage expense (Approx) in the family in next 2 years</fullName>
+                <default>false</default>
+                <label>Upcoming Marriage expense (Approx) in the family in next 2 years</label>
+            </value>
+            <value>
+                <fullName>Running Loan EMI Obligation(Monthly)</fullName>
+                <default>false</default>
+                <label>Running Loan EMI Obligation(Monthly)</label>
+            </value>
+            <value>
+                <fullName>Invested in LIC,</fullName>
+                <default>false</default>
+                <label>Invested in LIC,</label>
+            </value>
+            <value>
+                <fullName>Invested in Well digging,</fullName>
+                <default>false</default>
+                <label>Invested in Well digging,</label>
+            </value>
+            <value>
+                <fullName>Land Development</fullName>
+                <default>false</default>
+                <label>Land Development</label>
+            </value>
+            <value>
+                <fullName>House construction</fullName>
+                <default>false</default>
+                <label>House construction</label>
+            </value>
+            <value>
+                <fullName>Land Purchase</fullName>
+                <default>false</default>
+                <label>Land Purchase</label>
+            </value>
+            <value>
+                <fullName>Purchasing New Vehicle</fullName>
+                <default>false</default>
+                <label>Purchasing New Vehicle</label>
+            </value>
+            <value>
+                <fullName>Cattle Purchase</fullName>
+                <default>false</default>
+                <label>Cattle Purchase</label>
+            </value>
+            <value>
+                <fullName>LAST 5 YEARS MAJOR INVESTMENT OF INCOME</fullName>
+                <default>false</default>
+                <label>LAST 5 YEARS MAJOR INVESTMENT OF INCOME</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Expense</controllingFieldValue>
+            <valueName>Expenses for higher education of son / Daughter / Family member</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense</controllingFieldValue>
+            <valueName>Approx Medical Expenses</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense</controllingFieldValue>
+            <valueName>Existing vehicle maintenance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense</controllingFieldValue>
+            <valueName>Upcoming Marriage expense (Approx) in the family in next 2 years</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Expense</controllingFieldValue>
+            <valueName>Running Loan EMI Obligation(Monthly)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>Invested in LIC,</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>Invested in Well digging,</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>Land Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>House construction</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>Land Purchase</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>Purchasing New Vehicle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>Cattle Purchase</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Investment</controllingFieldValue>
+            <valueName>LAST 5 YEARS MAJOR INVESTMENT OF INCOME</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

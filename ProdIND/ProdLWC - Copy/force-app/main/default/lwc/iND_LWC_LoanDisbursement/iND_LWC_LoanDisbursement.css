@@ -1,0 +1,9 @@
+.slds-accordion__summary-action{
+    background-color:#84181f;
+}
+:host{
+    --sds-c-accordion-summary-color-background: white;
+    --sds-c-accordion-heading-text-color:black;
+    --sds-c-accordion-heading-text-font-weight: bold;
+    --sds-c-accordion-heading-text-color-hover: black;
+}

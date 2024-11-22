@@ -1,0 +1,599 @@
+<template>
+    <lightning-card>
+        <template if:true={sal}>
+            <template for:each={bankrecords} for:item="keyValue" for:index="index">
+                <div key={keyValue.key}>
+                    <lightning-accordion-section name="BankStatement" label="Bank Statement">
+
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Customers' bank<abbr
+                                                title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input variant="label-hidden" value={keyValue.value.Bank}
+                                            disabled=True>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Bank Account No.<abbr
+                                                title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" data-id="insDecVal"
+                                                value={keyValue.value.AccNo} disabled=True>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">ABB to be considered
+                                            <abbr title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" data-id="insDecVal"
+                                                value={keyValue.value.ABB} onchange={Abbchanged}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                <div
+                                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                        data-id={keyValue.value.IncomeRecordId} onclick={previewImage} disabled={filenotfound}>
+                                        View Bank statement
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                                <template for:each={lstRecords} for:item="keyValue" for:index="index">
+                                    <div key={keyValue.value}>
+                                        <lightning-accordion class="example-accordion" allow-multiple-sections-open
+                                            active-section-name={activeSections}>
+                                            <lightning-accordion-section name="Income source" label="Income source">
+                                                <div class="slds-form slds-grid slds-wrap">
+                                                    <div
+                                                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                                            <div class="slds-col slds-size_1-of-3">
+                                                                <label class="slds-form-element__label">Customer category (Sal/SEP/SENP)
+                                                                    <abbr title="required" class="slds-required">*</abbr></label>
+                                                            </div>
+                                                            <div class="slds-col slds-size_2-of-3">
+                                                                <lightning-input variant="label-hidden" value={keyValue.value.Customer}
+                                                                    disabled="true">
+                                                                </lightning-input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div
+                                                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                        <div class="slds-form-element slds-grid slds-wrap">
+                                                            <div class="slds-col slds-size_1-of-3">
+                                                                <label class="slds-form-element__label">Evaluation type (IP/NIP)
+                                                                    <abbr title="required" class="slds-required">*</abbr></label>
+                                                            </div>
+                                                            <div class="slds-col slds-size_2-of-3">
+                                                                <div class="slds-col slds-size_2-of-3">
+                                                                    <lightning-input variant="label-hidden"
+                                                                        value={keyValue.value.Evaluation} disabled="true">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div
+                                                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                        <div class="slds-form-element slds-grid slds-wrap">
+                                                            <div class="slds-col slds-size_1-of-3">
+                                                                <label class="slds-form-element__label">Profile
+                                                                    <abbr title="required" class="slds-required">*</abbr></label>
+                                                            </div>
+                                                            <div class="slds-col slds-size_2-of-3">
+                                                                <div class="slds-col slds-size_2-of-3">
+                                                                    <lightning-input variant="label-hidden" value={keyValue.value.Profile}
+                                                                        disabled="true">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form slds-grid slds-wrap">
+                                                        <div
+                                                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                                <div class="slds-col slds-size_1-of-3">
+                                                                    <label class="slds-form-element__label">Is income available on bank
+                                                                        statement (should be same as front end)
+                                                                        <abbr title="required" class="slds-required">*</abbr></label>
+                                                                </div>
+                                                                <div class="slds-col slds-size_2-of-3">
+                                                                    <lightning-input class="slds-p-left_xx-large" variant="label-hidden"
+                                                                        value={keyValue.value.Income} disabled="true">
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div></div>
+                                                        <div
+                                                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                            <div class="slds-form-element slds-grid slds-wrap">
+                                                                <div class="slds-col slds-size_1-of-3">
+                                                                    <label class="slds-form-element__label">Average income to be considered
+                                                                        <abbr title="required" class="slds-required">*</abbr></label>
+                                                                </div>
+                                                                <div class="slds-col slds-size_2-of-3">
+                                                                    <div class="slds-col slds-size_2-of-3">
+                                                                        <lightning-input variant="label-hidden"
+                                                                            value={keyValue.value.AvgIncome}
+                                                                            onchange={Avgchangestotalincome}>
+                                                                        </lightning-input>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
+                            
+                            
+                                                    <div
+                                                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    </div>
+                                                </div>
+                                            </lightning-accordion-section>
+                                        </lightning-accordion>
+                                    </div>
+                                </template>
+                            
+                                <template for:each={incomesalaried} for:item="keyValue">
+                                    <div key={keyValue.value} class="slds-form slds-grid slds-wrap">
+                                        <template for:each={keyValue.value} for:item="value" for:index="index">
+                                            <div key={value}
+                                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                <div class="slds-form-element  slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-3">
+                                                        <template if:false={index}>
+                                                            <label class="slds-form-element__label">Income from Source
+                                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                                        </template>
+                                                        <template if:true={index}>
+                                                            <label class="slds-form-element__label">Income from Source {index}
+                                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                                        </template>
+                            
+                                                    </div>
+                                                    <div class="slds-col slds-size_2-of-3">
+                                                        <lightning-input variant="label-hidden" value={value} disabled="true">
+                                                        </lightning-input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Total Income
+                                                    <abbr title="required" class="slds-required">*</abbr></label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input variant="label-hidden" value={totalincomesal} disabled="true">
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Income from Perfios
+                                                    <abbr title="required" class="slds-required">*</abbr></label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" value={incomeperfios} disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Remarks
+                                                </label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input variant="label-hidden" value={remarksinccome}
+                                                        onchange={remarksonchangeincome}>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                        </div>
+                    </lightning-accordion-section>
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+
+    <lightning-card>
+        <template if:true={itr}>
+            <lightning-accordion class="example-accordion" allow-multiple-sections-open
+                active-section-name={activeSections}>
+                <lightning-accordion-section name="ITR" label="ITR">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap"></div>
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                            <div
+                                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                    data-id={filesvalueitr} onclick={previewImageitr} disabled={filenotfounditr}>
+                                    View ITR
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Customer category (Sal/SEP/SENP)
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Evaluation type (IP/NIP)
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden"
+                                                    value={} disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Profile
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" value={}
+                                                    disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Income from source 1
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                </div>
+                            </div>
+
+                    <div>
+                        <template for:each={incomeITR} for:item="keyValue">
+                            <div key={keyValue.value} class="slds-form slds-grid slds-wrap">
+                                <template for:each={keyValue.value} for:item="value" for:index="index">
+                                    <div key={value}
+                                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Income from Source
+                                                    <abbr title="required" class="slds-required">*</abbr></label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" value={} disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Total Income
+                                            <abbr title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Income from Perfios
+                                            <abbr title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input variant="label-hidden" value={} disabled="true">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Remarks
+                                        </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                onchange={remarksonchangeitr}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </template>
+    </lightning-card>
+
+    <lightning-card>
+        <template if:true={gst}>
+            <lightning-accordion class="example-accordion" allow-multiple-sections-open
+                active-section-name={activeSections}>
+                <lightning-accordion-section name="GST" label="GST">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap"></div>
+                    </div>
+                    <div class="slds-clearfix">
+                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                            <div
+                                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                    data-id={filesvaluegst} onclick={previewImagegst} disabled={filenotfoundgst}>
+                                    View GST
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="slds-form slds-grid slds-wrap">
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Customer category (Sal/SEP/SENP)
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Evaluation type (IP/NIP)
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden"
+                                                    value={} disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Profile
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" value={}
+                                                    disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form slds-grid slds-wrap">
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label class="slds-form-element__label">Income from source 1
+                                                <abbr title="required" class="slds-required">*</abbr></label>
+                                        </div>
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                </div>
+
+                                <div
+                                    class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                </div>
+                            </div>
+                      
+
+                    <div>
+                        <template for:each={incomeGST} for:item="keyValue">
+                            <div key={keyValue.value} class="slds-form slds-grid slds-wrap">
+                                <template for:each={keyValue.value} for:item="value" for:index="index">
+                                    <div key={value}
+                                        class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Income from Source
+                                                        <abbr title="required" class="slds-required">*</abbr></label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input variant="label-hidden" value={} disabled="true">
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+
+                        <div class="slds-form slds-grid slds-wrap">
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Total Income
+                                            <abbr title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                disabled="true">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Income from Perfios
+                                            <abbr title="required" class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input variant="label-hidden" value={} disabled="true">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Remarks
+                                            </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <div class="slds-col slds-size_2-of-3">
+                                            <lightning-input variant="label-hidden" value={}
+                                                onchange={remarksonchangegst}>
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </template>   
+       
+    </lightning-card>
+</template>

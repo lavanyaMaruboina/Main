@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChangeVariantOfferCalled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This flag is updated to true when offer engine API (without Insurance) is called from Change Variant Income Screen Section and set to false whenever in further step offer engine API is called with Insurance.</description>
+    <label>ChangeVariantOfferCalled</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

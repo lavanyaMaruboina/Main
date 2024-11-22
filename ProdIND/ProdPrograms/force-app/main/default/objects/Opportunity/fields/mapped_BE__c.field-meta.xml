@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>mapped_BE__c</fullName>
+    <description>this stores the mapped BE found in D2C BE mapping API. This BE will be assigned later when initial offer will generate</description>
+    <externalId>false</externalId>
+    <label>mapped BE</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

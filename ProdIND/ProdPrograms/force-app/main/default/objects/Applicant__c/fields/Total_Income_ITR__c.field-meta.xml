@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Income_ITR__c</fullName>
+    <label>Total Income ITR</label>
+    <summarizedField>Income_Details__c.Income__c</summarizedField>
+    <summaryFilterItems>
+        <field>Income_Details__c.Is_Salaried__c</field>
+        <operation>equals</operation>
+        <value>False</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Income_Details__c.Applicant__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

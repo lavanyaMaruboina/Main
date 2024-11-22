@@ -1,0 +1,36 @@
+<template>
+    <div style="width: 50rem !important;">
+        <lightning-card title="Remarks" style="font-weight: bold;">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                    <div class="slds-p-around_medium">
+                        <lightning-combobox label="Overall RCU Agency Verification Status" name="RCUAgentStatus" value={statusValue} onchange={handleChange} options={overAllRCUStatusOptions} disabled={disableRCUAVS}></lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                    <div class="slds-p-around_medium">
+                        <lightning-textarea label="Overall RCU Agency Verification Remarks" name="RCUAgentRemarks" value={remarksValue} onchange={handleChange}></lightning-textarea>
+                    </div>
+                </div>
+                <template if:true={isRCUAgencySamplingRes}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                    <lightning-dual-listbox name="RCUAgentSamplingReason"
+                            label="Overall RCU Agency Sampling Reason"
+                            source-label="Available"
+                            selected-label="Selected"
+                            field-level-help="Overall RCU Agency Sampling Reason"
+                            options={samplingReasonOption}
+                            required={samplingReasonRequired}
+                            data-id="samplingReason"
+                            onchange={handleChange}></lightning-dual-listbox>
+                    </div>
+                </template>  
+            </div>
+
+
+                <div class="slds-p-around_medium" if:true={isShowSubmitButton}>
+                    <lightning-button label="Submit" class="slds-align_absolute-center" onclick={saveData} variant="brand"></lightning-button>
+                </div>
+        </lightning-card>
+    </div>
+</template>

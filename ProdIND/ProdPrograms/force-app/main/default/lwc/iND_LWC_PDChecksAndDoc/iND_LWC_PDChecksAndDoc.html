@@ -1,0 +1,108 @@
+<template>
+
+    <c-l-w-c_-l-o-s_-deal-number-drop-down record-id={oppId} screen-name="Pre Disbursement Check" onselectdealnumber={dealNumberHandler}></c-l-w-c_-l-o-s_-deal-number-drop-down>
+
+
+    <!-- <div class="slds-size_1-of-1 slds-text-align_right slds-m-around_xxx-small">
+        <lightning-button class="indusPrimaryVehicleButton slds-button slds-button_brand" name="revoke" label="Revoke" onclick={onSubmitRevokeEvent}>Revoke</lightning-button>
+        <lightning-button class="indusPrimaryVehicleButton slds-button slds-button_brand " name="addChangeBorowwer" label="Add/Change Borowwer" onclick={onSubmitBorrowerEvent}>Add/Change Borowwer</lightning-button>
+    </div> -->
+    <!-- <c-i-N-D-_-L-W-C-_-Revoke if:true={showConfirmation} ontoastselection={ontoastselection} oncancelselection={oncancelselection} record-id={oppId} revoketype={revoketype}></c-i-N-D-_-L-W-C-_-Revoke> -->
+
+    <lightning-tabset active-tab-value="Security Mandate">
+        <!-- <lightning-tab label="Tele-verification"></lightning-tab> -->
+
+        <!-- CISP-57 OR INDI-4606 - START -->
+        <template for:each={tabSetList} for:item="item">
+            <template if:true={item.preDisbursementCheck}>
+                <lightning-tab key={item} class="PreDisbursementCheck" label="CAM and Conditional Approval" value="Pre-Disbursement Check">
+                    <c-i-N-D-_-L-W-C-_pre-Disbursement-Check record-id={oppId} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_pre-Disbursement-Check>
+                </lightning-tab>
+            </template>
+            <template if:true={item.vehicleInspectionAndRCCheck}>
+                <lightning-tab key={item} class="VehicleInspectionAndRCCheck" label={vehicleInspectionLabel} value="Vehicle Inspection">
+                    <c-i-N-D-_-L-W-C-_capture-Vehicle-Inspection-R-C-Limit record-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_capture-Vehicle-Inspection-R-C-Limit>
+                </lightning-tab>
+            </template>
+
+        <!--<lightning-tab class="StructuredEMI" label="Structured EMI">
+                <c-i-N-D-_-L-W-C-_-Structured-E-M-I record-id={oppId}></c-i-N-D-_-L-W-C-_-Structured-E-M-I>
+            </lightning-tab>-->
+
+            <template if:true={item.securityMandate}>
+                <lightning-tab key={item} class="SecurityMandate" label="Security Mandate" value="Security Mandate" >
+                    <c-i-N-D-_-L-W-C-_-Security-Mandate record-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_-Security-Mandate>
+                </lightning-tab>
+            </template>
+            
+            <template if:true={item.invoice}>
+                <lightning-tab key={item} class="Invoice" label="Invoice" value="Invoice">
+                    <c-i-N-D-_-L-W-C-_capture-Invoice-Details record-id={oppId} current-step={currentStep} deal-id={dealId}></c-i-N-D-_-L-W-C-_capture-Invoice-Details>
+                </lightning-tab>
+            </template>
+            
+            <template if:true={item.ihm}>
+                <!-- <template if:true={isIHMVisible}> -->
+                    <lightning-tab key={item} class="IHM" label="IHM" value="IHM">
+                        <c-i-N-D-_-L-W-C-_-I-H-M-Page loan-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                            <!-- CISP-2735 -->
+                        </c-i-N-D-_-L-W-C-_-I-H-M-Page>
+                    </lightning-tab>
+                <!-- </template> -->
+            </template>
+            
+            <template if:true={item.loanAgreement}>
+                <lightning-tab key={item} class="LoanAgreement" label="Loan Agreement" value="Loan Agreement">
+                    <c-i-N-D-_-L-W-C-_-Loan-Agreement opp-id={oppId} current-step={currentStep} readonly="true" is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_-Loan-Agreement>
+                </lightning-tab>
+            </template>
+
+            <!-- <lightning-tab class="SigningEAgreement" label="Signing the e-Agreement">
+                <c-i-n-d_-l-w-c_-signing_e-agreement opp-id={oppId}></c-i-n-d_-l-w-c_-signing_e-agreement>
+            </lightning-tab> -->
+
+            <template if:true={item.repaymentMandate}>
+                <lightning-tab key={item} class="RepaymentMandate" label="Repayment Mandate" value="Repayment Mandate">
+                    <c-i-N-D-_-L-W-C-_-Repayment-Mandate-Parent record-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_-Repayment-Mandate-Parent>
+                </lightning-tab>
+            </template>
+
+            <template if:true={item.documentsUpload}>
+                <lightning-tab key={item} class="DocumentsUpload" label="RTO, DPN, POA Documents Upload">
+                    <!-- <c-i-N-D-_-L-W-C-_-Rto-Dpn-Poa-Documents record-id={oppId}></c-i-N-D-_-L-W-C-_-Rto-Dpn-Poa-Documents> -->
+                    <c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-Document-Upload record-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-Document-Upload>
+                </lightning-tab>
+            </template>
+
+            <template if:true={item.additionalDocuments}>
+                <lightning-tab key={item} class="AdditionalDocuments" label="Additional Documents" value="Addtional Documents" >
+                    <template if:false={isTractor}>
+                    <c-i-N-D-_-L-W-C-_-Addtional-Documents record-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+                        <!-- CISP-2735 -->
+                    </c-i-N-D-_-L-W-C-_-Addtional-Documents>
+                    </template>
+                    <template if:true={isTractor}>
+                        <c-i-N-D-_-L-W-C-_-Additional-Documents-Tractor record-id={oppId} current-step={currentStep} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId} ></c-i-N-D-_-L-W-C-_-Additional-Documents-Tractor>
+                    </template>
+                </lightning-tab>
+            </template>
+
+            <!--<lightning-tab class="InitiateRCU" label="Initiate RCU"></lightning-tab>
+            <lightning-tab class="RCUManager" label="RCU Manager"></lightning-tab> -->
+        </template>
+        <!-- CISP-57 OR INDI-4606 - END -->
+
+    </lightning-tabset>
+</template>

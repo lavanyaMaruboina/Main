@@ -1,0 +1,513 @@
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </template>
+    </div>
+    <lightning-accordion class="example-accordion" allow-multiple-sections-open active-section-name={activeSections}>
+        <lightning-accordion-section name="Change Variant" label={accordionLabel}>
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                            onclick={handle_ChangeVar} disabled={disableGetPrice}>
+                            Change Variant <!--CISP-4778--><!--CISP-12635-->
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-3">
+                            <label class="slds-form-element__label"> Make<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" value={Make} disabled=True>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-3">
+                            <label class="slds-form-element__label"> Model <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <!-- SFTRAC-1218 -->
+                            <lightning-combobox class="slds-form-element__control " options={modelOptions}
+                                dropdown-alignment="auto" onchange={modelChangeclick} name="modelField"
+                                placeholder={Model} value={Model} label="Model" variant="label-hidden"
+                                data-id="insDecVal" disabled={Modelchange} required></lightning-combobox>
+                                <!-- SFTRAC-1218 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-3">
+                            <label class="slds-form-element__label">Variant<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control " options={variantOptions}
+                                dropdown-alignment="auto" onchange={varientchangeclick} name="variantField"
+                                placeholder={Variant} value={Variant} label="Variant" variant="label-hidden"
+                                id="insDecVal" disabled={Varientchange} required></lightning-combobox>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <template if:false={isTractor}>
+               <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                            onclick={handleGetPriceButtons} disabled={pricedetails}>
+                            Get Price Details
+                        </button>
+                    </div>
+                </div>
+               </div>
+            </template>
+
+            <div class="slds-form slds-grid slds-wrap">
+            
+            <template if:false={isTractor}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Basic Price <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" data-id="insDecVal" value={BasicPrice} onblur={onbasepricechange} onchange={enableOfferEngine}
+                            onfocusout={calculateAllValues} disabled={onvariantchangedtrue}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">GST<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal" value={GSTAmount} onblur={ongstchange} onchange={enableOfferEngine}
+                                    formatter="currency" disabled={onvariantchangedtrue} onfocusout={calculateAllValues}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+                <template if:true={isTractor}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Basic Price <abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-name="Basic_Price__c" data-id="insDecVal" value={BasicPrice} onchange={enableOfferEngine}
+                                    onfocusout={calculateAllValuesTractor} disabled={onvariantchangedtrue}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">GST<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-name="GST_Amount__c" data-id="insDecVal" value={GSTAmount} onchange={enableOfferEngine}
+                                        formatter="currency" disabled={onvariantchangedtrue} onfocusout={calculateAllValuesTractor}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st yr insurance prem.<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-name="X1st_yr_Insurance_Premium__c" data-id="insDecVal" onchange={enableOfferEngine}
+                                        value={X1styrInsurancePremium} formatter="currency" onfocusout={calculateAllValuesTractor} disabled={onvariantchangedtrue}> 
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Invoice Amount<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-name="Invoice_Price__c" data-id="invoiceAmount" onchange={enableOfferEngine} onblur={onInvoicePricechange}
+                                        value={invoiceAmount} formatter="currency" onfocusout={calculateAllValuesTractor} disabled={onvariantchangedtrue}> 
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Required Loan amount<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-name="Loan_Amount__c" data-id="reqLoan" value={RequiredLoanamount} onfocusout={calculateAllValuesTractor}
+                                        disabled={onvariantchangedtrue} onchange={enableOfferEngine}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:false={isTractor}>
+
+                <template if:false = {isTWNew}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Discount On Basic Price<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insDecVal" value={DealerDisctoCustomer} onblur={ondealerdiscountchange} onchange={enableOfferEngine}
+                                        disabled={onvariantchangedtrue} onfocusout={calculateAllValues} >
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true = {isTWNew}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Discount On Basic Price<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insDecVal" value={DealerDisctoCustomer} onblur={ondealerdiscountchange}
+                                       disabled><!--CISP-240-->
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                </template>
+
+
+            </div>
+            <template if:false={isTractor}>
+            <div class="slds-form slds-grid slds-wrap">
+                <template if:false = {isTWNew}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Ex-Showroom <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" data-id="insDecVal" value={Exshowroomprice} onfocusout={calculateAllValues}
+                                disabled=True>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                </template>
+                <template if:true = {isTWNew}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Ex-Showroom <abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="exshowpriceTWNew" value={Exshowroomprice}
+                                onchange={handleExshowPriceChange} onblur={exshowroomPriceChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Ex-Showroom(Carwale)<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal"
+                                    value={Exshowroompricecarwale} formatter="currency" disabled=True>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">RTO Road Tax<abbr title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <!-- CISP-2346 -->
+                        <template if:false={isRtoRoadTaxFieldEnable}>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insDecVal" value={RTORoadTax} onchange={handleRTOChangeCar}  disabled={onvariantchangedtrue}><!--CISP-6540-->
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={isRtoRoadTaxFieldEnable}>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="rtoRoaTaxVal" value={rtoRoaTaxVal}  required onchange={handleRTOChange}
+                                    onblur={TWRtoChange} disabled={onvariantchangedtrue}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </template>
+                        <!-- CISP-2346 -->
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template if:false={isTractor}>
+            <div class="slds-form slds-grid slds-wrap">
+                <template if:false={isTWNew}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Other Charges<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal" value={Othercharges} onblur={onotherchargeschange} onchange={enableOfferEngine}
+                                onfocusout={calculateAllValues} disabled={onvariantchangedtrue}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st yr insurance prem.<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insDecVal" onblur={insurancecpremiumchange} onchange={enableOfferEngine}
+                                        value={X1styrInsurancePremium} formatter="currency" onfocusout={calculateAllValues} disabled={onvariantchangedtrue}> 
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={isTWNew}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Other Charges<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal" value={Othercharges} onblur={onotherchargeschange} onchange={enableOfferEngine}
+                                    >
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st yr insurance prem.<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insDecVal" onblur={insurancecpremiumchange}
+                                        value={X1styrInsurancePremium} onchange={enableOfferEngine} formatter="currency" >
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">On Road Price<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal" value={OnRoadprice}
+                                    disabled=True>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={isTractor}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Onroad price(Carwale) <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" data-id="insDecVal" value={OnRoadpricecarwale}
+                                disabled=True>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_3-of-3">
+                            <div class="slds-col slds-size_3-of-3">
+                                <lightning-input data-id="insDecVal" type="checkbox" label="Funding on Ex-Showroom" onblur={fundingonexshowroomchange}
+                                    checked={FundingonExShowroomboolean} disabled={onvariantchangedtrue}>
+                                </lightning-input>
+                                <lightning-input data-id="insDecVal" type="checkbox" label="Funding on ORP" onblur={fundingonorpchange}
+                                    checked={FundingonORPboolean} disabled={onvariantchangedtrue}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Required Loan amount<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input variant="label-hidden" data-id="insDecVal" value={RequiredLoanamount} onblur={onloanchange}
+                                    disabled={onvariantchangedtrue} onchange={enableOfferEngine}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                            onclick={runEligibilityEngine} disabled={runoffer}>
+                            Run Offer Engine
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <!-- confirmation dialog placed here -->
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div if:false={emptyvalue}>
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Variant Changed</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b>Variant value is changed from {oldvarient} to {newvarient}
+                            </b></p>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal}
+                            title="Cancel">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={varientsave} title="OK">OK</button>
+                    </footer>
+                </div>
+            </div>
+            <div if:true={emptyvalue}>
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Variant Changed</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                        <p><b>Change/Enter Variant value
+                            </b></p>
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeModal}
+                            title="Cancel">Close</button>
+                    </footer>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+</template>

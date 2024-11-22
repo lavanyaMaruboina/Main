@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Reinitiation_Validation</fullName>
+    <active>true</active>
+    <description>Document can be maximum reinitiated 2 times</description>
+    <errorConditionFormula>ISPICKVAL(Opportunity_Relation__r.Product_Type__c ,&apos;Tractor&apos;) &amp;&amp;(RCU_Case__r.Owner:User.UserRole.Name = &apos;NCM&apos;  || RCU_Case__r.Owner:User.UserRole.Name = &apos;SCM&apos;)  &amp;&amp; Reinitiation_Count__c  =  2  &amp;&amp;  (ISPICKVAL(NCM_Status__c, &apos;Reinitiated&apos;) ||  ISPICKVAL(SCM_Status__c, &apos;Reinitiated&apos;))</errorConditionFormula>
+    <errorMessage>Document can be reinitiated maximum 2 time only.</errorMessage>
+</ValidationRule>

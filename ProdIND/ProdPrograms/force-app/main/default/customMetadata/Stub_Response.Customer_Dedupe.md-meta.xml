@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Customer Dedupe</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;cicNo&quot;:&quot;1020220313114334608&quot;,  &quot;response&quot; : {
+    &quot;content&quot; : [ {
+      &quot;ErrorDesc&quot; : &quot;&quot;,
+      &quot;Data&quot; : {
+        &quot;InternalDedupeResponse&quot; : [ {
+          &quot;CustomerValidate&quot; : null,
+          &quot;CustomerMaster&quot; : null
+        } ],
+        &quot;ExternalDedupeResponse&quot; : {
+          &quot;CustomerValidate&quot; : null,
+          &quot;DtRECENTLEAD&quot; : null,
+          &quot;DtCFDCUSTBAS&quot; : null,
+          &quot;DEDUPE_STATUS&quot; : null
+        }
+      }
+    } ],
+    &quot;respDesc&quot; : &quot;IxsightEnquiry&quot;,
+    &quot;status&quot; : &quot;SUCCESS&quot;
+  }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Customer Dedupe</value>
+    </values>
+</CustomMetadata>

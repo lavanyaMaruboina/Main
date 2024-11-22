@@ -1,0 +1,92 @@
+<template>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <lightning-input class="slds-form-element__control" type="checkbox" disabled={checkboxDisable} label="Is this current residence cum office?" name="Is this current residence cum office?" onchange={handleCheckbox} value={isChecked} checked={isChecked}></lightning-input>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Employer/Business Name<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden" name="ownerContactNumberfield" disabled data-id="employeeNameId" pattern={label.RegEx_Alphabets_Only} message-when-pattern-mismatch={label.firstNameError} value={employerName} onchange={businessName} required></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Address line 1<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control loanAmt" variant="label-hidden" name="vehiclValuationfield" pattern={label.KycAddress1Pattern} data-id="addressLineOneId" value={formdata.street} disabled={textDisable} onchange={addressLineOne} type="textarea" required></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Address line 2<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="ownerNamefield" variant="label-hidden" pattern={label.KycAddress2Pattern} data-id="addressLineTwoId" value={formdata.addLine} disabled={textDisable} onchange={addressLineTwo} required></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">State<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" variant="label-hidden" name="ownerContactNumberfield" placeholder="Select State" required data-id="kycStateDataId" options={allStateDataOptionsList} value={formdata.state} disabled={textDisable} onchange={addressState}></lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">District<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox name="District Value" label="District" variant="label-hidden" value={formdata.district} data-id="addressDistrictId" onchange={addressDistrict} placeholder="Select District" required options={districtValueOptionsList} disabled={textDisable}></lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">City<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control loanAmt" variant="label-hidden" name="vehiclValuationfield" label="Mumbai" placeholder="Select City" required data-id="addressCityId" options={cityValueOptionsList} value={formdata.city} disabled={textDisable} onchange={addressCity} type="textarea"></lightning-combobox>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Pin Code<abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden" pattern={label.Pin_code_Pattern} data-id="addressPinCodeId" value={formdata.pincode} disabled={textDisable} onchange={addressPinCode} required></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( MSIL_Application_Status_Code__c == &apos;340017&apos;, &apos;CANCELED&apos;, IF( MSIL_Application_Status_Code__c == &apos;340012&apos;, &apos;RE_UPLOAD_DOCUMENT&apos;,IF( MSIL_Application_Status_Code__c == &apos;340004&apos; , &apos;REJECTED&apos;,IF( MSIL_Application_Status_Code__c == &apos;340003&apos; , &apos;SANCTIONED&apos;,IF(MSIL_Application_Status_Code__c == &apos;340002&apos;, &apos;UNDER_PROCESS&apos;,IF( MSIL_Application_Status_Code__c == &apos;340005&apos; , &apos;DISBURSED&apos;,&apos;&apos;))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Application Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

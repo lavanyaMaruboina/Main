@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Category__c</fullName>
+    <label>Sub - Category</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Category__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Upload File</fullName>
+                <default>false</default>
+                <label>Upload File</label>
+            </value>
+            <value>
+                <fullName>Salesforce Login</fullName>
+                <default>false</default>
+                <label>Salesforce Login</label>
+            </value>
+            <value>
+                <fullName>Integrator app Login</fullName>
+                <default>false</default>
+                <label>Integrator app Login</label>
+            </value>
+            <value>
+                <fullName>OTP related</fullName>
+                <default>false</default>
+                <label>OTP related</label>
+            </value>
+            <value>
+                <fullName>Image Upload</fullName>
+                <default>false</default>
+                <label>Image Upload</label>
+            </value>
+            <value>
+                <fullName>Bureau report</fullName>
+                <default>false</default>
+                <label>Bureau report</label>
+            </value>
+            <value>
+                <fullName>Make / Model / Variant missing</fullName>
+                <default>false</default>
+                <label>Make / Model / Variant missing</label>
+            </value>
+            <value>
+                <fullName>Dealer / Sub dealer name missing</fullName>
+                <default>false</default>
+                <label>Dealer / Sub dealer name missing</label>
+            </value>
+            <value>
+                <fullName>IRR related</fullName>
+                <default>false</default>
+                <label>IRR related</label>
+            </value>
+            <value>
+                <fullName>Carwale Pricing</fullName>
+                <default>false</default>
+                <label>Carwale Pricing</label>
+            </value>
+            <value>
+                <fullName>Scheme related</fullName>
+                <default>false</default>
+                <label>Scheme related</label>
+            </value>
+            <value>
+                <fullName>Tenure / Loan amount / EMI amount</fullName>
+                <default>false</default>
+                <label>Tenure / Loan amount / EMI amount</label>
+            </value>
+            <value>
+                <fullName>CMU related</fullName>
+                <default>false</default>
+                <label>CMU related</label>
+            </value>
+            <value>
+                <fullName>Cases not listed</fullName>
+                <default>false</default>
+                <label>Cases not listed</label>
+            </value>
+            <value>
+                <fullName>Data error</fullName>
+                <default>false</default>
+                <label>Data error</label>
+            </value>
+            <value>
+                <fullName>Data not retrieved</fullName>
+                <default>false</default>
+                <label>Data not retrieved</label>
+            </value>
+            <value>
+                <fullName>AML related</fullName>
+                <default>false</default>
+                <label>AML related</label>
+            </value>
+            <value>
+                <fullName>Upload or View image</fullName>
+                <default>false</default>
+                <label>Upload or View image</label>
+            </value>
+            <value>
+                <fullName>Scorecard / LTV / Pricing engine API</fullName>
+                <default>false</default>
+                <label>Scorecard / LTV / Pricing engine API</label>
+            </value>
+            <value>
+                <fullName>Sanctioning</fullName>
+                <default>false</default>
+                <label>Sanctioning</label>
+            </value>
+            <value>
+                <fullName>CAM &amp; Deviations</fullName>
+                <default>false</default>
+                <label>CAM &amp; Deviations</label>
+            </value>
+            <value>
+                <fullName>Additional Doc uploads</fullName>
+                <default>false</default>
+                <label>Additional Doc uploads</label>
+            </value>
+            <value>
+                <fullName>IHM calculation</fullName>
+                <default>false</default>
+                <label>IHM calculation</label>
+            </value>
+            <value>
+                <fullName>Repayment method</fullName>
+                <default>false</default>
+                <label>Repayment method</label>
+            </value>
+            <value>
+                <fullName>Agreement Stamping</fullName>
+                <default>false</default>
+                <label>Agreement Stamping</label>
+            </value>
+            <value>
+                <fullName>E-Agreement</fullName>
+                <default>false</default>
+                <label>E-Agreement</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Valuation IDV</fullName>
+                <default>false</default>
+                <label>Valuation IDV</label>
+            </value>
+            <value>
+                <fullName>Asset detail</fullName>
+                <default>false</default>
+                <label>Asset detail</label>
+            </value>
+            <value>
+                <fullName>Dedupe</fullName>
+                <default>false</default>
+                <label>Dedupe</label>
+            </value>
+            <value>
+                <fullName>Final terms</fullName>
+                <default>false</default>
+                <label>Final terms</label>
+            </value>
+            <value>
+                <fullName>Bank account check</fullName>
+                <default>false</default>
+                <label>Bank account check</label>
+            </value>
+            <value>
+                <fullName>Business Payment</fullName>
+                <default>false</default>
+                <label>Business Payment</label>
+            </value>
+            <value>
+                <fullName>Login</fullName>
+                <default>false</default>
+                <label>Login</label>
+            </value>
+            <value>
+                <fullName>Forgot Username/Password</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Forgot Username/Password</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Login</controllingFieldValue>
+            <valueName>Salesforce Login</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Login</controllingFieldValue>
+            <valueName>Integrator app Login</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Login</controllingFieldValue>
+            <valueName>Login</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>OTP related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <controllingFieldValue>FI</controllingFieldValue>
+            <valueName>Image Upload</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Bureau report</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Make / Model / Variant missing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Dealer / Sub dealer name missing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>IRR related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Carwale Pricing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Scheme related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Tenure / Loan amount / EMI amount</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>CMU related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <controllingFieldValue>FI</controllingFieldValue>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Others</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Insurance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Valuation IDV</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Loan Application</controllingFieldValue>
+            <valueName>Asset detail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FI</controllingFieldValue>
+            <valueName>Cases not listed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FI</controllingFieldValue>
+            <valueName>Data error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Data not retrieved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>AML related</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>Upload or View image</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Scorecard / LTV / Pricing engine API</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Sanctioning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>CAM &amp; Deviations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Dedupe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Final terms</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Processing</controllingFieldValue>
+            <valueName>Bank account check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>Additional Doc uploads</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>IHM calculation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>Repayment method</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>Agreement Stamping</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>E-Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>Business Payment</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

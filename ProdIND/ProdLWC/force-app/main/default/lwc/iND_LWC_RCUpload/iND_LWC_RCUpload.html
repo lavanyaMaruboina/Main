@@ -1,0 +1,134 @@
+<template>
+   
+        <template if:true={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
+        <template if:true={pageVisible}>     
+    <div>
+        <!-- <div class="slds-m-bottom_large slds-clearfix">
+            <template if:true={isEnableUploadViewDoc}>
+                <lightning-button onclick={handleUploadViewDoc} variant="brand" label="Upload and View Document"
+                    alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton">
+                </lightning-button>
+            </template>
+        </div> -->
+
+        <lightning-accordion class="example-accordion" active-section-name="A">
+            <lightning-accordion-section name="A" label={label.RC_Upload}>
+
+                <div class="slds-form slds-grid slds-wrap">
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Registration Format<abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">                        
+                                <lightning-combobox class="slds-form-element__control vehicleNumber" variant="label-hidden" data-id="registrationFormatField"
+                                    name="registrationFormatField" value={registrationFormat} onchange={handleInputFieldChange}
+                                    placeholder="-- Select --" options={registrationFormatOptions}  disabled={disableRegFormat} required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Registration Number <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden" required message-when-bad-input="Enter a Registration Number"
+                                    name="registrationNumberField" pattern={vehicleRegistrationPattern} placeholder={vehicleRegistrationPatternPlaceholder}
+                                    message-when-pattern-mismatch="Enter a Valid Registration Number" data-id="registrationNumberField"
+                                    onchange={handleInputFieldChange} value={registrationNumber} disabled={disableRegNumber}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Registration Owner Name <abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                    name="registrationOwnerNameField" data-id="registrationOwnerNameField"
+                                    onchange={handleInputFieldChange} value={registrationOwnerName} disabled={disableRegOwner} required>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Date of Registration<abbr title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                    name="dateOfRegistrationField" data-id="dateOfRegistrationField" max={todaysDate} disabled={disableRegDate}
+                                    onchange={handleInputFieldChange} type="date" message-when-range-overflow={label.RegistrationDateError} value={dateOfRegistration} required>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </lightning-accordion-section>
+        </lightning-accordion>    
+        
+        </br>
+
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleUploadViewDoc} disabled={disableUpload}>
+                        Upload RC
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        </br>
+
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button name="rcUploadSubmit" class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleSubmit} disabled={disableSubmit}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <template if:true={uploadViewDocFlag}>
+        <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeUploadRCFlagValue}
+            currentloanapplicationid={recordid} currentapplicantid={applicantid}
+            uploadviewdocpopup={uploadViewDocFlag}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId} createdoconparentbutton="true" currentvehiclerecordid={currentvehiclerecordid}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+    </template>
+
+    <!--<template if:true={uploadRCDocFlag}>
+        <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeUploadRCFlagValue}
+            currentloanapplicationid={recordid} currentapplicantid={applicantid}
+            uploadviewdocpopup={uploadRCDocFlag} createdoconparentbutton="true" title="Upload RC Document"
+            doctype={docType} isphotocopy={showPhotoCopy} showdocview={showDocView}
+            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+    </template>-->
+    </template>
+    <template if:false={pageVisible}>
+        {paymentRequestGenerated}
+    </template>
+</template>

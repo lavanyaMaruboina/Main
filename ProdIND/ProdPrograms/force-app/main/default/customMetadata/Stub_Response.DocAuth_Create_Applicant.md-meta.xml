@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>DocAuth Create Applicant</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;RequestId&quot;:&quot;22032022152326510&quot;,&quot;ResponseData&quot;:{&quot;Status&quot;:&quot;Success&quot;,&quot;ResponseInfo&quot;:{&quot;ApplicationId&quot;:28251484,&quot;SolutionSetInstanceId&quot;:&quot;55838f29-a664-4728-be39-26321c538b15&quot;},&quot;Fields&quot;:{&quot;Applicants&quot;:{&quot;Applicant&quot;:{&quot;ApplicantFirstName&quot;:&quot;Karthi&quot;,&quot;ApplicantMiddleName&quot;:&quot;&quot;,&quot;ApplicantLastName&quot;:&quot;M&quot;,&quot;Services&quot;:{&quot;Service&quot;:[{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;DocumentAuthentication&quot;,&quot;Operations&quot;:{&quot;Operation&quot;:[{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Createapplicant&quot;,&quot;Params&quot;:{&quot;Param&quot;:[]},&quot;Data&quot;:{&quot;Response&quot;:{&quot;RawResponse&quot;:&quot;{\&quot;addresses\&quot;:[],\&quot;country\&quot;:\&quot;gbr\&quot;,\&quot;country_of_birth\&quot;:null,\&quot;created_at\&quot;:\&quot;2022-03-22T09:53:31Z\&quot;,\&quot;delete_at\&quot;:null,\&quot;dob\&quot;:null,\&quot;email\&quot;:null,\&quot;first_name\&quot;:\&quot;Karthi\&quot;,\&quot;gender\&quot;:null,\&quot;href\&quot;:\&quot;/v2/applicants/7b8c2aca-b822-4851-aa46-596b634a7b04\&quot;,\&quot;id\&quot;:\&quot;7b8c2aca-b822-4851-aa46-596b634a7b04\&quot;,\&quot;id_numbers\&quot;:[],\&quot;last_name\&quot;:\&quot;M\&quot;,\&quot;middle_name\&quot;:null,\&quot;mobile\&quot;:null,\&quot;mothers_maiden_name\&quot;:null,\&quot;nationality\&quot;:null,\&quot;previous_last_name\&quot;:null,\&quot;sandbox\&quot;:false,\&quot;telephone\&quot;:null,\&quot;title\&quot;:null,\&quot;town_of_birth\&quot;:null}&quot;}},&quot;Status&quot;:&quot;Pass&quot;}]},&quot;Status&quot;:&quot;Pass&quot;}]},&quot;ApplicantIdentifier&quot;:&quot;d7c2e781-b8a2-414e-bcc5-09f7adcdff3c&quot;}},&quot;ApplicationData&quot;:{&quot;Services&quot;:{&quot;Service&quot;:{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;DocumentAuthentication&quot;,&quot;Skip&quot;:&quot;N&quot;,&quot;Consent&quot;:&quot;true&quot;,&quot;EnableSimulation&quot;:&quot;False&quot;}}},&quot;Decision&quot;:&quot;Pass&quot;,&quot;ApplicationId&quot;:&quot;28251484&quot;}}}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Create Applicant</value>
+    </values>
+</CustomMetadata>

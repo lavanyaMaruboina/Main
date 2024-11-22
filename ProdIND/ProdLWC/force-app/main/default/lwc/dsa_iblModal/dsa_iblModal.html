@@ -1,0 +1,82 @@
+<template> 
+    <section role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- modal header start -->
+            <!-- <header class="slds-modal__header">
+                <button
+                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    title="Close"
+                    onclick={handleCancel}
+                >
+                    <lightning-icon
+                        icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small"
+                    ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">
+                    {header}
+                </h2>
+            </header> -->
+
+            <!-- modal body start -->
+            <div
+                class="slds-modal__content slds-p-around_medium"
+                style="text-align: center"
+            >
+                <lightning-formatted-text value={message} linkify>
+                </lightning-formatted-text>
+                <br/><br/>
+                <div
+                    style="display: flex; width: 100%; justify-content: center"
+                >
+                    <button
+                        title="Cancel"
+                        name="cancel"
+                        onclick={handleCancel}
+                        class="ibl-btn-red_secondary responsive-btn"
+                    >
+                        Cancel
+                    </button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button
+                        title="Confirm"
+                        name="Confirm"
+                        onclick={handleConfirm}
+                        class="ibl-btn-red responsive-btn"
+                    >
+                        Confirm
+                    </button>
+                </div>
+            </div>
+
+            <!-- modal footer start-->
+            <!-- <footer class="slds-modal__footer lli-flex-center">
+                <div
+                    style="display: flex; width: 100%; justify-content: center"
+                >
+                    <button
+                        title="Cancel"
+                        name="cancel"
+                        onclick={handleCancel}
+                        class="ibl-btn-red responsive-btn"
+                    >
+                        Cancel
+                    </button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button
+                        title="Confirm"
+                        name="Confirm"
+                        onclick={handleConfirm}
+                        class="ibl-btn-red responsive-btn"
+                    >
+                        Confirm
+                    </button>
+                </div>
+            </footer> -->
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

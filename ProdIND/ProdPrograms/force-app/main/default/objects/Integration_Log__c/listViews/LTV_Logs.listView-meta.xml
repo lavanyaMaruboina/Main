@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LTV_Logs</fullName>
+    <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>NAME</columns>
+    <columns>Loan_Application__c</columns>
+    <columns>Service_Name__c</columns>
+    <columns>Original_request__c</columns>
+    <columns>Original_response__c</columns>
+    <columns>Elapsed_Time__c</columns>
+    <columns>Status__c</columns>
+    <columns>leadsource__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Loan_Application__c</field>
+        <operation>contains</operation>
+        <value>L09102404401</value>
+    </filters>
+    <label>LTV Logs</label>
+</ListView>

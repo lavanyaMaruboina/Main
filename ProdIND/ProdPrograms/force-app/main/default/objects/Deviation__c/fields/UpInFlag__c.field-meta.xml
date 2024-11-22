@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UpInFlag__c</fullName>
+    <description>Comma separated user id values where user is up in role/level hierarchy from the roles/levels identified in FICO engine output, to be fetched from Accounts Teams</description>
+    <label>UpInFlag</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WrittenoffAmountTotal__c</fullName>
+    <description>This field will be used to store the WrittenoffAmountTotal value coming from cibil api.</description>
+    <label>WrittenoffAmountTotal</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

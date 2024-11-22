@@ -1,0 +1,161 @@
+.slds-modal__header,
+.slds-modal__footer {
+    flex-shrink: 0;
+}
+
+.custom-container-class{
+    width: 50%;
+    margin: auto;
+    padding-top: 10rem;
+}
+
+.slds-modal__close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: rgb(160, 157, 157); 
+    border-radius: 50%; 
+    padding: 5px; 
+}
+
+.close-icon lightning-icon svg {
+    fill: white !important; 
+}
+
+/* Additional specificity to ensure color is white */
+.close-icon lightning-icon .slds-icon {
+    fill: white !important;
+    color: white !important;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .slds-modal__container {
+        max-width: 100%;
+        max-height: 100%;
+        top: 10%;
+        overflow: hidden; 
+        position: relative;
+        display: flex;
+    }
+
+    .slds-modal__close {
+        top: 10px;
+        right: 10px;
+        /*position: absolute;*/
+        background-color: rgb(160, 157, 157); 
+        border-radius: 50%; 
+        padding: 5px; 
+    }
+    
+    .close-icon lightning-icon svg {
+        fill: white !important; 
+    }
+    
+    /* Additional specificity to ensure color is white */
+    .close-icon lightning-icon .slds-icon {
+        fill: white !important;
+        color: white !important;
+    }
+
+    .custom-container-class{
+        width: 80%;
+        margin: auto;
+        padding-top: 6rem;
+    }
+
+    /*.slds-modal__close {
+        position: absolute;
+        top: 10px; 
+        right: 10px;
+        z-index: 1100; 
+        background-color: rgba(0, 0, 0, 0.3); 
+        border-radius: 50%; 
+        padding: 8px; 
+    }
+
+    .slds-modal__close lightning-icon svg {
+        fill: #fff !important;
+    }*/
+}
+
+@media (max-width: 480px) {
+    .slds-modal__container {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+
+    .slds-modal__close {
+        top: 5px;
+        right: 5px;
+    }
+
+    .custom-container-class{
+        width: 90%;
+        margin: auto;
+        padding-top: 3rem;
+    }
+}
+
+/* BYOD combobox */
+.container {
+    width: 100%;
+    max-width: 400px; /* Adjust maximum width as needed */
+    margin: 0 auto; /* Center the container */
+    padding: 10px;
+}
+
+.custom-combobox {
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+
+.slds-dropdown {
+    width: 100%;
+    max-width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    position: absolute;
+    top: calc(100% + 5px); /* Position dropdown below combobox */
+    left: 0;
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    max-height: 200px; /* Adjust max height based on content */
+}
+
+.custom-input {
+    width: 80%; /* Adjust width as desired */
+    max-width: 200px; /* Adjust maximum width if needed */
+    font-size: 12px; /* Adjust font size as needed */
+    padding: 6px 10px; /* Adjust padding as needed */
+
+}
+
+@media (max-width: 768px) {
+    .custom-combobox {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+@media (max-height: 768px) {
+    .custom-container-class{
+        width: 55%;
+        margin: auto;
+        padding-top: 2rem;
+    }
+}
+
+@media (max-height: 480px) {
+    .custom-container-class{
+        width: 60%;
+        margin: auto;
+        padding-top: 1rem;
+    }
+}

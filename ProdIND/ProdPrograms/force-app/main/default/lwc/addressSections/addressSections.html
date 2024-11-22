@@ -1,0 +1,486 @@
+<template>
+    <lightning-accordion-section name="F" label="CURRENT RESIDENTIAL ADDRESS">                                
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Line 1</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceAddressLine1" data-id={index}
+                             value={eachApplicant.residenceAddressLine1} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Line 2</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceAddressLine2" data-id={index}
+                             value={eachApplicant.residenceAddressLine2} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceCity" data-id={index}
+                             value={eachApplicant.residenceCity} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">District</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceDistrict" data-id={index}
+                             value={eachApplicant.residenceDistrict} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">State</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                   
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceState" data-id={index}
+                             value={eachApplicant.residenceState} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Pincode</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residencePinCode" data-id={index}
+                             value={eachApplicant.residencePinCode} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City as per Finacle</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">     
+                        <!-- <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                            name="residenceCityFinacle" value={residenceCityFinacle}
+                            placeholder="-- Select --" options={finacleCityOptions} onchange={handleChange}>
+                        </lightning-combobox>-->  
+                        <template if:false={eachApplicant.isPassengerVehicle}>
+                            <c-I-N-D_-L-W-C_-Custom_-Lookup
+                              is-value-selected={finacleId}
+                              selected-name={finacleName}
+                              object-name="Finacle_City__c"
+                              fetch-field="City_Code__c"
+                              search-field="City_Code__c"
+                              filter-field="City_Code__c"
+                              filter-term=""
+                              onlookupselected={residenceCityOnlookuphandler}
+                              onclearvalue={residenceCityOnlookuphandler}
+                              select-field-name="City_Code__c"
+                              disable-value={isDisabled}
+                              
+                              is-custom-class-not-applicable="true"
+                            >
+                            </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                        </template>
+                        <template if:true={eachApplicant.isPassengerVehicle}>
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceCityFinacleValue" data-id={index}
+                                value={eachApplicant.residenceCityFinacleValue} read-only>
+                        </lightning-input>
+                        </template>
+                        <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceCityFinacle" data-id={index}
+                            value={eachApplicant.residenceCityFinacle} onchange={handleChange}>
+                        </lightning-input> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Landmark</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="residenceLandmark" data-id={index}
+                             value={eachApplicant.residenceLandmark} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Verified with KYC?</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                   
+                        <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="crrAddressVerifiedField" data-id={index}
+                             value={eachApplicant.crrAddressVerified} type="checkbox" disabled>
+                        </lightning-input> -->
+                        
+                        <template if:true={eachApplicant.residenceAddressVerifiedWithKYC}>                                                    
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                name="residenceAddressVerifiedWithKYC" data-id={index} value={eachApplicant.residenceAddressVerifiedWithKYC}
+                                type="checkbox" disabled checked>
+                            </lightning-input>                                          
+                        </template>   
+                        <template if:false={eachApplicant.residenceAddressVerifiedWithKYC}>
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                name="residenceAddressVerifiedWithKYC" data-id={index} value={eachApplicant.residenceAddressVerifiedWithKYC}
+                                type="checkbox" disabled>
+                            </lightning-input>
+                        </template>   
+                    </div>
+                </div>
+            </div>
+        </div>                    
+    </lightning-accordion-section>
+
+    <lightning-accordion-section name="G" label="PERMANENT RESIDENTIAL ADDRESS">                                
+        <div class="slds-form slds-grid slds-wrap">                                    
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Line 1</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                                                    
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentAddressLine1" data-id={index}
+                             value={eachApplicant.permanentAddressLine1} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Line 2</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentAddressLine2" data-id={index}
+                             value={eachApplicant.permanentAddressLine2} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentCity" data-id={index}
+                             value={eachApplicant.permanentCity} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">District</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentDistrict" data-id={index}
+                             value={eachApplicant.permanentDistrict} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">State</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentState" data-id={index}
+                             value={eachApplicant.permanentState} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Pincode</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentPinCode" data-id={index}
+                             value={eachApplicant.permanentPinCode} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City as per Finacle</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">     
+                        <!-- <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                            name="permanentFinacle" value={permanentFinacle}
+                            placeholder="-- Select --" options={finacleCityOptions} onchange={handleChange}>
+                        </lightning-combobox>  --> 
+                        <template if:false={eachApplicant.isPassengerVehicle}>
+                        <c-I-N-D_-L-W-C_-Custom_-Lookup
+                              is-value-selected={finacleId}
+                              selected-name={finacleName}
+                              object-name="Finacle_City__c"
+                              fetch-field="City_Code__c"
+                              search-field="City_Code__c"
+                              filter-field="City_Code__c"
+                              filter-term=""
+                              onlookupselected={permanentFinaclonlookupHandler}
+                              onclearvalue={permanentFinaclonlookupHandler}
+                              select-field-name="City_Code__c"
+                              disable-value={isDisabled}
+                              
+                              is-custom-class-not-applicable="true"
+                            >
+                            </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                        </template>
+                        <template if:true={eachApplicant.isPassengerVehicle}>
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentFinacleValue" data-id={index}
+                                value={eachApplicant.permanentFinacleValue} read-only>
+                        </lightning-input>
+                        </template>
+                        <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentFinacle" data-id={index}
+                             value={eachApplicant.permanentFinacle} onchange={handleChange}>
+                        </lightning-input> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Landmark</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="permanentLandmark" data-id={index}
+                             value={eachApplicant.permanentLandmark} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+                            
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Verified with KYC?</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="prrAddressVerifiedField" data-id={index}
+                             value={eachApplicant.prrAddressVerified} type="checkbox" disabled>
+                        </lightning-input> -->
+                        <template if:true={eachApplicant.permanentAddressVerifiedWithKYC}>                                                    
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                name="permanentAddressVerifiedWithKYC" data-id={index} value={eachApplicant.permanentAddressVerifiedWithKYC}
+                                type="checkbox" disabled checked>
+                            </lightning-input>                                            
+                        </template>   
+                        <template if:false={eachApplicant.permanentAddressVerifiedWithKYC}>
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                name="permanentAddressVerifiedWithKYC" data-id={index} value={eachApplicant.permanentAddressVerifiedWithKYC}
+                                type="checkbox" disabled>
+                            </lightning-input>
+                        </template>                        
+                    </div>
+                </div>
+            </div>
+        </div>                    
+    </lightning-accordion-section>
+
+    <lightning-accordion-section name="H" label="CURRENT OFFICE ADDRESS">                                
+        <div class="slds-form slds-grid slds-wrap">                    
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Line 1</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeAddressLine1" data-id={index}
+                             value={eachApplicant.officeAddressLine1} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Address Line 2</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeAddressLine2" data-id={index}
+                             value={eachApplicant.officeAddressLine2} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeCity" data-id={index}
+                             value={eachApplicant.officeCity} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">District</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeDistrict" data-id={index}
+                             value={eachApplicant.officeDistrict} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">State</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeState" data-id={index}
+                             value={eachApplicant.officeState} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Pincode</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officePinCode" data-id={index}
+                             value={eachApplicant.officePinCode} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">City as per Finacle</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">     
+                        <!-- <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                            name="officeCityFinacle" value={officeCityFinacle}
+                            placeholder="-- Select --" options={finacleCityOptions} onchange={handleChange}>
+                        </lightning-combobox>    -->
+                        <template if:false={eachApplicant.isPassengerVehicle}>
+                        <c-I-N-D_-L-W-C_-Custom_-Lookup
+                        is-value-selected={finacleId}
+                        selected-name={finacleName}
+                        object-name="Finacle_City__c"
+                        fetch-field="City_Code__c"
+                        search-field="City_Code__c"
+                        filter-field="City_Code__c"
+                        filter-term=""
+                        onlookupselected={officeCityFinacleonlookupHandler}
+                        onclearvalue={officeCityFinacleonlookupHandler}
+                        select-field-name="City_Code__c"
+                        disable-value={isDisabled}
+                        
+                        is-custom-class-not-applicable="true"
+                      >
+                      </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                    </template>
+                    <template if:true={eachApplicant.isPassengerVehicle}>
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="officeCityFinacleValue" data-id={index}
+                            value={eachApplicant.officeCityFinacleValue} read-only>
+                    </lightning-input>
+                    </template>
+                        <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeCityFinacle" data-id={index}
+                             value={eachApplicant.officeCityFinacle} onchange={handleChange}>
+                        </lightning-input> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Landmark</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">                        
+                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                            name="officeLandmark" data-id={index}
+                             value={eachApplicant.officeLandmark} read-only>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>                
+        </div>                    
+    </lightning-accordion-section>
+</template>

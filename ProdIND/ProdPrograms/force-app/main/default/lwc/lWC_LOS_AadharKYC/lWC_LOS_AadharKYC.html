@@ -1,0 +1,304 @@
+<template>
+    <lightning-card>
+        <!-- Start: This section shows options of Biometric and Scan&Upload with Upload button -->
+        <div class="slds-clearfix">
+            <lightning-button class="slds-float_right slds-p-right_medium slds-p-top_x-small" type="submit"
+                label="Upload" variant="brand" onclick={handleSubmitClick} disabled={disableUploadButton}>
+            </lightning-button>
+        </div>
+        <lightning-radio-group class="slds-p-left_medium" options={aadharBiometicOTP} value={value} type="radio"
+            onchange={biometricOTPSelectAndUpload}>
+        </lightning-radio-group>
+        <br>
+        <!-- End: This section shows options of Biometric and Scan&Upload with Upload button -->
+
+        <!-- Start: This section will show options of Scan and Manually Enter with OCR button -->
+        <template if:true={templateScanManuallyOptions}>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2 ">
+                    <lightning-radio-group class="slds-p-left_medium" options={wayOfCapturingAadhar} value={value}
+                        type="radio" onchange={changeOCRSection}></lightning-radio-group>
+                </div>
+
+                <div class="slds-col slds-size_1-of-2 slds-p-right_medium">
+                    <lightning-button class="slds-float_right slds-p-right_medium" type="submit" label="OCR"
+                        variant="brand" onclick={handleOCR} disabled={disableOCRButton}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+        <!-- End: This section will show options of Scan and Manually Enter with OCR button -->
+
+        <!-- Start: This section will be enabled on selecting 'Scan and Upload'-->
+        <template if:true={templateScanAndUploadOptions}>
+            <div class="slds-clearfix">
+                <lightning-button class="slds-align_absolute-center slds-m-around_medium" type="submit"
+                    label="Front Upload" variant="brand"> </lightning-button>
+
+                <lightning-button class="slds-align_absolute-center slds-m-around_medium" type="submit"
+                    label="Back Upload" variant="brand"> </lightning-button>
+
+                <lightning-button class="slds-align_absolute-center slds-m-around_medium" type="submit" label="Doc Auth"
+                    variant="brand" onclick={submitKycDetails}> </lightning-button>
+            </div>
+        </template>
+        <!-- End: This section will enable on selecting 'Scan and Upload'-->
+
+        <!-- Start: This section will show Aadhar Number field-->
+        <template if:true={templateAadharNumberField}>
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input label="Aadhar Number" data-id="aadharNumber" onchange={validateAadhar}
+                    value={aadharEntered} disabled={disableAadharField} onfocus={showAadharNo} onblur={blurAadharNo}
+                    max-length="12">
+                </lightning-input>
+            </div>
+        </template>
+        <!-- End: This section will show Aadhar Number field-->
+
+        <!-- Start: This section will show 2 options-Biometric and OTP-->
+        <template if:true={templateBiometricOTPOptions}>
+            <lightning-radio-group class="slds-p-left_medium" options={wayOfSelectingBiometricOtp} value={value}
+                type="radio" onchange={changeBiometricOtp}></lightning-radio-group>
+        </template>
+        <!-- End: This section will show 2 options-Biometric and OTP-->
+
+        <!-- Start: This will Popup on click of Submit button-->
+        <template if:true={templateSubmitButton}>
+            <br>
+            <div class="slds-clearfix">
+                <lightning-button class="slds-align_absolute-center" type="submit" label="Submit" variant="brand"
+                    onclick={submitOtp} disabled={disableSubmitButton}>
+                </lightning-button>
+            </div>
+
+            <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+            <template if:true={modalPopUpToggleFlag}>
+                <section id="modal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+
+                            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                                Is this Correct or Not?
+                            </h2>
+                        </header>
+                        <lightning-card variant="base">
+                            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <lightning-input label="Aadhar Number" value={aadharEntered} disabled></lightning-input>
+                            </div>
+                            <br>
+                            <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                                <div class="slds-button-group-item">
+                                    <lightning-button class="slds-theme_brand" icon-position="left" variant="brand"
+                                        type="button" label="Yes" onclick={correctAadharYes}></lightning-button>
+                                </div>
+                                <div class="slds-button-group-item">
+                                    <lightning-button class="slds-theme_brand" icon-position="left" variant="brand"
+                                        type="button" label="No" onclick={wrongAadharNo}></lightning-button>
+                                </div>
+                            </lightning-button-group>
+                        </lightning-card>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops">
+                </div>
+            </template>
+        </template>
+        <!-- End: This will Popup on click of Submit button-->
+
+
+        <!--Start :  Popup for OTP Genrator Screen on click of 'Yes' in Submit button Popup-->
+        <template if:true={PopupOTPForSubmit}>
+            <c-l-W-C_-L-O-S_-Aadhar-O-T-P generateotppopup={PopupOTPForSubmit}
+                onchangeaadharsubmitpopupflag={closeModal}></c-l-W-C_-L-O-S_-Aadhar-O-T-P>
+        </template>
+        <!--End :  Popup for OTP Genrator Screen on click of 'Yes' in Submit button Popup-->
+
+
+        <!-- Start: This Section will enable with Aadhar KYC fields and 'Done' & 'Cancel' button -->
+        <template if:true={templateKYCFields}>
+            <br>
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="Document Type" value="Aadhar" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input pattern="[0-9]{4}" label="KYC no." value="1234" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" pattern="[A-Za-z ]" label="KYC name" value="Aadhar" disabled>
+                </lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="KYC Address line 1" value="House No 123,Xyz City" disabled>
+                </lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="KYC Address line 2" value="Nagpur,India" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input pattern="[0-9]{6}" label="KYC Pin Code" value="234234" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="KYC City" pattern="[A-Za-z]" value="Pune" disabled>
+                </lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="KYC State" pattern="[A-Za-z]" value="Maharashtra" disabled>
+                </lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="date" label="KYC DOB" value="07-Oct-2021" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input pattern="[0-9]{9}" label="Aadhar enrollment" value="123412345" disabled>
+                </lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="First name" value="Jhon" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-input type="text" label="Last name" value="Doe" disabled></lightning-input>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <!-- <lightning-input type="text" label="Gender" ></lightning-input> -->
+                <lightning-combobox label="Gender" value="Male" options={GenderOptions} onchange={handleGenderChange}
+                    disabled class="validate">
+                </lightning-combobox>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-combobox name="Salutation" label="Salutation" options={salutionOptions}
+                    placeholder="-Select-" value="Mr" disabled>
+                </lightning-combobox>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                <lightning-button variant="brand" label="Done" type="cancel" onclick={handleDone}></lightning-button>
+                &nbsp;&nbsp;
+                <lightning-button type="submit" variant="brand" label="Cancel" onclick={handleCancel}>
+                </lightning-button>
+            </div>
+        </template>
+        <!-- End: This Section will enable with Aadhar KYC fields and 'Done' & 'Cancel' button -->
+
+
+        <!-- Added by Ruchi Jain -->
+
+        <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+        <template if:true={openCancelPopUP}>
+            <section id="modal2" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+                <lightning-card variant="base">
+                    <div class="slds-card__body_inner">
+                        <div class="slds-align_absolute-center" style="font-size: 0.8125rem;">
+                            <div
+                                style="box-sizing: border-box; font-family: &amp;quot;Segoe UI&amp;quot;, system-ui, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, sans-serif; font-size: 14.6667px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+                                Are you sure, you want to exit?</div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                        <div class="slds-button-group-item">
+                            <lightning-button class="slds-m-right_xx-large slds-theme_brand" icon-position="left"
+                                variant="brand" type="button" label="Yes" onclick={navigateToLightningComponent}>
+                            </lightning-button>
+                        </div>
+                        <div class="slds-button-group-item">
+                            <lightning-button class="slds-m-left_xx-large slds-theme_brand" icon-position="left"
+                                variant="brand" type="button" label="No" onclick={closepopup}></lightning-button>
+                        </div>
+                    </lightning-button-group>
+                </lightning-card>
+            </section>
+        </template>
+    </lightning-card>
+    
+    <!--Start :  This Popup will Show for Capture Screen on click of Image Upload Button -->
+    <div class="chart slds-m-around_medium" lwc:dom="manual"></div>
+            
+    <template if:true={modalPopUpCaptureImage}>
+        <section id="modal3"
+                role="dialog"
+                tabindex="-1"
+                aria-labelledby="modal-heading-02"
+                aria-modal="true"
+                aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+        
+        <div class="slds-form slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={captureCustomerImageClose}>
+                    <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </header>
+            <lightning-card>
+                <div class="slds-card__body_inner"> 
+                    <lightning-button-group class="slds-align_absolute-center">
+                        <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Upload Document"></lightning-button>
+                        <lightning-button  class="slds-theme_brand" icon-position="left" variant="brand-outline"  type="button" label="View Document"></lightning-button>     
+                    </lightning-button-group>
+                    <br>
+            
+                    <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                        <div class="slds-col slds-size_1-of-8 slds-m-left">
+                                    Document Type
+                        </div>
+                        <div class="slds-col slds-size_1-of-10">
+                            <lightning-input type="text"  variant="label-hidden" label="Aadhar" disabled></lightning-input><br/>
+                        </div>
+                    </div>
+                    <lightning-file-upload
+                    label="Capture"
+                    variant="brand"
+                    class="slds-theme_brand slds-align_absolute-center"
+                    name="fileUploader"
+                    accept={acceptedFormats}
+                    record-id={myRecordId}
+                    file-field-name="Guest_Record_fileupload__c"
+                    file-field-value={encryptedToken}
+                    onuploadfinished={handleUploadFinished}
+                    multiple>
+                    </lightning-file-upload>
+                    <br>
+                        <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                            <div class="slds-button-group-item">
+                                <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Done" onclick={captureImageDone}></lightning-button>
+                            </div>
+                            <div class="slds-button-group-item">
+                                <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Cancel" onclick={captureCustomerImageClose}></lightning-button>
+                            </div>
+                        </lightning-button-group>
+                        <br>
+                    </div>
+                    
+                </lightning-card>
+            </div>
+        </section>
+       
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1"> </div>
+    </template>  
+<!--End :  This Popup will Show for Capture Screen on click of Image Upload Button -->
+</template>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_Change</fullName>
+    <active>true</active>
+    <label>Stage Change</label>
+    <picklistValues>
+        <picklist>Application_Journey_Level__c</picklist>
+        <values>
+            <fullName>Level 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Level 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Assignment_status__c</picklist>
+        <values>
+            <fullName>Accepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recalled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Module_Name__c</picklist>
+        <values>
+            <fullName>Additional Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asset Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed Won</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disbursement Request Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Terms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Initiation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Needs Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Sanction Checks and Documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Valuation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Record_Type__c</picklist>
+        <values>
+            <fullName>Stage Change</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Module</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nature_of_Business_Major_Industry__c</fullName>
+    <label>Nature of Business - Major Industry</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AGRICULTURE</fullName>
+                <default>false</default>
+                <label>AGRICULTURE</label>
+            </value>
+            <value>
+                <fullName>COAL MINING</fullName>
+                <default>false</default>
+                <label>COAL MINING</label>
+            </value>
+            <value>
+                <fullName>CONSTRUCTION COMPANY</fullName>
+                <default>false</default>
+                <label>CONSTRUCTION COMPANY</label>
+            </value>
+            <value>
+                <fullName>DAIRY FARMING</fullName>
+                <default>false</default>
+                <label>DAIRY FARMING</label>
+            </value>
+            <value>
+                <fullName>HOTEL AND RESTAURANT</fullName>
+                <default>false</default>
+                <label>HOTEL AND RESTAURANT</label>
+            </value>
+            <value>
+                <fullName>OFFICE CUM RESIDENCE</fullName>
+                <default>false</default>
+                <label>OFFICE CUM RESIDENCE</label>
+            </value>
+            <value>
+                <fullName>POULTRY FARMING</fullName>
+                <default>false</default>
+                <label>POULTRY FARMING</label>
+            </value>
+            <value>
+                <fullName>SAND QUARRYING</fullName>
+                <default>false</default>
+                <label>SAND QUARRYING</label>
+            </value>
+            <value>
+                <fullName>SUGAR</fullName>
+                <default>false</default>
+                <label>SUGAR</label>
+            </value>
+            <value>
+                <fullName>TRANSPORTER</fullName>
+                <default>false</default>
+                <label>TRANSPORTER</label>
+            </value>
+            <value>
+                <fullName>WATER SUPPLIER</fullName>
+                <default>false</default>
+                <label>WATER SUPPLIER</label>
+            </value>
+            <value>
+                <fullName>CONTRACTOR</fullName>
+                <default>false</default>
+                <label>CONTRACTOR</label>
+            </value>
+            <value>
+                <fullName>AQUACULTURE</fullName>
+                <default>false</default>
+                <label>AQUACULTURE</label>
+            </value>
+            <value>
+                <fullName>BRICKS</fullName>
+                <default>false</default>
+                <label>BRICKS</label>
+            </value>
+            <value>
+                <fullName>RICE - MERCHANT/MILL</fullName>
+                <default>false</default>
+                <label>RICE - MERCHANT/MILL</label>
+            </value>
+            <value>
+                <fullName>BUSINESS- STONE - SUPPLIER</fullName>
+                <default>false</default>
+                <label>BUSINESS- STONE - SUPPLIER</label>
+            </value>
+            <value>
+                <fullName>MUNICIPAL - CORPORATION</fullName>
+                <default>false</default>
+                <label>MUNICIPAL - CORPORATION</label>
+            </value>
+            <value>
+                <fullName>TIMBER</fullName>
+                <default>false</default>
+                <label>TIMBER</label>
+            </value>
+            <value>
+                <fullName>HARDWARE SHOP - RETAIL</fullName>
+                <default>false</default>
+                <label>HARDWARE SHOP - RETAIL</label>
+            </value>
+            <value>
+                <fullName>Health and Social Work</fullName>
+                <default>false</default>
+                <label>Health and Social Work</label>
+            </value>
+            <value>
+                <fullName>Education</fullName>
+                <default>false</default>
+                <label>Education</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

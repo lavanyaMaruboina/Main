@@ -1,0 +1,25 @@
+.button{
+    --sds-c-button-shadow:rgb(32, 204, 83);
+    --sds-c-button-shadow-focus:blue;
+    --sds-c-button-inverse-shadow-focus:rgb(148, 72, 114);
+    --sds-c-button-neutral-color-background:rgb(255, 123, 0);
+    --sds-c-button-neutral-color-border-hover:rgb(216, 119, 27);
+}
+.indusbutton{
+    min-width: 150px !important;
+}
+.float-button {
+     /* width: 5px;
+    height: 35px;
+         */
+    /* background:#84181F; */
+    border-radius: 30%;
+    position: fixed;
+    top: 250px;
+    right: 45px;
+    cursor: pointer;
+    /* box-shadow: 0px 2px 5px #666; */
+    }
+/* .float-button:hover {
+        width: 200px;
+} */

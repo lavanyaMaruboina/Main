@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Golden Source Passport API</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;body&quot;:null,&quot;ResponseData&quot;:{&quot;Status&quot;:&quot;Success&quot;,&quot;ResponseInfo&quot;:{&quot;SolutionSetInstanceId&quot;:&quot;f4a6e08c-12eb-47dd-b611-a39ac30eedc4&quot;,&quot;ApplicationId&quot;:26578322},&quot;Fields&quot;:{&quot;Decision&quot;:&quot;Pass&quot;,&quot;ApplicationId&quot;:&quot;26578322&quot;,&quot;ApplicationData&quot;:{&quot;Services&quot;:{&quot;Service&quot;:{&quot;Skip&quot;:&quot;N&quot;,&quot;Name&quot;:&quot;PublicDataAPI&quot;,&quot;Id&quot;:&quot;&quot;,&quot;EnableSimulation&quot;:&quot;&quot;,&quot;Consent&quot;:&quot;true&quot;}}},&quot;Applicants&quot;:{&quot;Applicant&quot;:{&quot;Services&quot;:{&quot;Service&quot;:[{&quot;Status&quot;:&quot;Pass&quot;,&quot;Operations&quot;:{&quot;Operation&quot;:[{&quot;Status&quot;:&quot;Pass&quot;,&quot;Params&quot;:{&quot;Param&quot;:[{&quot;Value&quot;:&quot;Y&quot;,&quot;Name&quot;:&quot;consent&quot;},{&quot;Value&quot;:&quot;MA2072741184320&quot;,&quot;Name&quot;:&quot;fileNo&quot;}]},&quot;Name&quot;:&quot;passport-verification&quot;,&quot;Id&quot;:&quot;&quot;,&quot;Errors&quot;:null,&quot;Data&quot;:{&quot;Response&quot;:{&quot;RawResponse&quot;:&quot;{\\&quot;result\\&quot;:{\\&quot;passport-verification\\&quot;:{\\&quot;requestId\\&quot;:\\&quot;4abf204b-012c-41a4-b7d6-451be3c2a5b1\\&quot;,\\&quot;result\\&quot;:{\\&quot;name\\&quot;:{\\&quot;nameFromPassport\\&quot;:\\&quot;DWARAKESH\\&quot;,\\&quot;surnameFromPassport\\&quot;:\\&quot;RAJAGOPALAN\\&quot;,\\&quot;nameMatch\\&quot;:true,\\&quot;nameScore\\&quot;:1.0},\\&quot;passportNumber\\&quot;:{\\&quot;passportNumberFromSource\\&quot;:\\&quot;U6926433\\&quot;,\\&quot;passportNumberMatch\\&quot;:null},\\&quot;dateOfIssue\\&quot;:{\\&quot;dispatchedOnFromSource\\&quot;:\\&quot;09/01/2020\\&quot;,\\&quot;dateOfIssueMatch\\&quot;:null},\\&quot;typeOfApplication\\&quot;:\\&quot;Normal\\&quot;,\\&quot;applicationDate\\&quot;:\\&quot;08/01/2020\\&quot;},\\&quot;statusCode\\&quot;:101},\\&quot;requestId\\&quot;:\\&quot;6fbc0726-7087-46df-8d08-802aeb6f8d2b\\&quot;,\\&quot;statusCode\\&quot;:\\&quot;101\\&quot;}}&quot;}}}]},&quot;Name&quot;:&quot;PublicDataAPI&quot;,&quot;Id&quot;:&quot;&quot;}]},&quot;Identifiers&quot;:null,&quot;Gender&quot;:&quot;M&quot;,&quot;DateOfBirth&quot;:&quot;8021990-01-01T00:00:00.000Z&quot;,&quot;ApplicantMiddleName&quot;:&quot;&quot;,&quot;ApplicantLastName&quot;:&quot; Rajagopalan&quot;,&quot;ApplicantIdentifier&quot;:&quot;096cae9b-d5b4-4b37-903c-22a3121656b5&quot;,&quot;ApplicantFirstName&quot;:&quot;Dwarakesh&quot;}}}},&quot;RequestId&quot;:&quot;13122021175530466&quot;}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Passport</value>
+    </values>
+</CustomMetadata>

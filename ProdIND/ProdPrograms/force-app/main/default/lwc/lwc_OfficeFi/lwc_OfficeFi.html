@@ -1,0 +1,810 @@
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <lightning-record-edit-form record-id={recordId} object-api-name="Field_Investigation__c"   onsubmit={handleSubmit} onsuccess={handleSuccess}>
+        <lightning-messages></lightning-messages>
+        <lightning-accordion class="example-accordion" allow-multiple-sections-open
+            onsectiontoggle={handleToggleSection} active-section-name={activeSections}>
+            <lightning-accordion-section name="A" label="OFFICE RESIDENCE FI">
+
+                <div class="slds-grid slds-wrap slds-p-around--medium">
+                    <div
+                        class="slds-p-horizontal_medium slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Name
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input label="Name" variant="label-hidden" value={name} disabled="true"
+                                    required="true"> </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="slds-p-horizontal_medium slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Product Type
+                                </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input label="Product Type" variant="label-hidden" value={prodct}
+                                    disabled="true" required="true"> </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium slds-hidden"> -->
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Case__c" value={cse}> </lightning-input-field>
+                    </div>
+                    <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium slds-hidden"> -->
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Office_FI_Status__c" value={officeFIStatus}>
+                        </lightning-input-field>
+                    </div>
+                    <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium slds-hidden"> -->
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="FI_Status__c" value={officeFIStatus}>
+                        </lightning-input-field>
+                    </div>
+
+                </div>
+
+
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="B" label="Business/Office Address">
+                <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Address_Line_1__c" value={addLine1} disabled="true"
+                            required="true"> </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Address_Line_2__c" value={addLine2} disabled="true"
+                            required="true"> </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="City__c" value={cty} disabled="true" required="true">
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Pin_Code__c" value={pincde} disabled="true" required="true">
+                        </lightning-input-field>
+                    </div>
+
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="State__c" value={state} disabled="true" required="true">
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Landmark__c" value={landmark}> </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Phone_Number__c" value={phnNum} disabled="true"
+                            required="true"> </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Mobile__c" value={mobile} disabled="true" required="true">
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-combobox onchange={handleInputFieldChange} value={smeAddAsInApp} label="Whether customer office/business is in the same address as in the application" options={yesNoOptions} required variant="label-inline"></lightning-combobox>
+                        <!-- CISP-2727 -->
+                    </div>
+                    <br />
+
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="LocationBoundBy" label="Location bound by">
+                <div class="slds-grid slds-wrap slds-p-around--medium">
+                    <div class="slds-col slds-size_3-of-12 slds-p-horizontal_medium"></div>
+                    <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                        <lightning-button class="button" label="Building Front View" required="true" variant="brand"
+                            onclick={handleChangeFileUpload}></lightning-button>
+
+                        <template if:true={isFileUpload}>
+                            <c-l-w-c_-l-o-s_-upload_-view-and-delete onclosemodel={closeUploadBuildingView}
+                                document-record-id={documentId} document-name={documentType}
+                                onuploadsuccess={closeUploadBuildingView} lead-id = {applicationId}></c-l-w-c_-l-o-s_-upload_-view-and-delete>
+                        </template>
+
+                    </div>
+
+                    <template if:true={filesList}>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                <div
+                                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+
+
+                    <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                        <lightning-button label="Capture Signature" variant="brand" onclick={handleSignatureUpload}>
+                        </lightning-button>
+                        <template if:true={showSignatureModal}>
+                            <section aria-modal="true" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container ">
+                                    <header class="slds-modal__header">
+                                        <h2 class="slds-text-heading_small">Signature</h2>
+                                        <lightning-icon class="slds-modal__close" icon-name="utility:close" size="small"
+                                            onclick={handleCloseSignatureModal}></lightning-icon>
+                                    </header>
+                                    <div class="slds-modal__content">
+                                        <c-capture-signature documentid={signatureDocumentId}
+                                            oncapturesucessfull={handleCloseSignatureModal}></c-capture-signature>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="brand" label="Save" onclick={handleSignatureSave}
+                                            class="slds-p-around_x-small"></lightning-button>
+                                        <lightning-button variant="brand" label="Clear" title="Clear"
+                                            onclick={handleSignatureClear} class="slds-m-left_x-small">
+                                        </lightning-button>
+                                        <lightning-button variant="brand" label="Cancel"
+                                            onclick={handleCloseSignatureModal} class="slds-p-around_x-small">
+                                        </lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+
+                        </template>
+
+                    </div>
+                </div>
+                <div class="slds-col slds-size_2-of-12 slds-p-horizontal_medium"></div>
+
+            </lightning-accordion-section>
+
+            <template if:true={isPrimaryIncomeSourceTrue}>
+
+                <lightning-accordion-section name="C" label="Office/Business Observation-SAL/SENP/SEP">
+                    <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Employer_Business_Name__c" value={empBusnssName} required={isrequired} readonly="true"> </lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Office_Business_Type__c" value={offBusnsstyp} required={isrequired} > </lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Business_Premise__c" value={busnssPremse} required={isrequired} > </lightning-input-field>
+                        </div>
+
+                        <div
+                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Political_Photo__c" value={politiclPhto}>
+                            </lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Office_Business_Board__c" value={offBusnssBrd} required={isrequired} > </lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Office_Business_Size_Sqft__c" value={offBusnssSizSqft} required={isrequired} > </lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Location__c" value={lctn} required={isrequired} >
+                            </lightning-input-field>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input field-name="Name_of_Person_met__c" label="Name Of Person Met" pattern={label.RegEx_Alphabets_Only} message-when-pattern-mismatch={label.lastNameError} type="text" 
+                            value={nameOfPersnMet} data-id="nameOfPersonMet" variant="label-inline"  onchange={NameChangeEvent}>
+                            </lightning-input>
+                        </div>
+
+                        <div
+                            class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                            <lightning-input-field field-name="Relationship__c" value={relatnshp}>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+
+                <template if:true={isSalaried}>
+                    <lightning-accordion-section class="myclass" name="D" label="SALARIED IP/NIP">
+                        <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Category__c" value={catgry} disabled="true"
+                                    required="true"> </lightning-input-field>
+                            </div>
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Profile__c" value={profile} disabled="true"
+                                    required="true"> </lightning-input-field>
+                            </div>
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Current_experience_years__c" value={currntExp}
+                                    disabled="true" required="true"> </lightning-input-field>
+                            </div>
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Total_Experience_Years__c" value={totalExp}
+                                    disabled="true" required="true"> </lightning-input-field>
+                            </div>
+
+
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Applicant_Recognized__c" value={pllRecgnzd}
+                                    required="true"> </lightning-input-field>
+                            </div>
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+
+                                <lightning-input-field field-name="Touring_or_Transferable_Job__c"
+                                    value={touingOrTransfrbleJob} required="true"> </lightning-input-field>
+                            </div>
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Monthly_Income_as_per_FI_Visit__c"
+                                    value={monthlyOncmAsPerFiVisit} required="true"> </lightning-input-field>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={profilePensions}>
+                    <lightning-accordion-section name="M" label="SENP - Pension Income">
+                        <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                            <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                <lightning-button class="button" variant="brand" label="Upload Pension Document"
+                                    required="true" icon-name="utility:upload"
+                                    onclick={hanldePensionDcoumentUplaod}></lightning-button>
+
+                                <template if:true={isFileUpload}>
+                                    <c-l-w-c_-l-o-s_-upload_-view-and-delete onclosemodel={closeUploadBuildingView}
+                                        document-record-id={documentId} document-name={documentType}
+                                        onuploadsuccess={closeUploadBuildingView}>
+                                    </c-l-w-c_-l-o-s_-upload_-view-and-delete>
+                                </template>
+
+                            </div>
+
+
+                            <div
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                <lightning-input-field field-name="Income_per_month__c" value={incmePerMonth}
+                                    required="true"> </lightning-input-field>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={isSelfEmployed}>
+                    <template if:true={profileIPNIP}>
+                        <lightning-accordion-section name="F" label={selfEmpIpNipLabel}>
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Category__c" value={catgry} disabled="true"
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Profile__c" value={profile} disabled="true"
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Current_experience_years__c" value={currntExp}
+                                        disabled="true" required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Total_Experience_Years__c" value={totalExp}
+                                        disabled="true" required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Income_as_per_FI_Visit__c"
+                                        value={IncmeAsPerFiVisit} required="true"> </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profileAgriculture}>
+                        <lightning-accordion-section name="G" label="SENP - Agriculture ">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Area__c" value={area} required="true">
+                                    </lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-button class="button" label="Land Photo" variant="brand" required="true"
+                                        icon-name="utility:upload" onclick={hanldeLandPhotoUplaod}></lightning-button>
+
+                                    <template if:true={isFileUpload}>
+                                        <c-l-w-c_-l-o-s_-upload_-view-and-delete onclosemodel={closeUploadBuildingView}
+                                            document-record-id={documentId} document-name={documentType}
+                                            onuploadsuccess={closeUploadBuildingView}>
+                                        </c-l-w-c_-l-o-s_-upload_-view-and-delete>
+                                    </template>
+
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Patta_Document_available__c"
+                                        value={pattaDocAvail} onchange={handlePattaDOC}> </lightning-input-field>
+                                    <br /><br />
+                                    <template if:true={uploadDoc}>
+                                        <lightning-button class="button" variant="brand" label="Upload Patta Document"
+                                            icon-name="utility:upload" required="true"
+                                            onclick={hanldePattaDcoumentUplaod}></lightning-button>
+                                    </template>
+                                    <template if:true={isFileUpload}>
+                                        <c-l-w-c_-l-o-s_-upload_-view-and-delete onclosemodel={closeUploadBuildingView}
+                                            document-record-id={documentId} document-name={documentType}
+                                            onuploadsuccess={closeUploadBuildingView}>
+                                        </c-l-w-c_-l-o-s_-upload_-view-and-delete>
+                                    </template>
+
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="No_of_crops_per_annum__c" value={noOfCrpsPerAnm}>
+                                    </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Type_of_Crop__c" value={typeOfCrp}>
+                                    </lightning-input-field>
+                                </div>
+                                <!-- yield per acre monthly -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Yield_Per_Acre_monthly__c"
+                                        value={yeildPerAcreMonthly} onchange={onyeildPerAcreMonthly}>
+                                    </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Price_per_unit__c" value={pricePerunit}
+                                        onchange={onpricePerunit}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Income__c" value={incme}>
+                                    </lightning-input-field>
+                                </div>
+                                <!-- type of house -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Type_of_House__c" value={typeOfHuose}>
+                                    </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Electricity_Connection_Present__c"
+                                        value={electricityConnctnPresent}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Access_to_Tubewells__c" value={accessToTubwll}>
+                                    </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Irrigation_system_present__c"
+                                        value={irrigtnSysPresent}> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="No_of_Cattle__c" value={noOfCattle}>
+                                    </lightning-input-field>
+                                </div>
+
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profileShop}>
+                        <lightning-accordion-section name="H" label="SENP - Own Shop/Store ">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Type_of_goods_sold__c" value={typeOfGoodSold}
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="No_of_Employees__c" value={noOfEmpls}
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Inhouse_Security_Camera_present__c"
+                                        value={inhuseSecCamPre} required="true"> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="POS_Machine__c" value={posMachin}
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="AC_Installed__c" value={acInstlld}
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Monthly_Sales__c" value={montlySales}
+                                        onchange={handlemontlySales}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Profit_Margin__c" value={prftMargn}
+                                        onchange={handleprofitMargin}> </lightning-input-field>
+                                </div>
+
+                                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Average_no_of_customers__c" value={avrgNoOfCustmrs}> </lightning-input-field>
+                                </div> -->
+                                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Average_Ticket_Size_Rs__c" value={avrgTicktSize}> </lightning-input-field>
+                                </div> -->
+
+                                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Number_of_operational_hours_in_a_day__c" value={numOfOperHoursInAday}> </lightning-input-field>
+                                </div> -->
+
+                                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Annual_Turnover__c" value={annualTurnover}> </lightning-input-field>
+                                </div> -->
+
+                                <!-- Monthly_Income_as_per_FI -->
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Estimated_Income_as_per_FI__c"
+                                        value={estmtdIncmeAsPerFi} readonly={isreadAble}> </lightning-input-field>
+                                </div>
+                                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Declared_Income_During_Application__c" value={declrdIncmeDurngApp}> </lightning-input-field>
+                                </div>-->
+
+                                <!--div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Final_Income__c" value={finalIncme}> </lightning-input-field>
+                                </div> -->
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Latest_Water_Bill__c" value={latestWatrBill}>
+                                    </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Payment_Proof_Shown__c" value={paymntPrfShwn}>
+                                    </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Latest_Telephone_Bill_Amount_Paid_Month__c"
+                                        value={latestTelephoneBill}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Telephone_Bill_Payment_Proof_Shown__c"
+                                        value={paymntPrfShwn}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Latest_Electricity_Bill_Amount_Paid_Mont__c"
+                                        value={latestElecBill}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Payment_Proof_shown_for_Electricity_Bill__c"
+                                        value={paymntPrfShwnforEleBill}> </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profileService}>
+                        <lightning-accordion-section name="I" label="SENP - Service oriented">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Own_Equipment_Tools__c" value={ownEqupmntTools} required="true" onchange={handleOwnEquipmentTools}> </lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="List_of_equipment_tools_owned__c" value={listOfEqupmntToolsOwnd} required={requiredlistOfEqupmntToolsOwnd} disabled={disablelistOfEqupmntToolsOwnd}> </lightning-input-field>
+                                </div>
+                                <!-- Affiliation -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Affiliation_to_e_commerce__c"
+                                        value={affilatnToECommrce} required="true"> </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Average_Professional_Fee_Service_Rs__c"
+                                        value={avrgPrffFeeSer_rs} required="true" onchange={onChangeAvgFeeChange}>
+                                    </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="No_of_Service_Requests_catered_in_month__c"
+                                        value={noOfServcReqCatInMonths} onchange={onChangeCater}>
+                                    </lightning-input-field>
+                                </div>
+                                <!-- estimated service income as per fi -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Estimated_Service_Income_as_per_FI__c"
+                                        value={estimatedSerIncmAsPerFi} disabled> </lightning-input-field>
+                                </div>
+                                <!-- <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Declared_Income_During_Application__c" value={declrdIncmeDurngApp}> </lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-input-field field-name="Final_Income__c" value={finalIncme}> </lightning-input-field>
+                                </div> -->
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profileTransporter}>
+                        <lightning-accordion-section name="J" label="SENP - Transporter">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+                                <!-- types of vehicle owned -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Types_of_vehicles_owned__c"
+                                        value={typOfVehclOwnd} required="true"> </lightning-input-field>
+                                </div>
+                                <!-- no of vehicle owned -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="No_of_vehicles_owned__c" value={noOfvehclesOwnd}
+                                        required="true"> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Estimated_Average_Income_per_month__c"
+                                        value={estmtdAvrgIncmPerMnth} required="true">
+                                    </lightning-input-field>
+                                </div>
+
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profileContracter}>
+                        <lightning-accordion-section name="K" label="SENP - Contractor">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+                                <!-- contracts last 1 year -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="No_of_contracts_awarded_in_last_1_year__c"
+                                        value={noOfContractsAwardedInLast1Yrs} required="true">
+                                    </lightning-input-field>
+                                </div>
+                                <!-- govt contract -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Do_you_have_any_government_contracts__c"
+                                        value={doYouHveAnyGovContracts} required="true">
+                                    </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Estimated_Total_Monthly_Income__c"
+                                        value={estimtdtotalMnthlyIncme} required="true"> </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profileRental}>
+                        <lightning-accordion-section name="L" label="SENP - Rental Income">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Number_of_Properties_rented__c"
+                                        value={noOfProprtsRentd}> </lightning-input-field>
+                                </div>
+                                <!-- income / month / property -->
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Income_per_month_property__c"
+                                        value={incmePerMonthProprty}> </lightning-input-field>
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Income_per_month__c" value={incmePerMonth}
+                                        required="true"> </lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-button class="button" label="Upload Rent Agreement/Reciept"
+                                        icon-name="utility:upload" required="true" onclick={hanldeRentAgreementUplaod}>
+                                    </lightning-button>
+
+                                    <template if:true={isFileUpload}>
+                                        <c-l-w-c_-l-o-s_-upload_-view-and-delete onclosemodel={closeUploadBuildingView}
+                                            document-record-id={documentId} document-name={documentType}
+                                            onuploadsuccess={closeUploadBuildingView}>
+                                        </c-l-w-c_-l-o-s_-upload_-view-and-delete>
+                                    </template>
+
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                    <template if:true={profilePension}>
+                        <lightning-accordion-section name="M" label="SENP - Pension Income">
+                            <div class="slds-grid slds-wrap slds-p-around--medium">
+
+                                <div class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning-button class="button" variant="brand" label="Upload Pension Document"
+                                        required="true" icon-name="utility:upload"
+                                        onclick={hanldePensionDcoumentUplaod}></lightning-button>
+
+                                    <template if:true={isFileUpload}>
+                                        <c-l-w-c_-l-o-s_-upload_-view-and-delete onclosemodel={closeUploadBuildingView}
+                                            document-record-id={documentId} document-name={documentType}
+                                            onuploadsuccess={closeUploadBuildingView}>
+                                        </c-l-w-c_-l-o-s_-upload_-view-and-delete>
+                                    </template>
+
+                                </div>
+
+
+                                <div
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                                    <lightning-input-field field-name="Income_per_month__c" value={incmePerMonth}
+                                        required="true"> </lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </template>
+                </template>
+            </template>
+            <lightning-accordion-section name="N" label="FI Feedback">
+                <div class="slds-grid slds-wrap slds-p-around--medium">
+
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="No_of_Attempts__c" value={noOfAttmpts}>
+                        </lightning-input-field>
+                    </div>
+
+
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="FI_Observation__c" value={fiObservtn}>
+                        </lightning-input-field>
+                    </div>
+                    <!-- feedback -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="FI_Feedback__c" value={fiFeedback} data-id="fiFeedback" onblur={handlebur}>
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-var-p-horizontal_medium">
+                        <lightning-input-field field-name="Office_FI_Accepted_Rejected__c" value={offFiAccptdRegctd}>
+                        </lightning-input-field>
+                    </div>
+
+                </div>
+
+            </lightning-accordion-section>
+
+            <!-- CISP-2701-START -->
+            <div class="slds-grid slds-wrap slds-p-around--medium">
+                <!-- <div class="slds-col slds-size_5-of-12 slds-p-horizontal_medium"></div> -->
+                    <div class="slds-col  slds-p-horizontal_medium slds-align_absolute-center">
+                        <button class="indusPrimaryButton slds-button slds-button_brand fiButton" type="button" onclick={fiLatitudeLongitude} disabled={disabledCapturedBtn} >Capture FI Latitude & Longitude</button>
+                    </div>
+            </div>
+            <!-- CISP-2701-END -->
+            <div class="slds-grid slds-wrap slds-p-around--medium">
+                <!-- <div class="slds-col slds-size_5-of-12 slds-p-horizontal_medium"></div> -->
+                <div class="slds-col  slds-p-horizontal_medium slds-align_absolute-center">
+                    <lightning-button variant="brand" type="submit" class="button" onclick={validateFields} label="Submit"></lightning-button>
+
+                </div>
+            </div>
+
+
+        </lightning-accordion>
+    </lightning-record-edit-form>
+</template>

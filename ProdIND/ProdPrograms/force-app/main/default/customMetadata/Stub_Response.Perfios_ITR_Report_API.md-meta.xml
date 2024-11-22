@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Perfios ITR Report API</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{
+  &quot;itrDetails&quot;: {
+    &quot;filingDetailsList&quot;: [
+      {
+        &quot;filingDatesDiff&quot;: &quot;0&quot;,
+        &quot;isItrNotFiledForPrevYear&quot;: &quot;NA&quot;,
+        &quot;filingDatesLTSixMonths&quot;: &quot;NA&quot;
+      }
+    ],
+    &quot;itrInfoList&quot;: {
+      &quot;itr&quot;: [
+        {
+          &quot;date&quot;: &quot;2020-11-26&quot;,
+          &quot;deductionsUnderScheduleVIA&quot;: 0,
+          &quot;personalInfo&quot;: {
+            &quot;firstName&quot;: &quot;&quot;,
+            &quot;surNameOrOrgName&quot;: &quot;Venkata Rajkumar Puvvada&quot;,
+            &quot;addressInfo&quot;: {
+              &quot;localityOrArea&quot;: &quot;Sanath Nagar&quot;,
+              &quot;roadOrStreet&quot;: &quot;&quot;,
+              &quot;pinCode&quot;: &quot;500082&quot;,
+              &quot;residenceNo&quot;: &quot;513&quot;,
+              &quot;cityOrTownOrDistrict&quot;: &quot;HYDERABAD&quot;,
+              &quot;state&quot;: &quot;TELANGANA&quot;,
+              &quot;residenceName&quot;: &quot;Vasavi Central Court&quot;
+            },
+            &quot;emailAddress&quot;: &quot;rajkumar_puvvada@rediffmail.com&quot;,
+            &quot;address&quot;: &quot;513 , Vasavi Central Court, Sanath Nagar, HYDERABAD, TELANGANA, 500082&quot;,
+            &quot;dob&quot;: &quot;17/05/1976&quot;,
+            &quot;aadhaarCardNo&quot;: &quot;645842284557&quot;,
+            &quot;name&quot;: &quot;Venkata Rajkumar Puvvada&quot;,
+            &quot;mobileNo&quot;: &quot;91 - 9490987588&quot;,
+            &quot;pan&quot;: &quot;AJWPP6120D&quot;,
+            &quot;employerCategory&quot;: &quot;Others&quot;
+          },
+          &quot;lateFilingFee234F&quot;: 0,
+          &quot;totalSurcharge&quot;: 0,
+          &quot;incChargeTaxSplRate111A112&quot;: 0,
+          &quot;incomeFromSal&quot;: 2007724,
+          &quot;origRetFiledDate&quot;: &quot;&quot;,
+          &quot;losses&quot;: {
+            &quot;lossesOfCurrentYearCarriedFwd&quot;: 0,
+            &quot;currentYearLoss&quot;: 0,
+            &quot;broughtFwdLossesSetoff&quot;: 0
+          },
+          &quot;type&quot;: &quot;ITR-1&quot;,
+          &quot;ackNoOriginalReturn&quot;: &quot;750186000261120&quot;,
+          &quot;taxPaid&quot;: {
+            &quot;selfAssessmentTax&quot;: 0,
+            &quot;tds&quot;: 426091,
+            &quot;balTaxPayable&quot;: 0,
+            &quot;refundDue&quot;: 47010,
+            &quot;advanceTax&quot;: 0,
+            &quot;tcs&quot;: 0,
+            &quot;totalTaxesPaid&quot;: 426091
+          },
+          &quot;totTaxRelief&quot;: 0,
+          &quot;fy&quot;: &quot;2019-20&quot;,
+          &quot;rebate87A&quot;: 0,
+          &quot;taxPayableOnRebate&quot;: 364506,
+          &quot;totIncFromOS&quot;: 0,
+          &quot;intrstPayUs234A&quot;: 0,
+          &quot;intrstPayUs234B&quot;: 0,
+          &quot;profBusGain&quot;: {
+            &quot;profGainSpeculativeBus&quot;: 0,
+            &quot;profGainSpecifiedBus&quot;: 0,
+            &quot;profGainNoSpecBus&quot;: 0,
+            &quot;totProfBusGain&quot;: 0
+          },
+          &quot;intrstPayUs234C&quot;: 0,
+          &quot;aggregateIncome&quot;: 0,
+          &quot;bankAccountDtls&quot;: {
+            &quot;priBankDetails&quot;: [
+              {
+                &quot;bankAccountType&quot;: null,
+                &quot;useForRefund&quot;: null,
+                &quot;bankAccountNo&quot;: &quot;50100017064517&quot;,
+                &quot;bankName&quot;: &quot;HDFC BANK&quot;,
+                &quot;ifscCode&quot;: &quot;HDFC0000628&quot;
+              }
+            ],
+            &quot;addtnlBankDetails&quot;: [
+              {
+                &quot;bankAccountType&quot;: null,
+                &quot;useForRefund&quot;: null,
+                &quot;bankAccountNo&quot;: null,
+                &quot;bankName&quot;: null,
+                &quot;ifscCode&quot;: null
+              }
+            ]
+          },
+          &quot;aggregateTaxInterestLiability&quot;: 0,
+          &quot;capGain&quot;: {
+            &quot;totalLongTerm&quot;: 0,
+            &quot;totalShortTerm&quot;: 0,
+            &quot;totalCapGains&quot;: 0
+          },
+          &quot;incomeFromHP&quot;: 0,
+          &quot;grossTaxLiability&quot;: 379086,
+          &quot;incChargeableTaxSplRates&quot;: 0,
+          &quot;totTaxPlusIntrstPay&quot;: 379086,
+          &quot;taxPayableOnTotInc&quot;: 0,
+          &quot;totalIncome&quot;: 80,
+          &quot;tdSonSalaries&quot;: {
+            &quot;tdSonSalary&quot;: null,
+            &quot;totalTDSonSalaries&quot;: 0
+          },
+          &quot;educationCess&quot;: 14580,
+          &quot;grossTotalIncome&quot;: 2007724,
+          &quot;receiptNo&quot;: &quot;&quot;,
+          &quot;ay&quot;: &quot;2020-21&quot;,
+          &quot;netTaxLiability&quot;: 0,
+          &quot;netAgricultureIncomeOrOtherIncomeForRate&quot;: 0,
+          &quot;totalIntrstPay&quot;: 0,
+          &quot;totalExemptInc&quot;: 0,
+          &quot;returnType&quot;: &quot;&quot;
+        }
+      ]
+    }
+  }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">ITR Report</value>
+    </values>
+</CustomMetadata>

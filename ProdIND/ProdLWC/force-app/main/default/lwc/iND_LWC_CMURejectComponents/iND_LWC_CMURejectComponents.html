@@ -1,0 +1,258 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner
+          alternative-text="Loading"
+          size="medium"
+        ></lightning-spinner>
+      </template>
+
+    <template if:true={showAcceptCaseButton}>
+        <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand" type="button" label="Accept Case" onclick={handleAcceptCaseModal}></lightning-button> 
+    </template>
+
+    <template if:true={showLWCText}>
+        <lightning-card>
+            <div class="slds-text-align_center slds-text-heading_small slds-text-color_destructive">{cardMsg}</div>
+        </lightning-card>
+    </template>
+
+    <div class="headerStyle" lwc:if={isSmallDevice}>
+        <lightning-datatable key-field="id" data={data} columns={columns} class="docTable" show-row-number-column row-number-offset={rowOffset}
+            hide-checkbox-column onrowaction={handleAction} min-column-width="100">
+        </lightning-datatable>
+    </div>
+     <div class="headerStyle" lwc:else>
+        <lightning-datatable key-field="id" data={data} columns={columns} class="docTable" show-row-number-column row-number-offset={rowOffset}
+            hide-checkbox-column onrowaction={handleAction}>
+        </lightning-datatable>
+    </div>
+    <!--CISP-2462-->
+    <template if:true={isTabUser}>
+        <iframe src={tabUrl} width="100%" height="900" scrolling="true"></iframe>
+    </template>
+    <!--CISP-2462-->
+    <template if:true={isAcceptCaseModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-00" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-00" class="slds-text-heading_medium slds-hyphenate">Do you have all the CMU rejected documents ?</h2>
+                    </header>
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="brand" class="slds-m-around_small" onclick={handleAcceptCase} label="Yes"></lightning-button>
+                            <lightning-button class="slds-m-top_small" variant="brand" name="No" label="No" onclick={closeModal}></lightning-button>
+                        </footer>
+                    </div>
+        </section>
+    </template>
+
+    <div class="slds-m-around_xx-large">
+        <!--Use template if:true to display/hide popup based on isModalOpen value-->
+        <template if:true={isModalOpen}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Document Details</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <lightning-record-edit-form record-id={selectedRowId} object-api-name="Documents__c" onsubmit={handleOnSubmit} onsuccess={handleSuccess} onerror={handleError}>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <h3 class="sectionHeader slds-m-bottom_small">Rejected Fields</h3>
+                            <div class="slds-grid slds-wrap  slds-form">
+                                <template for:each={editableFields} for:item="inpField">
+                                    <div class="slds-col slds-size_1-of-2  slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form_horizontal slds-wrap" key={inpField}>
+                                        <lightning-input-field field-name={inpField} data-name={inpField} id={inpField} class="docInpuField"></lightning-input-field> 
+                                    </div>
+                                </template>
+                                <template for:each={appEditableFields} for:item="inpField">
+                                    <div class="slds-col slds-size_1-of-2  slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form_horizontal slds-wrap" key={inpField}>
+                                        <lightning-input type="text" value={inpField.value} label={inpField.label} max-length=20 pattern={alphabetCheckLabel} onchange={handleOnAppFieldChange} message-when-pattern-mismatch={lastNameErrorLabel} class="docInpuField"></lightning-input>
+                                    </div>
+                                </template>
+                            </div>
+                            <h3 class="sectionHeader slds-m-bottom_small">Other Information</h3>
+                            <lightning-record-view-form record-id={selectedRowId} object-api-name="Documents__c">
+                                <div class="slds-grid slds-wrap  slds-form">
+                                    <template for:each={nonEditableFields} for:item="outField">
+                                        <div class="slds-col slds-size_1-of-2  slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form_horizontal slds-wrap" key={outField}>
+                                            <lightning-output-field data-name={outField} field-name={outField} id={outField}></lightning-output-field>
+                                        </div>
+                                    </template>
+                                    <template if:true={enableNewKYCField}>
+                                        <div class="slds-col slds-size_1-of-2  slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form_horizontal slds-wrap" >
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label" for="text-input-id-47">{kycDocumentType}</label>
+                                                <div class="slds-form-element__control">
+                                                  <input type="text" disabled style="border: none !important; background: white !important; padding-left: 0; color:rgb(24, 24, 24); font-size: 0.875rem;" data-name={kycNoAPIName} id="text-input-id-47" value={KycNumber}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </lightning-record-view-form>
+                            <!-- Modal/Popup Box LWC footer starts here -->
+                            <footer class="slds-modal__footer">
+                                <lightning-button variant="brand" class="slds-m-around_small" onclick={closeModal} label="Cancel"></lightning-button>
+                                <!--  <button class="slds-button slds-button_brand" onclick={closeModal} title="Cancel">Cancel</button>
+                                    <button class="slds-button slds-button_brand" onclick={closeModal} title="View">View</button>
+                                    <button class="slds-button slds-button_brand" onclick={closeModal} title="Upload">Upload</button> -->
+                                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="Submit" label="Save"></lightning-button>
+                                <!-- <lightning-button variant="brand" class="slds-m-around_small" onclick={submitDetails} label="Save"></lightning-button> -->
+                            </footer>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+        <!-- Code to open the document uplaod modal -->
+        <template if:true={modalPopUpUpload}>
+            <section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+
+                <div class="slds-form slds-modal__container">
+                    <header class="slds-modal__header">
+                        <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleDocumentPopupClose}>
+                            <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button> -->
+
+                        <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+                            Upload Image
+                        </h2>
+                    </header>
+                    <template if:true={showSpinnerinModel} class="slds-modal__content modalBodySpinner">
+                        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+                    </template>
+                    <lightning-card>
+                        <div class="slds-card__body_inner">
+                            <!-- <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_1-of-8 slds-m-left">
+                                    Doc Type
+                                </div>
+
+                                <div class="slds-col slds-size_1-of-10">
+
+                                    <lightning-input type="text" variant="label-hidden" value={type} label="Document Type" disabled></lightning-input>
+                                    <br/>
+                                </div>
+                            </div> -->
+                            <template if:true={templateFrontBackUpload}>
+                                <!-- Capture Front Button Code  -->
+                                <div class="slds-clearfix">
+                                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <!-- <button class="indusPrimaryButton slds-button slds-button_brand slds-align_absolute-center" onclick={captureFrontImage}>Capture Front</button>         -->
+                                            <lightning-file-upload label="Capture Front" variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader"
+                                                accept={acceptedFormats} record-id={currentDocumentId} file-field-name="Document_Side_fileupload__c"
+                                                file-field-value={documentSide} onuploadfinished={handleFrontUploadFinished}>
+                                            </lightning-file-upload>
+
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Capture Front Button Closed -->
+                                <!-- Start : Capture back button -->
+                                <template if:true={handleBackUpload}>
+                                    <div class="slds-clearfix">
+                                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <!-- <button class="indusPrimaryButton slds-button slds-button_brand slds-align_absolute-center" onclick={captureBackImage}>Capture Back</button>  -->
+                                                <lightning-file-upload label="Capture Back" variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader"
+                                                    accept={acceptedFormats} record-id={currentDocumentId} file-field-name="Document_Side_fileupload__c"
+                                                    file-field-value="Back" onuploadfinished={handleBacktUploadFinished}>
+                                                </lightning-file-upload>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                            
+                            <template if:true={captureApp}>
+                                
+                                <div class="slds-clearfix">
+                                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                            <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                            type="button" label="Upload Front" onclick={captureFrontApp} disabled={frontFileUploaderDisable}></lightning-button>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={backUploadApp}>
+                                    <div class="slds-clearfix">
+                                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                            <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                                <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand"
+                                                type="button" label="Upload Back" onclick={captureBackApp}></lightning-button>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </template>
+                            </template>
+                            <!-- End : Capture back button -->
+                            <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                                <div class="slds-button-group-item">
+                                    <lightning-button class="slds-theme_brand" icon-position="left" variant="brand" type="button" label="Done" onclick={handleDocumentUploadDoneButton}></lightning-button>
+                                </div>
+                            </lightning-button-group>
+                            <br>
+
+
+                        </div>
+
+                    </lightning-card>
+                </div>
+            </section>
+
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+            </div>
+        </template>
+    </div>
+
+    <template if:true={showSpinner}  class="slds-spinner">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template if:true={showOnlyToParterUser}>
+        <c-i-N-D_-L-W-C_-L-O-S_-C-M-U-Submit-Action record-id={recordId} is-community-user = "true"></c-i-N-D_-L-W-C_-L-O-S_-C-M-U-Submit-Action>
+        <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand" type="button" label="Submit" onclick={handleSubmit} disabled={isSubmitButtonDisable}></lightning-button>
+    </template>
+    <template if:true={isPreview}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container" style="background-color: grey;">
+                        <!-- modal header start -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={hideModalBox}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                    size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                        <!-- modal body start -->
+                        <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+                        <!-- modal footer start-->
+                        <footer class="slds-modal__footer">
+                            <!--<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>-->
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+</template>

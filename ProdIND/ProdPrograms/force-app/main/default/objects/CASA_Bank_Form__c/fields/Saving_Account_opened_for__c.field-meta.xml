@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Saving_Account_opened_for__c</fullName>
+    <label>Saving Account opened for</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Borrower</fullName>
+                <default>false</default>
+                <label>Borrower</label>
+            </value>
+            <value>
+                <fullName>Co-Borrower</fullName>
+                <default>false</default>
+                <label>Co-Borrower</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

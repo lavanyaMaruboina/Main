@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>UIDAI OTP API</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;response&quot;:{&quot;status&quot;:&quot;SUCCESS&quot;,&quot;respDesc&quot;:&quot;Generate OTP&quot;,&quot;content&quot;:[&quot;&lt;kycResponse&gt;&lt;TransactionInfo&gt;&lt;Pan&gt;6071890376411878709&lt;/Pan&gt;&lt;Proc_Code&gt;140000&lt;/Proc_Code&gt;&lt;Transm_Date_time&gt;0210215629&lt;/Transm_Date_time&gt;&lt;Stan&gt;642353&lt;/Stan&gt;&lt;Local_Trans_Time&gt;032629&lt;/Local_Trans_Time&gt;&lt;Local_date&gt;0211&lt;/Local_date&gt;&lt;AcqId&gt;200031&lt;/AcqId&gt;&lt;RRN&gt;204203642353&lt;/RRN&gt;&lt;ResponseCode&gt;00&lt;/ResponseCode&gt;&lt;ResponseMsg&gt;Approved&lt;/ResponseMsg&gt;&lt;CA_Tid&gt;register&lt;/CA_Tid&gt;&lt;CA_ID&gt;IBLA76232I02361&lt;/CA_ID&gt;&lt;CA_TA&gt;IBL HOUSE ANDHERI      MUMBAI       MHIN&lt;/CA_TA&gt;&lt;/TransactionInfo&gt;&lt;UidData&gt;&lt;txn&gt;642353&lt;/txn&gt;&lt;/UidData&gt;&lt;/kycResponse&gt;&quot;]}}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">UIDAI OTP</value>
+    </values>
+</CustomMetadata>

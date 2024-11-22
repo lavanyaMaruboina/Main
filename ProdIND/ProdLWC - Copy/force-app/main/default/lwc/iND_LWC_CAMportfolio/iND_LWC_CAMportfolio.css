@@ -1,0 +1,11 @@
+.headPadding{
+    /* padding: 0rem; */
+}
+
+.headPadding .nestedHeadPadding{
+    /* padding: 0rem; */
+}
+
+.headContent{
+    /* padding-left: 1rem; */
+}

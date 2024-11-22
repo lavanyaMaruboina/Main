@@ -1,0 +1,33 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open>
+        <template if:true={vehiclePresent}>
+
+        <template for:each={vehicleDetailList} for:item="item" for:index="index">
+            <div key={item.vehicleDetailId} class="slds-box slds-m-bottom_xx-small" >
+                
+                <lightning-accordion-section name={index} label={item.vehicleVarient}>
+                    <div class="slds-p-around_small">
+                            <c-i-n-d-_-l-w-c-_-valuation-i-d-v recordid={recordId}
+                            checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication} is-tractor={isTractor} vehicle-detail={item} ></c-i-n-d-_-l-w-c-_-valuation-i-d-v>
+                    </div>
+                </lightning-accordion-section>
+            
+            </div>
+        </template>
+    </template>
+    <template if:false={vehiclePresent}>
+        <div class="slds-text-align_center slds-m-around_medium"><h1><b> Valuation is not applicable for implement</b> </h1></div>
+    </template>
+    </lightning-accordion>
+
+    <div class="slds-clearfix" if:true={vehiclePresent}>
+        <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small slds-var-p-top_medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleSubmit} disabled={subStage}><!--CISP-3075-->
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</template>

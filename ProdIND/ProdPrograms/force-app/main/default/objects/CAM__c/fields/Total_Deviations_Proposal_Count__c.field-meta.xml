@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Deviations_Proposal_Count__c</fullName>
+    <label>Total Deviations Proposal Count</label>
+    <summaryFilterItems>
+        <field>Deviation__c.Proposal_Status__c</field>
+        <operation>equals</operation>
+        <value>Hold, Approved, Conditional Approved, Rejected</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Deviation__c.Parent_CAM__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

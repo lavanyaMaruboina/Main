@@ -1,0 +1,55 @@
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+
+       
+    <lightning-card>
+        <lightning-combobox name="Vehicle Type" label="Vehicle Type" value={vehicleType}
+            placeholder="Select Vehicle Type" options={vehicleTypeOptions} onchange={handleVehicleTypeChange}>
+        </lightning-combobox>
+
+        </br>
+        <template if:true={subCategoryComboboxTemplate}>
+            <lightning-combobox data-id="subCategoryOptions"
+                name="Vehicle SubCategory - Vehicle SubCategory Description"
+                label="Vehicle SubCategory - Vehicle SubCategory Description" value={vehicleSubCategoryType}
+                placeholder="Select Vehicle SubCategory Type" options={vehicleSubCategoryOptions}
+                onchange={handleVehicleSubCategoryChange}>
+            </lightning-combobox>
+        </template>
+
+        <template if:true={vehicleDedupeTemplate}>
+            <lightning-input label='Customer Code' value={customerCodeValue} data-id="dedupeInput"
+                pattern="[a-zA-Z0-9]{8,15}" message-when-pattern-mismatch="Enter a Valid Customer Code"
+                disabled={isCustomerCodeDisabled} onblur={handleDedupeInputField}></lightning-input>
+            <lightning-input label='Parent Deal Number' value={parentDealNumberValue} data-id="dedupeInput"
+                disabled={isParentDealNumberDisabled} onblur={handleDedupeInputField}></lightning-input>
+            <lightning-input label='Vehicle Registration Number' value={vehicleRegisterationNumberValue}
+                pattern="[A-Z]{2}[0-9A-Z]{2}[0-9A-Z]{0,3}[0-9]{4}"
+                message-when-pattern-mismatch="Enter a Valid Registeration Number" data-id="dedupeInput"
+                disabled={isVehicleRegisterationNumberDisabled} onblur={handleDedupeInputField}>
+            </lightning-input>
+            <lightning-input label='NOC Number' value={nocNumberValue} data-id="dedupeInput"
+                disabled={isNOCNumberDisabled} onblur={handleDedupeInputField}></lightning-input>
+
+            </br></br>
+            <!-- disabled={isVerifyVehicleSubCategoryButtonDisabled} -->
+            <lightning-button label="Verify Vehicle Sub-category" onclick={handleVehicleSubCategory}>
+            </lightning-button>
+            </br></br>
+        </template>
+
+        <!-- Added By Naga Puppala start  -->
+        <lightning-combobox name="Income Source Available" label="Income Source Available" value={incomeSrcValue}
+            placeholder="Select Progress" options={incomeSourceOptions}></lightning-combobox>
+
+        <lightning-input type="number" name="decIncome" label="Declared Income" value={declaredIncome}
+            placeholder="Enter Declared Income" step="0.01" onkeydown={validateIncomeField} onchange={validateInput} class="incomeDec" ></lightning-input>
+
+        <lightning-input type="number" name="loanAmount" label="Loan Amount" value={loanAmount}
+            placeholder="Enter Loan Amount" step="0.01" onkeydown={validateLoanAmountField} onchange={validateLoanAmt} class="loanAmt" ></lightning-input>
+        <!-- Added By Naga Puppala end -->
+    </lightning-card>
+
+</template>

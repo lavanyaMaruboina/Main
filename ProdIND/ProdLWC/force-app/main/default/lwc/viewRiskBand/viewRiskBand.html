@@ -1,0 +1,38 @@
+<template>
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  slds-modal_small">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header" style="background: #8C3137;">
+                    <button style="background-color: grey" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close" 
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <div>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"
+                         style="color: white;margin-block: -9px">
+                           Risk Profile
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable_x" style="overflow-y: auto;"
+                    id="modal-content-id-1">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                        style="border: groove;">
+                    <!-- <thead></thead> -->
+                    <tbody>
+                        <td>
+                            <div class="labelClass slds-cell-wrap">{applicantType}</div>
+                        </td>
+                        <td>
+                            <div class="labelClass slds-cell-wrap">{riskBand}</div>
+                        </td>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </template>
+</template>

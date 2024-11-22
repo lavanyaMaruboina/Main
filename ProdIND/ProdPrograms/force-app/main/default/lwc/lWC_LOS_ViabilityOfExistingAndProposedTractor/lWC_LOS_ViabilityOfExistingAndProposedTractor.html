@@ -1,0 +1,478 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+    <lightning-layout>
+        <lightning-layout-item size="12">
+            <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+                onclick={handleAddRow} disabled={disableAddRows}>
+            </lightning-button>
+            <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Save"
+                onclick={saveRows} disabled={disableSave}>
+            </lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+      <lightning-layout-item size="12" class={className}>
+        <table class="slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr>
+                       <th>Sr No.</th>
+                       <th>Usage Type</th>
+                       <th>Existing / Proposed</th>
+                       <th>Tractor / Harvester</th>
+                       <th>Nos. of Hours run in year</th>
+                       <th>Per Hour Rate</th>
+                       <th>Diesal Rate/Hr</th>
+                       <th>Diesal counsumption / hr</th>
+                       <th>Expenses</th>
+                       <th>Total Income</th>
+                       <th>Net Income</th>
+                       <th></th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <template for:each={filterList} for:item="filterData" for:index="index">
+                        <template if:false = {filterData.isValid}>
+                            <tr key={filterData}>
+                                <td>
+                                  {filterData.srNo}
+                                 </td>
+                                 <td>
+                                  <template if:true={isDesktop}>
+                                    <lightning-combobox name="Usage_Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                    placeholder="" onchange={handleChange} value={filterData.Usage_Type}
+                                    options={usageTypeOptions} required>
+                                </lightning-combobox>
+                                  </template>
+                                  <template if:false={isDesktop}>
+                                    <div class="slds-form-element">
+                                      <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                         <select name="Usage_Type__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Usage_Type}>
+                                            <option value="">-None-</option>
+                                            <template for:each={usageTypeOptions} for:item="item">
+              
+                                               <option key={item.value} value={item.value}>{item.label}</option>
+              
+                                            </template>
+                                         </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </template>
+  
+                                 </td>
+                                 <td>
+                                    
+                                  <template if:true={isDesktop}>
+                                    <lightning-combobox name="Existing_Proposed__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                    placeholder="" onchange={handleChange} value={filterData.Existing_Proposed}
+                                    options={existingProposedOptions} required>
+                                </lightning-combobox>
+                                  </template>
+                              <template if:false={isDesktop}>
+                                <div class="slds-form-element">
+                                  <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                     <select name="Existing_Proposed__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Existing_Proposed}>
+                                        <option value="">-None-</option>
+                                        <template for:each={existingProposedOptions} for:item="item">
+          
+                                           <option key={item.value} value={item.value}>{item.label}</option>
+          
+                                        </template>
+                                     </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </template>
+                                 
+
+                                  
+                                </td>
+                                <td>
+
+                                  <template if:true={isDesktop}>
+                                    <lightning-combobox name="Tractor_Harvester__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                    placeholder="" onchange={handleChange} value={filterData.Tractor_Harvester}
+                                    options={tractorHarvesterOptions} required>
+                                </lightning-combobox>
+                                  </template>
+                                  <template if:false={isDesktop}>
+                                    <div class="slds-form-element">
+                                      <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                         <select name="Tractor_Harvester__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Tractor_Harvester}>
+                                            <option value="">-None-</option>
+                                            <template for:each={tractorHarvesterOptions} for:item="item">
+              
+                                               <option key={item.value} value={item.value}>{item.label}</option>
+              
+                                            </template>
+                                         </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </template>
+                                  
+                               </td>
+                                <td>
+                                    <lightning-input type="number" name="Nos_of_Hours_run_in_year__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Nos_of_Hours_run_in_year} required>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                  <lightning-input type="number" name="Per_Hour_Rate__c" data-index={index} data-id={filterData.id}
+                                     variant="label-hidden" placeholder="" onchange={handleChange}
+                                     value={filterData.Per_Hour_Rate} required>
+                                  </lightning-input>
+                                </td>
+                                <td>
+                                    <lightning-input type="number" name="Diesal_Rate_Hr__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Diesal_Rate_Hr} disabled="true">
+                                    </lightning-input>
+                                 </td>
+                                 <td>
+                                    <lightning-input type="number" step="0.1" name="Diesal_counsumption_hr__c" data-index={index} data-id={filterData.id}
+                                       variant="label-hidden" placeholder="" onchange={handleChange}
+                                       value={filterData.Diesal_counsumption_hr} required> 
+                                       <!-- SFTRAC-271 BUG : Enable the field -->
+                                    </lightning-input>
+                                 </td>
+                                <td>
+                                  <lightning-input type="number" name="Expenses__c" data-index={index} data-id={filterData.id}
+                                     variant="label-hidden" placeholder="" onchange={handleChange}
+                                     value={filterData.Expenses} disabled="true">
+                                  </lightning-input>
+                                </td>
+                                <td>
+                                  <lightning-input type="number" name="Total_Income__c" data-index={index} data-id={filterData.id}
+                                     variant="label-hidden" placeholder="" onchange={handleChange}
+                                     value={filterData.Total_Income} disabled="true">
+                                  </lightning-input>
+                                </td>
+                                <td>
+                                  <lightning-input type="number" name="Net_Income__c" data-index={index} data-id={filterData.id}
+                                     variant="label-hidden" placeholder="" onchange={handleChange}
+                                     value={filterData.Net_Income} disabled="true">
+                                  </lightning-input>
+                                </td>
+                                 <td>
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                                 </td>
+                            </tr>
+                        </template>
+                        <template if:true={filterData.isValid}>
+                           <tr key={filterData}>
+                              <td>
+                                {filterData.srNo}
+                              </td>
+                              <td>
+                                {filterData.Usage_Type}
+                              </td>
+                              <td>
+                                {filterData.Existing_Proposed}
+                              </td>
+                              <td>
+                                {filterData.Tractor_Harvester}
+                              </td>
+                              <td>
+                                {filterData.Nos_of_Hours_run_in_year}
+                              </td>
+                              <td>
+                                {filterData.Per_Hour_Rate}
+                              </td>
+                              <td>
+                                {filterData.Diesal_Rate_Hr}
+                              </td>
+                              <td>
+                                {filterData.Diesal_counsumption_hr}
+                              </td>
+                              <td>
+                                {filterData.Expenses}
+                              </td>
+                              <td>
+                                {filterData.Total_Income}
+                              </td>
+                              <td>
+                                {filterData.Net_Income}
+                              </td>
+                               <td>
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:delete" onclick={handleDeleteRow}>
+                                    </lightning-button-icon>
+
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                      icon-name="action:edit" onclick={handleEditRow}>
+                                    </lightning-button-icon>
+                               </td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+      </lightning-layout-item>
+    </lightning-layout>
+
+    <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+              <label class="slds-form-element__label">Total Agri Expenses for Existing Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+              {totalAgriExpensesForExistingHarvester}
+          </div>
+          </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Expenses for Proposed Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriExpensesForProposedHarvester}
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Expenses for Existing Tractor:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriExpensesForExistingTractor}
+        </div>
+        </div>
+      </div>
+   </div>
+   <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Expenses for Proposed Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriExpensesForProposedTractor}
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Income for Existing Harvester:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriIncomeForExistingHarvester}
+        </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Income for Proposed Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriIncomeForProposedHarvester}
+          </div>
+        </div>
+      </div>
+   </div>
+   <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+              <label class="slds-form-element__label">Total Agri Income for Existing Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+              {totalAgriIncomeForExistingTractor}
+          </div>
+          </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Income for Proposed Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriIncomeForProposedTractor}
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Net Income for Existing Harvester:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriNetIncomeForExistingHarvester}
+        </div>
+        </div>
+      </div>
+   </div>
+
+   <div class="slds-form slds-grid slds-wrap">
+     <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Net Income for Proposed Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriNetIncomeForProposedHarvester}
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Net Income for Existing Tractor:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriNetIncomeForExistingTractor}
+        </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Net Income for Proposed Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriNetIncomeForProposedTractor}
+          </div>
+        </div>
+      </div>
+   </div>
+
+   <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+              <label class="slds-form-element__label">Total Agri Commercial Expenses for Existing Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+              {totalAgriCommercialExpensesForExistingHarvester}
+          </div>
+          </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Expenses for Proposed Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialExpensesForProposedHarvester}
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Expenses for Existing Tractor:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialExpensesForExistingTractor}
+        </div>
+        </div>
+      </div>
+   </div>
+   <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Expenses for Proposed Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialExpensesForProposedTractor}
+          </div>
+        </div>
+      </div> 
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Income for Existing Harvester:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialIncomeForExistingHarvester}
+        </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Income for Proposed Harvester:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialIncomeForProposedHarvester}
+          </div>
+        </div>
+      </div>
+   </div>
+   <div class="slds-form slds-grid slds-wrap">
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+              <label class="slds-form-element__label">Total Agri Commercial Income for Existing Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+              {totalAgriCommercialIncomeForExistingTractor}
+          </div>
+          </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Income for Proposed Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialIncomeForProposedTractor}
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+            <label class="slds-form-element__label">Total Agri Commercial Net Income for Existing Harvester:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            {totalAgriCommercialNetIncomeForExistingHarvester}
+        </div>
+        </div>
+      </div>
+   </div>
+   <div class="slds-form slds-grid slds-wrap">
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+      <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+          <label class="slds-form-element__label">Total Agri Commercial Net Income for Proposed Harvester:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+          {totalAgriCommercialNetIncomeForProposedHarvester}
+        </div>
+      </div>
+    </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element  slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-2">
+              <label class="slds-form-element__label">Total Agri Commercial Net Income for Existing Tractor:</label>
+          </div>
+          <div class="slds-col slds-size_1-of-2">
+              {totalAgriCommercialNetIncomeForExistingTractor}
+          </div>
+          </div>
+    </div>
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+      <div class="slds-form-element  slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-2">
+          <label class="slds-form-element__label">Total Agri Commercial Net Income for Proposed Tractor:</label>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+          {totalAgriCommercialNetIncomeForProposedTractor}
+        </div>
+      </div>
+    </div>
+   </div>
+</template>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MfrIncentive_Rule</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT( ISNULL(  Mfr_incentive__c  ) ) , NOT( ISNULL(  Mfr_incentive_p__c )), ISPICKVAL(Product__c, &apos;Two Wheeler&apos;) )</errorConditionFormula>
+    <errorDisplayField>Mfr_incentive__c</errorDisplayField>
+    <errorMessage>Please enter either Incentive % or amt and not both in scheme</errorMessage>
+</ValidationRule>

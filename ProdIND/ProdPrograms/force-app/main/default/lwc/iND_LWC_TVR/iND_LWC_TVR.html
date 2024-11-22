@@ -1,0 +1,1322 @@
+<template>
+    <template if:false={response} class="slds-is-relative slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={response}>
+        <div>            
+            <div class="slds-m-bottom_large slds-clearfix">
+                <template if:true={isEnableUploadViewDoc}>
+                    <lightning-button onclick={handleUploadViewDoc} variant="brand" label="Upload and View Document"
+                        alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton">
+                    </lightning-button>
+                </template>
+                
+            </div>
+            <lightning-tabset active-tab-value="0">
+                <template for:each={response} for:item="eachApplicant" for:index="index">
+                    <template if:true={uploadRCDocFlag} >
+                        <section key={eachApplicant.applicantId} id={eachApplicant.applicantId} role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <template if:true={isLoading}><lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner></template>
+                            <div class="slds-form slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-id={eachApplicant.applicantId} onclick={uploadDone}>
+                                        <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                                        </lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 id={eachApplicant.applicantId} class="slds-modal__title slds-hyphenate">
+                                        Upload Email Attachment
+                                    </h2>
+                                </header>
+                                <lightning-card>
+                                    <div class="slds-card__body_inner">
+                                        <div class="slds-clearfix">
+                                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">	
+                                                        <lightning-file-upload label="Upload File" variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader" accept={acceptedFormats} record-id={eachApplicant.tvrId} onuploadfinished={handleFileUpload} multiple="false"></lightning-file-upload>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </br>
+                                        <div class="slds-clearfix">
+                                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+                                                    <button class=" slds-button slds-button_brand " onclick={uploadDone} data-id={eachApplicant.applicantId}>
+                                                        Done 
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+                                </lightning-card>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open modalBackdrops" id={eachApplicant.applicantId} key={eachApplicant.applicantId}>
+                        </div>
+    
+                       <!-- <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 
+                            currentloanapplicationid={eachApplicant.oppId} currentapplicantid={eachApplicant.applicantId}
+                            uploadviewdocpopup={uploadRCDocFlag} createdoconparentbutton="true" title="Upload Email Attachment"
+                            doctype={docType} isphotocopy={showPhotoCopy} showdocview={showDocView}
+                            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+                            documentrecordidfromparent={documentRecordId} key={eachApplicant.applicantId} onchangeflagvalue={changeFlagValue}>
+                        </c-l-W-C_-L-O-S_-Generic-Upload-Document-M5> -->
+                    </template> 
+    
+                    <lightning-tab label={eachApplicant.applicantType} value={index} key={eachApplicant.applicantId}>     
+                    
+                        <lightning-accordion allow-multiple-sections-open active-section-name="A" >
+                            <lightning-accordion-section name="A" label="APPLICATION LIST">                                
+                                <div class="slds-form slds-grid slds-wrap">                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Application No</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                   
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="oppName" data-id="index"
+                                                        value={eachApplicant.oppName} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Name</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                    
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="applicantName" data-id="index"
+                                                        value={eachApplicant.applicantName} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Vehicle type (New/Used/Refinance)</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                    
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="vehicleType" data-id="index"
+                                                        value={eachApplicant.vehicleType} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Mobile Number</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                    
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="applicantContactNumber" data-id="index"
+                                                        value={eachApplicant.applicantContactNumber} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <template if:true={eachApplicant.isPassengerVehicle}>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Alternate Mobile Number</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                    
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden" max-length="10" min-length="10"
+                                                    name="alternateMobileNumber" data-id={index} type="phone"
+                                                        value={eachApplicant.alternateMobileNumber} onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div></template>
+                                    <!-- Added by Abhishek -->
+                                <template if:false={eachApplicant.isBorrower}>
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Relationship with borrower</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                    
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="applicationrelationshipWithBorrower" data-id="index"
+                                                        value={eachApplicant.applicationrelationshipWithBorrower} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <!-- End -->                                      
+                                </div>                    
+                            </lightning-accordion-section>
+                    
+                            <lightning-accordion-section name="B" label="KYC">                                
+                                <div class="slds-form slds-grid slds-wrap">                                   
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Have originals been verified atleast once during the process?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">  
+                                                <template if:true={eachApplicant.kycAttestationOnce}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycAttestationOnce" data-id={index} data-name="originalKYCVerifiedField"
+                                                        value={eachApplicant.kycAttestationOnce}  type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>
+                                                </template>   
+                                                <template if:false={eachApplicant.kycAttestationOnce}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycAttestationOnce" data-id={index} data-name="originalKYCVerifiedField"
+                                                        value={eachApplicant.kycAttestationOnce}  type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>                                                                    
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Is customer having an Aadhar Card?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                       
+                                                <template if:true={eachApplicant.kycAadhaarCard}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycAadhaarCard" data-id={index}
+                                                        value={eachApplicant.kycAadhaarCard} type="checkbox" onchange={handleChange} 
+                                                        disabled checked>
+                                                    </lightning-input>
+                                                </template>   
+                                                <template if:false={eachApplicant.kycAadhaarCard}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycAadhaarCard" data-id={index}
+                                                        value={eachApplicant.kycAadhaarCard} type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>  
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Is customer's Mob.No linked to Aadhar?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                        
+                                                <template if:true={eachApplicant.kycMobileLinkedAadhaar}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycMobileLinkedAadhaar" data-id={index}
+                                                        value={eachApplicant.kycMobileLinkedAadhaar}  type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                                    
+                                                </template>   
+                                                <template if:false={eachApplicant.kycMobileLinkedAadhaar}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycMobileLinkedAadhaar" data-id={index}
+                                                        value={eachApplicant.kycMobileLinkedAadhaar}  type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Is customer using Mob.No Linked to Aadhar?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">  
+                                                <template if:true={eachApplicant.kycUsingMobileLinkedAadhaar}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycUsingMobileLinkedAadhaar" data-id={index}
+                                                        value={eachApplicant.kycUsingMobileLinkedAadhaar}  type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                                 
+                                                </template>   
+                                                <template if:false={eachApplicant.kycUsingMobileLinkedAadhaar}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="kycUsingMobileLinkedAadhaar" data-id={index}
+                                                        value={eachApplicant.kycUsingMobileLinkedAadhaar}  type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>                                                                      
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    
+                            </lightning-accordion-section>
+                    
+                            <lightning-accordion-section name="C" label="PERSONAL DETAILS">                     
+                                <div class="slds-form slds-grid slds-wrap">                                   
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Vehicle Make</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalVehicleMake" data-id={index}
+                                                        value={eachApplicant.personalVehicleMake} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Vehicle Model</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalVehicleModel" data-id={index}
+                                                        value={eachApplicant.personalVehicleModel} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Vehicle Variant</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalVehicleVariant" data-id={index}
+                                                        value={eachApplicant.personalVehicleVariant} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <template if:true={eachApplicant.isPassengerVehicle}>
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Dealer name</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalVehicleVariant" data-id={index}
+                                                        value={eachApplicant.dealerName} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div><br></template>
+                                        
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Have you applied for a loan?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                        
+                                                <template if:true={eachApplicant.personalAppliedForLoan}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="personalAppliedForLoan" data-id={index}
+                                                        value={eachApplicant.personalAppliedForLoan}  type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                                
+                                                </template>   
+                                                <template if:false={eachApplicant.personalAppliedForLoan}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="personalAppliedForLoan" data-id={index}
+                                                        value={eachApplicant.personalAppliedForLoan}  type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Has the vehicle been delivered?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                        
+                                                <template if:true={eachApplicant.personalVehicleDelivered}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="personalVehicleDelivered" data-id={index}
+                                                        value={eachApplicant.personalVehicleDelivered}  type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                               
+                                                </template>   
+                                                <template if:false={eachApplicant.personalVehicleDelivered}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="personalVehicleDelivered" data-id={index}
+                                                        value={eachApplicant.personalVehicleDelivered}  type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Who will be the end user of the product</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-combobox  class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalProductEndUser" data-id={index}
+                                                    placeholder="-- Select --" options={tvrEndUserOptions} 
+                                                        value={eachApplicant.personalProductEndUser} onchange={handleChange}>
+                                                </lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">What is the purpose of purchasing the vehicle?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalPurpose" data-id={index}
+                                                        value={eachApplicant.personalPurpose} onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Remarks</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="personalRemarks" data-id={index}
+                                                        value={eachApplicant.personalRemarks} onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>                    
+                                </div>                    
+                            </lightning-accordion-section>
+                            <template if:true={eachApplicant.isPassengerVehicle}>
+                                <c-i-n-d-_-l-w-c-_-t-v-r-vehicle-Details each-applicant={eachApplicant}></c-i-n-d-_-l-w-c-_-t-v-r-vehicle-Details>
+                            </template>   
+                            <lightning-accordion-section name="D" label="BUSINESS DETAILS">            
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Name of the Company</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                    
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="businessCompanyName" data-id={index}
+                                                        value={eachApplicant.businessCompanyName} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">No. of years in business/ Current employment</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                   
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="businessYearsInBusiness" data-id={index}
+                                                  
+                                                        value={eachApplicant.businessYearsInBusiness} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>                
+                                </div>
+                            </lightning-accordion-section>                                
+                    
+                            <lightning-accordion-section name="E" label="LOAN DETAILS">                                
+                                <div class="slds-form slds-grid slds-wrap">                                  
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Loan Amount</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                   
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="loanAmount" data-id={index}
+                                                        value={eachApplicant.loanAmount} read-only>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Cheque bounce charges informed</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                        
+                                                <template if:true={eachApplicant.loanChequeBounce}>                                                    
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="loanChequeBounce" data-id={index}
+                                                        value={eachApplicant.loanChequeBounce} type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                             
+                                                </template>   
+                                                <template if:false={eachApplicant.loanChequeBounce}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="loanChequeBounce" data-id={index}
+                                                        value={eachApplicant.loanChequeBounce} type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Margin Money Paid?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                        
+                                                <template if:true={eachApplicant.loanMarginMoney}>                                                                                                       
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="loanMarginMoney" data-id={index}
+                                                        value={eachApplicant.loanMarginMoney} type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                          
+                                                </template>   
+                                                <template if:false={eachApplicant.loanMarginMoney}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="loanMarginMoney" data-id={index}
+                                                        value={eachApplicant.loanMarginMoney} type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">To whom has the Margin Money paid? / will be paid</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                    name="loanWhomMarginMoney" data-id={index}
+                                                    placeholder="-- Select --" options={tvrMarginMoneyOptions} 
+                                                        value={eachApplicant.loanWhomMarginMoney} onchange={handleChange} required>
+                                                </lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Did you get any receipt?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                                        
+                                                <template if:true={eachApplicant.loanReceipt}>                                                                                                                                                           
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="loanReceipt" data-id={index}
+                                                        value={eachApplicant.loanReceipt} type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>                                        
+                                                </template>   
+                                                <template if:false={eachApplicant.loanReceipt}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="loanReceipt" data-id={index}
+                                                        value={eachApplicant.loanReceipt} type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>                                                    
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Amount Paid</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="loanAmountPaid" data-id={index}
+                                                        value={eachApplicant.loanAmountPaid} onchange={handleChange} required>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>                    
+                                </div>                    
+                            </lightning-accordion-section>
+                    
+                            <c-address-sections each-applicant={eachApplicant} finacle-city-options={finacleCityOptions} index={index} onchild={handleFinacleCityChange}></c-address-sections>
+                    
+                            <lightning-accordion-section name="I" label="GENERAL">                                
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Customer informed about KYC to be updated within 3 months?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">  
+                                                <template if:true={eachApplicant.currentAddressAvailable}>
+                                                    <template if:true={eachApplicant.customerInformedProvideKYCIn3Months}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="isCrrOfficeCustomerInformedAboutKYC" data-id={index}
+                                                            value={eachApplicant.customerInformedProvideKYCIn3Months}  type="checkbox" checked onchange={handleChange}>
+                                                        </lightning-input>
+                                                    </template>
+                                                    <template if:false={eachApplicant.customerInformedProvideKYCIn3Months}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="isCrrOfficeCustomerInformedAboutKYC" data-id={index}
+                                                            value={eachApplicant.customerInformedProvideKYCIn3Months}  type="checkbox" onchange={handleChange}>
+                                                        </lightning-input>
+                                                    </template>                                                    
+                                                </template>
+                                                <template if:false={eachApplicant.currentAddressAvailable}>
+                                                    <template if:true={eachApplicant.customerInformedProvideKYCIn3Months}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="isCrrOfficeCustomerInformedAboutKYC" data-id={index}
+                                                            value={eachApplicant.customerInformedProvideKYCIn3Months} checked type="checkbox" disabled>
+                                                        </lightning-input>
+                                                    </template>
+                                                    <template if:false={eachApplicant.customerInformedProvideKYCIn3Months}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="isCrrOfficeCustomerInformedAboutKYC" data-id={index}
+                                                            value={eachApplicant.customerInformedProvideKYCIn3Months}  type="checkbox" disabled>
+                                                        </lightning-input>
+                                                    </template>                                                       
+                                                </template>                      
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Any Money asked for processing/Down Payment?</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">  
+                                                <template if:true={eachApplicant.moneyAskedForProcessingDownPayment}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="crrOfficeMoneyAskedForProcessing" data-id={index}
+                                                        value={eachApplicant.moneyAskedForProcessingDownPayment}  type="checkbox" onchange={handleChange} checked>
+                                                    </lightning-input>
+                                                </template>
+                                                <template if:false={eachApplicant.moneyAskedForProcessingDownPayment}>
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="crrOfficeMoneyAskedForProcessing" data-id={index}
+                                                        value={eachApplicant.moneyAskedForProcessingDownPayment}  type="checkbox" onchange={handleChange}>
+                                                    </lightning-input>
+                                                </template>                                                                       
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>                    
+                            </lightning-accordion-section>
+                            <template if:false={eachApplicant.isPassengerVehicle}>
+                            <template if:true={eachApplicant.isBorrower}>
+                                <lightning-accordion-section name="J" label="NOMINEE DETAILS">                                
+                                    <div class="slds-form slds-grid slds-wrap">                    
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">SA Account Opening Form No</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">                        
+                                                  
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="nomineeSAAccountOpening" data-id={index}
+                                                            value={eachApplicant.nomineeSAAccountOpening} read-only>
+                                                    </lightning-input>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">SA Account Opened For</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">                                                                        
+                                                  
+                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                        name="nomineeSAAccountOpenedFor" data-id={index}
+                                                            value={eachApplicant.nomineeSAAccountOpenedFor} onchange={handleChange} read-only>
+                                                    </lightning-input>                                                                                                               
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee Available</label>
+                                                </div>
+                                                <!-- INDI 4596 -->
+                                                <div class="slds-col slds-size_2-of-3">  
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>                                                        
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeAvailable" data-id={index}
+                                        
+                                                                value={eachApplicant.nomineeAvailable} type="checkbox" onchange={handleChange} checked disabled>
+                                                            </lightning-input>
+                                                        </template>   
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeAvailable" data-id={index}
+                                                                value={eachApplicant.nomineeAvailable} type="checkbox" onchange={handleChange}>
+                                                            </lightning-input>
+                                                        </template>    
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>                                                        
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeAvailable" data-id={index}
+                                                                value={eachApplicant.nomineeAvailable} type="checkbox" checked disabled>
+                                                            </lightning-input>
+                                                        </template>   
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeAvailable" data-id={index}
+                                                                value={eachApplicant.nomineeAvailable} type="checkbox" disabled>
+                                                            </lightning-input>
+                                                        </template>    
+                                                    </template>                                                                                                                                                                                                                                              
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee Name</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3"> 
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="boNomineeField slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeName" data-id={index} type="text" pattern="^[a-zA-Z ]{1,50}$" 
+                                                                value={eachApplicant.nomineeName} onchange={handleChange}>
+                                                            </lightning-input>
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeName" data-id={index}
+                                                                value={eachApplicant.nomineeName} read-only>
+                                                            </lightning-input>
+                                                        </template>   
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineeName" data-id={index}
+                                                            value={eachApplicant.nomineeName} read-only>
+                                                        </lightning-input>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>                                      
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee DOB</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">                        
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="boNomineeField slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeDOB" data-id={index} type="date"
+                                                                value={eachApplicant.nomineeDOB} onchange={handleChange}>
+                                                            </lightning-input>
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeDOB" data-id={index}
+                                                                value={eachApplicant.nomineeDOB} type="date" read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineeDOB" data-id={index}
+                                                            value={eachApplicant.nomineeDOB} type="date" read-only>
+                                                        </lightning-input>                                                        
+                                                    </template>                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee Address</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">                        
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="boNomineeField slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeAddress" data-id={index}
+                                                                value={eachApplicant.nomineeAddress} onchange={handleChange}>
+                                                            </lightning-input>
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeAddress" data-id={index}
+                                                                value={eachApplicant.nomineeAddress} read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineeAddress" data-id={index}
+                                                            value={eachApplicant.nomineeAddress} read-only>
+                                                        </lightning-input>
+                                                    </template>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee Pin Code</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">                        
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="boNomineeField slds-form-element__control" variant="label-hidden"
+                                                                name="nomineePinCode" data-id={index} max-length="6" min-length="6" type="text" pattern={label.Pin_code_Pattern}
+                                                                value={eachApplicant.nomineePinCode} onchange={handleChange}>
+                                                            </lightning-input>
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineePinCode" data-id={index}
+                                                                value={eachApplicant.nomineePinCode} read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineePinCode" data-id={index}
+                                                            value={eachApplicant.nomineePinCode} read-only>
+                                                        </lightning-input>
+                                                    </template>                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee City</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">     
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                           <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeCity" data-id={index}
+                                                                value={eachApplicant.nomineeCity} onchange={handleChange}>
+                                                            </lightning-input>-->
+                                                              <c-I-N-D_-L-W-C_-Custom_-Lookup
+                                                            is-value-selected="True"
+                                                            selected-name={eachApplicant.nomineeCity}
+                                                            object-name="Finacle_City__c"
+                                                            fetch-field="City_Code__c"
+                                                            search-field="City_Code__c"
+                                                            filter-field="City_Code__c"
+                                                            filter-term=""
+                                                            onlookupselected={nomineeCitylookupHandler}
+                                                            onclearvalue={nomineeCityClearvaluelookupHandler}
+                                                            select-field-name="City_Code__c"
+                                                            index = {index}
+                                                            is-custom-class-not-applicable="true"
+                                                          >
+                                                          </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                                            
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeCity" data-id={index}
+                                                                value={eachApplicant.nomineeCity} read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineeCity" data-id={index}
+                                                            value={eachApplicant.nomineeCity} read-only>
+                                                        </lightning-input>
+                                                    </template>                                                                                              
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Nominee State</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3">   
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="boNomineeField slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeState" data-id={index}
+                                                                value={eachApplicant.nomineeState} read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeState" data-id={index}
+                                                                value={eachApplicant.nomineeState} read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineeState" data-id={index}
+                                                            value={eachApplicant.nomineeState} read-only>
+                                                        </lightning-input>
+                                                    </template>                                                                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                            <div class="slds-form-element  slds-grid slds-wrap">
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <label class="slds-form-element__label">Relationship with Borrower</label>
+                                                </div>
+                                                <div class="slds-col slds-size_2-of-3"> 
+                                                    <template if:true={borrowerNomineeEnable}>
+                                                        <template if:true={eachApplicant.nomineeAvailable}>
+                                                            <lightning-combobox class="boNomineeField slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeRelationshipBorrower" data-id={index}
+                                                                value={eachApplicant.nomineeRelationshipBorrower} onchange={handleChange} options={relationshipOptions}>
+                                                            </lightning-combobox >
+                                                        </template>
+                                                        <template if:false={eachApplicant.nomineeAvailable}>
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="nomineeRelationshipBorrower" data-id={index}
+                                                                value={eachApplicant.nomineeRelationshipBorrower} read-only>
+                                                            </lightning-input>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={borrowerNomineeEnable}>
+                                                        <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                            name="nomineeRelationshipBorrower" data-id={index}
+                                                            value={eachApplicant.nomineeRelationshipBorrower} read-only>
+                                                        </lightning-input>
+                                                    </template>                                                                                               
+                                                </div>
+                                            </div>
+                                        </div>                                                                                                                  
+                                    </div>                    
+                                </lightning-accordion-section>
+                            </template>
+                            <template if:false={eachApplicant.isBorrower}>
+                                <!-- INDI 4565 -->
+                                <template if:true={ShowCoborrowerNominee}>
+                                    <template if:true={borrowerAvailable}>
+                                        <lightning-accordion-section name="J" label="NOMINEE DETAILS">                                
+                                            <div class="slds-form slds-grid slds-wrap">                    
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">SA Account Opening Form No</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">                        
+                                                         
+                                                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                name="CB_nomineeSAAccountOpening" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeSAAccountOpening} read-only>
+                                                            </lightning-input>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">SA Account Opened For</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">                                                                        
+                                                         
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeSAAccountOpenedFor" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeSAAccountOpenedFor} onchange={handleChange} >
+                                                                </lightning-input>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeSAAccountOpenedFor" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeSAAccountOpenedFor} onchange={handleChange} read-only>
+                                                                </lightning-input>
+                                                            </template> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee Available</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">  
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>                                                        
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeAvailable" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeAvailable} type="checkbox" onchange={handleChange} checked disabled>
+                                                                    </lightning-input>
+                                                                </template>   
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeAvailable" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeAvailable} type="checkbox" onchange={handleChange}>
+                                                                    </lightning-input>
+                                                                </template>    
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>                                                        
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeAvailable" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeAvailable} type="checkbox" checked disabled>
+                                                                    </lightning-input>
+                                                                </template>   
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeAvailable" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeAvailable} type="checkbox" disabled>
+                                                                    </lightning-input>
+                                                                </template>    
+                                                            </template>                                                                                                                       
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee Name</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3"> 
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="cbNomineeField slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeName" data-id={index} type="text" pattern="^[a-zA-Z ]{1,50}$" 
+                                                                        value={eachApplicant.CB_nomineeName} onchange={handleChange}>
+                                                                    </lightning-input>
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeName" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeName} read-only>
+                                                                    </lightning-input>
+                                                                </template>  
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeName" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeName} read-only>
+                                                                </lightning-input>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>                                      
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee DOB</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">                        
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="cbNomineeField slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeDOB" data-id={index}  type="date"
+                                                                        value={eachApplicant.CB_nomineeDOB} onchange={handleChange}>
+                                                                    </lightning-input>
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeDOB" data-id={index}  type="date"
+                                                                        value={eachApplicant.CB_nomineeDOB} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeDOB" data-id={index} type="date"
+                                                                    value={eachApplicant.CB_nomineeDOB} read-only>
+                                                                </lightning-input>                                                       
+                                                            </template>                                                  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee Address</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">                        
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="cbNomineeField slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeAddress" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeAddress} onchange={handleChange}>
+                                                                    </lightning-input>
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeAddress" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeAddress} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeAddress" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeAddress} read-only>
+                                                                </lightning-input>
+                                                            </template>                                                  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee Pin Code</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">                        
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="cbNomineeField slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineePinCode" data-id={index} type="text" pattern={label.Pin_code_Pattern}
+                                                                        value={eachApplicant.CB_nomineePinCode} onchange={handleChange}>
+                                                                    </lightning-input>
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineePinCode" data-id={index}
+                                                                        value={eachApplicant.CB_nomineePinCode} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineePinCode" data-id={index}
+                                                                    value={eachApplicant.CB_nomineePinCode} read-only>
+                                                                </lightning-input>
+                                                            </template>                                                   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee City</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">     
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                   <!-- <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeCity" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeCity} onchange={handleChange}>
+                                                                    </lightning-input> -->
+                                                                <c-I-N-D_-L-W-C_-Custom_-Lookup
+                                                                    is-value-selected="True"
+                                                                    selected-name={eachApplicant.CB_nomineeCity}
+                                                                    object-name="Finacle_City__c"
+                                                                    fetch-field="City_Code__c"
+                                                                    search-field="City_Code__c"
+                                                                    filter-field="City_Code__c"
+                                                                    filter-term=""
+                                                                    onlookupselected={CBnomineeCitylookupHandler}
+                                                                    onclearvalue={CBnomineeCityClearvaluelookupHandler}
+                                                                    select-field-name="City_Code__c"
+                                                                    index = {index}
+                                                                    is-custom-class-not-applicable="true"
+                                                                  >
+                                                                  </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeCity" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeCity} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeCity" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeCity} read-only>
+                                                                </lightning-input>
+                                                            </template>                                                                                                
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Nominee State</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3">   
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="cbNomineeField slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeState" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeState} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeState" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeState} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeState" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeState} read-only>
+                                                                </lightning-input>
+                                                            </template>                                                                                                  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                    <div class="slds-form-element  slds-grid slds-wrap">
+                                                        <div class="slds-col slds-size_1-of-3">
+                                                            <label class="slds-form-element__label">Relationship with Co-Borrower</label>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-3"> 
+                                                            <template if:true={coBorrowerNomineeEnable}>
+                                                                <template if:true={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-combobox class="cbNomineeField slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeRelationshipBorrower" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeRelationshipBorrower} onchange={handleChange} options={relationshipOptions}>
+                                                                    </lightning-combobox >
+                                                                </template>
+                                                                <template if:false={eachApplicant.CB_nomineeAvailable}>
+                                                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                        name="CB_nomineeRelationshipBorrower" data-id={index}
+                                                                        value={eachApplicant.CB_nomineeRelationshipBorrower} read-only>
+                                                                    </lightning-input>
+                                                                </template>
+                                                            </template>
+                                                            <template if:false={coBorrowerNomineeEnable}>
+                                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                                    name="CB_nomineeRelationshipBorrower" data-id={index}
+                                                                    value={eachApplicant.CB_nomineeRelationshipBorrower} read-only>
+                                                                </lightning-input>
+                                                            </template>                                                                                                   
+                                                        </div>
+                                                    </div>
+                                                </div>                                                                                                                  
+                                            </div>                    
+                                        </lightning-accordion-section>
+                                    </template>
+                                </template>
+                            </template>
+                            </template>
+                            <template if:true={eachApplicant.isPassengerVehicle}>
+                                <c-i-n-d-_-l-w-c-_-t-v-r-nominee-and-reference each-applicant={eachApplicant} borrower-available={borrowerAvailable} show-coborrower-nominee={ShowCoborrowerNominee}></c-i-n-d-_-l-w-c-_-t-v-r-nominee-and-reference>
+                            </template>
+                            <lightning-accordion-section name="L" label="REMARKS">
+                                <template if:true={eachApplicant.isPassengerVehicle}>
+                                <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                                    <lightning-button onclick={viewCam} variant="brand" label="View CAM"
+                                        alternative-text="View CAM" class=" slds-float_right indusPrimaryVehicleButton slds-action-overflow_touch__body slds-align_absolute-center">
+                                    </lightning-button>
+                                </div><br></template>
+                                <div class="slds-form slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Attempts</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="tvrAttempts" data-id={index}
+                                                        value={eachApplicant.tvrAttempts} onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">TVR Assessment</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                                                   
+                                                <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                                    name="tvrassessment" value={eachApplicant.tvrassessment} data-id={index}
+                                                    placeholder="-- Select --" options={tvrAssessmentOptions} onchange={handleChange}>
+                                                </lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                        <div class="slds-form-element  slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <label class="slds-form-element__label">Remarks</label>
+                                            </div>
+                                            <div class="slds-col slds-size_2-of-3">                        
+                                                <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                                    name="tvrRemarks" data-id={index}
+                                                    value={eachApplicant.tvrRemarks} onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                </div>                
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                      
+                    </lightning-tab>  
+                </template>                                
+            </lightning-tabset>
+           
+     
+            <div class="slds-m-bottom_large slds-clearfix slds-align_absolute-center">
+                <lightning-button onclick={handleSubmit} variant="brand" label="Submit"
+                    alternative-text="Submit" class=" slds-float_right indusPrimaryVehicleButton slds-action-overflow_touch__body slds-align_absolute-center">
+                </lightning-button>
+    
+                <lightning-button onclick={handleUploadViewAndDelete} variant="brand" label="Upload Email Attachment"
+                alternative-text="Upload Email Attachment" class=" slds-float_right indusPrimaryVehicleButton slds-action-overflow_touch__body slds-align_absolute-center">
+            </lightning-button>
+    
+            
+            
+            </div>
+           
+        </div>
+        <template if:true={showModal}> 
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">       
+                  
+                    <template if:true={showModalForUpdateKYC}> 
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <p>{label.isKycUpdatedIn3Months}</p>        
+                        </div>
+                    </template>  
+                    <template if:true={showModalForChequeBounce}> 
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                            <p>{label.customerChequeBounce}</p>        
+                        </div>
+                    </template>                    
+                    <div class="slds-modal__footer">
+                        <lightning-button variant="brand" label="OK" title="Primary action" onclick={handleOk} class="slds-m-left_x-small"></lightning-button>					
+                    </div>
+                </div>
+            </section>
+    
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;" role="presentation"></div>
+        </template>
+    </template>    
+    <!--
+        <template if:true={uploadViewDocFlag}>
+        <c-l-W-C_-L-O-S_-Upload-And-View-Document  onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={oppId} currentapplicantid={applicantId}
+            uploadviewdocpopup={uploadViewDocFlag}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId}></c-l-W-C_-L-O-S_-Upload-And-View-Document >
+    </template> 
+    -->
+    
+    
+    
+    </template>

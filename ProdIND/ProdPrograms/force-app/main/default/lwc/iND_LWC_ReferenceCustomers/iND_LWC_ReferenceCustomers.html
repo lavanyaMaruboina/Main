@@ -1,0 +1,40 @@
+<template>
+     <lightning-layout>
+        <lightning-layout-item size="12" class="slds-scrollable">
+    <table class="slds-table slds-table_bordered slds-table_col-bordered">
+      <thead>
+        <tr >
+          <th style="height: 30px;"></th>
+          <th >Customer Name</th>
+          <th  style="width: 200px;">Address</th>
+          <th >Customer Since</th>
+          <th >Mobile Number</th>
+          <th >Product</th>
+          <th>Exposure</th>
+          <th>Feedback</th>
+      </tr>
+      </thead>
+      <tbody>
+          <template for:each={referenceCustomerRecords} for:item="item">
+          <tr key={item.Id}>
+            <td style="width : 50px">
+              <lightning-input class="slds-m-left_medium" variant="label-hidden" name="checkbox" type="checkbox" data-name="checkbox" data-id={item.Id} onchange={handleCheckboxChange} disabled={item.disableRow} checked={item.isChecked}></lightning-input>
+            </td>
+            <td >{item.Name}</td>
+            <td >{item.Address}</td>
+            <td>{item.Maker_Date}</td>
+            <td>{item.Phone}</td>
+            <td>{item.Product}</td>
+            <td>{item.Exposure}</td>
+            <td>
+            <div style="overflow: auto;">
+              <lightning-input name="feedback" type="text" variant="label-hidden" data-name="feedback" data-id={item.Id} value={item.Feedback} disabled={item.feedbackDisabled} required></lightning-input>
+            </div>
+            </td>
+          </tr>
+          </template>
+      </tbody>
+    </table>
+        </lightning-layout-item>
+     </lightning-layout>
+</template>

@@ -1,0 +1,387 @@
+<template>
+
+  <template if:true={isSpinnerMoving} class=" slds-align_absolute-center slds">
+    <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+    </lightning-spinner>
+  </template>
+
+  <lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+    <template if:true={repaymentScreenVisible}>
+      <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Repayment to be done by</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="repaymentDoneByField" value={repaymentDoneBy} label="Repayment Done By" variant="label-hidden" type="text" data-id="repaymentDoneById" disabled required></lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Bank Name</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <c-I-N-D_-L-W-C_-Custom_-Lookup
+                is-value-selected={bankId}
+                selected-name={bank}
+                object-name="Bank_Masters__c"
+                fetch-field="Name"
+                search-field="Name"
+                filter-field=""
+                filter-term=" "
+                onlookupselected={selectedStateHandler}
+                onclearvalue={selectedStateHandler}
+                select-field-name="Name"
+                disable-value={isDisabled}
+                is-disabled={isDisabled}
+                required
+                is-custom-class-not-applicable="true"
+              >
+              </c-I-N-D_-L-W-C_-Custom_-Lookup>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Authorization mode available</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+             <!--<lightning-input class="slds-form-element__control" name="authorizationModeAvailableField" value={authorizationModeAvailable} label="Authorization mode available" variant="label-hidden" type="text" data-id="authorizationModeAvailableId" disabled  required> </lightning-input> -->
+
+             <lightning-combobox
+                  variant="label-hidden"
+                  name="authorizationModeAvailableField"
+                  value={comboboxValue}
+                  placeholder="Select Authorization Mode"
+                  options={authorizationModeAvailableOptions}
+                  onchange={handleChange} 
+                  disabled={isDisabled}>
+              </lightning-combobox>
+            
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Is Netbanking available with customer</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-combobox name="isNetbankingAvailableField" data-id="isNetbankingAvailableId" variant="label-hidden" options={yesNoOption} value={isNetBankingAvailable} required onchange={handleInputFieldChange} disabled={isDisabled}> </lightning-combobox>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Is Debit Card available with customer</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-combobox name="isDebitCardAvailableField" data-id="isDebitCardAvailableId" variant="label-hidden" options={yesNoOption} value={isDebitCardAvailable} required onchange={handleInputFieldChange} disabled={isDisabled}> </lightning-combobox>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Repayment Method</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <template if:true={repaymentMethodOption}>
+                <!--CISP-4181 Keep the Repayment Method field disabled if Repayment Mandate component is called from the Final offer page in L1 journey-->
+                <template if:true={isInvokedFromFinalOffer}>
+                  <lightning-combobox name="repaymentMethodField" variant="label-hidden" options={repaymentMethodOption} value={repaymentMethod} required onchange={handleRepaymentChange} disabled> </lightning-combobox>
+                </template>
+                <template if:false={isInvokedFromFinalOffer}>
+                  <lightning-combobox name="repaymentMethodField" data-id="repaymentMethodId" variant="label-hidden" options={repaymentMethodOption} value={repaymentMethod} required onchange={handleRepaymentChange} disabled={isDisabled}> </lightning-combobox>
+                </template>
+              </template>
+            </div>
+          </div>
+        </div>
+        <!---->
+
+        <!---->
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Loan Amount</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="loanAmountField" value={loanAmount} label="Loan Amount" variant="label-hidden" type="number" data-id="loanAmountId" disabled required> </lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">EMI Amount</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="emiAmountField" value={emiAmount} label="EMI Amount" variant="label-hidden" type="number" data-id="emiAmountId" disabled required> </lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Start Date</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="startDateField" value={startDate} label="Start Date" variant="label-hidden" type="Date" data-id="repaymentDoneById" disabled required></lightning-input>
+            </div>
+          </div>
+        </div>
+        <!---->
+        <!---->
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Until Cancelled</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-combobox name="untilCancelledField" data-id="untilCancelledId" variant="label-hidden" options={yesNoOption} value={untilCancelled} required onchange={handleUntilCancelledChange} disabled={isDisabled}> </lightning-combobox>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">End Date</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="endDateField" value={endDate} label="End Date" variant="label-hidden" type="Date" data-id="endDateId" disabled={isEndDateDisabled} onchange={handleInputFieldChange} required> </lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">1st EMI Due Date</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="lstEMIDueDateField" value={lstEMIDueDate} label="1st EMI Due Date" variant="label-hidden" type="Date" data-id="lstEMIDueDateId" disabled required></lightning-input>
+            </div>
+          </div>
+        </div>
+        <!---->
+        <!---->
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Auto Pay Limit Amount</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="autoPayLimitAmountField" value={autoPayLimitAmount} label="Auto Pay Limit Amount" variant="label-hidden" type="number" data-id="autoPayLimitAmountId" disabled required></lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Frequency</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <!-- <template if:true={frequencyOptions.data}>
+                <lightning-combobox name="frequencyField" data-id="frequencyId" variant="label-hidden" options={frequencyOptions.data.values} value={frequency} required onchange={handleInputFieldChange} disabled={isDisabled}> </lightning-combobox>
+              </template> -->
+              <lightning-input class="slds-form-element__control" name="frequencyField" value={frequency} label="Frequency" variant="label-hidden" type="text" data-id="frequencyId" disabled></lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Bank Name</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="bankNameTextField" value={bank} label="Bank Name" variant="label-hidden" type="text" data-id="bankNameTextId" disabled={isDisabled} required> </lightning-input>
+            </div>
+          </div>
+        </div>
+        <!---->
+
+        <!---->
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">IFSC Code</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="ifscCodeField" value={ifscCode} label="IFSC Code" variant="label-hidden" type="text" data-id="ifscCodeId" disabled={isDisabled} required onchange={handleInputFieldChange}> </lightning-input>
+            </div>
+          </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+          <div class="slds-form-element slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Account Number</label>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <lightning-input class="slds-form-element__control" name="accountNumberField" value={accountNumber} label="Account Number" variant="label-hidden" type="text" data-id="accountNumberId" required onfocusout ={handleAccountOnFocusout} disabled={isDisabled}></lightning-input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Please select Yes, if you have checked the above repayment details</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-combobox name="checkRepaymentDetailsField" data-id="checkRepaymentDetailsId" variant="label-hidden" options={yesNoOption} value={checkRepaymentDetailsField} required onchange={handleInputFieldChange} disabled={isPreDisabled}> </lightning-combobox>
+          </div>
+        </div>
+      </div>
+      <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="remarksField" value={remarks} label="Remarks" variant="label-hidden" type="text" data-id="remarksId" required onchange={handleInputFieldChange} disabled={isPreDisabled}> </lightning-input>
+          </div>
+        </div>
+      </div>
+      <template if:true={ispennyDropShow}>
+        <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+          <lightning-button class="slds-align_absolute-center" disabled={enablePennyDrop} type="InitiatePennyDrop" label="Initiate Penny Drop" variant="brand" onclick={handlePennyDropApiCall}> </lightning-button>
+        </div>
+        <template if:true ={isPostSanction}>
+        <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+          <lightning-button class="slds-align_absolute-center" disabled={disableCaptureBankImage} type="bankStatement" label="Capture Bank Statement" variant="brand" onclick={handleCaptureBankImage}> </lightning-button>
+        </div>
+        <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+          <lightning-button class="slds-align_absolute-center" disabled={disableChequeImage} type="cheque" label="Capture Cheque" variant="brand" onclick={handleCaptureChequeImage}> </lightning-button>
+        </div>
+        </template>
+        <template if:false ={isPostSanction}>
+        <template if:true={showBankPreview}>
+          <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+          <lightning-button class="slds-align_absolute-center"  value="Customer Bank Statement" label="View Bank Statement" variant="brand" onclick={handleViewDocument}> </lightning-button></div>
+        </template>
+        <template if:true={showChequePreview}>
+          <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+          <lightning-button class="slds-align_absolute-center"  value="Cheques SPDC" label="View Cheque" variant="brand" onclick={handleViewDocument}> </lightning-button></div>
+        </template>
+        </template>
+        </template>
+      <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+        <!-- <template if:false={isSubmitDisabled}> -->
+          <template if:false={isSubmitDisabled}>
+          <lightning-button class="slds-align_absolute-center" disabled={isSubmitDisabled} type="submit" label="Submit" variant="brand" onclick={handleSubmitRepaymentDetails}> </lightning-button>
+        </template>
+        <template if:true={isSubmitDisabled}>
+          <lightning-button class="slds-align_absolute-center" type="submit" disabled={isPreDisabled} label="Submit" variant="brand" onclick={handleSubmitPreRepaymentDetails}> </lightning-button>
+          </template>
+        <!-- </template> -->
+      </div>
+      <!---->
+      <lightning-accordion active-section-name={accordionActiveSection} class="slds-size_12-of-12">
+        <template if:true={eNachFlag}>
+          <lightning-accordion-section class="slds-accordion__summary-heading headingtext" name="e-Nach" label="e-NACH">
+            <c-i-N-D-_-L-W-C-_e-Nach-Repayment-Mandate current-step={currentStep} applicant-id={applicantId} record-id={recordId} onenachchange={eNachHandler} is-revoked-loan-application={isRevokedLoanApplication} ongotofinalofferpage={handleGotoFinalOfferPage} deal-id={dealId}>
+              <!-- CISP-2735 -->
+            </c-i-N-D-_-L-W-C-_e-Nach-Repayment-Mandate>
+          </lightning-accordion-section>
+        </template>
+        <template if:true={achFlag}>
+          <lightning-accordion-section class="slds-accordion__summary-heading headingtext" name="ach" label="ACH">
+            <c-i-N-D-_-L-W-C-_ach-Repayment-Mandate current-step={currentStep} record-id={recordId}  applicant-id={applicantId} repaymentid={repaymentRecordId} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}> 
+              <!-- CISP-2735 -->
+            </c-i-N-D-_-L-W-C-_ach-Repayment-Mandate>
+          </lightning-accordion-section>
+        </template>
+        <template if:true={siFlag}>
+          <lightning-accordion-section class="slds-accordion__summary-heading headingtext" name="si" label="SI">
+            <c-i-N-D-_-L-W-C-_si-Repayment-Mandate current-step={currentStep} onsichange={siChangeHandler} applicant-id={applicantId} repayment-id={repaymentRecordId} si-method={siDefaultMethod} record-id={recordId} is-revoked-loan-application={isRevokedLoanApplication} deal-id={dealId}>
+              <!-- CISP-2735 -->
+            </c-i-N-D-_-L-W-C-_si-Repayment-Mandate>
+          </lightning-accordion-section>
+        </template>
+      </lightning-accordion>
+    </template>
+    <!-- <template if:true={isApplWillingToOpenAcc}>
+      <div class="slds-text-color_error slds-align_absolute-center">{iibAccError}</div>
+    </template> -->
+    <template if:false={isLoanAgrSubmitted}>
+      <div class="slds-text-color_error slds-align_absolute-center">{loanAgreementScreenError}</div>
+    </template>
+    <!---->
+    <!-- <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Please select Yes, if you have checked the above
+                        repayment details</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox name="checkRepaymentDetailsField" data-id="checkRepaymentDetailsId"
+                        variant="label-hidden" options={yesNoOption} value={noOption} required
+                        onchange={handleInputFieldChange} disabled={isDisabled}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Remarks</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" name="remarksField" value={remarks}
+                        label="Remarks" variant="label-hidden" type="text" data-id="remarksId" required
+                        onchange={handleInputFieldChange} disabled={isDisabled}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+            <lightning-button class="slds-align_absolute-center" type="submit" label="Submit" variant="brand"
+                onclick={handleSubmitRepaymentDetails}>
+            </lightning-button>
+        </div> -->
+        <!--CISP-4181 Show back button when called from the Final offer page in L1 journey-->
+        <template if:true={isInvokedFromFinalOffer}>
+          <button class="slds-button slds-float_left slds-button_brand" name="Back" onclick={openFinalOfferPage}>
+              Back
+          </button>
+        </template>
+  </lightning-layout>
+  <template if:true={uploadViewDocFlag}>
+    <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValue}
+        currentloanapplicationid={recordId} currentapplicantid={applicantId}
+        uploadviewdocpopup={uploadViewDocFlag} createdoconparentbutton= "false" title={title}
+        doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+        docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+        documentrecordidfromparent={documentRecordId} 
+        onfileuploadstatus={docUploadSuccessfully}
+            ></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+    </template>
+    <template if:true={isPreview}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="background-color: grey;">
+              <!-- modal header start -->
+              <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                  title="Close" onclick={hideModalBox}>
+                  <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                    size="small"></lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+              </header>
+              <!-- modal body start -->
+              <c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+              <!-- modal footer start-->
+              <footer class="slds-modal__footer">
+                <!--<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>-->
+              </footer>
+            </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+</template>

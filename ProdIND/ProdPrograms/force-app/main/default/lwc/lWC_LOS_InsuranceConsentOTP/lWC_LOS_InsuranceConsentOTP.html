@@ -1,0 +1,56 @@
+<!-- Html template modified by Ruchi Jain for otp verification-->
+<template>
+    <div class="slds-card" style="background-color:#FFF5E7;width:68%;margin:1em auto 1em">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-6">
+                &nbsp;
+            </div>
+            <div class="slds-col slds-size_4-of-6">
+                <article class="slds-card" style="background-color:White; padding:20px;">
+                    <div>
+                        <div class="slds-align_absolute-center">
+                            <img src={getIndBankImage} width="150" height="120" class="slds-align_absolute-center"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <span class="slds-align_absolute-center" style="color:red">{message}</span>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                           Enter OTP :  <input  data-id="OTP" pattern="^[0-9]\d{4}$"  placeholder="xxxxx"></input > 
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-m-top_large">
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                    <lightning-button class="slds-align_absolute-center  slds-m-bottom_medium" variant='brand' onclick={handleConsent} icon-position="left"  label="Generate OTP">
+                            </lightning-button>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                    <lightning-button class="slds-align_absolute-center  slds-m-bottom_medium" variant='brand' disabled={verify} onclick={handleVerify} icon-position="left"  label="Verify">
+                            </lightning-button>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                    <lightning-button class="slds-align_absolute-center  slds-m-bottom_medium" label="Resend"  onclick={handleResend} type="submit" variant='brand'
+                                    disabled={resend} >
+                            </lightning-button>
+                                </div> 
+                            </div> 
+                           
+                        </div>
+                    </div> 
+                    
+        </article>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                &nbsp;
+            </div>
+        </div>
+
+
+      
+</div> 
+
+
+</template>

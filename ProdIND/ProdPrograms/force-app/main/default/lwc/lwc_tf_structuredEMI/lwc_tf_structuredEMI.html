@@ -1,0 +1,153 @@
+<template>
+        <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Structured EMI</b>
+                </div>
+    <lightning-card>
+        <h3 style="color: #84181F;font-size:medium;" class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+            EMI Table
+        </h3>
+        <div class=" slds-scrollable_x" style="width: 100vw;">
+        <lightning-layout>
+        <lightning-layout-item size="3"
+                    padding="around-small">
+                        <strong>From Installment</strong>
+                </lightning-layout-item>
+            <lightning-layout-item size="3"
+                    padding="around-small">
+                    <strong>To Installment</strong>
+                </lightning-layout-item>
+            <lightning-layout-item size="3"
+                    padding="around-small">
+                    <strong>No of Installments</strong>
+                </lightning-layout-item>
+            <lightning-layout-item size="3"
+                    padding="around-small">
+                    <strong>EMI Amount</strong>
+                </lightning-layout-item>
+            <lightning-layout-item 
+                    padding="around-small">
+                    <div class="slds-p-top_medium">
+                    </div>
+                </lightning-layout-item>
+        </lightning-layout>
+       <!--<lightning-layout >
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                        <lightning-input type="number" label={fromLabel} class="textInput" value={fromMonth} disabled="true" style="font-size: large;">
+                        </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input type="number" label={toLabel} class="textInput" value={toMonth} disabled="true" >
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input type="number" label="# of Installments" class="textInput" value={installments}  disabled="true">
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <lightning-input type="number" label="EMI Amount" value={emi}  class="textInput" disabled="true" >
+                    </lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                    padding="around-small">
+                    <div class="slds-p-top_medium">
+                    </div>
+                </lightning-layout-item>
+        </lightning-layout>-->
+        <template for:each={itemList} for:item="item" for:index="index">
+            <div key={item}>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="3"
+                        padding="around-small">
+                            <lightning-input  label="" name="fromMon" value={item.fromMonth} class="validate fromCmp" data-id= "validateFromCmp" data-target-id={index} required onchange={changeHandlerOnFromMonth} disabled>
+                            </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="3"
+                        padding="around-small">
+                        <lightning-input  label="" name="toMon" type="number" value={item.toMonth} onchange={changeHandlerOnToMonth} class="validate toCmp" data-target-id={index} data-id= "validateToCmp" required disabled={isDisableTo}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="2"
+                        padding="around-small">
+                        <lightning-input  label="" name="installment" value={item.installments} onchange={changeHandlerOnInstallment}  class="validate" data-id="noInstallmentsId" data-target-id={index} disabled>
+                        </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="3"
+                        padding="around-small">
+                        <lightning-input  label="" name="emi" type="number" value={item.emi} onchange={changeHandlerOnEMI} class="validate emi" data-id="validateEMIId" data-target-id={index} required disabled={isDisableEMI}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    
+                <lightning-layout-item size="1"
+                        padding="around-small">
+                        <div class="slds-p-top_medium">
+                            <!--<lightning-icon icon-name="action:new" access-key={item.id} id={index}
+                                alternative-text="Add Row" size="small" title="Add Row" onclick={addRow} data-target-id={index}>
+                            </lightning-icon>-->
+                            <button class=" slds-button slds-button_brand " onclick={addRow} data-target-id={index}>
+                                Add
+                            </button>
+                            <!--<button class=" slds-button slds-button_brand " onclick={removeRow} data-target-id={index} id={index} >
+                                Delete
+                            </button>-->
+                            <!--<lightning-icon icon-name="action:delete" access-key={item.id} id={index}
+                                alternative-text="Delete Row" size="small" title="Delete Row" onclick={removeRow} data-target-id={index}>
+                            </lightning-icon>-->
+                        </div>
+                    </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        </template>
+            <lightning-layout >
+            <lightning-layout-item size="3"
+                        padding="around-small">
+                            <lightning-input type="number" class="textInput" value={increment} disabled="true">
+                            </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="3" 
+                        padding="around-small">
+                        <lightning-input type="number"  class="textInput" value={increment} disabled="true" >
+                        </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="2"
+                        padding="around-small">
+                        <lightning-input type="number" class="textInput" value="1"  disabled="true">
+                        </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="3"
+                        padding="around-small">
+                        <lightning-input type="number" value={lastEMI}  class="textLastEMI" disabled="true" data-id ="lastEMIId">
+                        </lightning-input>
+                    </lightning-layout-item>
+                <lightning-layout-item size="1"
+                        padding="around-small">
+                    <!--<div class="slds-p-top_medium">
+                    </div>-->
+                    </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        </br>
+        <template if:false={read}>
+        <template if:true={itemList}>
+            <div><b>Loan Amount Check</b></div>
+            <div><b>Loan Agreemount Amount : {loanAgreementAmt}</b></div>
+            <div><b>Tenure : {increment}</b></div>
+            <div><b>As Per above EMI's other than last Installment : {totalEMI}</b></div>
+            <!--div>Please match loan amount to continue with the journey.</div-->
+        </template>
+        </template>
+        <lightning-layout>
+            <div class="slds-align_absolute-center">
+                <button class=" slds-button slds-button_brand " disabled={isSubmitDisabled} onclick={handleReset}>
+                    Reset
+                    </button>
+                <button class=" slds-button slds-button_brand " disabled={isSubmitDisabled} onclick={handleSubmit}>
+                    Submit
+                    </button>
+            </div>
+        </lightning-layout>
+    </lightning-card>
+       </template>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>check_status</name>
+        <label>check status</label>
+        <locationX>495</locationX>
+        <locationY>368</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>check_application_status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assignment_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Application</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_record</targetReference>
+            </connector>
+            <label>check application status</label>
+        </rules>
+    </decisions>
+    <interviewLabel>update loan history record {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>update loan history record</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>update_record</name>
+        <label>update record</label>
+        <locationX>503</locationX>
+        <locationY>543</locationY>
+        <inputAssignments>
+            <field>Assignment_status__c</field>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>New_Owner__c</field>
+            <value>
+                <elementReference>$Record.Current_Owner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>373</locationX>
+        <locationY>48</locationY>
+        <object>Loan_Application_Transaction_History__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>Schedule_after_90_min</name>
+            <connector>
+                <targetReference>check_status</targetReference>
+            </connector>
+            <label>Schedule after 90 min</label>
+            <offsetNumber>90</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>CreatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

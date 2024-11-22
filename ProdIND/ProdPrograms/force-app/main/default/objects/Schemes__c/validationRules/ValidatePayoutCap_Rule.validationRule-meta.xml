@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidatePayoutCap_Rule</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( NOT( ISNULL( Payout_Cap__c )), ISPICKVAL(Product__c, &apos;Two Wheeler&apos;), (Payout_Cap__c &lt; (IF(NOT(ISNULL(DSM_Incentive1_p__c)), DSM_Incentive1_p__c, 0) + IF(NOT(ISNULL(DSM_Incentive2_p__c)), DSM_Incentive2_p__c, 0) + IF(NOT(ISNULL(Dealer_incentive_amount_sub_dealer_p__c)), Dealer_incentive_amount_sub_dealer_p__c, 0)+ IF(  NOT(ISNULL(Dealer_incentive_amount_main_dealer_p__c ) ) , Dealer_incentive_amount_main_dealer_p__c , 0)+ IF(  NOT(ISNULL(Gift_through_dealer_amount_p__c ) ) , Gift_through_dealer_amount_p__c , 0))))</errorConditionFormula>
+    <errorMessage>Payout cap value exceeded. Please modify the Payout fields</errorMessage>
+</ValidationRule>

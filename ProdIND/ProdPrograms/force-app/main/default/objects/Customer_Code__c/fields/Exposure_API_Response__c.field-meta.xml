@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exposure_API_Response__c</fullName>
+    <description>This field will be used to store the Exposure API response captured on Customer Addition Code module.</description>
+    <externalId>false</externalId>
+    <label>Exposure API Response</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

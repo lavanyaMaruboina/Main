@@ -1,0 +1,97 @@
+<template>
+    <!-- <lightning-card title="Land Holding Details"> -->
+       <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+       <lightning-layout>
+          <lightning-layout-item size="12">
+            <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+                onclick={handleAddRow} disabled={disableAddRows}>
+             </lightning-button>
+             <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Save"
+                onclick={saveRows} disabled={disableSave}>
+             </lightning-button>
+          </lightning-layout-item>
+       </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item size="12" class={className}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                   <tr>
+                      <th>Sr No.</th>
+                      <th>Cattle Name</th>
+                      <th>Nos of Cattle</th>
+                      <th></th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <template for:each={filterList} for:item="filterData" for:index="index">
+                     <template if:false = {filterData.isValid}>
+                      <tr key={filterData}>
+                        <td>
+                            {filterData.srNo}
+                         </td>
+                         <td>
+                           <template if:true={isDesktop}>
+                            <lightning-combobox name="Cattle_Name__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                               placeholder="" onchange={handleChange} value={filterData.Type}
+                               options={cattleNameOptions} required>
+                            </lightning-combobox>
+                           </template>
+                           <template if:false={isDesktop}>
+                            <div class="slds-form-element">
+                              <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                 <select name="Cattle_Name__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Type}>
+                                    <option value="">-None-</option>
+                                    <template for:each={cattleNameOptions} for:item="item">
+      
+                                       <option key={item.value} value={item.value}>{item.label}</option>
+      
+                                    </template>
+                                 </select>
+                                </div>
+                              </div>
+                            </div>
+                           </template>
+
+                        </td>
+                         <td>
+                            <lightning-input type="number" name="Nos_of_Cattle__c" data-index={index} data-id={filterData.id}
+                                variant="label-hidden" onchange={handleChange} required value={filterData.CattleNo}>
+                            </lightning-input>
+                         </td>
+                         <td>
+                            <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                               icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                         </td>
+                      </tr>
+                      </template>
+                      <template if:true={filterData.isValid}>
+                        <tr key={filterData}>
+                           <td>
+                               {filterData.srNo}
+                            </td>
+                            <td>
+                              {filterData.Cattle_Name}
+                            </td>
+                            <td>
+                              {filterData.Nos_of_Cattle}
+                            </td>
+                            <td>
+                              <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                    icon-name="action:delete" onclick={handleDeleteRow}>
+                              </lightning-button-icon>
+
+                              <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                 icon-name="action:edit" onclick={handleEditRow}>
+                              </lightning-button-icon>
+                           </td>
+                         </tr>
+                     </template>
+                   </template>
+                </tbody>
+             </table>
+            </lightning-layout-item>
+        </lightning-layout>
+    <!-- </lightning-card> -->
+ </template>

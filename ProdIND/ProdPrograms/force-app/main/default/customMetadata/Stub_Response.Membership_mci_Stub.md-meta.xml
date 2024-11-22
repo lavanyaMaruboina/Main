@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Membership mci Stub</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;RequestId&quot;: &quot;04102021160110041&quot;,
+    &quot;ResponseData&quot;: {
+        &quot;Status&quot;: &quot;Success&quot;,
+        &quot;ResponseInfo&quot;: {
+            &quot;ApplicationId&quot;: 22552850,
+            &quot;SolutionSetInstanceId&quot;: &quot;0ab5e9e2-dccd-4315-b692-e81b0a723ecd&quot;
+        },
+        &quot;Fields&quot;: {
+            &quot;Applicants&quot;: {
+                &quot;Applicant&quot;: {
+                    &quot;Services&quot;: {
+                        &quot;Service&quot;: [
+                            {
+                                &quot;Id&quot;: &quot;&quot;,
+                                &quot;Name&quot;: &quot;PublicDataAPI&quot;,
+                                &quot;Operations&quot;: {
+                                    &quot;Operation&quot;: [
+                                        {
+                                            &quot;Id&quot;: &quot;&quot;,
+                                            &quot;Name&quot;: &quot;mci&quot;,
+                                            &quot;Params&quot;: {
+                                                &quot;Param&quot;: [
+                                                    {
+                                                        &quot;Name&quot;: &quot;consent&quot;,
+                                                        &quot;Value&quot;: &quot;Y&quot;
+                                                    },
+                                                    {
+                                                        &quot;Name&quot;: &quot;membership_no&quot;,
+                                                        &quot;Value&quot;: &quot;14530&quot;
+                                                    },
+                                                    {
+                                                        &quot;Name&quot;: &quot;registration_no&quot;,
+                                                        &quot;Value&quot;: &quot;1&quot;
+                                                    },
+                                                    {
+                                                        &quot;Name&quot;: &quot;year_of_reg&quot;,
+                                                        &quot;Value&quot;: &quot;1960&quot;
+                                                    },
+                                                    {
+                                                        &quot;Name&quot;: &quot;medical_council&quot;,
+                                                        &quot;Value&quot;: &quot;Andhra Pradesh Medical Council&quot;
+                                                    }
+                                                ]
+                                            },
+                                            &quot;Data&quot;: {
+                                                &quot;Response&quot;: {
+                                                    &quot;RawResponse&quot;: &quot;{\&quot;result\&quot;:{\&quot;mci\&quot;:{\&quot;result\&quot;:{\&quot;regdNoValue\&quot;:\&quot;1\&quot;,\&quot;doctorId\&quot;:563162,\&quot;addlqual1\&quot;:\&quot;\&quot;,\&quot;addlqual2\&quot;:\&quot;\&quot;,\&quot;addlqual3\&quot;:\&quot;\&quot;,\&quot;addlqualuniv1\&quot;:\&quot;\&quot;,\&quot;addlqualuniv2\&quot;:\&quot;\&quot;,\&quot;addlqualuniv3\&quot;:\&quot;\&quot;,\&quot;addlqualyear1\&quot;:\&quot;-\&quot;,\&quot;addlqualyear2\&quot;:\&quot;-\&quot;,\&quot;addlqualyear3\&quot;:\&quot;-\&quot;,\&quot;address\&quot;:\&quot;Tanuku, West Godavari District\&quot;,\&quot;addressLine1\&quot;:\&quot;Tanuku, West Godavari District\&quot;,\&quot;addressLine2\&quot;:null,\&quot;birthDate\&quot;:null,\&quot;birthDateStr\&quot;:\&quot;\&quot;,\&quot;birthPlace\&quot;:null,\&quot;bloodGroup\&quot;:null,\&quot;catagory\&quot;:null,\&quot;catagory_view\&quot;:\&quot;N/A\&quot;,\&quot;checkExistingUser\&quot;:false,\&quot;city\&quot;:null,\&quot;college\&quot;:\&quot;\&quot;,\&quot;collegeId\&quot;:null,\&quot;country\&quot;:null,\&quot;doctRegistrationNo\&quot;:null,\&quot;doctorDegree\&quot;:\&quot;LMP\&quot;,\&quot;doctorEducationId\&quot;:null,\&quot;economicStatus\&quot;:null,\&quot;eligbleToVote\&quot;:null,\&quot;emailId\&quot;:null,\&quot;firstName\&quot;:\&quot;Yellamraju Suryanarayanarao Seshachalam\&quot;,\&quot;gender\&quot;:null,\&quot;homeAddress\&quot;:null,\&quot;isNewDoctor\&quot;:false,\&quot;lastName\&quot;:null,\&quot;middleName\&quot;:null,\&quot;monthOfPass\&quot;:null,\&quot;monthandyearOfPass\&quot;:\&quot;1916\&quot;,\&quot;nationality\&quot;:null,\&quot;officeAddress\&quot;:null,\&quot;officeaddress\&quot;:null,\&quot;otherSubject\&quot;:null,\&quot;parentName\&quot;:\&quot;Y Seshachalam\&quot;,\&quot;passoutCollege\&quot;:null,\&quot;phoneNo\&quot;:null,\&quot;photo\&quot;:null,\&quot;pincode\&quot;:null,\&quot;regDate\&quot;:\&quot;07/11/1955\&quot;,\&quot;registrationDate\&quot;:null,\&quot;registrationDatePrevious\&quot;:null,\&quot;registrationNo\&quot;:\&quot;1\&quot;,\&quot;registrationNoPrevious\&quot;:null,\&quot;regnNo\&quot;:null,\&quot;remarks\&quot;:\&quot;\&quot;,\&quot;removedOn\&quot;:\&quot;01/01/1900\&quot;,\&quot;removedStatus\&quot;:false,\&quot;restoredOn\&quot;:\&quot;01/01/1900\&quot;,\&quot;restoredStatus\&quot;:false,\&quot;role\&quot;:null,\&quot;salutation\&quot;:null,\&quot;smcId\&quot;:1,\&quot;smcIds\&quot;:null,\&quot;smcName\&quot;:\&quot;Andhra Pradesh Medical Council\&quot;,\&quot;smcNamePrevious\&quot;:null,\&quot;state\&quot;:null,\&quot;stateId\&quot;:null,\&quot;stateMedicalCouncil\&quot;:null,\&quot;trasanctionStatus\&quot;:null,\&quot;university\&quot;:\&quot;U.Madras\&quot;,\&quot;universityId\&quot;:null,\&quot;universityId_view\&quot;:null,\&quot;uprnNo\&quot;:null,\&quot;uprnNoPrevious\&quot;:null,\&quot;yearInfo\&quot;:\&quot;1960\&quot;,\&quot;yearOfPassing\&quot;:\&quot;1916\&quot;,\&quot;esFlag\&quot;:1},\&quot;request_id\&quot;:\&quot;0c888de9-9c64-493f-be64-2a68c1b4d239\&quot;,\&quot;status-code\&quot;:\&quot;101\&quot;},\&quot;request_id\&quot;:\&quot;f5016b2d-c67a-4cb9-b099-08cd41e2f452\&quot;,\&quot;status-code\&quot;:\&quot;101\&quot;}}&quot;
+                                                }
+                                            },
+                                            &quot;Status&quot;: &quot;Pass&quot;
+                                        }
+                                    ]
+                                },
+                                &quot;Status&quot;: &quot;Pass&quot;
+                            }
+                        ]
+                    },
+                    &quot;ApplicantIdentifier&quot;: &quot;e5247945-be95-4e0f-852b-53b117c78536&quot;
+                }
+            },
+            &quot;ApplicationData&quot;: {
+                &quot;Services&quot;: {
+                    &quot;Service&quot;: {
+                        &quot;Id&quot;: &quot;&quot;,
+                        &quot;Name&quot;: &quot;PublicDataAPI&quot;,
+                        &quot;Skip&quot;: &quot;N&quot;,
+                        &quot;Consent&quot;: &quot;true&quot;,
+                        &quot;EnableSimulation&quot;: &quot;&quot;
+                    }
+                }
+            },
+            &quot;Decision&quot;: &quot;Pass&quot;,
+            &quot;ApplicationId&quot;: &quot;22552850&quot;
+        }
+    }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">mci</value>
+    </values>
+</CustomMetadata>

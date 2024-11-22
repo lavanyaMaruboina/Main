@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>C</label>
+    <protected>false</protected>
+    <values>
+        <field>DealerDiscounttoCustomer__c</field>
+        <value xsi:type="xsd:double">40.0</value>
+    </values>
+    <values>
+        <field>DealerExpReimbursePercent__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DealerExpReimburse__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DealerIncentiveAmountMainDealerTwo__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DealerIncentiveAmountMainDealer__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DealerIncentiveAmountSubDealerTwo__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DealerIncentiveAmountSubDealer__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DocumentChargesMinPercentage__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DocumentchargesPercentage__c</field>
+        <value xsi:type="xsd:double">1.5</value>
+    </values>
+    <values>
+        <field>DsmIncentiveOneC__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DsmIncentiveOneH__c</field>
+        <value xsi:type="xsd:double">5.0</value>
+    </values>
+    <values>
+        <field>DsmIncentiveOne__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DsmIncentiveTwoC__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>DsmIncentiveTwoH__c</field>
+        <value xsi:type="xsd:double">5.0</value>
+    </values>
+    <values>
+        <field>DsmIncentiveTwo__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>GiftThroughDealerAmountC__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>GiftThroughDealerAmountH__c</field>
+        <value xsi:type="xsd:double">5.0</value>
+    </values>
+    <values>
+        <field>GiftThroughDealerAmount__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>ManufacturerIncentive__c</field>
+        <value xsi:type="xsd:double">0.5</value>
+    </values>
+    <values>
+        <field>MfrExpReimburseAmt__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>MfrExpReimbursePercent__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>NonDlrDsmIncentiveOneC__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>NonDlrDsmIncentiveOneH__c</field>
+        <value xsi:type="xsd:double">5.0</value>
+    </values>
+    <values>
+        <field>NonDlrDsmIncentiveOne__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>NonDlrDsmIncentiveTwoC__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>NonDlrDsmIncentiveTwoH__c</field>
+        <value xsi:type="xsd:double">5.0</value>
+    </values>
+    <values>
+        <field>NonDlrDsmIncentiveTwo__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostHMax__c</field>
+        <value xsi:type="xsd:double">750.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostHMin__c</field>
+        <value xsi:type="xsd:double">1050.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostHTwo__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostH__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostMax__c</field>
+        <value xsi:type="xsd:double">750.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostMin__c</field>
+        <value xsi:type="xsd:double">1050.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostSValue__c</field>
+        <value xsi:type="xsd:double">750.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostS__c</field>
+        <value xsi:type="xsd:double">0.5</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCostTwo__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>ProvisionalChannelCost__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Referrer_Incentive_for_referrer__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>StampingCharges__c</field>
+        <value xsi:type="xsd:double">20.0</value>
+    </values>
+    <values>
+        <field>documentChargesFinAmount__c</field>
+        <value xsi:type="xsd:double">266667.0</value>
+    </values>
+    <values>
+        <field>documentChargesMinAmount__c</field>
+        <value xsi:type="xsd:double">4000.0</value>
+    </values>
+    <values>
+        <field>product__c</field>
+        <value xsi:type="xsd:string">C</value>
+    </values>
+    <values>
+        <field>serviceChargesValueMax__c</field>
+        <value xsi:type="xsd:double">3.0</value>
+    </values>
+    <values>
+        <field>serviceChargesValueMin__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>serviceChargesValue__c</field>
+        <value xsi:type="xsd:double">5.0</value>
+    </values>
+</CustomMetadata>

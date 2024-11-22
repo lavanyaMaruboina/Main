@@ -1,0 +1,441 @@
+<template>
+    <div class="slds-m-bottom_large slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Enquiry
+            Details</label>
+    </div>
+    <template if:true={isLoading} class=" slds-align_absolute-center slds">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand">
+        </lightning-spinner>
+      </template>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Journey Type<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                    name="journeyTypefield" value={journeyType}
+                    onchange={handleInputFieldChange} placeholder="-- Select --"
+                    options={journeyTypeOptions} required disabled={journeyTypeDisabled}>
+                </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Enquiry Number</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="EnquiryNumberfield"
+                        variant="label-hidden" disabled={EnquiryNumberDisabled}
+                        value={EnquiryNumber}
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Lead Reference Id</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="EnquiryNumberfield"
+                        variant="label-hidden" disabled={leadReferenceDisabled}
+                        value={LeadReference} required  min-length=3
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Customer Name<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="CustomerNamefield"
+                        variant="label-hidden" disabled={CustomerNameDisabled} onchange={handleInputFieldChange}
+                        value={CustomerName} required  min-length=3 pattern="[A-Za-z\s]*"
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Mobile Number 1</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="MobileNumber1field"
+                        variant="label-hidden" disabled={MobileNumber1Disabled} onchange={handleInputFieldChange}
+                        value={MobileNumber1}  pattern={label.RegEx_Number} message-when-pattern-mismatch={label.Mobile_Number_Error_Msg} max-length="10" min-length="10"
+                        type="tel"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Mobile Number 2</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="MobileNumber2field"
+                        variant="label-hidden" disabled={MobileNumber2Disabled} onchange={handleInputFieldChange}
+                        value={MobileNumber2}  pattern={label.RegEx_Number} message-when-pattern-mismatch={label.Mobile_Number_Error_Msg} max-length="10" min-length="10"
+                        type="tel"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >Loan Amount<abbr title="required"
+                        class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="LoanAmountfield"
+                        variant="label-hidden" disabled={LoanAmountDisabled} onchange={handleInputFieldChange}
+                        value={LoanAmount}  pattern="[0-9]*" minlength="3" maxlength="10"
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Product Type</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="Productfield" variant="label-hidden" disabled value={Product}>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Product Category<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                    name="productCategoryfield" value={productCategory}
+                    onchange={handleInputFieldChange} placeholder="-- Select --"
+                    options={productCategoryOptions} required disabled={productCategoryDisabled}>
+                </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Email</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="Emailfield"
+                        variant="label-hidden" disabled={EmailDisabled} onchange={handleInputFieldChange}
+                        value={Email}  min-length=3
+                        type="email"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Deal No</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="DealNofield"
+                        variant="label-hidden" disabled={DealNoDisabled} onchange={handleInputFieldChange}
+                        value={DealNo}  min-length=3
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Customer Code</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="CustomerCodefield"
+                        variant="label-hidden" disabled={CustomerCodeDisabled} onchange={handleInputFieldChange}
+                        value={CustomerCode} 
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Source</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="Sourcefield"
+                        variant="label-hidden" disabled={SourceDisabled} onchange={handleInputFieldChange}
+                        value={Source}
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">PAN No</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="PANfield"
+                        variant="label-hidden" disabled={PANDisabled} onchange={handleInputFieldChange}
+                        value={PAN}  min-length=3 pattern={label.Pan_Pattern}
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">CIF ID</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="CIFIDfield"
+                        variant="label-hidden" disabled={CIFIDDisabled} onchange={handleInputFieldChange}
+                        value={CIFID}
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Referred To Branch</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="ReferredToBranchfield"
+                        variant="label-hidden" disabled={ReferredToBranchDisabled} onchange={handleInputFieldChange}
+                        value={branchValue}
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Campaign Type</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="CampaignTypefield"
+                        variant="label-hidden" disabled={CampaignTypeDisabled} onchange={handleInputFieldChange}
+                        value={CampaignType}
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Enquiry Status<abbr title="required"
+                            class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                    name="enquiryStatusfield" value={enquiryStatus}
+                    onchange={handleInputFieldChange} placeholder="-- Select --"
+                    options={enquiryStatusOptions} required disabled={enquiryStatusDisabled}>
+                </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Reason<abbr title="required"
+                        class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                    name="Reasonfield" value={Reason}
+                    onchange={handleInputFieldChange} placeholder="-- Select --"
+                    options={ReasonOptions} disabled={ReasonDisabled} required={isReasonRequired} >
+                </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Remarks</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control incomeDec" name="Remarksfield"
+                        variant="label-hidden" disabled={RemarksDisabled} onchange={handleInputFieldChange}
+                        value={Remarks}  min-length=3
+                        type="text"></lightning-input>
+                </div>
+            </div>
+        </div>
+        <template if:true={phase2Enquiry}>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Make<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" options={makeOptions}
+                            onchange={handleMakeSelection} name="makeField" value={make}
+                            variant="label-hidden" data-index={index} disabled={mmvDisable} required></lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label"> Model <abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" options={modelOptions}
+                            onchange={handleModelSelection} name="modelField" value={modelCodeOfProduct}
+                            variant="label-hidden" data-index={index} disabled={allFieldsDisabled} required></lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label" value={variant}> Variant <abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" options={variantOptions}
+                            onchange={handleVariantSelection} name="variantField" value={variantCodeOfProduct}
+                            variant="label-hidden" data-index={index} disabled={allFieldsDisabled} required></lightning-combobox>
+                    </div>
+                </div>
+            </div>
+         
+        </template>
+         
+    </div>
+        <!-- submitting-->
+        <template if:true={phase1Enquiry}>
+        <template if:true={submitButtonVisible}>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="submitBtn indusPrimaryVehicleButton slds-button slds-button_brand " data-id="submitButton" onclick={handleSubmit}
+                        disabled={submitButtonDisabled}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={convertToLeadButtonVisible}>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="submitBtn indusPrimaryVehicleButton slds-button slds-button_brand " data-id="convertToLeadButton" onclick={handleSubmit}
+                        disabled={submitButtonDisabled}>
+                        Convert to Lead
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>
+    <template if:true={phase2Enquiry}>
+      <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="submitBtn indusPrimaryVehicleButton slds-button slds-button_brand " data-id="transferButton" onclick={openModal}
+                    disabled={isTransferDisabled}>
+                    Transfer Enquiry
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="submitBtn indusPrimaryVehicleButton slds-button slds-button_brand " data-id="submitButton" onclick={handleSubmit}
+                    disabled={submitButtonDisabled}>
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Transfer button functioanlity -->
+<template if:true={isModalOpen}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-form slds-modal__container">
+            <lightning-card title='Transfer Enquiry'> 
+                <div class="slds-card__body_inner">
+                    <br>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">State</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                 <c-generic-custom-lookup selected-name={selectedState} object-name='CFD_State_Master__c' is-value-selected={isStateSelected} fetch-field='Name' search-field='Name' filter-field={state_Filter_Field} filter-term={state_Filter_Field} onlookupselected={selectedStateHandler} onclearvalue={clearStateHandler} select-field-name="State" small-input="true"></c-generic-custom-lookup>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Branch</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox
+                                name="Branch"
+                                label="Branch"
+                                variant="label-hidden"
+                                options={branchOptions}
+                                value={selectedBranch}
+                                onchange={handleBranchChange}
+                                required = "true"
+                                 ></lightning-combobox>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">User</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <c-l-w-c_-l-o-s_-custom-lookup  object-api-name="user" icon-name="standard:user"
+                                    onrecordselection={onRecordSelection} state={selectedState} branch={selectedBranch} ></c-l-w-c_-l-o-s_-custom-lookup >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <br>
+                </div>
+                <div slot="footer">
+                    <lightning-button variant="brand" label="Submit"  onclick={handleModalSubmit} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="Cancel"  onclick={closeModal} class="slds-m-left_x-small"></lightning-button>
+                </div>
+                </lightning-card>  
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+    
+
+</template>

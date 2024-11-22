@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Chatter_Post_for_Receiver</name>
+        <label>Chatter Post for Receiver</label>
+        <locationX>958</locationX>
+        <locationY>417</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>Chatter_post_body</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>visibility</name>
+            <value>
+                <stringValue>allUsers</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Chatter_Post_for_Receiver_0</name>
+        <label>Chatter Post for Receiver One</label>
+        <locationX>1066</locationX>
+        <locationY>622</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>ChatterToPartner</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>visibility</name>
+            <value>
+                <stringValue>allUsers</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Site_URL</name>
+        <label>Get Site URL</label>
+        <locationX>752</locationX>
+        <locationY>632</locationY>
+        <actionName>Utilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Chatter_Post_for_Receiver_0</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Utilities</nameSegment>
+        <outputParameters>
+            <assignToReference>siteurl</assignToReference>
+            <name>output</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>chcek_record_type</name>
+        <label>chcek record type</label>
+        <locationX>534</locationX>
+        <locationY>423</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>record_type_check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>lead_Assignemnt</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Partner_User</targetReference>
+            </connector>
+            <label>record type check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Partner_User</name>
+        <label>Check Partner User</label>
+        <locationX>742</locationX>
+        <locationY>425</locationY>
+        <defaultConnector>
+            <targetReference>Chatter_Post_for_Receiver</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_Partner_User</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.New_Owner__r.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IBL Partner Community Counter Staff</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.New_Owner__r.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IBL Partner Community CVO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.New_Owner__r.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IBL Partner Community Marketing Agent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.New_Owner__r.Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IBL Partner Community Marketing Officer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Site_URL</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>If Partner User</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>LinkForOpp</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Enterprise_Server_URL_260},FIND(&apos;/services&apos;,{!$Api.Enterprise_Server_URL_260}))&amp;&apos;/lightning/r/Opportunity/&apos;&amp;{!$Record.Loan_Application_ID__c}&amp;&apos;/view&apos;</expression>
+    </formulas>
+    <formulas>
+        <name>LinkToChatter</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.IBL_Lightning_Base_URL}&amp;&quot;/&quot;&amp;{!$Record.Id}</expression>
+    </formulas>
+    <formulas>
+        <name>LinkToChatterPartner</name>
+        <dataType>String</dataType>
+        <expression>{!siteurl}&amp;&apos;/s/loan-application-transaction-history/&apos;&amp;{!$Record.Id}</expression>
+    </formulas>
+    <interviewLabel>Post To chatter {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>Post To chatter</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>record_type</name>
+        <label>record type</label>
+        <locationX>368</locationX>
+        <locationY>421</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>chcek_record_type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Lead_Assignment</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>lead_Assignemnt</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>330</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>record_type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Loan_Application_ID__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Loan_Application_Transaction_History__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Chatter_post_body</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi @[{!$Record.New_Owner__c}],
+            {!$Record.Type__c} Assigned - {!$Record.Loan_Application_ID__r.Name}
+            
+            {!$Record.Type__c} is assigned to you for lead no {!$Record.Loan_Application_ID__r.Name}.  Please click to take action on the {!$Record.Type__c}.
+            
+            {!LinkToChatter}.</text>
+    </textTemplates>
+    <textTemplates>
+        <name>ChatterToPartner</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi @[{!$Record.New_Owner__c}],
+            {!$Record.Type__c} Assigned - {!$Record.Loan_Application_ID__r.Name}
+            
+            {!$Record.Type__c} is assigned to you for lead no {!$Record.Loan_Application_ID__r.Name}.  Please click to take action on the {!$Record.Type__c}.
+            
+            {!LinkToChatterPartner} .</text>
+    </textTemplates>
+    <textTemplates>
+        <name>PostForAcceptModule</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi @[{!$Record.New_Owner__c}],
+A {!$Record.Module_Name__c} module is accepted by you, please click on the link below and Complete the Module.
+{!LinkForOpp}</text>
+    </textTemplates>
+    <variables>
+        <name>lead_Assignemnt</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>siteurl</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

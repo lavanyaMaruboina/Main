@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCU</fullName>
+    <active>true</active>
+    <businessProcess>RCU Support</businessProcess>
+    <compactLayoutAssignment>Case_RCU</compactLayoutAssignment>
+    <label>RCU</label>
+    <picklistValues>
+        <picklist>Case_Disposition__c</picklist>
+        <values>
+            <fullName>Admin Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enhancement Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fix Needed by Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need Fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Management</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>Credit Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Sanction</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IncidentManagement_Stage__c</picklist>
+        <values>
+            <fullName>Additional Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asset Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM and Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed Won</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Processing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Code Addition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disbursement Request Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Offer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Terms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Journey Restart</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Journey Stop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Initiation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Needs Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer Screen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Sanction Checks and Documentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre Disbursement Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoke</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Valuation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IncidentManagement_Sub_Stage__c</picklist>
+        <values>
+            <fullName>Additional Documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Account Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beneficiary Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Payment Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM and Approval Log</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CIBIL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture Dedupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture PAN or Other KYC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture current residential address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture permanent residential address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Assessment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deal Number %26 Customer Code Generation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declared Income%2FRequired Loan Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exposure Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Field Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final Terms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IHM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Initiate RCU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New%2FUsed Vehicle Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre-Disbursement Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC Upload</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RCU Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Repayment Mandate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risk Summary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sanction of Application</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security Mandate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Signing the e-Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Structured EMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tele-verification %3CPost Sanction%3E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Valuation IDV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Dedupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Inspection and RC Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View Application Details</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LOB__c</picklist>
+        <values>
+            <fullName>PV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TW</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NCM_SCM_Loan_Approval_status__c</picklist>
+        <values>
+            <fullName>Approve</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reject</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Overall_RCU_Agency_Sampling_Reason__c</picklist>
+        <values>
+            <fullName>Adverse Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manipulated Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mismatch of Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Misrepresentation of Facts %2F False details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office%2FResidence Profile not satisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Political Connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profile Mismatch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Overall_RCU_Agency_Verification_Status__c</picklist>
+        <values>
+            <fullName>Clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refer to Credit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Screened</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Overall_RCU_Sampling_Reason__c</picklist>
+        <values>
+            <fullName>Adverse Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manipulated Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mismatch of Address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Misrepresentation of Facts %2F False details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office%2FResidence Profile not satisfactory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Political Connection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Profile Mismatch</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Overall_RCU_Verification_Status__c</picklist>
+        <values>
+            <fullName>Clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refer to Credit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>Blocker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>P1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>P3</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RCA_Type__c</picklist>
+        <values>
+            <fullName>Code Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Config Fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Fix</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Complex functionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instructions not clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User didn%27t attend training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Resi_Profile__c</picklist>
+        <values>
+            <fullName>Clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Document</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non-clear Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refer to Credit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Resolution_By_L2__c</picklist>
+        <values>
+            <fullName>Admin Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Code Fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enhancement Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fix Needed by Vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Need Fix</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Management</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Screen__c</picklist>
+        <values>
+            <fullName>Additional customer code</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Additional customer details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Additional documents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asset details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Account Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beneficiary details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM and Approval Log</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM and Conditional Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CIBIL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMU case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture PAN and other KYC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture current residential address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture customer dedupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Capture permanent residential address</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Assessment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Current residence FI case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deal number and Customer code generation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Declared Income%2FRequired Loan Amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing EMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Exposure Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Field Investigation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final offer Page</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final terms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gating And Screening</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IHM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incident case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance Detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lead details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan details</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New%2FUsed vehicle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer Screen</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office Address for primary Income Source</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office FI case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permanent residence FI case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC Upload</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Repayment Mandate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risk summary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Security Mandate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Structured EMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TVR case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validation IDV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle Valuation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle dedupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle inspection and RC check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>View Applicant details</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Stages__c</picklist>
+        <values>
+            <fullName>Cases</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Verification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Sanction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre disbursement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tab %28L1%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Category__c</picklist>
+        <values>
+            <fullName>AML related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Additional Doc uploads</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agreement Stamping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asset detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank account check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bureau report</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAM %26 Deviations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMU related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carwale Pricing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cases not listed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data not retrieved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dealer %2F Sub dealer name missing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dedupe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Final terms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IHM calculation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IRR related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Image Upload</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insurance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Integrator app Login</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Make %2F Model %2F Variant missing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Repayment method</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Login</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sanctioning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheme related</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scorecard %2F LTV %2F Pricing engine API</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tenure %2F Loan amount %2F EMI amount</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upload File</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upload or View image</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Valuation IDV</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>CMU Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Current Residence FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Office FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permanent Residence FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

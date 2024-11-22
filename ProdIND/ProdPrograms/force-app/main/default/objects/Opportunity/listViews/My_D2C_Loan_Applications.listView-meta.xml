@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_D2C_Loan_Applications</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Account_Name_Custom__c</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>D2C_Stage__c</columns>
+    <columns>OPPORTUNITY.LAST_UPDATE</columns>
+    <columns>Sub_Stage__c</columns>
+    <columns>Sanction_Status__c</columns>
+    <columns>Source__c</columns>
+    <columns>D2C_Journey_Status__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>OPPORTUNITY.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>D2C</value>
+    </filters>
+    <label>My D2C Loan Applications</label>
+</ListView>

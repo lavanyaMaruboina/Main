@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submitted_Tabs__c</fullName>
+    <label>Submitted Tabs</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>L1 - Borrower Insurance</fullName>
+                <default>false</default>
+                <label>L1 - Borrower Insurance</label>
+            </value>
+            <value>
+                <fullName>L1 - Coborrower Insurance</fullName>
+                <default>false</default>
+                <label>L1 - Coborrower Insurance</label>
+            </value>
+            <value>
+                <fullName>L2 - Borrower Insurance</fullName>
+                <default>false</default>
+                <label>L2 - Borrower Insurance</label>
+            </value>
+            <value>
+                <fullName>L2 - Coborrower Insurance</fullName>
+                <default>false</default>
+                <label>L2 - Coborrower Insurance</label>
+            </value>
+            <value>
+                <fullName>Borrower Insurance Recompute</fullName>
+                <default>false</default>
+                <label>Borrower Insurance Recompute</label>
+            </value>
+            <value>
+                <fullName>Coborrower Insurance Recompute</fullName>
+                <default>false</default>
+                <label>Coborrower Insurance Recompute</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

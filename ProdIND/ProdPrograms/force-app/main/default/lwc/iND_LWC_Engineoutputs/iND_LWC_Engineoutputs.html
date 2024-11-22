@@ -1,0 +1,302 @@
+<template>
+    
+    <template if:true={isTractor}>
+        <lightning-accordion>
+            <template for:each={finalTermList} for:item="finalTerm">
+                <lightning-accordion-section name="varient" label={finalTerm.Vehicle_Detail__r.Variant__c} key={finalTerm.Id}>
+                    <lightning-accordion allow-multiple-sections-open active-section-name="OfferEngine">
+                        <lightning-accordion-section name="ScorecardOutput" label="Scorecard Output">
+                            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Risk band"
+                                            value={finalTerm.Fi_Score_Band__c}></lightning-input><!--Add finalTerm.Fi_Score_Band__c in value-->
+                                    </div>            
+                                </div>
+                            </div>
+                         </lightning-accordion-section>
+                        <lightning-accordion-section name="LTVEngine" label="LTV Engine">
+                            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="LTV applicable as per ORP"
+                                            value={finalTerm.LtvEngine_Ltv__c}></lightning-input>                            
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="GatingScreeningEngine" label="Gating and Screening Engine">
+                            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Gating and Screening engine"
+                                            value={checkEligibilityMessage}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                         </lightning-accordion-section>
+                        <lightning-accordion-section name="PricingEngine" label="Pricing Engine">
+                            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Threshold bank/Imputed IRR"
+                                            value={finalTerm.PricingEngine_thresholdNetrr__c}></lightning-input>                            
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+            
+                        <lightning-accordion-section name="OfferEngine" label="Offer Engine">
+                            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Max Loan Amount"
+                                            value={finalTerm.OfferengineMaxLoanAmount__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Min Loan Amount"
+                                            value={finalTerm.OfferengineMinLoanAmount__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Requested loan amount"
+                                            value={finalTerm.Loan_Amount__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Minimum Tenure"
+                                            value={finalTerm.OfferengineMinTenure__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Maximum tenure"
+                                            value={finalTerm.OfferengineMaxTenure__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Requested tenure"
+                                            value={finalTerm.Tenure__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Net Bank IRR (only for PV) or Imputed Bank IRR(only for TW)"
+                                            value={netBankIRRorImputedBankIRR}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="CRM IRR Offered"
+                                            value={finalTerm.CRM_IRR__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="Requested CRM IRR"
+                                            value={finalTerm.Required_CRM_IRR__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text" label="LTV as per LTV engine"
+                                            value={finalTerm.LtvEngine_Ltv__c}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                                        <lightning-input disabled={disableFields} type="text"
+                                            label="Price to be considered for Used, Refinance cars" value={priceConsider}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+
+    </template>
+
+    <template if:false={isTractor}>
+        <lightning-accordion class="example-accordion"  allow-multiple-sections-open active-section-name={activeSections}>
+            <lightning-accordion-section name="ScorecardOutput" label="Scorecard Output">
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <lightning-input disabled={disableFields} type="text" label="Risk band"
+                                value={riskBand}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+
+         <lightning-accordion-section name="FIEngine" label="FI Engine">
+            Borrower
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Current Fi Wavier"
+                            value={finalTerms.FIwaiver_currentAddress__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Permanent FI Wavier"
+                            value={finalTerms.FIwaiver_presentAddress__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Office FI Wavier"
+                            value={finalTerms.FIwaiver_offAddress__c}></lightning-input>
+                    </div>
+                </div>
+            </div>
+            <template if:true={showCoBorrowerSection}>
+                CoBorrower
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <lightning-input disabled={disableFields} type="text" label="Current Fi Wavier"
+                                value={finalTerms.FIwaiver_co_currentAddress__c}></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <lightning-input disabled={disableFields} type="text" label="Permanent FI Wavier"
+                                value={finalTerms.FIwaiver_co_presentAddress__c}></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <lightning-input disabled={disableFields} type="text" label="Office FI Wavier"
+                                value={finalTerms.FIwaiver_co_offAddress__c}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+        </template>
+         </lightning-accordion-section>
+
+         <lightning-accordion-section name="LTVEngine" label="LTV Engine">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="LTV applicable as per ORP"
+                            value={finalTerms.LtvEngine_Ltv__c}></lightning-input>                            
+                    </div>
+                </div>
+            </div>
+         </lightning-accordion-section>
+
+         <lightning-accordion-section name="GatingScreeningEngine" label="Gating and Screening Engine">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Gating and Screening engine"
+                            value={appRecords.Check_Eligibility_Message__c}></lightning-input>
+                    </div>
+                </div>
+            </div>
+         </lightning-accordion-section>
+
+         <lightning-accordion-section name="PricingEngine" label="Pricing Engine">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Threshold bank/Imputed IRR"
+                            value={finalTerms.PricingEngine_thresholdNetrr__c}></lightning-input>                            
+                    </div>
+                </div>
+            </div>
+         </lightning-accordion-section>
+
+         <lightning-accordion-section name="OfferEngine" label="Offer Engine">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Max Loan Amount"
+                            value={finalTerms.OfferengineMaxLoanAmount__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Min Loan Amount"
+                            value={finalTerms.OfferengineMinLoanAmount__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Requested loan amount"
+                            value={finalTerms.Loan_Amount__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Minimum Tenure"
+                            value={finalTerms.OfferengineMinTenure__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Maximum tenure"
+                            value={finalTerms.OfferengineMaxTenure__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Requested tenure"
+                            value={finalTerms.Tenure__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Net Bank IRR (only for PV) or Imputed Bank IRR(only for TW)"
+                            value={netBankIRRorImputedBankIRR}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="CRM IRR Offered"
+                            value={finalTerms.CRM_IRR__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="Requested CRM IRR"
+                            value={finalTerms.Required_CRM_IRR__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text" label="LTV as per LTV engine"
+                            value={finalTerms.LtvEngine_Ltv__c}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input disabled={disableFields} type="text"
+                            label="Price to be considered for Used, Refinance cars" value={priceConsider}></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+
+    </template>
+    <div class="slds-text-align_center slds-m-around_x-small">
+        <c-i-n-d-_-l-w-c_-aml-list recordid={recordId} onamlprocessed={handleAMLCheck} isrevokelead={isRevokedLead}></c-i-n-d-_-l-w-c_-aml-list>
+        <!-- CISP-2735 Added isrevokedlead attribute -->
+    </div> 
+    <div class="slds-text-align_center slds-m-around_x-small">
+        <button onclick={handleSubmit} class="indusPrimaryVehicleButton slds-button slds-button_brand submit" disabled ={disableSubmitBtn}>
+            Submit
+        </button>
+    </div>   
+
+</template>

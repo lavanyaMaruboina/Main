@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Please_update_KYC_within_3_months</fullName>
+    <active>false</active>
+    <description>If No is selected - Pop-up to say - &apos;Please inform the below to the customer - Please update KYC within 3 months&apos;</description>
+    <errorConditionFormula>Provide_Update_KYC_in_3_Months__c  = false</errorConditionFormula>
+    <errorDisplayField>Provide_Update_KYC_in_3_Months__c</errorDisplayField>
+    <errorMessage>&apos;Please inform the below to the customer - Please update KYC within 3 months&apos;</errorMessage>
+</ValidationRule>

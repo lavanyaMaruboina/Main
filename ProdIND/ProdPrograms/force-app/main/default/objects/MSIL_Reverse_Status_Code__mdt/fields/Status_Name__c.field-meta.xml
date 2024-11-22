@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Name__c</fullName>
+    <description>This field is created to store status name which we will send in API call out</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Status Name</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>APPLIED</fullName>
+                <default>true</default>
+                <label>APPLIED</label>
+            </value>
+            <value>
+                <fullName>UNDER PROCESS</fullName>
+                <default>false</default>
+                <label>UNDER PROCESS</label>
+            </value>
+            <value>
+                <fullName>SANCTIONED</fullName>
+                <default>false</default>
+                <label>SANCTIONED</label>
+            </value>
+            <value>
+                <fullName>REJECTED</fullName>
+                <default>false</default>
+                <label>REJECTED</label>
+            </value>
+            <value>
+                <fullName>DISBURSED</fullName>
+                <default>false</default>
+                <label>DISBURSED</label>
+            </value>
+            <value>
+                <fullName>EXPIRED</fullName>
+                <default>false</default>
+                <label>EXPIRED</label>
+            </value>
+            <value>
+                <fullName>RE-UPLOAD DOCUMENT</fullName>
+                <default>false</default>
+                <label>RE-UPLOAD DOCUMENT</label>
+            </value>
+            <value>
+                <fullName>CANCELED</fullName>
+                <default>false</default>
+                <label>CANCELED</label>
+            </value>
+            <value>
+                <fullName>WITHDRAWN</fullName>
+                <default>false</default>
+                <label>WITHDRAWN</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

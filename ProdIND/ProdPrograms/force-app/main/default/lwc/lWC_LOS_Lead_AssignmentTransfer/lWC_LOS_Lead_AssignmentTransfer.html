@@ -1,0 +1,178 @@
+<template> 
+    <template if:true={isTransfer}>
+        <lightning-button variant="brand" label="Transfer" onclick={openModal} disabled={isTransferDisabled} class="slds-m-left_x-small"></lightning-button>
+    </template>
+    <template if:true={isRecall}>
+        <lightning-button variant="brand" label="Recall"   onclick={handleRecall} disabled={isRecallDisabled} class="slds-m-left_x-small"></lightning-button>
+    </template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Processing Recall" size="medium"></lightning-spinner>
+    </template>
+    
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <lightning-card>
+                    
+                    <div class="slds-card__body_inner">
+                        <br>
+                        <div class="slds-form slds-grid slds-wrap">
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Type</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox
+                                    name="type"
+                                    label="Type"
+                                    variant="label-hidden"
+                                    options={typeOptions}
+                                    value={selectedType}
+                                    onchange={handleTypeChange}
+                                    required = "true"
+                                     ></lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> Module</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox
+                                    name="Module"
+                                    label="Module"
+                                    variant="label-hidden"
+                                    options={moduleOptions}
+                                    value={selectedModlue}
+                                    onchange={handleModuleChange}
+                                    disabled={isDisabled}
+                                    required = "true"
+                                     ></lightning-combobox>  
+                                </div>
+                            </div>
+                        </div>
+
+                        <template if:true={isLargeScreen}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">User</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <!--CISP:2861 Sending Agent BL code paramater--> <!-- CISP-3497, added branch and state -->
+                                        <c-l-w-c_-l-o-s_-custom-lookup  object-api-name="user" icon-name="standard:user" loanappid={recordId} agentblcode={agentbl}
+                                        onrecordselection={onRecordSelection} state={selectedState} branch={selectedBranch} ></c-l-w-c_-l-o-s_-custom-lookup >
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <!-- CISP-3497 -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">State</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                     <!-- <lightning-combobox
+                                    name="State"
+                                    label="State"
+                                    variant="label-hidden"
+                                    options={stateOptions}
+                                    value={selectedState}
+                                    onchange={handleStateChange}
+                                    required = "true"
+                                     ></lightning-combobox>   --> 
+                                    <c-generic-custom-lookup selected-name={selectedState} object-name='CFD_State_Master__c' is-value-selected={isStateSelected} fetch-field='Name' search-field='Name' filter-field={state_Filter_Field} filter-term={state_Filter_Field} onlookupselected={selectedStateHandler} onclearvalue={clearStateHandler} select-field-name="State" small-input="true"></c-generic-custom-lookup> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CISP-3497 -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Branch</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox
+                                    name="Branch"
+                                    label="Branch"
+                                    variant="label-hidden"
+                                    options={branchOptions}
+                                    value={selectedBranch}
+                                    onchange={handleBranchChange}
+                                    required = "true"
+                                     ></lightning-combobox>  
+                                </div>
+                            </div>
+                        </div>
+                        <template if:false={isLargeScreen}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">User</label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <!--CISP:2861 Sending Agent BL code paramater--> <!-- CISP-3497, added branch and state -->
+                                        <c-l-w-c_-l-o-s_-custom-lookup  object-api-name="user" icon-name="standard:user" loanappid={recordId} agentblcode={agentbl}
+                                        onrecordselection={onRecordSelection} state={selectedState} branch={selectedBranch} ></c-l-w-c_-l-o-s_-custom-lookup >
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                     </div>
+                     
+                 <!-- <div class="slds-m-top_large slds-grid slds-gutters slds-grid_align-center slds-align–absolute-center">
+                        <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                    <lightning-combobox
+                            name="type"
+                            label="Type"
+                            variant="label-hidden"
+                            options={typeOptions}
+                            value={selectedType}
+                            onchange={handleTypeChange}
+                             ></lightning-combobox>
+                             </div>
+                             <div class="slds-col slds-size_1-of-3 slds-align_absolute-center"> 
+                             <lightning-combobox
+                             name="Module"
+                             label="Module"
+                             variant="label-hidden"
+                             options={moduleOptions}
+                             value={selectedModlue}
+                             disabled={isDisabled}
+                              ></lightning-combobox>  
+                     </div>
+                     <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                
+                                <!<c-l-w-c_-l-o-s_-custom-lookup  lookup-label="User" object-api-name="user" icon-name="standard:user"  
+                                  onrecordselection={onRecordSelection}></c-l-w-c_-l-o-s_-custom-lookup > 
+                                  <c-l-w-c_-l-o-s_-custom-lookup  object-api-name="user" icon-name="standard:user"  
+                                  onrecordselection={onRecordSelection}></c-l-w-c_-l-o-s_-custom-lookup >
+                         </div>      
+                
+                    </div>-->
+                    <br>
+                    </div>
+                    <div slot="footer">
+                        <lightning-button variant="brand" label="Submit"  onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Cancel"  onclick={closeModal} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                    </lightning-card>  
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+    
+    
+   <!-- <div class="slds-align_absolute-center" style="height:5rem">
+    <lightning-button label="Submit"  onclick={handleClick} type="submit" variant='brand'></lightning-button>
+</div>-->
+</template>

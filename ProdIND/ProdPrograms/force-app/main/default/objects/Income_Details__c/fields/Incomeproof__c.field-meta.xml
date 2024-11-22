@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incomeproof__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISPICKVAL(Applicant__r.Opportunity__r.LeadSource , &apos;D2C&apos;)), 
+
+    (IF(ISPICKVAL(Capture_Income_Method__c ,&apos;&apos; )  &amp;&amp; ISPICKVAL( Capture_ITR_Method__c , &apos;&apos;) &amp;&amp; ISPICKVAL(Capture_GST_Method__c ,&apos;&apos; ), &apos;NIP&apos; , &apos;IP&apos;)),
+
+    TEXT(Income_Source_Status__c)
+)</formula>
+    <label>Incomeproof</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,181 @@
+<template>
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-grid slds-wrap">
+            <template for:each={finalOutcome} for:item="mapkey" for:index="i">
+                <div class="" style="width: 100%;" key={mapkey.key}>
+                    <template for:each={mapkey.value} for:item="docObj" for:index="index1">
+                        <template lwc:if={docObj.isApplicant}>
+                            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom" key={mapkey.key}>
+                                <div class="slds-sol slds-size_1-of-12 slds-p-around_medium">
+                                    <span class="heading">App No</span>
+                                </div>
+                                <div class="slds-sol slds-size_3-of-12 slds-p-around_medium">
+                                    <span class="detail">{appNo}</span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-12 slds-p-around_medium">
+                                    <span class="heading">Name</span>
+                                </div>
+                                <div class="slds-sol slds-size_2-of-12 slds-p-around_medium">
+                                    <span class="detail">{kycName}</span>
+                                </div>
+                                <div class="slds-sol slds-size_2-of-12 slds-p-around_medium">
+                                    <span class="heading">Date of Birth</span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-12 slds-p-around_medium">
+                                    <span class="detail"><lightning-formatted-date-time value={kycDOB} year="numeric"
+                                            month="numeric" day="numeric"></lightning-formatted-date-time></span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-12 slds-p-around_medium">
+                                    <span class="heading">Age</span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-12 slds-p-around_medium">
+                                    <span class="detail">{age}</span>
+                                </div>
+                            </div>                            
+                            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom" key={docObj.index}>
+                                <template lwc:if={docObj.isCust}>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                        <span class="heading">App {docObj.docTypeName} Photo</span><br />
+                                        <template lwc:if={docObj.docUrl}>
+                                            <img style="max-width:85%;max-height:90%; height: 220px; width: 300px;border:5px solid green;"
+                                                src={docObj.docUrl}>
+                                        </template>
+                                        <template lwc:else>
+                                            <span>Unable to find {docObj.docTypeName} Photo</span>
+                                        </template>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                        <span class="heading">App Signature Photo</span><br />
+                                        <template lwc:if={docObj.signDocUrl}>
+                                            <img style="max-width:85%;max-height:90%; height: 220px; width: 300px;border:5px solid green;"
+                                                src={docObj.signDocUrl}>
+                                        </template>
+                                        <template lwc:else>
+                                            <span>Unable to find Signature Photo</span>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                        <template lwc:if={docObj.notCustImage}>
+                            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom" key={mapkey.key}>
+                                <div class="slds-sol slds-size_1-of-4 slds-p-around_medium">
+                                    <span class="heading">{docObj.docTypeName}</span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-4 slds-p-around_medium">
+                                    <span class="detail">{docObj.docNumber}</span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-4 slds-p-around_medium">
+                                    <span class="heading">Issuing Date</span>
+                                </div>
+                                <div class="slds-sol slds-size_1-of-4 slds-p-around_medium">
+                                    <span class="detail">{docObj.issuanceDate}</span>
+                                </div>
+                            </div>
+                        </template>
+                        <template lwc:if={docObj.noBackAndFront}>
+                            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom" key={docObj.index}>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                    <span class="heading">App {docObj.docTypeName} Photo</span><br />
+                                    <template lwc:if={docObj.docUrl}>
+                                        <img style="max-width:85%;max-height:90%; height: 220px; width: 300px;border:5px solid green;"
+                                            src={docObj.docUrl}>
+                                    </template>
+                                    <template lwc:else>
+                                        <span>Unable to find {docObj.docTypeName} Photo</span>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                        <template lwc:else>
+                            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom" key={docObj.index}>
+                                <template lwc:if={docObj.front}>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                        <span class="heading">App {docObj.docTypeName} Front Photo</span><br />
+                                        <template lwc:if={docObj.frontDocUrl}>
+                                            <img style="max-width:85%;max-height:90%; height: 220px; width: 300px;border:5px solid green;"
+                                                src={docObj.frontDocUrl}>
+                                        </template>
+                                        <template lwc:else>
+                                            <span>Unable to find {docObj.docTypeName} Front Photo</span>
+                                        </template>
+                                    </div>
+                                </template>
+                                <template lwc:if={docObj.back}>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+                                        <span class="heading">App {docObj.docTypeName} Back Photo</span><br />
+                                        <template lwc:if={docObj.backDocUrl}>
+                                            <img style="max-width:85%;max-height:90%; height: 220px; width: 300px;border:5px solid green;"
+                                                src={docObj.backDocUrl}>
+                                        </template>
+                                        <template lwc:else>
+                                            <span>Unable to find {docObj.docTypeName} Back Photo</span>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </template>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom">
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Other Resi Proof</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="detail">{otherResiProof}</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Nature Resi Proof</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="detail">{natureResiProof}</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Nature Age Proof</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="detail">{natureAgeProof}</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Natue ID Proof</span>
+                </div>
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="detail">{natureIdProof}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom">
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Mobile No</span>
+                </div>
+                <div class="slds-sol slds-size_7-of-8 slds-p-around_medium">
+                    <span class="detail">{mobileNo}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom">
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Residential Address</span>
+                </div>
+                <div class="slds-sol slds-size_7-of-8 slds-p-around_medium">
+                    <span class="detail">{residentialAddress}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-border_bottom">
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Office Address</span>
+                </div>
+                <div class="slds-sol slds-size_7-of-8 slds-p-around_medium">
+                    <span class="detail">{officialAddress}</span>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid">
+                <div class="slds-sol slds-size_1-of-8 slds-p-around_medium">
+                    <span class="heading">Permanent Address</span>
+                </div>
+                <div class="slds-sol slds-size_7-of-8 slds-p-around_medium">
+                    <span class="detail">{permanentAddress}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,212 @@
+<template>
+	<!-- <div class="slds-scrollable" style="height: 50vh;">
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered"
+			aria-labelledby="element-with-table-label other-element-with-table-label">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Sr.No">Sr.No</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Matched Base">Matched Base</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="List Name">List Name</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Name">Name</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Name Score">Name Score</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Id">ML Id</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Nationality">Nationality </div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="Nationality">Nationality Score </div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Address">ML Address</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Date Of Birth">ML Date Of Birth</div>
+					</th>
+					<th class="" scope="col">
+						<div class="slds-truncate" title="ML Description">ML Description</div>
+					</th>
+
+					<template if:true={isCa}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="CA Decision">CA Decision</div>
+						</th>
+					</template>
+
+<template if:true={isCh}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="CH Decision">CH Decision</div>
+						</th>
+					</template>
+<template if:true={isCmu}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="CMU Decision">CMU Decision </div>
+						</th>
+					</template>
+<template if:true={isCVO}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="BE CVO Decision">BE CVO Decision</div>
+						</th>
+					</template>
+
+
+<template if:true={isCa}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks IBL Credit Analyst">Remarks IBL Credit Analyst</div>
+						</th>
+					</template>
+<template if:true={isCh}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks IBL Credit Head">Remarks IBL Credit Head </div>
+						</th>
+					</template>
+<template if:true={isCmu}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks CMU">Remarks CMU</div>
+						</th>
+					</template>
+<template if:true={isCVO}>
+						<th class="" scope="col">
+							<div class="slds-truncate" title="Remarks BE CVO">Remarks BE CVO</div>
+						</th>
+					</template>
+
+</tr>
+</thead>
+<tbody>
+
+    <template for:each={amlrecords} for:item="logRecord" for:index="index">
+					<tr class="slds-hint-parent" key={logRecord.Id}>
+						<td height="55">
+							<div class="slds-truncate" title={index}>{index}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Matched_base__c}>{logRecord.Matched_base__c}
+							</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.List_Name__c}>{logRecord.List_Name__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Name__c}>{logRecord.Name__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Name_Score__c}>{logRecord.Name_Score__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Id__c}>{logRecord.ML_Id__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Nationality__c}>{logRecord.Nationality__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.Nationality_Score__c}>
+								{logRecord.Nationality_Score__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Address__c}>{logRecord.ML_Address__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Date_Of_Birth__c}>
+								{logRecord.ML_Date_Of_Birth__c}</div>
+						</td>
+						<td height="55">
+							<div class="slds-truncate" title={logRecord.ML_Description__c}>{logRecord.ML_Description__c}
+							</div>
+						</td>
+						<template if:true={isCa}>
+							<td height="55">
+								<lightning-combobox required="true" class="inputdecision" message-when-value-missing="CA Decision is Required !!" data-field-name="CA_Decision__c" data-name={index}
+									value={logRecord.CA_Decision__c} options={pickListCA} onchange={handleCA}>
+								</lightning-combobox>
+							</td>
+						</template>
+    <template if:true={isCh}>
+							<td height="55">
+								<lightning-combobox required="true" class="inputdecision" message-when-value-missing="CH Decision is Required !!" data-field-name="CH_Decision__c" data-name={index}
+									value={logRecord.CH_Decision__c} options={pickListCH} onchange={handleCH}>
+								</lightning-combobox>
+							</td>
+						</template>
+    <template if:true={isCmu}>
+							<td height="55">
+								<lightning-combobox required="true" class="inputdecision" message-when-value-missing="CMU Decision is Required !!" data-field-name="CMU_Decision__c" data-name={index}
+									value={logRecord.CMU_Decision__c} options={pickListCMU} onchange={handleCMU}>
+								</lightning-combobox>
+							</td>
+						</template>
+    <template if:true={isCVO}>
+							<td height="55">
+								<lightning-combobox required="true" class="inputdecision" message-when-value-missing="BE/CVO Decision is Required !!" data-field-name="BE_CVO_Decision__c" data-name={index}
+									value={logRecord.BE_CVO_Decision__c} options={pickListBeCvo} onchange={handleBeCvo}>
+								</lightning-combobox>
+							</td>
+						</template>
+    <template if:true={isCa}>
+							<td height="55">
+								<lightning-input type="text" data-name={index} onchange={handleCaRemark}
+									value={logRecord.Remarks_Credit_Analyst__c}></lightning-input>
+							</td>
+						</template>
+    <template if:true={isCh}>
+							<td height="55">
+								<lightning-input type="text" data-name={index} onchange={handleChRemark}
+									value={logRecord.Remarks_Credit_Head__c}></lightning-input>
+							</td>
+						</template>
+    <template if:true={isCmu}>
+							<td height="55">
+								<lightning-input type="text" data-name={index} onchange={handleCmuRemark}
+									value={logRecord.Remarks_CMU__c}></lightning-input>
+							</td>
+						</template>
+    <template if:true={isCVO}>
+							<td height="55">
+								<lightning-input type="text" data-name={index} onchange={handleCvoRemark}
+									value={logRecord.Remarks_BE_CVO__c}></lightning-input>
+							</td>
+						</template>
+
+    </tr>
+    </template>
+</tbody>
+</table>
+</div> -->
+
+<div class="slds-m-top_small slds-m-bottom_medium">
+    <div class="slds-grid slds-grid_align-center">
+		<div class="slds-clearfix">
+			<div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+				<div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+					<button class="indusPrimaryButton slds-button slds-button_brand colorgreen" onclick={handleInitiateAML} disabled={disableInitiateAMLCheck} >
+						Initiate AML Check
+						<span class="slds-p-left_xx-small" if:true={checkButton}>&#x2714;</span>
+						<span class="slds-p-left_xx-small" if:true={redCross}>&#10060;</span>
+					</button>
+		   		</div>
+			</div>
+		</div>
+    </div>
+    <template if:true={toggleSpinner}>
+			<div class="slds-spinner_container">
+				<div role="status" class="slds-spinner slds-spinner_large">
+					<span class="slds-assistive-text">Loading</span>
+					<div class="slds-spinner__dot-a"></div>
+					<div class="slds-spinner__dot-b"></div>
+				</div>
+			</div>
+		</template>
+
+</div>
+</template>

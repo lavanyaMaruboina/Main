@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_to_update_Status_and_Comment</fullName>
+    <active>true</active>
+    <description>Restrict NCM and SCM user to update the Comment and Status, If RCU Case is not NEW</description>
+    <errorConditionFormula>($Profile.Name = &apos;IBL National Credit Manager&apos; || $Profile.Name = &apos;IBL State Credit Manager&apos;) &amp;&amp; NOT(ISNULL(RCU_Case__c)) &amp;&amp;   
+ NOT(ISPICKVAL(RCU_Case__r.Status, &apos;New&apos;))  &amp;&amp; (ISCHANGED( NCM_Status__c ) || ISCHANGED( NCM_Comment__c ) || ISCHANGED( SCM_Comment__c ) || ISCHANGED( SCM_Status__c ))</errorConditionFormula>
+    <errorMessage>RCU Case Already Submitted</errorMessage>
+</ValidationRule>

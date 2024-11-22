@@ -1,0 +1,447 @@
+<template>
+    <!--CISP-20684 : Start-->
+    <template if:true={withdrawn}>
+        
+        <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+          <span class="slds-assistive-text">warning</span>
+           <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+                title="Description of icon when needed">
+                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning">
+                </lightning-icon>
+            </span>
+            <h2>This loan application has been withdrawn, you are no more allowed to edit this application.</h2>
+        </div>
+    </template>
+    <!--CISP-20684 : END-->
+    <template if:false={withdrawn}>
+    <div
+        class="slds-page-header"
+        style="
+            border: 1px solid #c9c9c9;
+            box-shadow: 0 2px 2px 0 rgb(0 0 0 / 10%);
+            background-color: #832625;
+            color: white;
+        "
+    >
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning-button-icon
+                            icon-name="utility:back"
+                            alternative-text="Return"
+                            title="Return"
+                            onclick={handleReturn}
+                            variant="border-filled"
+                        >
+                        </lightning-button-icon>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      <!--  <svg
+                            width="32px"
+                            height="32px"
+                            viewBox="0 0 16 16"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            class="bi bi-people"
+                        >
+                            <path
+                                d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"
+                            />
+                        </svg>-->
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span
+                                        class="slds-page-header__title slds-truncate"
+                                        title={applicantName}
+                                        style="font-size: 2em"
+                                    >
+                                        {applicantName}
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="border: 1px solid rgb(0 0 0 / 10%)">
+        <lightning-accordion
+            allow-multiple-sections-open
+            active-section-name={activeSections}
+        >
+            <lightning-accordion-section name="A" label="Lead Information">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Lead Number"
+                            name="leadNumber"
+                            disabled="true"
+                            value={dtWrapper.opp.Lead_number__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Applicant Name"
+                            name="firstName"
+                            disabled="true"
+                            value={applicantName}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="PAN Number"
+                            name="panNumber"
+                            disabled="true"
+                            value={dtWrapper.applicant.PAN_No__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Date of Birth"
+                            name="dob"
+                            disabled="true"
+                            value={dob}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Customer Mobile"
+                            name="customerMobile"
+                            disabled="true"
+                            value={customerMobile}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="WhatsApp Number"
+                            name="whatsappNumber"
+                            disabled="true"
+                            value={whatsappNumber}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <div
+                                class="slds-form-element__control slds-grow input-box"
+                            >
+                                <lightning-input
+                                    type="checkbox"
+                                    label="WhatsApp number sames as contact number"
+                                    name="whatsAppNumberSameAsContactNumber"
+                                    variant="label-hidden"
+                                    checked={whatsAppNumberSameAsContactNumber}
+                                    disabled="true"
+                                ></lightning-input>
+                                <span class="cblabel">
+                                    WhatsApp number same as contact number
+                                </span>
+                            </div>
+                            <span class="slds-form-element__label slds-no-flex">
+                            </span>
+                        </div>
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <div
+                                class="slds-form-element__control slds-grow input-box"
+                            >
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Customer wants to register for WhatsApp banking"
+                                    name="registerForWhatsAppBanking"
+                                    variant="label-hidden"
+                                    checked="dtWrapper.applicant.Register_for_WhatsApp_Banking__c"
+                                    disabled="true"
+                                ></lightning-input>
+                                <span class="cblabel">
+                                    Customer wants to register for WhatsApp
+                                    banking
+                                </span>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Gender"
+                            name="Gender"
+                            disabled="true"
+                            value={gender}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Address Line 1"
+                            name="addressLine1"
+                            disabled="true"
+                            value={dtWrapper.applicant.Office_Address_Line_1__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Address Line 2"
+                            name="addressLine2"
+                            disabled="true"
+                            value={dtWrapper.applicant.Office_Address_Line_2__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="State"
+                            name="state"
+                            disabled="true"
+                            value={dtWrapper.applicant.Office_State__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="City"
+                            name="City"
+                            disabled="true"
+                            value={dtWrapper.applicant.Office_City__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Pin code"
+                            name="pinCode"
+                            disabled="true"
+                            value={dtWrapper.applicant.Office_PinCode__c}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="B" label="Income Information">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Earning/Non-earning"
+                            name="incomeSource"
+                            disabled="true"
+                            value={incomeSource}
+                            variant="label-inline"
+                        ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Income Category"
+                            name="incomeCategory"
+                            disabled="true"
+                            value={incomeCategory}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="text"
+                            label="Profile"
+                            name="profile"
+                            disabled="true"
+                            value={profile}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="Borrower Annual Income (Rs)"
+                            name="borrannualIncome"
+                            disabled="true"
+                            value={borrincome}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="Monthly Existing EMI (Rs)"
+                            name="existing-emi"
+                            disabled="true"
+                            value={monthlyExistingEMI}
+                            variant="label-inline"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <template if:true={hascoborrIncome}>
+                        <lightning-layout-item padding="around-small" size="6">
+                            <lightning-input
+                                type="number"
+                                label="Co-borrower Annual Income (Rs)"
+                                name="coborrannualIncome"
+                                disabled="true"
+                                value={coborrincome}
+                                variant="label-inline"
+                            >
+                            </lightning-input>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="C" label="Vehicle Information">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            label="Make"
+                            name="make"
+                            variant="label-inline"
+                            value={make}
+                            disabled="true"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            label="Model"
+                            name="model"
+                            variant="label-inline"
+                            value={model}
+                            disabled="true"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            label="Variant"
+                            name="variant"
+                            data-id="variant"
+                            variant="label-inline"
+                            options={variantOptions}
+                            onchange={handleChange}
+                            value={variant}
+                            disabled="true"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="Estimated Asset Value (Rs)"
+                            name="estimatedAssetValue"
+                            variant="label-inline"
+                            value={estimatedAssetValue}
+                            disabled="true"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="Required Loan Amount (Rs)"
+                            name="requiredLoanAmount"
+                            variant="label-inline"
+                            value={assetDetailsWrapper.Required_Loan_amount__c}
+                            disabled="true"
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="D" label="Offer Information">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="Max. eligible loan amount (Rs)"
+                            name="maxEligibleLoanAmount"
+                            data-id="maxEligibleLoanAmount"
+                            variant="label-inline"
+                            value={maxEligibleLoanAmount}
+                            disabled
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                   <!--CISP-13306 <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="IRR (%)"
+                            name="irr"
+                            data-id="irr"
+                            variant="label-inline"
+                            value={irr}
+                            disabled
+                        >
+                        </lightning-input>
+                   </lightning-layout-item> CISP-13306-->
+
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="Max. Tenure (Months)"
+                            name="maxTenure"
+                            data-id="maxTenure"
+                            variant="label-inline"
+                            value={maxTenure}
+                            disabled
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                   <!--CISP-13306 <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input
+                            type="number"
+                            label="EMI (Rs)"
+                            name="emi"
+                            data-id="emi"
+                            variant="label-inline"
+                            value={emi}
+                            disabled
+                        >
+                        </lightning-input>
+                    </lightning-layout-item>CISP-13306-->
+                </lightning-layout>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </div>
+</template>
+</template>

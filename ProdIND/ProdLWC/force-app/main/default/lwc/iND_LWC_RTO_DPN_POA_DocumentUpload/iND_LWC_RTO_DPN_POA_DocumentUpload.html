@@ -1,0 +1,356 @@
+<template>
+
+    <template if:true={showSpinner}>
+        <!-- class="slds-is-relative" -->
+        <div>
+           <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
+        </div>
+     </template>
+
+    <lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+        <template if:true={isPV}>
+            <button class="slds-button slds-button_neutral" onclick={moveToPayReq} disabled={disabledmovetoPayReq}>Move to payment request</button>
+        </template>
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} class="slds-size_12-of-12">
+            <lightning-accordion-section class= "slds-accordion__summary-heading headingtext" label="RTO">
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix" if:true={postSancationCheck}>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={handleUploadDocument} disabled={disableSubmitBtn1} value="RTO">
+                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix" if:true={preDisbursementCheck}>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={handleViewDocument} value="RTO">
+                    View <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Is Document legible? </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                <lightning-combobox class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                name="Is_Document_Eligible__c" value={rtoDocObj.Is_Document_Eligible__c} label="Is Document legible?" variant="label-hidden"
+                                options={yesNoOptions} required type="text" data-id="RTO" disabled={isFieldDisabled} ></lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3" >
+                                <label class="slds-form-element__label slds-var-m-right_medium">Please select Yes, if RTO is correctly captured </label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                <lightning-combobox class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                name="Correctly_Captured__c" value={rtoDocObj.Correctly_Captured__c} label="Please select Yes, if RTO is correctly captured" variant="label-hidden"
+                                options={yesNoOptions} required type="text" data-id="RTO" disabled={isFieldDisabled}></lightning-combobox>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+
+                                <lightning-input class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                    name="Remarks__c" value={rtoDocObj.Remarks__c} label="Remarks" variant="label-hidden"
+                                    type="text" data-id="RTO" required={rtoRemarkReq} disabled={isFieldDisabled}></lightning-input>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section class= "slds-accordion__summary-heading headingtext" label="DPN">
+
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix" if:true={postSancationCheck}>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={handleUploadDocument} disabled={disableSubmitBtn1} value="DPN">
+                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix" if:true={preDisbursementCheck}>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={handleViewDocument} value="DPN">
+                    View <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Is Document legible? </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                <lightning-combobox class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                name="Is_Document_Eligible__c" value={dpnDocObj.Is_Document_Eligible__c} label="Is Document legible?" variant="label-hidden"
+                                options={yesNoOptions} required type="text" data-id="DPN" disabled={isFieldDisabled} ></lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3" >
+                                <label class="slds-form-element__label slds-var-m-right_medium">Please select Yes, if DPN is correctly captured </label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                <lightning-combobox class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                name="Correctly_Captured__c" value={dpnDocObj.Correctly_Captured__c} label="Please select Yes, if DPN is correctly captured" variant="label-hidden"
+                                options={yesNoOptions} required type="text" data-id="DPN" disabled={isFieldDisabled}></lightning-combobox>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                    name="Remarks__c" value={dpnDocObj.Remarks__c} label="Remarks" variant="label-hidden"
+                                    type="text" data-id="DPN" required={dpnRemarkReq} disabled={isFieldDisabled}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section class= "slds-accordion__summary-heading headingtext" label="POA">
+
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix" if:true={postSancationCheck}>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={handleUploadDocument} disabled={disablePOAUpload} value="POA"><!-- D2C Swapnil changed the disabled variable from disableSubmitBtn1 to disablePOAUpload-->
+                    Upload <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+
+                <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix" if:true={preDisbursementCheck}>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                    onclick={handleViewDocument} value="POA">
+                    View <span if:true={iconButton}>&#x2714;</span></button>
+                </div>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Is Document legible? </label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                
+                                <lightning-combobox class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                name="Is_Document_Eligible__c" value={poaDocObj.Is_Document_Eligible__c} label="Is Document legible?" variant="label-hidden"
+                                options={yesNoOptions} required type="text" data-id="POA" disabled={isFieldDisabled}></lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3" >
+                                <label class="slds-form-element__label slds-var-m-right_medium">Please select Yes, if POA is correctly captured </label>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3" style="width:100px">
+                                <lightning-combobox class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                name="Correctly_Captured__c" value={poaDocObj.Correctly_Captured__c} label="Please select Yes, if POA is correctly captured" variant="label-hidden"
+                                options={yesNoOptions} required type="text" data-id="POA" disabled={isFieldDisabled} ></lightning-combobox>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control validate" onchange={handleInputFieldChange}
+                                    name="Remarks__c" value={poaDocObj.Remarks__c} label="Remarks" variant="label-hidden"
+                                    type="text" data-id="POA" required={poaRemarkReq} disabled={isFieldDisabled}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            
+            <lightning-accordion-section class= "slds-accordion__summary-heading headingtext" label="Conditional Approvals" if:true={postSancationCheck}>
+
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-4">
+                                <label class="slds-form-element__label ">Are all conditions pertaining to conditional approval met ?</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-4" style="width:100px">
+                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="chassisNumberFieldCapturedIntially" value={chassisNumberCaptured} label="Remarks" variant="label-hidden"
+                                    type="text" disabled></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3" >
+                                <label class="slds-form-element__label slds-var-m-right_medium">Remarks</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="chassisNumberFieldCapturedIntially" value={chassisNumberCaptured} label="Remarks" variant="label-hidden"
+                                    type="text" disabled></lightning-input>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+                
+            <div class="slds-m-bottom_medium  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand slds-align_absolute-center" style = "width:300px" variant="Brand"
+                onclick={handleSubmitDocuments} disabled={disableSubmitBtn}>
+                Submit </button>
+            </div>
+   		</lightning-accordion>
+
+        <template if:true={viewDocFlag}>
+
+            <c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document onchangeflagvalue={changeFlagValueMethod}
+            currentloanapplicationid={recordId} currentapplicantid={applicantid}
+            uploadviewdocpopup={viewDocFlag} createdoconparentbutton= "false" title={popupTitle}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehiclerecordid}
+            onfileuploadstatus={docUploadSuccessfully}
+            ></c-i-N-D-_-L-W-C-_-R-T-O-_-D-P-N-_-P-O-A-_-View-Document>
+
+            <!-- <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValueMethod}
+                currentloanapplicationid={recordId} currentapplicantid={applicantid}
+                uploadviewdocpopup={viewDocFlag} createdoconparentbutton= "false" title={popupTitle}
+                doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+                docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+                documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehiclerecordid}
+                onfileuploadstatus={docUploadSuccessfully}
+                ></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5> -->
+        </template>
+
+        <template if:true={uploadAdditionalDocFlag}>
+
+            <!-- <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeFlagValueMethod}
+                currentloanapplicationid={recordId} currentapplicantid={applicantId}
+                uploadviewdocpopup={uploadAdditionalDocFlag} doctype={docType} showdocview={showDocView}
+                isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+                documentrecordidfromparent={documentRecordId} onfileuploadstatus={docUploadSuccessfully}>
+            </c-l-W-C_-L-O-S_-Upload-And-View-Document> -->
+
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValueMethod}
+                currentloanapplicationid={recordId} currentapplicantid={applicantid}
+                uploadviewdocpopup={uploadAdditionalDocFlag} createdoconparentbutton= "false" title={popupTitle}
+                doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+                docotherrecordtype="true" showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+                documentrecordidfromparent={documentRecordId} currentvehiclerecordid ={vehiclerecordid}
+                onfileuploadstatus={docUploadSuccessfully} additionaldocument={additionaldocument}
+                ></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+        </template>
+
+    </lightning-layout>
+    <!-- Popup for Payment Requests : start -->
+    <template if:true={PaymentRequestpopup}>
+        <section id="modal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+            <div class="slds-modal__container" style="width:70% !important;max-width:70% !important;">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hidePaymentRequests}>
+                        <lightning-icon icon-name="utility:close"
+                           alternative-text="close"
+                           variant="inverse"
+                           size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                     </button>
+                    <h2 id="modal-heading-000001" class="slds-modal__title slds-hyphenate">
+                        Payment Requests
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height:400px;overflow-y:scroll;">
+                    <lightning-card variant="base">
+                        <lightning-tabset id="paymentTabset" active-tab-value={currentSubTab}>
+    
+                        <lightning-tab id="Tab1" label={label.Business_Payment} value={label.Business_Payment}
+                            onactive={handleActiveSubTab}>
+                            <template if:true={viewappsubtabs.bussinesspayment}>
+                                <div class="slds-m-left_small slds-m-right_small">
+                                    <c-i-N-D-_-L-W-C-_-Business-Payment onsuccessfullysubmitted={handleTabSwitch}
+                                        recordid={recordId} currentloanappstage={currentappstage}
+                                        currentloanappsubstage={currentappssubtage}
+                                        disbursementrecordid={disbursementrecordid}
+                                        disablefields={disableBusinessPaymentFields}
+                                        frompostsanction={frompostsanction}>
+                                    </c-i-n-d-_-l-w-c-_-business-payment>
+                                </div>
+                            </template>
+                        </lightning-tab>
+    
+                        <lightning-tab id="Tab2" label={label.Insurance_Details} value={label.Insurance_Details}
+                            recordid={recordId} onactive={handleActiveSubTab}>
+                            <template if:true={viewappsubtabs.insurancedetails}>
+                                <div class="slds-m-left_small slds-m-right_small">
+                                    <template if:true={recordId}>
+                                        <c-i-n-d-_-l-w-c-_-disbursement-insurance-details
+                                            onsuccessfullysubmitted={handleTabSwitch} recordid={recordId}
+                                            applicantid={applicantid} disbursementrecordid={disbursementrecordid}
+                                            disablefields={disableInsuranceFields}>
+                                        </c-i-n-d-_-l-w-c-_-disbursement-insurance-details>
+                                    </template>
+                                </div>
+                            </template>
+                        </lightning-tab>
+    
+                        <lightning-tab id="Tab3" label={label.NewUsed_Vehicles} value={label.NewUsed_Vehicles}
+                            onactive={handleActiveSubTab}>
+                            <template if:true={viewappsubtabs.neworusedvehicle}>
+                                <div class="slds-m-left_small slds-m-right_small">
+                                    <c-i-n-d-_-l-w-c_-new-or-used-vehicles onsuccessfullysubmitted={handleTabSwitch}
+                                        recordid={recordId} currentloanappstage={currentappstage}
+                                        currentloanappsubstage={currentappssubtage}
+                                        disbursementrecordid={disbursementrecordid}
+                                        disablefields={disableNewUsedVehicleFields}
+                                        frompostsanction={frompostsanction}>
+                                    </c-i-n-d-_-l-w-c_-new-or-used-vehicles>
+                                </div>
+                            </template>
+                        </lightning-tab>
+    
+                        <lightning-tab id="Tab4" label={label.Beneficiary_Details} value={label.Beneficiary_Details}
+                            onactive={handleActiveSubTab}>
+                            <template if:true={viewappsubtabs.beneficiarydetails}>
+                                <div class="slds-m-left_small slds-m-right_small">
+                                    <c-i-n-d-_-l-w-c_-beneficiary-details onsuccessfullysubmitted={handleBeneficiaryFinish}
+                                        recordid={recordId} applicantid={applicantid}
+                                        loanapplicantdetails={loanapplicantdetails}
+                                        disbursementrecordid={disbursementrecordid}
+                                        disablefields={disableBenefeciaryFields}
+                                        frompostsanction={frompostsanction}
+                                        ></c-i-n-d-_-l-w-c_-beneficiary-details>
+                                </div>
+                            </template>
+                        </lightning-tab>
+    
+                    </lightning-tabset>
+                    </lightning-card>
+              </div>
+                
+           <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hidePaymentRequests}>Cancel</button>
+         </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops">
+        </div>
+    </template>
+</template>

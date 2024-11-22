@@ -1,0 +1,88 @@
+.imgClass{
+    max-width: 50% !important;
+    height:90px !important;
+}
+.indusKycButton{
+    background-color: transparent !important;
+}
+button:disabled{
+background-color: #91A3B0 !important;
+} 
+.indusbutton{
+    min-width: 150px !important;
+}
+.indusPrimaryButton{
+    min-width: 180px !important;
+}
+/* added by Ruchi Jain */
+.SuccessButton{
+    background-color: #4CAF50 !important;
+    }
+.float-button {
+    width: 200px;
+    height: 35px;
+        
+    background:#84181F;
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px #666;
+    }
+.float-button:hover {
+        width: 150px;
+}
+.font_design{
+    font-family: 'Lucida Sans';
+    font-weight: bold;
+    font-size: '19px';
+    color: #84181F;
+}
+.font_design_note{
+    font-family: 'Lucida Sans';
+    font-size: '19px';
+    color: #000000;
+}
+
+.checkmark {
+
+    display: inline-block;
+    
+    transform: rotate(45deg);
+    
+    height: 25px;
+    
+    width: 12px;
+    
+    margin-left: 60%;
+    
+    border-bottom: 7px solid #78b13f;
+    
+    border-right: 7px solid #78b13f;
+    
+    }
+
+    .correct-btn{
+
+        margin-left:3px;
+        
+        font-size:200%;
+        
+        background:green;
+        
+        height:34px;
+        
+        width:25px;
+        
+        border-radius:3px;
+        
+        color:white;
+        
+        }
+
+.agentCss{
+    color:black;
+}
+.vehicleCss{
+    color: black;
+}

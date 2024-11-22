@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Beneficiary_Product</fullName>
+    <columns>Beneficiary_Master__c</columns>
+    <columns>Product__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Beneficiary_BL_Code_Product__c.Ben_Product</value>
+    </filters>
+    <label>Beneficiary Product</label>
+</ListView>

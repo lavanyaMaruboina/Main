@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>D2C_Stage__c</fullName>
+    <description>D2C Stage field</description>
+    <externalId>false</externalId>
+    <formula>IF(
+  ISBLANK(IO_Loan_amount__c),
+  &quot;Pre Initial Offer&quot;,
+  IF(
+    ISPICKVAL(StageName, &quot;Credit Processing&quot;) ||
+    ISPICKVAL(StageName, &quot;Post Sanction Checks and Documentation&quot;) ||
+    ISPICKVAL(StageName, &quot;Pre Disbursement Check&quot;) ||
+    ISPICKVAL(StageName, &quot;Disbursement Request Preparation&quot;) ||
+    ISPICKVAL(StageName, &quot;Journey Stop&quot;) ||
+    ISPICKVAL(StageName, &quot;Closed Won&quot;),
+    TEXT(StageName),
+    IF(
+      Vehicle_Type__c == &apos;Used&apos; || Vehicle_Type__c == &apos;Refinance&apos;,
+      IF(
+        ISPICKVAL(StageName, &quot;Credit Processing&quot;) ||
+        ISPICKVAL(StageName, &quot;Post Sanction Checks and Documentation&quot;) ||
+        ISPICKVAL(StageName, &quot;Pre Disbursement Check&quot;) ||
+        ISPICKVAL(StageName, &quot;Disbursement Request Preparation&quot;),
+        TEXT(StageName),
+        IF(
+          ISPICKVAL(Sub_Stage__c, &quot;Vehicle Dedupe&quot;),
+          &quot;Vehicle Dedupe&quot;,
+          &quot;Post Initial Offer&quot;
+        )
+      ),
+      &quot;Post Initial Offer&quot;
+    )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>D2C Stage</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

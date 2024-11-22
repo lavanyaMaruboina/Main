@@ -1,0 +1,83 @@
+<template>
+    <template if:true={generateotppopup}>
+        <lightning-card
+            class="slds-border_top slds-border_bottom slds-border_left slds-border_right slds-card slds-card_boundary">
+            <section id="modal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closepopup}>
+                            <lightning-icon icon-name="utility:close" class="color" size="medium" variant="bare">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+
+                    <lightning-card variant="base">
+                        <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+                            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+                        </template>
+                        <div class="slds-clearfix slds-align_absolute-center">
+                            <lightning-button type="submit" label="Generate OTP" variant="brand"
+                                onclick={handleGenerateOtpClick} disabled={disableGenerateOtpButton}>
+                            </lightning-button>
+                        </div>
+                        <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3 slds-m-left_xx-large">
+                                    Enter OTP
+                                </div>
+                                <div class="slds-col slds-size_1-of-3 slds-large-size_2-of-3" >
+                                    <input class="slds-input" data-id="OTP" placeholder="xxxxxx"></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-clearfix">
+                            <br>
+                            <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                                <div class="slds-button-group-item">
+                                    <lightning-button class="slds-theme_brand" icon-position="left" variant="brand"
+                                        type="submit" label="Verify" onclick={handleVerifyClick}
+                                        disabled={disableVerifyButton}></lightning-button>
+                                </div>
+                                <div class="slds-button-group-item">
+                                    <lightning-button class="slds-theme_brand" icon-position="left" variant="brand"
+                                        type="submit" label="Resend" onclick={handleResendClick}
+                                        disabled={disableResendButton}></lightning-button>
+                                </div>
+                            </lightning-button-group>
+                        </div>
+
+                    </lightning-card>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={checkaadharpopup}>
+        <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-03" class="slds-modal__title slds-hyphenate">
+                        Check the Aadhar Number
+                    </h2>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button
+                                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                onclick={handleOkButtonPopup} variant="brand" label="OK"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops3">
+        </div>
+    </template>
+</template>

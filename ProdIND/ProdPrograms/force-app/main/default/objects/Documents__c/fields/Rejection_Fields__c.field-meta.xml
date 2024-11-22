@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rejection_Fields__c</fullName>
+    <label>Rejection Fields</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>CMU_Accept_Reject__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Kyc_Fields</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC name</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Salutation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC No.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Driving Licence</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Last Name</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Gender</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Aadhaar Enrollment Number</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Passport File No</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Passport No</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>PAN No.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC Expiry Date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC Issuance Date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC DOB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC Address Line 1</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC Address Line 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC City</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC District</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC State</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>KYC Pin Code</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Aadhaar KYC value not masked</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Image not clear</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Minor KYC/PAN attached</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Image not pertains to this customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Father name incorrect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Mother name incorrect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Spouse name incorrect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Incomplete document</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>Customer name/KYC value not matched with existing code - dedupe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reject</controllingFieldValue>
+            <valueName>PAN is not linked to Aadhaar</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

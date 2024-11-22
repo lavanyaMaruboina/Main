@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reassignment_Type__c</fullName>
+    <description>This field will store the type of reassignment</description>
+    <label>Reassignment Type</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lead Assignment</fullName>
+                <default>false</default>
+                <label>Lead Assignment</label>
+            </value>
+            <value>
+                <fullName>FI Case Assignment</fullName>
+                <default>false</default>
+                <label>FI Case Assignment</label>
+            </value>
+            <value>
+                <fullName>CMU Case Assignment</fullName>
+                <default>false</default>
+                <label>CMU Case Assignment</label>
+            </value>
+            <value>
+                <fullName>CVO Assignment</fullName>
+                <default>false</default>
+                <label>CVO Assignment</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

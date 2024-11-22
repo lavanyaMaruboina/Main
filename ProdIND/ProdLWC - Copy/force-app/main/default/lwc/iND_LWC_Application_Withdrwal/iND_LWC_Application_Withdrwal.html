@@ -1,0 +1,167 @@
+<template>
+    <template if:false={hideButton}>
+        <!--Commenting lightning button and adding standard html button - CISP-13870 Start --> 
+        <!--lightning-button variant="brand" label="Withdrawn" onclick={openModal} disabled={disbableWithdrawn} class="slds-button_customred slds-m-left_x-small"> 
+        </lightning-button--> 
+        <template lwc:if={isTractorApp}>
+        <lightning-button data-id="withdrawnBtn" class="slds-m-left_x-small" onclick={openModal} disabled={disbableWithdrawn} variant="brand" label="Withdrawn"></lightning-button>
+        </template>
+        <template lwc:else>
+            <button class="slds-button slds-button_brand" onclick={openModal} disabled={disbableWithdrawn} aria-disabled="false" type="button" style="background-color: #84181F; color: white" part="button">Withdrawn</button>
+        </template>
+        <!--Commenting lightning button and adding standard html button - CISP-13870 End --> 
+    </template>
+    <lightning-button data-id="revokedBtn" if:true={showRevokeBtn} variant="brand" label="Revoke" onclick={handleRevokeBtnClick} disabled={disabledRevokeBtn} class="slds-m-left_x-small"> </lightning-button>
+    <!-- CISP-2390 Added data-id="revokedBtn" -->
+
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class=" slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="border-filled"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>Withdrawn
+                            Application</b></h2>
+                </header>
+                <div class="card__body_inner slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="demo-only">
+                        <!--CISP:2699-->
+                        <template if:true={isPV}>
+                            <p style="color: red; font-weight: bold; padding-bottom: 10px;">On hit of submit button, please be informed that application will get withdrawn and you will no longer be able to access this application.</p>
+                        </template>
+                        <lightning-combobox 
+                      
+                         name="Withdrawn Reason" 
+                         label="Withdrawn Reason" 
+                         value={value}
+                        placeholder="Select Reason" 
+                        options={typeOptions} 
+                        required="true"
+                         onchange={handleTypeChange}>
+                        </lightning-combobox>
+                    </div>
+                    <br/><br/>
+                        <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                            <lightning-button variant="brand" label="Submit" onclick={handleSubmit}
+                                class="slds-m-left_x-small">
+                            </lightning-button>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+
+    </template>
+
+    <template if:true={showRevokeModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+            <h1  class="slds-modal__title slds-hyphenate">Revoke ?</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" >
+            <strong>Are you sure you want to Revoke the Application?</strong>
+            <!--CISP-4628 Start-->
+            <br/><br/>
+            <template lwc:if={showUserSelectionLookupOnRevoke}>
+                <c-generic-custom-lookup is-value-selected={isUserSelected} selected-name={selectedUserName}
+                    icon-name='standard:avatar' is-called-from-revoke="true" parent-data={revokeData}
+                    onclearvalue={clearUserSelection} onlookupselected={handleUserSelection} select-field-name='Ben Code'
+                    small-input="true">
+                </c-generic-custom-lookup>
+            </template>
+            <!--CISP-4628 End-->
+            </div>
+            <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeRevokeModal}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleRevokeConfirm} disabled={isConfirmDisabled} >Confirm</button>
+            </div>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;" role="presentation"></div>
+    </template>
+
+    <template if:true={showConfirmRevokeModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1  class="slds-modal__title slds-hyphenate">RCU Documents</h1>
+                <span>Select the RCU Documents which you want to re-upload</span>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" style="overflow: auto !important;">
+                <template if:false={showMessage}>
+                    <template if:true={tableData}>
+                        <lightning-datatable
+                        key-field="Id"
+                        data={tableData}
+                        onrowselection={handleRowSelection}
+                        onrowaction={handleRowAction}
+                        columns={columns}>
+                        </lightning-datatable>
+                    </template>
+                </template>
+                <template if:true={showMessage}>
+                    <div class="slds-text-heading_small slds-text-align_center slds-text-color_default">No RCU Document Available</div>
+              </template>
+            </div>
+
+            <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeRevokeConfirmModal}>Cancel</button>
+           <button class="slds-button slds-button_brand" onclick={handleRevokeConfirm}>Confirm</button>
+            </div>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;" role="presentation"></div>
+    </template>
+    
+    <template if:true={showSpinner}>
+        <lightning-spinner class="slds-spinner_brand" size="large"></lightning-spinner>
+    </template>
+    
+    <template if:true={showRevokeModalForTractor}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Cancel and close</span>
+            </button>
+            <div class="slds-modal__header">
+            <h1  class="slds-modal__title slds-hyphenate">Revoke ?</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" >
+            <center><strong>Are you sure you want to Revoke the Application?</strong></center>
+            <br/><br/>
+            <div class="slds-col slds-size_2-of-3">
+                <lightning-combobox class="slds-form-element__control" data-id="salutationId" variant="label-hidden" name="status" label=""
+                    placeholder="-Select-"   options={revokeReasonVal} onchange={handleRevokeTypeChange} value={revokeTypeValue} required></lightning-combobox>
+            </div></div>
+            <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={closeRevokeModal}>Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={handleRevokeConfirmForTractor}>Confirm</button>
+            </div>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;" role="presentation"></div>
+    </template>
+
+</template>

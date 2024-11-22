@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Land_Irrigation_source__c</fullName>
+    <label>Land Irrigation source</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>TUBEWELL/BOREWELL</fullName>
+                <default>false</default>
+                <label>TUBEWELL/BOREWELL</label>
+            </value>
+            <value>
+                <fullName>POND/DAM</fullName>
+                <default>false</default>
+                <label>POND/DAM</label>
+            </value>
+            <value>
+                <fullName>WELL</fullName>
+                <default>false</default>
+                <label>WELL</label>
+            </value>
+            <value>
+                <fullName>CANAL</fullName>
+                <default>false</default>
+                <label>CANAL</label>
+            </value>
+            <value>
+                <fullName>RIVER</fullName>
+                <default>false</default>
+                <label>RIVER</label>
+            </value>
+            <value>
+                <fullName>DEPENDENT ON RAINS</fullName>
+                <default>false</default>
+                <label>DEPENDENT ON RAINS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

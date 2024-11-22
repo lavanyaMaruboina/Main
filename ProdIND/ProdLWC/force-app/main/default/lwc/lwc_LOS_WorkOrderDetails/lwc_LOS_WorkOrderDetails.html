@@ -1,0 +1,117 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+    <lightning-layout>
+       <lightning-layout-item size="12">
+         <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+             onclick={handleAddRow} disabled={disableAddRows}>
+          </lightning-button>
+          <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Save"
+             onclick={saveRows} disabled={disableSave}>
+          </lightning-button>
+          <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Upload Work Order" 
+          onclick={handleUpload} disabled={disableSave}>
+       </lightning-button>
+       </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+           <lightning-layout-item size="12" class="slds-scrollable_x">
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+             aria-labelledby="element-with-table-label other-element-with-table-label">
+             <thead>
+                <tr>
+                   <th>Sr No.</th>
+                   <th>Contact With Company</th>
+                   <th>Date of commencement</th>
+                   <th>Explanation</th>
+                   <th>Contact Amount(in Lakhs) </th>
+                   <th>Tenure of Contract(Years)</th>
+                   <!-- <th>Upload Work Order</th> -->
+                   <th></th>
+                </tr>
+             </thead>
+             <tbody>
+                <template for:each={filterList} for:item="filterData" for:index="index">
+                  <template if:false = {filterData.isValid}>
+                   <tr key={filterData}>
+                     <td>
+                         {filterData.srNo}
+                      </td>
+                      <td>
+                        <lightning-input type="text" name="Contract_with_Company__c" data-index={index} data-id={filterData.id}
+                        value={filterData.ContractWithCompany} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                     </td>
+                      <td>
+                        <lightning-input type="date" name="Date_of_Commencement__c" data-index={index} data-id={filterData.id}
+                        value={filterData.dateofCommencement} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="text" name="Explanation__c" data-index={index} data-id={filterData.id}
+                        value={filterData.Explanation} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="number" name="Contact_Amount__c" data-index={index} data-id={filterData.id}
+                        value={filterData.contactAmount} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input type="number" name="Tenure_of_Contract_Years__c" data-index={index} data-id={filterData.id}
+                        value={filterData.tenureofContacts} variant="label-hidden" onchange={handleChange} required>
+                     </lightning-input>
+                      </td>
+                      <!-- <td>
+                        <lightning-button class="slds-align_absolute-center" variant="brand" label="Upload" onclick={handleUpload}></lightning-button>
+                      </td> -->
+                      <td>
+                         <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                            icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                      </td>
+                   </tr>
+                   </template>
+                   <template if:true={filterData.isValid}>
+                     <tr key={filterData}>
+                        <td>
+                            {filterData.srNo}
+                         </td>
+                         <td>
+                            {filterData.ContractWithCompany}
+                         </td>
+                         <td>
+                            {filterData.dateofCommencement}
+                         </td>
+                         <td>
+                            {filterData.Explanation}
+                         </td>
+                         <td>
+                            {filterData.contactAmount}
+                         </td>
+                         <td>
+                            {filterData.tenureofContacts}
+                         </td>
+                         <!-- <td>
+                           <lightning-button class="slds-align_absolute-center" variant="brand" label="Upload" onclick={handleUpload} disabled></lightning-button>
+                         </td> -->
+                         <td>
+                             <template if:false = {filterData.isDatabase}>
+                              <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                 icon-name="action:delete" onclick={handleRemoveRow}>
+                              </lightning-button-icon>
+                              </template>  
+                         </td>
+                      </tr>
+                  </template>
+                </template>
+             </tbody>
+          </table>
+       </lightning-layout-item>
+    </lightning-layout>
+    <template if:true={uploadViewDocFlag}>
+      <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue}
+      currentloanapplicationid={applicationId} currentapplicantid={applicantId}
+      uploadviewdocpopup={uploadViewDocFlag} doctype={documentType} showdocview={showDocView}
+      showupload={showUpload}  alldocs={isAllDocType} vehicledocs={isVehicleDoc}
+      documentrecordidfromparent={documentId} ondocdelete={docDeleted} recordtypename = {sendingRecordTypeName}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+  </template>
+</template>

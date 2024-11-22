@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Insurance_Application_Document__c</columns>
+    <columns>Parent_Loan_Application__c</columns>
+    <columns>ThirdYr_Own_Damage_Premium__c</columns>
+    <columns>Vehicle_Sold_By__c</columns>
+    <columns>Own_Damage_Premium_Add_ons__c</columns>
+    <columns>FI_Done_By__c</columns>
+    <columns>Lien_marked_IBL__c</columns>
+    <columns>Long_term_policy_Own_Damage_Yrs__c</columns>
+    <columns>Insurance_application_no__c</columns>
+    <columns>Balance_Transfer_Amount_in_Rs__c</columns>
+    <columns>Original_Purchase_value_in_Rs__c</columns>
+    <columns>Fund_End_Use__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Parent_Loan_Application__c</field>
+        <operation>equals</operation>
+        <value>L13062404084</value>
+    </filters>
+    <label>All</label>
+</ListView>

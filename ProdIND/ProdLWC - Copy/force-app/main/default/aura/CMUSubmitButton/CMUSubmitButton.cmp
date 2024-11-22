@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute type="id" name="recordId" />
+    <c:iND_LWC_LOS_CMUSubmitAction aura:id="wrapr" recordId="{!v.recordId}"></c:iND_LWC_LOS_CMUSubmitAction> 
+</aura:component>

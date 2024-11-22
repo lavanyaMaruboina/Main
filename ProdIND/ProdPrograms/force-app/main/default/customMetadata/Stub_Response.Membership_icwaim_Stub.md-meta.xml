@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Membership icwaim Stub</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;RequestId&quot;: &quot;04102021160713027&quot;,
+    &quot;ResponseData&quot;: {
+        &quot;Status&quot;: &quot;Success&quot;,
+        &quot;ResponseInfo&quot;: {
+            &quot;ApplicationId&quot;: 22552913,
+            &quot;SolutionSetInstanceId&quot;: &quot;71e8fa6c-8df8-4056-8cab-cf0ec32e2e73&quot;
+        },
+        &quot;Fields&quot;: {
+            &quot;Applicants&quot;: {
+                &quot;Applicant&quot;: {
+                    &quot;Services&quot;: {
+                        &quot;Service&quot;: [
+                            {
+                                &quot;Id&quot;: &quot;&quot;,
+                                &quot;Name&quot;: &quot;PublicDataAPI&quot;,
+                                &quot;Operations&quot;: {
+                                    &quot;Operation&quot;: [
+                                        {
+                                            &quot;Id&quot;: &quot;&quot;,
+                                            &quot;Name&quot;: &quot;icwaim&quot;,
+                                            &quot;Params&quot;: {
+                                                &quot;Param&quot;: [
+                                                    {
+                                                        &quot;Name&quot;: &quot;consent&quot;,
+                                                        &quot;Value&quot;: &quot;Y&quot;
+                                                    },
+                                                    {
+                                                        &quot;Name&quot;: &quot;membership_no&quot;,
+                                                        &quot;Value&quot;: &quot;14530&quot;
+                                                    }
+                                                ]
+                                            },
+                                            &quot;Data&quot;: {
+                                                &quot;Response&quot;: {
+                                                    &quot;RawResponse&quot;: &quot;{\&quot;result\&quot;:{\&quot;icwaim\&quot;:{\&quot;result\&quot;:{\&quot;Fname\&quot;:\&quot;Richard Correa\&quot;,\&quot;Mname\&quot;:\&quot;\&quot;,\&quot;SrName\&quot;:\&quot;\&quot;,\&quot;dob\&quot;:\&quot;\&quot;,\&quot;gender\&quot;:\&quot;\&quot;,\&quot;MemCategory\&quot;:\&quot;F\&quot;,\&quot;MemshipDt\&quot;:\&quot;\&quot;,\&quot;MemRegion\&quot;:\&quot;WESTERN\&quot;,\&quot;Chapter\&quot;:\&quot;\&quot;,\&quot;Retired\&quot;:\&quot;\&quot;,\&quot;ProtFirmName\&quot;:\&quot;Richard Correa\&quot;,\&quot;FirmEftDt\&quot;:\&quot;\&quot;,\&quot;CrtEmployer\&quot;:\&quot;Richard Correa\&quot;,\&quot;EffectiveDt\&quot;:\&quot;\&quot;,\&quot;ValidUpDt\&quot;:\&quot;31/03/2021\&quot;,\&quot;CancellationDt\&quot;:\&quot;\&quot;},\&quot;request_id\&quot;:\&quot;548d4d15-377b-4232-bbd8-7a081bba808a\&quot;,\&quot;status-code\&quot;:\&quot;101\&quot;},\&quot;request_id\&quot;:\&quot;04bc8fd5-4218-49d5-9818-cf9dfd8f7291\&quot;,\&quot;status-code\&quot;:\&quot;101\&quot;}}&quot;
+                                                }
+                                            },
+                                            &quot;Status&quot;: &quot;Pass&quot;
+                                        }
+                                    ]
+                                },
+                                &quot;Status&quot;: &quot;Pass&quot;
+                            }
+                        ]
+                    },
+                    &quot;ApplicantIdentifier&quot;: &quot;3f7de7f8-efa0-4a11-a4e2-f7df87057362&quot;
+                }
+            },
+            &quot;ApplicationData&quot;: {
+                &quot;Services&quot;: {
+                    &quot;Service&quot;: {
+                        &quot;Id&quot;: &quot;&quot;,
+                        &quot;Name&quot;: &quot;PublicDataAPI&quot;,
+                        &quot;Skip&quot;: &quot;N&quot;,
+                        &quot;Consent&quot;: &quot;true&quot;,
+                        &quot;EnableSimulation&quot;: &quot;&quot;
+                    }
+                }
+            },
+            &quot;Decision&quot;: &quot;Pass&quot;,
+            &quot;ApplicationId&quot;: &quot;22552913&quot;
+        }
+    }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">icwaim</value>
+    </values>
+</CustomMetadata>

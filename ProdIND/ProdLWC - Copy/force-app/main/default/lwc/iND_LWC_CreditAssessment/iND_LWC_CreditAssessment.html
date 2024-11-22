@@ -1,0 +1,128 @@
+<template>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-col slds-size_3-of-4">
+            <!-- <lightning-textarea rows=10 class="textarea" name="remarks" label="Remarks" disabled={isReadonlyMode} value={remarksTextValue}
+                 message-when-value-missing="An empty remark can't be saved.">
+            </lightning-textarea> -->
+            <label>Remarks</label>
+            <textarea rows=10 class="slds-textarea text" name="remarks" disabled={isReadonlyMode}></textarea>
+        </div>
+    </div>
+    <template if:true={isTractorProduct}>
+        <template lwc:if={isNonIndividual}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-col slds-size_3-of-4">
+                    <label>Recommendation for the Loan</label>
+                    <textarea rows=10 class="slds-textarea loanText" name="loanRemarks" disabled={disableLoanRemarks}></textarea>
+                </div>
+            </div>
+        </template>
+        <lightning-accordion active-section-name="A">
+            <lightning-accordion-section name="A" label="PSL Information"> 
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Loan Categorization<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                    name="loanCategorization" placeholder="Select Loan Categorization" required
+                                    data-id="loanCategorizationId" options={loanCategorizationData} value={loanCategorizationValue}
+                                    onchange={loanCategorizationHandler}  disabled={isloanCategorizationDisable}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={shownonPSLCategory}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Non-PSL Categorization<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                        name="nonPSLCategorization" placeholder="Select Non-PSL Categorization" required
+                                        data-id="nonPSLCategorizationId" options={nonPSLCategorizationData} value={nonPSLCategorizationValue}
+                                        disabled={isnonPSLCategorizationDisable} onchange={nonPSLCategorizationHandler}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={showPSLCategory}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label"> PSL Sub Type<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                        name="PSLSubType" placeholder="Select PSL Sub-Type" required
+                                        data-id="PSLSubTypeId" options={PSLSubTypeData} value={pSLSubTypeValue}
+                                        disabled={isPSLSubTypeDisable} onchange={PSLSubTypeHandler}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Acre Category<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control" variant="label-hidden"
+                                        name="acreCategory" placeholder="Select Acre Category" required
+                                        data-id="acreCategoryId" options={getAcreCategoryData} value={getAcreCategoryPicklist}
+                                        disabled={isAcreCategoryDisable} onchange={acreCategoryHandler}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Borrower Category<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control loanAmt" variant="label-hidden"
+                                        name="borrowerCategory" disabled
+                                        type="number" value={borrowerCategoryValue}
+                                        data-id="borrowerCategoryId">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </template>
+    <!-- <template if:false={isReadonlyMode}> -->
+        <lightning-button variant="brand" label="Submit" title="Submit" class="slds-m-left_x-small"
+            onclick={handleClick} disabled={isSubmitClicked} > <!--CISP-2663-->
+        </lightning-button>
+    <!-- </template> -->
+</template>
+
+
+
+<!-- <template>
+    <div>
+        <lightning-textarea name="remarks" label="Remarks" disabled={isReadonlyMode} value={remarksTextValue}
+            message-when-value-missing="An empty remark can't be saved.">
+        </lightning-textarea>
+
+        <template if:false={isReadonlyMode}>
+            <lightning-button variant="brand" label="Submit" title="Submit" class="slds-m-left_x-small"
+                onclick={handleClick}>
+            </lightning-button>
+        </template>
+
+    </div>
+</template> -->

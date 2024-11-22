@@ -1,0 +1,133 @@
+<template>
+    <div class="slds-section slds-is-open">
+      <h3 class="slds-section__title">
+        <button data-position="1" class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn" aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+          <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+          </svg>
+          <span class="slds-truncate" title="Section Title">Proposal's Forwarded By You</span>
+        </button>
+      </h3>
+  
+      <div class="slds-modal__content slds-p-around_medium slds-scrollable_x " style="overflow-y: auto; border:2px" id="modal-content-id-4">
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_row-bordered" >
+              <thead>
+                  <tr class="slds-line-height_reset">
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">App No</div>     
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Lead No</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Applicant Name</div>
+                      </th>
+                      <th class="slds-truncate" scope="col">
+                          <div class="labelClass slds-cell-wrap">Status</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Branch Name</div>
+                      </th>
+                      <th class="" scope="col" if:true={isTwoWheeler}>
+                          <div class="labelClass slds-cell-wrap">Segment</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Executive Name</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Exposure</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Committee</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">CAM Intimation Date</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">CAM Intimation Time</div><!--CISP-7949-->
+                      </th>
+                      <!-- <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">{approvedBy} Approval</div>
+                      </th> -->
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">No. of Days Pending</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Hold By Others</div>
+                      </th>
+                      <th class="" scope="col">
+                          <div class="labelClass slds-cell-wrap">Variant</div>
+                      </th>
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                  <template for:each={forwardedByList} for:item='item'>
+                      <tr class="slds-hint-parent" key={item} style={item.rowStyle}><!--CISP-2863-->
+                          <td data-label="App No">
+                              <div class="slds-ztruncate centerClass" >{item.Loan_Application__r.Application_number__c}</div>
+                          </td>
+                          <td data-label="Applicant Name">
+                              <div class="slds-ztruncate centerClass" ><a href={item.URL} target="_blank">{item.Loan_Application__r.Name}</a></div><!--CISP-7949-->
+                          </td> 
+                          <td data-label="Applicant Name">
+                              <div class="slds-ztruncate centerClass" >{item.Loan_Application__r.Applicant_Name__c}</div>
+                          </td>  
+                          <td data-status="Status">
+                              <!-- Forward By You -->
+                                 <c-approval-status approvalstatus="Forward By You" no-of-days-pending={item.No_of_Days_Pending__c}></c-approval-status>
+                             </td>
+                             <td data-label="Branch Name">
+                              <div class="slds-ztruncate centerClass" >{item.branchName}</div>
+                          </td> 
+                          <td data-label="Segment" if:true={isTwoWheeler}>
+                              <div class="slds-ztruncate centerClass" >{item.segment}</div>
+                          </td>
+                          <td data-label="Executive Name">
+                              <div class="slds-ztruncate centerClass" >{item.Loan_Application__r.Owner.Name}</div>
+                          </td> 
+                          <td data-label="Exposure" >
+                              <div class="slds-ztruncate centerClass"  >{item.TotalExposure}</div>
+                          </td> 
+                          <td data-label="Committee" >
+                              <div class="slds-ztruncate centerClass" >{item.Committee__c}</div>
+                          </td> 
+                          <!--
+                          <td data-label="Status">
+                              <div class="slds-ztruncate centerClass" >{item.Approval_Status__c}</div>
+                          </td> 
+                         -->
+                         <td data-label="CAM intimation DateTime">
+                              <div class="slds-ztruncate centerClass" >
+                                  <lightning-formatted-date-time value={item.Deviation_Created_Date__c} year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time>
+                              </div>
+                              <!-- <div class="slds-ztruncate centerClass" >
+                                  <lightning-formatted-date-time value={item.CreatedDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                  minute="2-digit" time-zone-name="short" hour12="false"></lightning-formatted-date-time>
+                              </div> -->
+                          </td> 
+                          <td data-label="CAM intimation DateTime">
+                              <div class="slds-ztruncate centerClass" >
+                                  <lightning-formatted-time  value={item.Deviation_Created_Time__c} hour="2-digit" minute="2-digit"></lightning-formatted-time></div><!--CISP-7949-->
+                              </td> 
+                          <!-- <td data-label="SCM Approval">
+                              <div class="slds-ztruncate centerClass" >{item.SCM_Approval__c}</div>
+                          </td>  -->
+                          <td data-label="No. of Days Pending">
+                              <div class="slds-ztruncate centerClass" >{item.No_of_Days_Pending__c}</div>
+                          </td> 
+                          <td data-label="Hold By Others">
+                              <div class="slds-ztruncate centerClass" >{item.isHoldByOthers}</div>
+                          </td> 
+                          <td data-label="Variant">
+                              <div class="slds-ztruncate centerClass" >{item.variant}</div>
+                          </td>
+                      </tr>
+                  </template>
+  
+              </tbody>
+          </table>  
+      </div>
+  
+  </div>
+  </template>

@@ -1,0 +1,393 @@
+<template>
+    <template if:true={SpinnerMoving} class="slds-align_absolute-center slds">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={readMode}>
+        <template lwc:if={showEquated}>
+            <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Amortization Schedule</b>
+                </div>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Installment No</th>
+                        <th>Due Date</th>
+                        <th>Opening Principle</th>
+                        <th>Principal</th>
+                        <th>Interest</th>
+                        <th>Closing Principle</th>
+                        <th>EMI Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={totalPaybleEMI} for:item="emi">
+                        <tr key={emi.instalmentNo}>
+                            <td>{emi.instalmentNo}</td>
+                            <td>{emi.dueDate}</td>
+                            <td>{emi.openingPrinciple}</td>
+                            <td>{emi.principalComp}</td>
+                            <td>{emi.interestComp}</td>
+                            <td>{emi.closingPrinciple}</td>
+                            <td>{emi.instalmentAmount}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template> 
+        <template lwc:if={showStructured}>
+            <c-lwc_tf_structured-E-M-I vehicle-id={assetId} read-mode="true" installment-frequency={frequency} loan-agreement-amt={loanAgreementAmt} record-id={recordId} deal-id={dealId}></c-lwc_tf_structured-E-M-I>
+            <template lwc:if={showAmort}>
+            <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Amortization Schedule</b>
+            </div>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th>Installment No</th>
+                            <th>Due Date</th>
+                            <th>Opening Principle</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Closing Principle</th>
+                            <th>EMI Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={totalPaybleEMI} for:item="emi">
+                            <tr key={emi.installmentNumber}>
+                                <td>{emi.installmentNumber}</td>
+                                <td>{emi.emiDueDate}</td>
+                                <td>{emi.openingPrincipal}</td>
+                                <td>{emi.pricipalComponent}</td>
+                                <td>{emi.interestComponent}</td>
+                                <td>{emi.closingPrincipal}</td>
+                                <td>{emi.installmentAmount}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </template>
+    </template>
+    <template if:true={editMode}>
+        <template lwc:if={showInstButton}>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                        onclick={handleInstSch} disabled={isInstSchDisabled}> 
+                        Installment Schedule
+                    </button>
+                    <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                    variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                </lightning-button-icon>
+                </div>
+            </div>
+        </div>
+    </template> 
+        <template lwc:if={showEquated}>
+                    <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Amortization Schedule</b>
+                </div>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Installment No</th>
+                        <th>Due Date</th>
+                        <th>Opening Principle</th>
+                        <th>Principal</th>
+                        <th>Interest</th>
+                        <th>Closing Principle</th>
+                        <th>EMI Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={totalPaybleEMI} for:item="emi">
+                        <tr key={emi.instalmentNo}>
+                            <td>{emi.instalmentNo}</td>
+                            <td>{emi.dueDate}</td>
+                            <td>{emi.openingPrinciple}</td>
+                            <td>{emi.principalComp}</td>
+                            <td>{emi.interestComp}</td>
+                            <td>{emi.closingPrinciple}</td>
+                            <td>{emi.instalmentAmount}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                        onclick={handleSubmit} disabled={isdisableSubmit}> 
+                        Submit
+                    </button>
+                    <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                    variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                </lightning-button-icon>
+                </div>
+            </div>
+        </div>
+        </template> 
+        <template lwc:if={showStr}>
+            <c-lwc_tf_structured-E-M-I vehicle-id={assetId} read-mode="false" onmycustomevent={handleEvent} installment-frequency={frequency} loan-agreement-amt={loanAgreementAmt} record-id={recordId} deal-id={dealId}></c-lwc_tf_structured-E-M-I>
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                            onclick={handleCallOfferEngine} disabled={disableCallOfferEngine}> 
+                            Call Offer Engine
+                        </button>
+                        <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                        variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                    </lightning-button-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                            onclick={handleSubmit} disabled={isdisableSubmit}> 
+                            Submit
+                        </button>
+                        <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                        variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                    </lightning-button-icon>
+                    </div>
+                </div>
+            </div>
+            <template lwc:if={showAmort}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th>Installment No</th>
+                            <th>Due Date</th>
+                            <th>Opening Principle</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Closing Principle</th>
+                            <th>EMI Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={totalPaybleEMI} for:item="emi">
+                            <tr key={emi.installmentNumber}>
+                                <td>{emi.installmentNumber}</td>
+                                <td>{emi.emiDueDate}</td>
+                                <td>{emi.openingPrincipal}</td>
+                                <td>{emi.pricipalComponent}</td>
+                                <td>{emi.interestComponent}</td>
+                                <td>{emi.closingPrincipal}</td>
+                                <td>{emi.installmentAmount}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </template>
+    </template>
+    <!-- <template if:true={showInstallmentModel}>
+        <template if:true={readMode}>
+            <template lwc:if={showEquated}>
+                <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Amortization Schedule</b>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Installment No</th>
+                        <th>Due Date</th>
+                        <th>Opening Principle</th>
+                        <th>Principal</th>
+                        <th>Interest</th>
+                        <th>Closing Principle</th>
+                        <th>EMI Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={totalPaybleEMI} for:item="emi">
+                        <tr key={emi.instalmentNo}>
+                            <td>{emi.instalmentNo}</td>
+                            <td>{emi.dueDate}</td>
+                            <td>{emi.openingPrinciple}</td>
+                            <td>{emi.principalComp}</td>
+                            <td>{emi.interestComp}</td>
+                            <td>{emi.closingPrinciple}</td>
+                            <td>{emi.instalmentAmount}</td>
+                        </tr>
+                    </template>
+                </tbody>
+                </table>
+                </div>
+                </div>
+            </template> 
+            <template lwc:if={showStructured}>
+                <c-lwc_tf_structured-E-M-I vehicle-id={assetId} read-mode="true" installment-frequency={frequency} loan-agreement-amt={loanAgreementAmt} record-id={recordId} deal-id={dealId}></c-lwc_tf_structured-E-M-I>
+                <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">
+                <template lwc:if={showAmort}>
+                <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Amortization Schedule</b>
+                </div>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th>Installment No</th>
+                            <th>Due Date</th>
+                            <th>Opening Principle</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Closing Principle</th>
+                            <th>EMI Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={totalPaybleEMI} for:item="emi">
+                            <tr key={emi.installmentNumber}>
+                                <td>{emi.installmentNumber}</td>
+                                <td>{emi.emiDueDate}</td>
+                                <td>{emi.openingPrincipal}</td>
+                                <td>{emi.pricipalComponent}</td>
+                                <td>{emi.interestComponent}</td>
+                                <td>{emi.closingPrincipal}</td>
+                                <td>{emi.installmentAmount}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                </template>
+                </div>
+                </div>
+            </template>
+        </template>
+        <template if:true={editMode}>
+            <template lwc:if={showInstButton}>
+                <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                        onclick={handleInstSch} disabled={isInstSchDisabled}> 
+                        Installment Schedule
+                    </button>
+                    <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                    variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                </lightning-button-icon>
+                </div>
+                </div>
+                </div>
+            </template> 
+            <template lwc:if={showEquated}>
+                    <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+                <b>Amortization Schedule</b>
+                </div>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>Installment No</th>
+                        <th>Due Date</th>
+                        <th>Opening Principle</th>
+                        <th>Principal</th>
+                        <th>Interest</th>
+                        <th>Closing Principle</th>
+                        <th>EMI Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={totalPaybleEMI} for:item="emi">
+                        <tr key={emi.instalmentNo}>
+                            <td>{emi.instalmentNo}</td>
+                            <td>{emi.dueDate}</td>
+                            <td>{emi.openingPrinciple}</td>
+                            <td>{emi.principalComp}</td>
+                            <td>{emi.interestComp}</td>
+                            <td>{emi.closingPrinciple}</td>
+                            <td>{emi.instalmentAmount}</td>
+                        </tr>
+                    </template>
+                </tbody>
+                </table>
+                <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                        onclick={handleSubmit} disabled={isdisableSubmit}> 
+                        Submit
+                    </button>
+                    <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                    variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                </lightning-button-icon>
+                </div>
+                </div>
+                </div>
+            </template> 
+            <template lwc:if={showStr}>
+                <c-lwc_tf_structured-E-M-I vehicle-id={assetId} read-mode="false" onmycustomevent={handleEvent} installment-frequency={frequency} loan-agreement-amt={loanAgreementAmt} record-id={recordId} deal-id={dealId}></c-lwc_tf_structured-E-M-I>
+                <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                            onclick={handleCallOfferEngine} disabled={disableCallOfferEngine}> 
+                            Call Offer Engine
+                        </button>
+                        <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                        variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                    </lightning-button-icon>
+                    </div>
+                </div>
+                </div>
+                <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                            onclick={handleSubmit} disabled={isdisableSubmit}> 
+                            Submit
+                        </button>
+                        <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                        variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                    </lightning-button-icon>
+                    </div>
+                </div>
+                </div>
+                <template lwc:if={showAmort}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr>
+                            <th>Installment No</th>
+                            <th>Due Date</th>
+                            <th>Opening Principle</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Closing Principle</th>
+                            <th>EMI Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={totalPaybleEMI} for:item="emi">
+                            <tr key={emi.installmentNumber}>
+                                <td>{emi.installmentNumber}</td>
+                                <td>{emi.emiDueDate}</td>
+                                <td>{emi.openingPrincipal}</td>
+                                <td>{emi.pricipalComponent}</td>
+                                <td>{emi.interestComponent}</td>
+                                <td>{emi.closingPrincipal}</td>
+                                <td>{emi.installmentAmount}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                </template>
+            </template>
+        </template>
+    </template> -->
+</template>

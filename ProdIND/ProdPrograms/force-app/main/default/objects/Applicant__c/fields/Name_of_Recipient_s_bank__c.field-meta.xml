@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Name_of_Recipient_s_bank__c</fullName>
+    <label>Name of Recipient&apos;s bank</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>State Bank of India (SBI)</fullName>
+                <default>false</default>
+                <label>State Bank of India (SBI)</label>
+            </value>
+            <value>
+                <fullName>Punjab National Bank</fullName>
+                <default>false</default>
+                <label>Punjab National Bank</label>
+            </value>
+            <value>
+                <fullName>Union Bank of India</fullName>
+                <default>false</default>
+                <label>Union Bank of India</label>
+            </value>
+            <value>
+                <fullName>Canara Bank</fullName>
+                <default>false</default>
+                <label>Canara Bank</label>
+            </value>
+            <value>
+                <fullName>Bank of Baroda</fullName>
+                <default>false</default>
+                <label>Bank of Baroda</label>
+            </value>
+            <value>
+                <fullName>Bank of India</fullName>
+                <default>false</default>
+                <label>Bank of India</label>
+            </value>
+            <value>
+                <fullName>Central Bank of India</fullName>
+                <default>false</default>
+                <label>Central Bank of India</label>
+            </value>
+            <value>
+                <fullName>Indian Bank</fullName>
+                <default>false</default>
+                <label>Indian Bank</label>
+            </value>
+            <value>
+                <fullName>Indian Overseas Bank</fullName>
+                <default>false</default>
+                <label>Indian Overseas Bank</label>
+            </value>
+            <value>
+                <fullName>Bank of Maharashtra</fullName>
+                <default>false</default>
+                <label>Bank of Maharashtra</label>
+            </value>
+            <value>
+                <fullName>ICICI Bank</fullName>
+                <default>false</default>
+                <label>ICICI Bank</label>
+            </value>
+            <value>
+                <fullName>HDFC Bank</fullName>
+                <default>false</default>
+                <label>HDFC Bank</label>
+            </value>
+            <value>
+                <fullName>Axis Bank</fullName>
+                <default>false</default>
+                <label>Axis Bank</label>
+            </value>
+            <value>
+                <fullName>IDBI Bank</fullName>
+                <default>false</default>
+                <label>IDBI Bank</label>
+            </value>
+            <value>
+                <fullName>Yes Bank</fullName>
+                <default>false</default>
+                <label>Yes Bank</label>
+            </value>
+            <value>
+                <fullName>Kotak Mahindra Bank</fullName>
+                <default>false</default>
+                <label>Kotak Mahindra Bank</label>
+            </value>
+            <value>
+                <fullName>IndusInd Bank</fullName>
+                <default>false</default>
+                <label>IndusInd Bank</label>
+            </value>
+            <value>
+                <fullName>Federal Bank</fullName>
+                <default>false</default>
+                <label>Federal Bank</label>
+            </value>
+            <value>
+                <fullName>IDFC First Bank</fullName>
+                <default>false</default>
+                <label>IDFC First Bank</label>
+            </value>
+            <value>
+                <fullName>Jammu and Kashmir Bank</fullName>
+                <default>false</default>
+                <label>Jammu and Kashmir Bank</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

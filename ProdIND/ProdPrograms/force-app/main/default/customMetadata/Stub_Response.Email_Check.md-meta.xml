@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Email Check</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;RequestId&quot;:&quot;22032022154040883&quot;,&quot;ResponseData&quot;:{&quot;Status&quot;:&quot;Success&quot;,&quot;ResponseInfo&quot;:{&quot;ApplicationId&quot;:28251594,&quot;SolutionSetInstanceId&quot;:&quot;4dfb17e3-e810-44f6-b3f1-7555719999bb&quot;},&quot;Fields&quot;:{&quot;Applicants&quot;:{&quot;Applicant&quot;:{&quot;EmailAddress&quot;:&quot;ganeshsun1991@gmail.com&quot;,&quot;Services&quot;:{&quot;Service&quot;:[{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;EmailVerification&quot;,&quot;Operations&quot;:{&quot;Operation&quot;:[{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;EmailVerification&quot;,&quot;Params&quot;:{&quot;Param&quot;:[]},&quot;Data&quot;:{&quot;Response&quot;:{&quot;DREmailVerification&quot;:{&quot;IsEmailValid&quot;:true,&quot;IsEmailBlackListCheckSuccess&quot;:&quot;True&quot;,&quot;IsBlackListedEmailDomain&quot;:&quot;False&quot;,&quot;IsBlackListedEmailAddress&quot;:&quot;False&quot;,&quot;IsEmailAPICallSuccess&quot;:&quot;True&quot;,&quot;APIResponseInMS&quot;:&quot;250&quot;},&quot;DSEmailVerification&quot;:{&quot;RequestDateTime&quot;:&quot;2022-03-22T10:10:56.0684342Z&quot;,&quot;BasicCheckStatus&quot;:&quot;valid&quot;,&quot;BasicCheckStatusCode&quot;:&quot;50&quot;,&quot;LongevityScore&quot;:&quot;3&quot;,&quot;VelocityScore&quot;:&quot;9&quot;,&quot;PopularityScore&quot;:&quot;4&quot;,&quot;DateFirstSeen&quot;:&quot;2019-08-07&quot;,&quot;BasicCheckStatusCodeDesc&quot;:&quot;Valid email address.&quot;},&quot;DSEmailVerificationData&quot;:{&quot;Request&quot;:&quot;&quot;,&quot;Response&quot;:{&quot;Success&quot;:&quot;True&quot;,&quot;Data&quot;:{&quot;RawResponse&quot;:&quot;{\&quot;eam\&quot;:{\&quot;longevity\&quot;:3,\&quot;velocity\&quot;:9,\&quot;date_first_seen\&quot;:\&quot;2019-08-07\&quot;,\&quot;popularity\&quot;:4},\&quot;email_validation\&quot;:{\&quot;domain_type\&quot;:\&quot;freeisp\&quot;,\&quot;status_code\&quot;:50,\&quot;address\&quot;:\&quot;ganeshsun1991@gmail.com\&quot;,\&quot;status\&quot;:\&quot;valid\&quot;}}&quot;,&quot;Status&quot;:1,&quot;GatewayTransactionId&quot;:&quot;1c3d85c4-9d4d-47b0-8eb4-ba3e05562e87&quot;}}},&quot;DSEmailVerificationStatus&quot;:{&quot;Outcome&quot;:&quot;Success&quot;,&quot;IsSuccess&quot;:&quot;True&quot;}}},&quot;Status&quot;:&quot;Pass&quot;}]},&quot;Status&quot;:&quot;Pass&quot;}]},&quot;ApplicantIdentifier&quot;:&quot;100f6dd0-3800-4a8f-9f5f-324bd0b872e1&quot;}},&quot;ApplicationData&quot;:{&quot;Services&quot;:{&quot;Service&quot;:{&quot;Id&quot;:&quot;&quot;,&quot;Name&quot;:&quot;EmailVerification&quot;,&quot;Skip&quot;:&quot;N&quot;,&quot;Consent&quot;:&quot;true&quot;}}},&quot;Decision&quot;:&quot;Pass&quot;,&quot;ApplicationId&quot;:&quot;28251594&quot;}}}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Email Check</value>
+    </values>
+</CustomMetadata>

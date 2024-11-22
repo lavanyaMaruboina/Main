@@ -1,0 +1,182 @@
+<template>
+    <!--<lightning-accordion-section name="Borrower Family Details" label="Borrower Family Details" lwc:if={borrowerFlag}>-->
+        <template if:true={fiRecord}>
+            <lightning-record-edit-form record-id={fieldInvestigationId} object-api-name="Field_Investigation__c">
+                <template if:true={borrowerFlag}>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <!-- Field: Father DOB -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.fatherDOB.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="fatherDOB" type="date"
+                                        value={inputWrapper.fatherDOB.value} class="FamilyDetails" required
+                                        onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Field: Mother DOB -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.motherDOB.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="motherDOB" type="date"
+                                    value={inputWrapper.motherDOB.value} class="FamilyDetails" required
+                                    onchange={handleInputChange}>
+                                </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Field: Spouse Gender -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.spouseGender.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={spouseGenderType.data}>
+                                        <lightning-combobox variant="label-hidden" name="spouseGender" class="spouseGender FamilyDetails" required  value={inputWrapper.spouseGender.value} options={spouseGenderType.data.values} onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                      </template>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Field: Spouse DOB -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.spouseDOB.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="spouseDOB" type="date" value={inputWrapper.spouseDOB.value} class="FamilyDetails" required
+                                    onchange={handleInputChange}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Field: 1st Child Name, Gender, DOB -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child1Name.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="child1Name" class="FamilyDetails" value={inputWrapper.child1Name.value} onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child1Gender.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={firstChildGenderType.data}>
+                                        <lightning-combobox variant="label-hidden" name="child1Gender" class="child1Gender FamilyDetails" required  value={inputWrapper.child1Gender.value} options={firstChildGenderType.data.values} onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                      </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child1DOB.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="child1DOB" type="date" value={inputWrapper.child1DOB.value} class="FamilyDetails" required
+                                    onchange={handleInputChange}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Field: 2nd Child Name, Gender, DOB -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child2Name.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="child2Name" class="FamilyDetails" value={inputWrapper.child2Name.value} onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child2Gender.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={secondChildGenderType.data}>
+                                        <lightning-combobox variant="label-hidden" name="child2Gender" class="child2Gender FamilyDetails" required  value={inputWrapper.child2Gender.value} options={secondChildGenderType.data.values} onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                      </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child2DOB.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="child2DOB" type="date" value={inputWrapper.child2DOB.value} class="FamilyDetails" required
+                                    onchange={handleInputChange}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Field: 3rd Child Name, Gender, DOB -->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child3Name.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="child3Name" class="FamilyDetails" value={inputWrapper.child3Name.value} onchange={handleInputChange}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child3Gender.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={thirdChildGenderType.data}>
+                                        <lightning-combobox variant="label-hidden" name="child3Gender" class="child3Gender FamilyDetails" required  value={inputWrapper.child3Gender.value} options={thirdChildGenderType.data.values} onchange={handleInputChange}>
+                                        </lightning-combobox>
+                                      </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">{inputWrapper.child3DOB.label}</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" name="child3DOB" type="date" value={inputWrapper.child3DOB.value} class="FamilyDetails" required
+                                    onchange={handleInputChange}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                
+            </lightning-record-edit-form>
+        </template>
+        
+    <!--</lightning-accordion-section>-->
+</template>

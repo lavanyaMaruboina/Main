@@ -1,0 +1,197 @@
+<template>
+    <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+   
+    <lightning-layout>
+     <lightning-layout-item size="12">
+         <!-- <lightning-button class="slds-float_right slds-var-m-around_small" variant="brand" label="Add Row"
+             onclick={handleAddRow} disabled={disableAddRows}>
+          </lightning-button> -->
+          <lightning-button class="slds-float_right slds-var-m-around_small" variant="brand" label="Save"
+             onclick={saveRows} disabled={isDisableSave}>
+          </lightning-button>
+          
+    </lightning-layout-item>
+    </lightning-layout>
+     <lightning-layout>
+        <lightning-layout-item size="12" class={className}>
+          <table class="slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+             aria-labelledby="element-with-table-label other-element-with-table-label">
+             <thead>
+                <tr>
+                   <!-- <th>Sr No.</th> -->
+                   <th style="min-width: 250px;">Asset Name</th>
+                   <th style="min-width: 150px;">Actual price as per Customer Purchase Price of Tractor / implement / Harvester</th>
+                   <th style="min-width: 150px;">How much margin amount paid to Dealer / DSA</th>
+                   <th style="min-width: 150px;">Loan amount</th>
+                   <th style="min-width: 150px;">EMI conveyed to customer?</th>
+                   <th style="min-width: 150px;">Loan Tenure</th>
+                   <th style="min-width: 150px;">Repayment Mode</th>
+                   <th style="min-width: 150px;">Repayment Frequency</th>
+                   <th style="min-width: 150px;">Installment Type</th>
+                   <!-- <th></th> -->
+                </tr>
+             </thead>
+             <tbody>
+                <template for:each={editedData} for:item="filterData" for:index="index">
+                  <!-- <template if:false = {filterData.isValid}> -->
+                   <tr key={filterData}>
+                     <!-- <td>
+                         {filterData.id}
+                      </td> -->
+                      <td>
+                        <lightning-input variant="label-hidden" name="Asset_Name__c" value={filterData.Variant__c} title={filterData.Variant__c} disabled>
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input variant="label-hidden" name="purchasePrice" value={filterData.purchasePrice} onchange={handleChange} data-index={index} data-id={filterData.id} required >
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input variant="label-hidden" name="marginAmountToDealer" type="number" value={filterData.marginAmountToDealer} data-index={index} data-id={filterData.id} onchange={handleChange} required>
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input variant="label-hidden" name="loanAmountRequired" type="number" value={filterData.Loan_Amount__c} data-index={index} data-id={filterData.id} disabled>
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input variant="label-hidden" name="emiConveyed" type="number" value={filterData.emiConveyed} onchange={handleChange} data-index={index} data-id={filterData.id} required>
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <lightning-input variant="label-hidden" name="loanTenure" value={filterData.loanTenure} onchange={handleChange} min="12" max="84" type="number" message-when-range-overflow="Month Should be between 12 to 84" message-when-range-underflow="Month Should be between 12 to 84"
+                        data-index={index} data-id={filterData.id} required>
+                        </lightning-input>
+                      </td>
+                      <td>
+                        <template if:true={repaymentModeType.data}>
+                          <template if:true={isDesktop}>
+                            <lightning-combobox variant="label-hidden" name="repaymentMode" value={filterData.repaymentMode} options={repaymentModeType.data.values} onchange={handleChange} data-index={index} data-id={filterData.id} required>
+                            </lightning-combobox>
+                         </template>
+
+                        
+                         <template if:false={isDesktop}>
+                            <div class="slds-form-element">
+                               <div class="slds-form-element__control">
+                                 <div class="slds-select_container">
+                                  <select name="repaymentMode" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.repaymentMode} required>
+                                     <option value="">-None-</option>
+                                     <template for:each={repaymentModeType.data.values} for:item="item">
+       
+                                        <option key={item.value} value={item.value}>{item.label}</option>
+       
+                                     </template>
+                                  </select>
+                                 </div>
+                               </div>
+                             </div>
+                         </template>
+                           
+                          </template>
+                      </td>
+                      <td>
+                        <template if:true={repaymentFrequencyType.data}>
+                           
+                            <template if:true={isDesktop}>
+                              <lightning-combobox variant="label-hidden" name="repaymentFrequency" value={filterData.repaymentFrequency} options={repaymentFrequencyOptions} required data-index={index} data-id={filterData.id} onchange={handleChange}>
+                              </lightning-combobox><!--SFTRAC-1366 changed options repaymentFrequencyType.data to repaymentFrequencyOptions to remove Bi-Monthly option-->
+                           </template>
+  
+                          
+                           <template if:false={isDesktop}>
+                              <div class="slds-form-element">
+                                 <div class="slds-form-element__control">
+                                   <div class="slds-select_container">
+                                    <select name="repaymentFrequency" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.repaymentFrequency} required>
+                                       <option value="">-None-</option>
+                                       <template for:each={repaymentFrequencyOptions} for:item="item"><!--SFTRAC-1366 changed options repaymentFrequencyType.data to repaymentFrequencyOptions to remove Bi-Monthly option-->
+         
+                                          <option key={item.value} value={item.value}>{item.label}</option>
+         
+                                       </template>
+                                    </select>
+                                   </div>
+                                 </div>
+                               </div>
+                           </template>
+                          </template>
+                      </td>
+                      <td>
+                        <template if:true={installmentType.data}>
+                            
+                            <template if:true={isDesktop}>
+                              <lightning-combobox variant="label-hidden" name="installmentType" value={filterData.installmentType} options={installmentType.data.values} required data-index={index} data-id={filterData.id} onchange={handleChange}>
+                              </lightning-combobox>
+                           </template>
+  
+                          
+                           <template if:false={isDesktop}>
+                              <div class="slds-form-element">
+                                 <div class="slds-form-element__control">
+                                   <div class="slds-select_container">
+                                    <select name="installmentType" data-index={index} class="slds-select" data-id={filterData.id} onchange={handleChange} value={filterData.installmentType} required>
+                                       <option value="">-None-</option>
+                                       <template for:each={installmentType.data.values} for:item="item">
+         
+                                          <option key={item.value} value={item.value}>{item.label}</option>
+         
+                                       </template>
+                                    </select>
+                                   </div>
+                                 </div>
+                               </div>
+                           </template>
+                          </template>
+                      </td>
+                      <!-- <td>
+                         <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                            icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                      </td> -->
+                   </tr>
+                   <!-- </template> -->
+                   <!-- <template if:true={filterData.isValid}>
+                     <tr key={filterData}>
+                        <td>
+                             {filterData.id}
+                         </td>
+                         <td>
+                           {filterData.Name}
+                         </td>
+                         <td>
+                            {filterData.Name}
+                          </td>
+                          <td>
+                            {filterData.Name}
+                          </td>
+                          <td>
+                            {filterData.Name}
+                          </td>
+                          <td>
+                            {filterData.Name}
+                          </td>
+                          <td>
+                            {filterData.Name}
+                          </td>
+                          <td>
+                            {filterData.Name}
+                          </td>
+                          <td>
+                            {filterData.Name}
+                          </td>
+                         <td>
+                             <template if:false = {filterData.isDatabase}>
+                              <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                 icon-name="action:delete" onclick={handleRemoveRow}>
+                              </lightning-button-icon>
+                              </template>  
+                         </td>
+                      </tr>
+                  </template> -->
+                </template>
+             </tbody>
+          </table>
+        </lightning-layout-item>
+     </lightning-layout>
+ <!-- </lightning-card> -->
+</template>

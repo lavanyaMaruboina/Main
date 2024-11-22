@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>KYC_Document_Number__c</fullName>
+    <externalId>false</externalId>
+    <formula>If(ISPICKVAL(Document_Type__c, &apos;GST Certificate&apos;), (IF( (GST_No__c != null),GST_No__c, Document_Number__c)),IF(ISPICKVAL(Document_Type__c, &apos;CIN&apos;),(IF( (CIN_No__c != null),CIN_No__c, Document_Number__c)), Document_Number__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>KYC Document Number</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

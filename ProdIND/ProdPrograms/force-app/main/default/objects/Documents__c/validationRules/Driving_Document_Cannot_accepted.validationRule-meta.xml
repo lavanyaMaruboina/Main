@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Driving_Document_Cannot_accepted</fullName>
+    <active>true</active>
+    <description>If Golden source not successful user can not accept Driving Licence  document</description>
+    <errorConditionFormula>AND(ISPICKVAL(CMU_Accept_Reject__c  , &apos;Accept&apos;)  , Golden_Source_Pass__c = false,  ISPICKVAL(Document_Type__c,&apos;4&apos;) )</errorConditionFormula>
+    <errorMessage>Golden source not successful . Please re-trigger golden source.</errorMessage>
+</ValidationRule>

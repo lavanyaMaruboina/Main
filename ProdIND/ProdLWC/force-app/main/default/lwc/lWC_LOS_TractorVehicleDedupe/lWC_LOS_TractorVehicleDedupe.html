@@ -1,0 +1,325 @@
+<template>
+    <template if:true={isSpinnerMoving} >
+        <div class=" slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+    </template>
+    <lightning-card>
+        <div class="slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-var-p-bottom_medium slds-var-p-top_medium"><b>Vehicle Dedupe</b></label>
+        </div>        
+        <template lwc:if={isRefinance}>
+            <div class="slds-form slds-grid slds-wrap slds-var-m-around_x-large">
+                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap slds-text-align_center">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"><b>Vehicle Type</b></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                            <lightning-input class="slds-form-element__control vehicleCssRefinance" variant="label-hidden"
+                                name="Vehicle Type" label="Vehicle Type" value={oppvehicleType} data-record-id={index}
+                                onchange={handleChange} disabled={disableVehicleType}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap slds-text-align_center">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"><b>Verify Deal Number</b></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                            <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                name="Search Deal Number" label="Enter Deal Number" value={dealNumberValue} placeholder="Enter Deal Number"
+                                onchange={searchDealNumber} disabled={disableDealInput}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-m-top_medium">
+                            <button class="indusPrimaryButton slds-button slds-button_brand" 
+                                onclick={validateDealNo} disabled={disableDealNobtn}>Validate Deal Number</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-form slds-grid slds-wrap slds-var-m-around_x-large">
+                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label"><b>Vehicle Type</b></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control vehicleCss" variant="label-hidden"
+                                name="Vehicle Type" label="Vehicle Type" value={oppvehicleType} data-record-id={index}
+                                onchange={handleChange} disabled={disableVehicleType}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <lightning-layout>
+            <lightning-layout-item size="12" class={className}>
+             <table class="slds-table">
+            <thead>
+                <tr>
+                    <template if:true={isUsedORRefinance}>
+                        <th>Vehicle SubCategory</th> 
+                    </template>
+                    <th>Vehicle Sub Type</th> 
+                    <th>Registration No. Format</th>
+                    <th>Vehicle Registration No.</th>
+                    <th>Vehicle Delivered</th>
+                    <th>Engine No.</th>
+                    <th>Chassis No.</th>
+                    <template if:false={isUsed}>
+                        <th>Serial No.</th>
+                    </template>
+
+                    <template if:true={isUsedORRefinance}> 
+                        <th>Parent Deal No.</th>
+                        <th>Customer No.</th>
+                        <th>NOC No.</th>
+                    </template>
+
+                    <th>Verify</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={vehicleDetails} for:item="vd" for:index="index">
+                    <tr key={vd.vehicleDetailId}>
+                        <template if:true={isUsedORRefinance}>
+                            <td>
+                               
+
+                                <template if:true={isDesktop}>
+                                    <lightning-combobox data-id="subCategoryOptions" class="slds-form-element__control"
+                                    name="Vehicle SubCategory - Vehicle SubCategory Description"
+                                    label="Vehicle SubCategory" required={vd.isvehicleSubCategoryTypeRequired}
+                                    value={vd.vehicleSubCategoryType} variant="label-hidden"
+                                    placeholder="Select Sub Type" options={vehicleSubCategory} data-record-id={index}
+                                    onchange={handleChange} disabled={vd.disableSubCategoryField} >
+                                </lightning-combobox>
+                                 </template>
+      
+                                
+                                 <template if:false={isDesktop}>
+                                    <div class="slds-form-element">
+                                       <div class="slds-form-element__control">
+                                         <div class="slds-select_container">
+                                          <select name="Vehicle SubCategory" data-id="subCategoryOptions" data-record-id={index} data-value="vehicleSubCategory" class="slds-select slds-form-element__control" onchange={handleChange} value={vd.vehicleSubCategoryType} disabled={vd.disableSubCategoryField} required={vd.isvehicleSubCategoryTypeRequired}>
+                                             <option value="">-None-</option>
+                                             <template for:each={vehicleSubCategory} for:item="item">
+               
+                                                <option key={item.value} value={item.value}>{item.label}</option>
+               
+                                             </template>
+                                          </select>
+                                         </div>
+                                       </div>
+                                     </div>
+                                 </template>
+
+                            </td>
+                        </template>
+                        
+                        <td>
+                            
+
+                            <template if:true={isDesktop}>
+                                <lightning-combobox data-id="subTypeOptions" class="slds-form-element__control"
+                                name="Vehicle SubType - Vehicle SubType Description"
+                                label="Vehicle SubType" required
+                                value={vd.vehicleSubType} variant="label-hidden"
+                                placeholder="Select Sub Type" options={vehicleSubTypeOptions} data-record-id={index}
+                                onchange={handleChange} disabled={vd.disableSubTypeField} >
+                            </lightning-combobox>
+                             </template>
+  
+                            
+                             <template if:false={isDesktop}>
+                                <div class="slds-form-element">
+                                   <div class="slds-form-element__control">
+                                     <div class="slds-select_container">
+                                      <select name="Vehicle SubType" class="slds-select slds-form-element__control" data-id="subTypeOptions" data-value="vehicleSubtype" data-record-id={index} onchange={handleChange} value={vd.vehicleSubType} disabled={vd.disableSubTypeField} required>
+                                         <option value="">-None-</option>
+                                         <template for:each={vehicleSubTypeOptions} for:item="item">
+           
+                                            <option key={item.value} value={item.value}>{item.label}</option>
+           
+                                         </template>
+                                      </select>
+                                     </div>
+                                   </div>
+                                 </div>
+                             </template>
+                        </td>
+                        
+                        <td>
+                            
+
+                            <template if:true={isDesktop}>
+                                <lightning-combobox data-id="registerationNumberFormat" name="Registeration Number Format" class="slds-form-element__control"
+                                label="Registration Number Format" value={vd.registerationNumberFormatValue}
+                                options={registeratioNumberFormatOptions} onchange={handleChange} required={vd.isvehicleNoFormatRequired}
+                                disabled={vd.registerationNumberFormatDisabled} variant="label-hidden" data-record-id={index}>
+                            </lightning-combobox>
+                             </template>
+  
+                            
+                             <template if:false={isDesktop}>
+                                <div class="slds-form-element">
+                                   <div class="slds-form-element__control">
+                                     <div class="slds-select_container">
+                                      <select name="Registration Number Format" class="slds-select slds-form-element__control" data-value="regNumFormat" data-id="registerationNumberFormat" onchange={handleChange} value={vd.registerationNumberFormatValue} disabled={vd.registerationNumberFormatDisabled} required={vd.isvehicleNoFormatRequired} data-record-id={index}>
+                                         <option value="">-None-</option>
+                                         <template for:each={registeratioNumberFormatOptions} for:item="item">
+           
+                                            <option key={item.value} value={item.value}>{item.label}</option>
+           
+                                         </template>
+                                      </select>
+                                     </div>
+                                   </div>
+                                 </div>
+                             </template>
+                        </td>
+                        <td>
+                            <lightning-input label='Vehicle Registration Number' 
+                                message-when-bad-input="Enter a Registration Number"
+                                class="slds-form-element__control vehicleNumber" 
+                                value={vd.vehicleRegistrationNumberValue}
+                                pattern={vd.vehicleRegistrationPattern} 
+                                placeholder={vd.vehicleRegistrationPatternPlaceholder}
+                                message-when-pattern-mismatch="Enter a Valid Registration Number" 
+                                data-id="dedupeeInput" 
+                                disabled={vd.vehicleRegistrationNumberDisabled} 
+                                variant="label-hidden"
+                                required={vd.isvehicleNoRequired}
+                                onchange={handleChange} data-record-id={index}>
+                            </lightning-input>
+                        </td> 
+                        
+                        <td>
+                            
+                            <template if:true={isDesktop}>
+                                <lightning-combobox data-id="vehicleDeliveredOptions" class="slds-form-element__control"
+                                name="Vehicle Delivered - Vehicle Delivered Description"
+                                label="Vehicle Delivered"
+                                value={vd.vehicleDelivered} variant="label-hidden" required
+                                placeholder="Select an Option" options={vehicleDeliveredType} data-record-id={index}
+                                onchange={handleChange} disabled={vd.disableDeliveredField} >
+                                </lightning-combobox>
+
+                             </template>
+  
+                            
+                             <template if:false={isDesktop}>
+                                <div class="slds-form-element">
+                                   <div class="slds-form-element__control">
+                                     <div class="slds-select_container">
+                                      <select name="Vehicle Delivered" class="slds-select slds-form-element__control" data-value="vehicleDelivered" data-id="vehicleDeliveredOptions" data-record-id={index} onchange={handleChange} value={vd.vehicleDelivered} disabled={vd.disableDeliveredField} required>
+                                         <option value="">-None-</option>
+                                         <template for:each={vehicleDeliveredType} for:item="item">
+           
+                                            <option key={item.value} value={item.value}>{item.label}</option>
+           
+                                         </template>
+                                      </select>
+                                     </div>
+                                   </div>
+                                 </div>
+                             </template>
+                        </td>
+                        <td>     
+                            <lightning-input label='Engine Number' class="slds-form-element__control"
+                                value={vd.engineNoValue} data-id="dedupeInput" pattern="[a-zA-Z0-9]+"
+                                message-when-pattern-mismatch="Enter a Valid Engine No." 
+                                onblur={handleChange} required={vd.isEngineNoRequired} disabled={vd.isEngineNumberDisabled}
+                                variant="label-hidden" data-record-id={index}>
+                            </lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input class="slds-form-element__control " type="text" label='Chassis Number'
+                                value={vd.chassisNoValue} data-id="dedupeInput" pattern="[a-zA-Z0-9]+"
+                                message-when-pattern-mismatch="Enter a Valid Chassis No." 
+                                disabled={vd.isChassisNumberDisabled}
+                                onblur={handleChange} required={vd.isChassisNoRequired}
+                                variant="label-hidden" data-record-id={index}>
+                            </lightning-input>
+                        </td>
+
+                        <template if:false={isUsed}>
+                            <td>
+                                <lightning-input class="slds-form-element__control " type="text" label='Serial Number'
+                                    value={vd.serialNoValue} data-id="dedupeInput" 
+                                    disabled={vd.isSerialNumberDisabled}
+                                    onblur={handleChange} required={vd.isSerialNoRequired}
+                                    variant="label-hidden" data-record-id={index}>
+                                </lightning-input>
+                            </td>
+                        </template>
+
+                        <template if:true={isUsedORRefinance}> 
+                            <td>
+                                <lightning-input class="slds-form-element__control " type="text" label='Parent Deal Number'
+                                    value={vd.parentDealNumber} data-id="dedupeInput" 
+                                    disabled={vd.isParentDealNumberDisabled} required={vd.firstAPIfields}
+                                    onblur={handleChange} variant="label-hidden" data-record-id={index}>
+                                </lightning-input>
+                            </td>
+
+                            <td>
+                                <lightning-input class="slds-form-element__control " type="text" label='Customer Code'
+                                    value={vd.customerCodeValue} data-id="dedupeInput" 
+                                    disabled 
+                                    onblur={handleChange} variant="label-hidden" data-record-id={index}>
+                                </lightning-input>
+                            </td>
+                        
+                            <td>
+                                <lightning-input class="slds-form-element__control " type="text" label='NOC Number'
+                                    value={vd.nocNumberValue} data-id="dedupeInput" required={vd.nocNumberValueReq}
+                                    disabled={vd.isNOCNumberDisabled} onblur={handleChange} pattern={label.Regex_NumberOnly} 
+                                    variant="label-hidden" data-record-id={index}>
+                                </lightning-input>
+                            </td>
+                        </template>
+                        <td>
+                            <template if:false={vd.isVerifydisableFields}>
+                                <lightning-icon icon-name="utility:asset_audit" alternative-text="Verify" title="Verify"
+                                data-record-id={index}
+                                onclick={handleVerifyButton} 
+                                disabled={vd.isVerifydisableFields}
+                                ></lightning-icon>
+                            </template>
+                            <template if:true={vd.isVerifydisableFields}>
+                                <lightning-icon icon-name="utility:check" alternative-text="Verify" title="Verify"
+                                data-record-id={index}
+                                onclick={handleVerified} 
+                                disabled={vd.isVerifydisableFields}
+                                ></lightning-icon>
+                            </template>
+                            
+                        </td>
+                        <td>
+                            <lightning-button
+                                variant="base"
+                                label="Delete"
+                                onclick={deleteRow}
+                                data-record-id={index}
+                                disabled={isDisableDelete}>
+                            </lightning-button>
+                        </td>
+                    </tr> 
+                </template>
+                <template if:true={isNotBenificiary}> <!-- SFTRAC-458 --> 
+                    <tr>
+                        <td><lightning-button label="Add Row" onclick={addRow} disabled={isDisableAddRow}></lightning-button></td>
+                    </tr>
+                </template>
+            </tbody>
+             </table>
+           </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

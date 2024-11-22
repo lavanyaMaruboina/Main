@@ -1,0 +1,56 @@
+.section-header{
+    color: rgb(255, 255, 255);
+    background: #851119;
+    border-radius:5px;
+}
+
+/* div{
+    text-align: center;
+} */
+
+.invalid{
+
+    --lwc-colorBorderInputDisabled : #FF000B !important;
+}
+
+.auto-filled{
+    --lwc-colorTextLabel : #2e844a;
+}
+
+.whitecolour{
+    --slds-c-icon-color-foreground-default: white; 
+    --slds-c-icon-color-background: white;
+    --slds-c-button-brand-color-background: rgb(248, 242, 248);
+   --slds-c-button-brand-color-border: rgb(248, 244, 248); 
+    --lwc-colorTextIconDefault: white;
+}
+.lightning-button-icon:hover {
+    color: #fff
+}
+
+.slds-button__icon:hover  {
+    --slds-c-icon-color-background: white;
+}
+.lli-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ibl-btn-red{
+    background-color: #832625;
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .slds-button__icon.button {
+    /* width: var(--lwc-squareIconMediumContentAlt,0.875rem);
+    height: var(--lwc-squareIconMediumContentAlt,0.875rem); 
+    fill: var(--slds-c-icon-color-foreground, white);
+} */

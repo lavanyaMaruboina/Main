@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PV_Used_Refinance_STP_Thrshld_Amount_c__c</fullName>
+    <label>PV_Used_Refinance_STP_Thrshld_Amount__c</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

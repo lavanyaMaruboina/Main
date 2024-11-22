@@ -1,0 +1,103 @@
+<!-- Screen created By : Vinita K
+Screen Name: 'LWC_LOS_UploadAndViewDocuments'
+Description : Generic Component for Upload and View Documents.
+created on: 3 Dec 2021
+-->
+<template>
+    <template if:true={uploadviewdocpopup}>
+        <section id="modal3" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <template if:true={isLoading}><lightning-spinner data-id="spinner" variant="brand" class="slds-hide"></lightning-spinner></template>
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={uploadImageClose}>
+                        <lightning-icon icon-name="utility:close" size="medium" variant="bare">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">
+                        Upload Documents
+                    </h2>
+                </header>
+                <lightning-card>
+                    <div class="slds-card__body_inner">
+                <template if:true={isView}>      <!--   added by aditya-->
+                        <template if:true={showupload}>
+                            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_1-of-8 slds-m-left">
+                                    Document Type
+                                </div>
+                                <template if:true={vehicledocs}>
+                                    <div class="slds-col slds-size_1-of-10">
+                                        <lightning-input type="text" variant="label-hidden" value={doctype}  disabled></lightning-input>
+                                    </div>
+                                </template>
+                                <template if:true={alldocs}>
+                                    <div class="slds-col slds-size_1-of-10">
+                                        <template if:true={documentTypeValues.data}>
+                                            <lightning-combobox  class="slds-form-element__control insType" variant="label-hidden" value={docType} onchange={handleDocType} placeholder="-- Select --"  options={documentTypeValues.data.values} required></lightning-combobox>
+                                        </template>                            
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+
+                        <template if:true={isphotocopy}>
+                            <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                                <div class="slds-col slds-size_2-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="Is this a photocopy ?" onchange={handlerIsPhotocopy} name="Is this a photocopy?" disabled></lightning-input>
+                                </div>
+                            </div>
+                        </template>
+                       <br>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small ">
+                                <div class=" slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                                        <template if:true={webApp}>
+                                            <lightning-file-upload label={fileUploadLabel} variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader" accept={acceptedFormats} record-id={documentRecordId} file-field-name="Document_Side_fileupload__c"
+                                            file-field-value="Front" onuploadfinished={handleFileUpload} multiple disabled={disabledFileUpload} ></lightning-file-upload>
+                                       <br>
+                                        <template if:true={captureBackSide}>
+                                            <lightning-file-upload label="Capture Back Side" variant="brand" class="slds-theme_brand slds-align_absolute-center " name="fileUploader" accept={acceptedFormats} record-id={documentRecordId} file-field-name="Document_Side_fileupload__c"
+                                            file-field-value="Back"  onuploadfinished={handleBackFileUpload} multiple disabled={disabledBackFileUpload} ></lightning-file-upload>
+                                        </template>
+                                    </template>
+                                    <template if:true={mobileTabApp}>
+                                        <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand" type="button" label={captureTabLabel} onclick={captureCustomerImageApp} value="Front"></lightning-button>
+                                        <br>
+                                        <template if:true={BackmobileTabApp}>
+                                            <lightning-button class="slds-theme_brand slds-align_absolute-center" icon-position="left" variant="brand" type="button" label="Capture Back Side" onclick={captureCustomerImageApp} value="Back"></lightning-button>
+                                        </template>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                      
+
+                  </template>  <!-- added by aditya-->
+                        </br>
+
+                        <template if:true={showdocview}>
+                            <div class="slds-box slds-box_xx-small">
+                                <c-l-W-C_-L-O-S_-Datatable data-id="documents" currentloanapplicationid={currentloanapplicationid} config={documentsConfig} query-filters={queryFilters} onrowaction={handleRowAction} doctype={doctype} functionality={functionality}></c-l-W-C_-L-O-S_-Datatable>
+                            </div>
+                        </template>
+                        </br>
+
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">                     
+                                    <button class=" slds-button slds-button_brand " onclick={uploadDone}>
+                                        Done 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 400vh !important;" id="modalBackdrops1">
+        </div>
+    </template>
+</template>

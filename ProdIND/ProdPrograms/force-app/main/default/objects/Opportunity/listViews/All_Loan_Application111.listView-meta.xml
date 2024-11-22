@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Loan_Application111</fullName>
+    <columns>Lead_Name__c</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>Loan_Application_Name__c</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.LAST_UPDATE</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Sub_Stage__c</columns>
+    <columns>Journey_Status__c</columns>
+    <columns>Vehicle_Type__c</columns>
+    <columns>Parent_Deal_number__c</columns>
+    <columns>Vehicle_Type_c__c</columns>
+    <columns>Vehicle_Sub_Category_c__c</columns>
+    <columns>OPPORTUNITY.LEAD_SOURCE</columns>
+    <columns>Product_Type__c</columns>
+    <columns>Agent_BL_code__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Product_Type__c</field>
+        <operation>equals</operation>
+        <value>Passenger Vehicles</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>10/5/2024 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>Advance_EMI__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>All Loan Application</label>
+    <sharedTo>
+        <role>CEO</role>
+    </sharedTo>
+</ListView>

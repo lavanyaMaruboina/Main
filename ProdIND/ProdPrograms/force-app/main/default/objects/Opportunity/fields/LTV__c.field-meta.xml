@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LTV__c</fullName>
+    <formula>IF( Vehicle_Type__c == &apos;New&apos;,IF(Funding_on_Ex_Showroom__c==true, Basic_Price__c -  Discount_on_Basic_Price__c ,(IF( Funding_on_ORP__c ==true, Basic_Price__c +  RTO_Road_Tax__c +  X1st_yr_Insurance_Premium__c +  Other_charges__c +  GST_Amount__c -  Discount_on_Basic_Price__c ,0))),0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>LTV Invoice Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

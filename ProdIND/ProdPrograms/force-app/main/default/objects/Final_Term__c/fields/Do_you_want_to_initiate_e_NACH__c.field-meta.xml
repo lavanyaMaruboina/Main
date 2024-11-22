@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_you_want_to_initiate_e_NACH__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field used to store the value of &apos;Do you want to initiate e-NACH for this loan application?&apos; input field from the Final Offer Page screen</description>
+    <label>Do you want to initiate e-NACH</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

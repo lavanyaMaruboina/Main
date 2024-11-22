@@ -1,0 +1,337 @@
+<template>
+    <!-- <lightning-card title="Land Holding Details"> -->
+       <lightning-spinner if:true={isSpinner} variant="brand" size="large"> </lightning-spinner>
+       <template if:true={isLoansLandHolding}>
+         {LandHoldingWarningMessage}
+       </template>
+
+      <template if:false={isLoansLandHolding}>
+         <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"> 
+               <div  class="slds-grid">
+                  <div class="slds-col slds-size_1-of-2"> 
+                     Total Land Holding in Acres - Loan Holders
+                  </div>
+                  <div class="slds-col slds-size_1-of-2"> 
+                     {totalLandHolding_landholder}
+                  </div>
+               </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"> 
+               <div  class="slds-grid">
+                  <div class="slds-col slds-size_1-of-2"> 
+                     Total Land Holding in Acres - Family
+                  </div>
+                  <div class="slds-col slds-size_1-of-2"> 
+                     {totalLandHolding_family}
+                  </div>
+               </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3"> 
+               <div  class="slds-grid">
+                  <div class="slds-col slds-size_1-of-2"> 
+                     Approximate value of Agri Land - Loan Holders
+                  </div>
+                  <div class="slds-col slds-size_1-of-2"> 
+                     {approximateValueOfAgriLand_landHolder}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <lightning-layout>
+            <lightning-layout-item size="12">
+               <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Add Row"
+                  onclick={handleAddRow} disabled={disableAddRows}>
+               </lightning-button>
+               <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Save"
+                  onclick={saveRows} disabled={disableSave}>
+               </lightning-button>
+               <lightning-button class="slds-float--right slds-m-around_small" variant="brand" label="Upload Proof" 
+                  onclick={handleUplaod} disabled={disableSave}>
+               </lightning-button>
+            </lightning-layout-item>
+         </lightning-layout>
+           <lightning-layout>
+                <lightning-layout-item size="12" class={className}>
+                   <div class={scrollableClass}>
+               <table class="slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                  aria-labelledby="element-with-table-label other-element-with-table-label">
+                  <thead>
+                     <tr>
+                        <th>Sr No.</th>
+                        <th>Land holder Name</th>
+                        <th>Type</th>
+                        <th>Land holding Type</th>
+                        <th>Ownership Type</th>
+                        <th>State</th>
+                        <th>District</th>
+                        <th>Taluka/Tehsil</th>
+                        <th>Village Name</th>
+                        <th>Survey No.</th>
+                        <th>Land holding In acres</th>
+                        <th>Proof attached?</th>
+                        <th>Since, How long are they doing Agriculture?</th>
+                        <th>Approximate value of Agri Land</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <template for:each={filterList} for:item="filterData" for:index="index">
+                        <template if:false = {filterData.isValid}>
+                        <tr key={filterData}>
+                           <td>
+                              {filterData.srNo}
+                           </td>
+                           <td>
+                              <lightning-input type="text" name="Land_holder_Name__c" data-index={index} data-id={filterData.id}
+                                 variant="label-hidden" placeholder="" onchange={handleChange}
+                                 value={filterData.Land_holder_Name} pattern={landHolderNamePattern} required>
+                              </lightning-input>
+                           </td>
+                           <td>
+                           
+                              <template if:true={isDesktop}>
+                                 <lightning-combobox name="Type__c"  dropdown-alignment="auto" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                 placeholder="" onchange={handleChange} value={filterData.Type}
+                                 options={typeOptions} required>
+                              </lightning-combobox>
+                              </template>
+                              <template if:false={isDesktop}>
+                                 <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-select_container">
+                                       <select name="Type__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Type}>
+                                          <option value="">-None-</option>
+                                          <template for:each={typeOptions} for:item="item">
+            
+                                             <option key={item.value} value={item.value}>{item.label}</option>
+            
+                                          </template>
+                                       </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </template>
+                             
+                           </td>
+                           <td>
+                              <!-- <lightning-combobox name="Land_holding_Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                 placeholder="" onchange={handleChange} value={filterData.Land_holding_Type}
+                                 options={landHoldingTypeOptions} required>
+                              </lightning-combobox> -->
+                              {loansLandHoldingValue}
+                           </td>
+                           <td>
+
+                              <template if:true={isDesktop}>
+                                 <lightning-combobox name="Ownership_Type__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                 placeholder="" onchange={handleChange} value={filterData.Ownership_Type}
+                                 options={ownershipTypeOptions} required>
+                              </lightning-combobox> 
+                              </template>
+                              <template if:false={isDesktop}>
+                                 <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-select_container">
+                                       <select name="Ownership_Type__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Ownership_Type}>
+                                          <option value="">-None-</option>
+                                          <template for:each={ownershipTypeOptions} for:item="item">
+            
+                                             <option key={item.value} value={item.value}>{item.label}</option>
+            
+                                          </template>
+                                       </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </template>
+
+                           </td>
+                           <td>
+                              <!-- <lightning-combobox name="State_Master__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                              placeholder="" onchange={handleChange} value={filterData.State_Master}
+                              options={stateOptions} required>
+                              </lightning-combobox> -->
+                              {KYC_State}
+                           </td>
+                           <td>
+
+                              <template if:true={isDesktop}>
+                                 <lightning-combobox name="District_Master__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                 placeholder="" onchange={handleChange} value={filterData.District_Master} options={getDistrictPicklist} required> 
+                              </lightning-combobox>
+                              </template>
+                              <template if:false={isDesktop}>
+                                 <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-select_container">
+                                       <select name="District_Master__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.District_Master}>
+                                          <option value="">-None-</option>
+                                          <template for:each={getDistrictPicklist} for:item="item">
+            
+                                             <option key={item.value} value={item.value}>{item.label}</option>
+            
+                                          </template>
+                                       </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </template>
+
+                           </td>
+                           <td>
+                              <template if:true={isDesktop}>
+                                 <lightning-combobox name="Taluka_Master__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                    placeholder="" onchange={handleChange} value={filterData.Taluka_Master}
+                                    options={talukaOptions} required>
+                                 </lightning-combobox>
+                              </template>
+                              <template if:false={isDesktop}>
+                                 <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-select_container">
+                                       <select name="Taluka_Master__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Taluka_Master}>
+                                          <option value="">-None-</option>
+                                          <template for:each={talukaOptions} for:item="item">
+            
+                                             <option key={item.value} value={item.value}>{item.label}</option>
+            
+                                          </template>
+                                       </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </template>
+                           
+                              
+                           </td>
+                           <td>
+                              <lightning-input type="text" name="Village_Name__c" data-index={index} data-id={filterData.id}
+                                 variant="label-hidden" placeholder="" onchange={handleChange}
+                                 value={filterData.Village_Name} pattern={landHolderNamePattern} required>
+                              </lightning-input>
+                           </td>
+                           <td>
+                              <lightning-input type="text" name="Survey_No__c" data-index={index} data-id={filterData.id}
+                                 value={filterData.Survey_No} variant="label-hidden" onchange={handleChange} required>
+                              </lightning-input>
+                           </td>
+                           <td>
+                              <lightning-input type="number" step="0.01" name="Land_holding_In_acres__c" data-index={index} data-id={filterData.id}
+                                 value={filterData.Land_holding_In_acres} variant="label-hidden" onchange={handleChange} required>
+                              </lightning-input>
+                           </td>
+                           <td>
+
+                              <template if:true={isDesktop}>
+                                 <lightning-combobox name="Proof_attached__c" data-index={index} variant="label-hidden" data-id={filterData.id}
+                                 placeholder="" onchange={handleChange} value={filterData.Proof_attached}
+                                 options={proofAttachedOptions} required>
+                              </lightning-combobox>
+                              </template>
+                              <template if:false={isDesktop}>
+                                 <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                      <div class="slds-select_container">
+                                       <select name="Proof_attached__c" data-index={index} class="slds-select" data-id={filterData.id} required onchange={handleChange} value={filterData.Proof_attached}>
+                                          <option value="">-None-</option>
+                                          <template for:each={proofAttachedOptions} for:item="item">
+            
+                                             <option key={item.value} value={item.value}>{item.label}</option>
+            
+                                          </template>
+                                       </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </template>
+
+                              
+                           </td>
+                           <td>
+                              <lightning-input type="number" name="Since_How_long_are_they_doing_Agricultu__c" data-index={index} data-id={filterData.id}
+                                 value={filterData.Since_How_long_are_they_doing_Agricultu} variant="label-hidden" onchange={handleChange}
+                                 maxlength="2"
+                                 required>
+                              </lightning-input>
+                           </td>
+                           <td>
+                              {filterData.Approx_Value}
+                           </td>
+                           <td>
+                              <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                 icon-name="action:delete" onclick={handleRemoveRow}></lightning-button-icon>
+                           </td>
+                        </tr>
+                        </template>
+                        <template if:true={filterData.isValid}>
+                           <tr key={filterData}>
+                              <td>
+                                 {filterData.srNo}
+                              </td>
+                              <td>
+                                 {filterData.Land_holder_Name}
+                              </td>
+                              <td>
+                                 {filterData.Type}
+                              </td>
+                              <td>
+                                 {filterData.Land_holding_Type}
+                              </td>
+                              <td>
+                                 {filterData.Ownership_Type}
+                              </td>
+                              <td>
+                                 {filterData.State_Master_Value}
+                              </td>
+                              <td>
+                                 {filterData.District_Master_Value}
+                              </td>
+                              <td>
+                                 {filterData.Taluka_Master_Value}
+                              </td>
+                              <td>
+                                 {filterData.Village_Name}
+                              </td>
+                              <td>
+                                 {filterData.Survey_No}
+                              </td>
+                              <td>
+                                 {filterData.Land_holding_In_acres}
+                              </td>
+                              <td>
+                                 {filterData.Proof_attached}
+                              </td>
+                              <td>
+                                 {filterData.Since_How_long_are_they_doing_Agricultu}
+                              </td>
+                              <td>
+                                 {filterData.Approx_Value}
+                              </td>
+                              <td>
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                       icon-name="action:delete" onclick={handleDeleteRow}>
+                                    </lightning-button-icon>
+                                    
+                                    <lightning-button-icon data-index={filterData.id} class="slds-float--right"
+                                      icon-name="action:edit" onclick={handleEditRow}>
+                                    </lightning-button-icon>
+                              </td>
+                           </tr>
+                        </template>
+                     </template>
+                  </tbody>
+               </table></div>
+            </lightning-layout-item>
+         </lightning-layout>
+         <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={applicationId} currentapplicantid={applicantId}
+            uploadviewdocpopup={uploadViewDocFlag} doctype={documentType} showdocview={showDocView}
+            showupload={showUpload}  alldocs={isAllDocType} vehicledocs={isVehicleDoc} 
+            document-record-id={documentId} documentrecordidfromparent={documentId} ondocdelete={docDeleted} recordtypename = {sendingRecordTypeName}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+           
+        </template>
+      </template>
+    <!-- </lightning-card> -->
+ </template>

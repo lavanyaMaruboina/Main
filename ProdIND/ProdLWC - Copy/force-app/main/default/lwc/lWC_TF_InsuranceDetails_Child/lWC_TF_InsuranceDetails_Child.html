@@ -1,0 +1,472 @@
+<template>
+
+    <template if:true={SpinnerMoving} class="slds-align_absolute-center">
+        <div class="slds-grid slds-gutters">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>                           
+        </div>
+    </template>
+    
+    <!-- Spinner :Start -->
+    <template if:true={isSpinnerMoving} class="slds-align_absolute-center">
+        <section id="modal123" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <div id="modal-heading-011" class="slds-modal__title slds-hyphenate">
+                        We are customizing the insurance plans for you.                    
+                    </div>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>                           
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops123">
+        </div>        
+    </template>
+
+    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" if:true={showBeneficiary}>
+        <div class="slds-form-element slds-grid slds-wrap">
+           <div class="slds-col slds-size_1-of-3">
+              <label class="slds-form-element__label">Beneficiary
+                 <abbr title="required" class="slds-required">*</abbr>
+              </label>
+           </div>
+           <div class="slds-col slds-size_2-of-3">
+              <lightning-combobox name="progress" value={beneficiaryId} placeholder="Select Beneficiary" options={beneficiaryOptions} required disabled onchange={beneficiaryeHandler} variant="label-hidden"></lightning-combobox>
+           </div>
+        </div>
+    </div>
+
+    <!-- Insurance Product Section :Start -->
+  <template if:true={loadInsuranceSection}>
+    <table>
+        <template for:each={insuranceDetailsList} for:item='item'>
+            <tr class="slds-hint-parent" key={item}>
+                <td>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_3-of-3">
+                                    <lightning-input type="checkbox"  class ="disableInsFields" data-id="healthInsuranceField" label={item.insProductName}
+                                        disabled={item.isPlanCheckDisabled} checked={item.isPlanChecked} value={item.isPlanChecked} 
+                                        onchange={planCheckChangeHandler}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Plan</label>
+                                </div>
+
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox data-id="healthInsuranceField"
+                                        class="slds-form-element__control disableInsFields"
+                                        name={item.insProductName} variant="label-hidden" onchange={handlePlanChange}  options={item.insPlanOptions}
+                                        value={item.insPlanCode} disabled={item.isPlanCodeDisabled}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Amount</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" 
+                                    formatter="currency" 
+                                    step="0.01"  
+                                    value={item.insAmount}
+                                    onblur={hanldeAmountValueChange} 
+                                    data-id="healthInsuranceField"
+                                        class="slds-form-element__control disableInsFields"
+                                        variant="label-hidden" 
+                                        name={item.insProductName} 
+                                        disabled={item.isAmountFieldDisabled}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Is Funded</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="toggle" message-toggle-active="Funded" message-toggle-inactive="Non-Funded" id={item.insPlanCode} data-id="healthInsuranceField" name={item.insProductName}
+                                        class='healthInsuranceDetailsField isFundedCheckbox disableInsFields' value={item.isFundedChecked}
+                                        checked={item.isFundedChecked} onchange={handleIsFundedToggle} disabled={item.isFundedDisabled}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-border_top slds-m-vertical_large"></div>
+                </td>
+            </tr>
+        </template>
+    </table> 
+    <!-- Insurance Product Section :End -->
+    <div class="slds-form slds-grid slds-wrap" if:true={showheightAndWeight}>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Height (in CM)</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" type="text" name="height"  variant="label-hidden" value={applicantHeight} onchange={handleHeightAndWeight} disabled={disabledHeightAndWeight}></lightning-input>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Weight (in KG)</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" type="text" name="weight" variant="label-hidden" value={applicantWeight} onchange={handleHeightAndWeight} disabled={disabledHeightAndWeight}></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="slds-clearfix"><!--Start CISP-3194-->
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top_medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                <div style="display: flex; justify-content:center; align-items:center;">
+                    <div style="width:220px; box-sizing:border-box; margin:0px;">
+                        <button class="indusPrimaryButton slds-button slds-button_brand" 
+                        onclick={handleComputePremium} disabled={disableComputePremium}>
+                            Compute Premium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End CISP-3194-->
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top_medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                <div style="display: flex; justify-content:center; align-items:center;">
+                    <div style="width:220px; box-sizing:border-box; margin:0px;">
+                        <button class="indusPrimaryButton slds-button slds-button_brand "
+                            onclick={handleFundingAvailability} disabled={fundisabled}>
+                            Funding Availability
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Funded Premium</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control " formatter="decimal" name="fundedPremium" variant="label-hidden"
+                        onchange={handlePlanChange} value={fundedPremiumValue} disabled>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Total Insurance Payable</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" formatter="decimal" name="ownerNamefield" variant="label-hidden"
+                        disabled value={totalInsurancePayable} required></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">LTV With Insurance</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                        name="ownerContactNumberfield" disabled value={ltvWithInsurancePercentage}
+                        required>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">LTV Without Insurance</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control loanAmt" variant="label-hidden" 
+                        name="vehiclValuationfield" disabled
+                        value={ltvWithoutInsurancePercentage} required>
+                    </lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-border_top slds-m-vertical_large"></div>
+
+    <template if:true={isTractorWithNomineeSection}>
+      <template  if:true={showNomineeSection}>
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+           <lightning-accordion-section name="NomineeDetails" label={nomineeLabel}>
+               <div class="slds-form slds-grid slds-wrap">
+                   <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                       <div class="slds-form-element  slds-grid slds-wrap">
+                           <div class="slds-col slds-size_1-of-3">
+                               <label class="slds-form-element__label">Name <abbr
+                                title="required" class="slds-required">*</abbr></label>
+                           </div>
+                           <div class="slds-col slds-size_2-of-3">
+                               <lightning-input class="slds-form-element__control"  variant="label-hidden" value={inputWrapper.borrowerName.value} name="borrowerName" 
+                               data-name="borrowerFields" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field">
+                               </lightning-input>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                           <div class="slds-form-element  slds-grid slds-wrap">
+                               <div class="slds-col slds-size_1-of-3">
+                                   <label class="slds-form-element__label">DOB <abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                               </div>
+                               <div class="slds-col slds-size_2-of-3">
+                                   <lightning-input class="slds-form-element__control" variant="label-hidden"  name="borrowerDOB" data-name="borrowerFields" data-id="borrowerDOB"
+                                   type="date" onchange={handleInputFieldChange} value={inputWrapper.borrowerDOB.value} required message-when-value-missing="Complete this field">
+                                   </lightning-input>
+                               </div>
+                           </div>
+                   </div>
+                   <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                           <div class="slds-form-element  slds-grid slds-wrap">
+                               <div class="slds-col slds-size_1-of-3">
+                                   <label class="slds-form-element__label">Relationship <abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                               </div>
+                               <div class="slds-col slds-size_2-of-3">
+                                   <template if:true={borrowerRelationshipOption}>
+                                       <lightning-combobox class="slds-form-element__control" variant="label-hidden"  label="Relationship" name="borrowerRelationship" 
+                                       data-name="borrowerFields"  value={inputWrapper.borrowerRelationship.value} onchange={handleInputFieldChange} options={borrowerRelationshipOption}
+                                       required message-when-value-missing="Complete this field">
+                                   </lightning-combobox>
+                                     </template>
+                                   
+                               </div>
+                           </div>
+                   </div>
+                   <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                           <div class="slds-form-element  slds-grid slds-wrap">
+                               <div class="slds-col slds-size_1-of-3">
+                                   <label class="slds-form-element__label">Address <abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                               </div>
+                               <div class="slds-col slds-size_2-of-3">
+                                   <lightning-input class="slds-form-element__control" variant="label-hidden"  value={inputWrapper.borrowerAddress.value} name="borrowerAddress" 
+                                   data-name="borrowerFields" type="text" onchange={handleInputFieldChange} required message-when-value-missing="Complete this field"
+                                   data-id="borrowerAddressInput">
+                                   </lightning-input>
+                               </div>
+                           </div>
+                   </div>
+               </div>
+           </lightning-accordion-section>
+       </lightning-accordion>
+      </template>
+    </template>
+    <div if:true={isEnableStrTable} class="slds-scrollable_x" style="width: 100vw;">
+        <c-lwc_tf_structured-E-M-I vehicle-id={assetId} onmycustomevent={handleEvent} installment-frequency={frequency} read-mode="false" loan-agreement-amt={loanAgreementAmt} record-id={recordId}></c-lwc_tf_structured-E-M-I>
+    </div>
+    <div lwc:if={showEquated} class="slds-scrollable_x" style="width: 100vw;">
+        <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+            <b>Amortization Schedule</b>
+            </div>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr>
+                    <th>Installment No</th>
+                    <th>Due Date</th>
+                    <th>Opening Principle</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Closing Principle</th>
+                    <th>EMI Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={totalPaybleEMI} for:item="emi">
+                    <tr key={emi.instalmentNo}>
+                        <td>{emi.instalmentNo}</td>
+                        <td>{emi.dueDate}</td>
+                        <td>{emi.openingPrinciple}</td>
+                        <td>{emi.principalComp}</td>
+                        <td>{emi.interestComp}</td>
+                        <td>{emi.closingPrinciple}</td>
+                        <td>{emi.instalmentAmount}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    <div lwc:if={showAmort} class="slds-scrollable_x" style="width: 100vw;">
+        <div class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" style="color: #84181F;font-size:large;">
+            <b>Amortization Schedule</b>
+            </div>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr>
+                    <th>Installment No</th>
+                    <th>Due Date</th>
+                    <th>Opening Principle</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Closing Principle</th>
+                    <th>EMI Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={totalPaybleEMI} for:item="emi">
+                    <tr key={emi.installmentNumber}>
+                        <td>{emi.installmentNumber}</td>
+                        <td>{emi.emiDueDate}</td>
+                        <td>{emi.openingPrincipal}</td>
+                        <td>{emi.pricipalComponent}</td>
+                        <td>{emi.interestComponent}</td>
+                        <td>{emi.closingPrincipal}</td>
+                        <td>{emi.installmentAmount}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <template if:true={showStrButton}>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                    onclick={handleStructuredEMI} disabled={isStructuredDisabled} data-id="calculateStr"> 
+                    Calculate Structured EMI
+                </button>
+                <lightning-button-icon size="xxx-large" class="slds-m-left_small" icon-name="utility:sync"
+                    variant="container" alternative-text="Refresh" title="Refresh" onclick={handleRefresh}>
+                </lightning-button-icon>
+            </div>
+        </div>
+    </div>
+</template>
+    <template if:true={showCallOffer}>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                <div style="display: flex; justify-content:center; align-items:center;">
+                    <div style="width:220px; box-sizing:border-box; margin:0px;">
+                        <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleOfferEngine} data-id="callOfferEngine" disabled={isOfferEngineDisabled}>
+                            Call Offer Engine
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </template>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                <div style="display: flex; justify-content:center; align-items:center;">
+                    <div style="width:220px; box-sizing:border-box; margin:0px;">
+                        <button class="indusPrimaryButton slds-button slds-button_brand " onclick={handleSubmit} data-id="submitButton" disabled={isSubmitButtonDisabled}>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </template>
+    <!-- Popup Start -->
+    <template if:true={showPopup}>
+        <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                        Please change the plan or funding requirement in non-motor insurance products. 
+                    </h2>
+                </header>
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-button
+                                class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                onclick={handleClosePopup} variant="brand" label="OK"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops1">
+        </div>
+    </template>
+    <!-- Popup End -->
+    
+    <!-- Popup Start -->
+    <template if:true={showPopupForAmount}>
+        <section id="modal11" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-form slds-modal__container">
+                <lightning-card variant="base">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-p-around_medium">
+                            <lightning-input type="checkbox" label="I have checked the premium amount and entered premium amount is equal to the output of insurance premium amount calculator " checked={popupCheckbox} onchange={hanldeAmountPopupCheckbox}>                     
+                            </lightning-input>
+    
+                            <lightning-button class="slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                            onclick={handlePopupSubmit} variant="brand" label="Submit" disabled={popupCheckboxChecked}></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open modalBackdrops" style="height: 300vh !important;" id="modalBackdrops11">
+        </div>
+    </template>
+
+    <template if:true={showFileUploadAndView}>
+        <c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordId} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+    </template>
+    <template if:true={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next"
+           onclick={handleOnfinish}>
+           Next
+        </button>
+  </template>
+  <!--<template if:true={isEnableBeneficiaryNext}>
+    <button class="slds-button slds-float_right slds-button_brand ninext"
+       onclick={handlebeneficiaryNext}>
+       Next
+    </button>
+</template>-->
+
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CAM_List</fullName>
+    <columns>Loan_Application__c</columns>
+    <columns>Proposal_Status__c</columns>
+    <columns>NAME</columns>
+    <columns>CAM_Page__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>List of Applications</label>
+</ListView>

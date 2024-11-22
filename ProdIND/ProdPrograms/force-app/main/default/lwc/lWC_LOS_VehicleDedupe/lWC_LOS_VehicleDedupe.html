@@ -1,0 +1,212 @@
+<!-- Screen created By : Nidhi Dhote
+Screen Name: 'LWC_LOS_VehicleDedupe'
+Description : Vehicle Dedupe check will be done in this screen.
+--> 
+<template>
+    <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+    </template>
+    <div class="slds-clearfix">
+        <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Vehicle
+            Dedupe</label>
+    </div>
+    <div class="slds-form slds-grid slds-wrap">
+        </br>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Vehicle Type</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control vehicleCss" variant="label-hidden"
+                        name="Vehicle Type" label="Vehicle Type" value={vehicleType} placeholder="-- Select --"
+                        message-when-value-missing="Select Vehicle Type" options={vehicleTypeOptions}
+                        onchange={handleVehicleTypeChange} required disabled={disableVehicleTypeField}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <template if:true={subCategoryComboboxTemplate}>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Vehicle Sub-Category</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox data-id="subCategoryOptions" class="slds-form-element__control"
+                            name="Vehicle SubCategory - Vehicle SubCategory Description"
+                            label="-- Select --"
+                            value={vehicleSubCategoryType} variant="label-hidden"
+                            placeholder="Select Vehicle SubCategory Type" options={vehicleSubCategoryOptions}
+                            onchange={handleVehicleSubCategoryChange} disabled={disableFields}>
+                        </lightning-combobox>
+                        <!-- <select class="slds-select" data-id="subCategoryOptions"
+                            name="Vehicle SubCategory - Vehicle SubCategory Description"
+                            onchange={handleVehicleSubCategoryChange}>
+                            <template for:each={vehicleSubCategoryOptions} for:item="vehicleSubCategoryItem">
+                                <option key={vehicleSubCategoryItem.value} value={vehicleSubCategoryItem.value}>
+                                    {vehicleSubCategoryItem.label}
+                                </option>
+                            </template>
+                        </select> -->
+                    </div>
+                </div>
+            </div>
+        </template>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+        </div>
+    </div>
+    <template if:true={vehicleDedupeTemplate}>
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Parent Deal Number</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input label='Parent Deal Number' variant="label-hidden" value={parentDealNumber}
+                            data-id="dedupeInput" disabled={isParentDealNumberDisabled} onblur={handleDedupeInputField}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Registration Number Format</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <!-- <lightning-input label='Parent Deal Number' variant="label-hidden" data-id="dedupeInput" disabled={isParentDealNumberDisabled}
+                            onblur={handleDedupeInputField}></lightning-input> -->
+                        <lightning-combobox data-id="registerationNumberFormat" name="Registeration Number Format"
+                            label="Registration Number Format" value={registerationNumberFormatValue}
+                            options={registeratioNumberFormatOptions} onchange={handleRegisterNumberFormat}
+                            disabled={registerationNumberFormatDisabled} variant="label-hidden">
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label ">Vehicle Registration Number</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <!-- <lightning-input  class="slds-form-element__control" variant="label-hidden" label='Vehicle Registration Number' data-id="dedupeInput"
+                            disabled={isVehicleRegisterationNumberDisabled} onblur={handleDedupeInputField}></lightning-input>					 -->
+                        <lightning-input label='Vehicle Registration Number' required message-when-bad-input="Enter a Registration Number"
+                            class="slds-form-element__control vehicleNumber" value={vehicleRegistrationNumberValue}
+                            pattern={vehicleRegistrationPattern} placeholder={vehicleRegistrationPatternPlaceholder}
+                            message-when-pattern-mismatch="Enter a Valid Registration Number" data-id="dedupeeInput"
+                            disabled={vehicleRegistrationNumberDisabled} variant="label-hidden"
+                            onchange={handleDedupeInputField}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Customer Code</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <!-- <lightning-input  pattern="[a-zA-Z0-9]{8,15}" class="slds-form-element__control" variant="label-hidden" label='Customer Code' data-id="dedupeInput" disabled={isCustomerCodeDisabled}
+                            onblur={handleDedupeInputField}></lightning-input>					                        -->
+                        <lightning-input label='Customer Code' class="slds-form-element__control"
+                            value={customerCodeValue} data-id="dedupeInput" pattern="[a-zA-Z0-9]{8,15}"
+                            message-when-pattern-mismatch="Enter a Valid Customer Code" onblur={handleDedupeInputField}
+                            variant="label-hidden" disabled></lightning-input>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">NOC Number</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <!-- <lightning-input class="slds-form-element__control" variant="label-hidden" label='NOC Number' data-id="dedupeInput" disabled={isNOCNumberDisabled}
+                            onblur={handleDedupeInputField}></lightning-input>								 -->
+                        <lightning-input class="slds-form-element__control nocInput " type="text" label='NOC Number'
+                            value={nocNumberValue} data-id="dedupeInput" disabled={isNOCNumberDisabled}
+                            onblur={handleDedupeInputField} pattern={label.Regex_NumberOnly} 
+                            variant="label-hidden"></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Verify</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <button class="indusPrimaryButton slds-button slds-button_brand "
+                        onclick={handleVehicleSubCategory} disabled={disableFields}>Verify &nbsp; <span if:true={verifyButton}>&#x2714;</span>  <span if:true={VerifyExclamation}>&#33;</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup for NOC number : start-->
+        <template if:true={nocNumberPopup}>
+            <section id="modal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-000001" class="slds-modal__title slds-hyphenate">
+                            Your NOC Number Is.
+                        </h2>
+                    </header>
+                    <lightning-card variant="base">
+                        <div class="slds-m-top_large slds-grid slds-grid_align-center slds-align–absolute-center">
+                            <lightning-formatted-rich-text data-id="nocNumber" type="text" value={nocNumberValue}>
+                            </lightning-formatted-rich-text>
+                            <!-- <lightning-formatted-number data-id="nocNumber" type="text"  pattern="[0-9]" value="345123">
+                            </lightning-formatted-number> -->
+                        </div>
+                        <br>
+                        <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                            <div class="slds-button-group-item">
+                                <lightning-button class="slds-theme_brand" icon-position="left" variant="brand"
+                                    type="button" label="Yes" onclick={populateNocNumberHandler}>
+                                </lightning-button>
+                            </div>
+                            <div class="slds-button-group-item">
+                                <lightning-button class="slds-theme_brand" icon-position="left" variant="brand"
+                                    type="button" label="No" onclick={closePopupHandler}></lightning-button>
+                            </div>
+                        </lightning-button-group>
+                    </lightning-card>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open modalBackdrops" id="modalBackdrops">
+            </div>
+        </template>
+        <!-- Popur for NOC number : end -->
+
+
+        <!-- <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <button class="indusPrimaryButton slds-button slds-button_brand slds-align_absolute-center"  onclick={handleVehicleSubCategory}>Verify </button>                          </div>
+            </div> 
+        </div> -->
+    </template>
+    <template if:true={showSubmitButton} >
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <lightning-button variant="brand" onclick={handleSubmit} disabled={isDisabledSubmit} label="Submit"> </lightning-button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

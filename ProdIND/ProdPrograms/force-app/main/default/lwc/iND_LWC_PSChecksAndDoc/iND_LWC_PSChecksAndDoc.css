@@ -1,0 +1,9 @@
+.tab-active {
+    --sds-c-tabs-scoped-color-text-active: red;
+}
+.section-btn {
+    line-height: 100%;
+    padding: 4px;
+    background-color: #8c3137;
+    color:white;
+}

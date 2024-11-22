@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Loan Consent</label>
+    <protected>false</protected>
+    <values>
+        <field>Consent_Flag__c</field>
+        <value xsi:type="xsd:string">OTP</value>
+    </values>
+    <values>
+        <field>Consent_Url__c</field>
+        <value xsi:type="xsd:string">https://indusindbank.my.salesforce-sites.com/AcceptConsent/?id={0}&amp;&amp;otp={1}</value>
+    </values>
+</CustomMetadata>

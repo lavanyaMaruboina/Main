@@ -1,0 +1,562 @@
+<template>
+    <template if:true={showScreen}>
+        <template if:true={loanpage}>
+            <lightning-tabset active-tab-value={activeTab}>
+                <lightning-tab label={label.View_Application_Details} value={label.View_Application_Details}
+                    onactive={handleMainActiveTab}>
+                    <template if:true={tabs.viewapplicationdetails}>
+                        <lightning-tabset active-tab-value={activeviewappsubtab}>
+                            <lightning-tab label={label.Lead_KYC_Details} value={label.Lead_KYC_Details}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.leadkyc}>
+                                    <lightning-tabset active-tab-value={activeTabValue}>
+                                        <template for:each={tabList} for:item="tab">
+                                            <lightning-tab label={tab.applicantType} value={tab.applicantId}
+                                                key={tab.applicantId} onactive={handleActiveSecondSubTab}>
+                                                <div class="slds-m-left_small slds-m-right_small">
+                                                    <c-l-w-c-_-l-o-s-_-loan-application
+                                                        isborrowerincomeavailable={borroweIncomeSource}
+                                                        recordid={recordId} currenttab={tab.applicantType}
+                                                        current-tab-id={tab.applicantId}
+                                                        creditval={getcreditvalue}
+                                                        onborrowerincomesource={handleBorrowerIncomeSource}
+                                                        onadditionaldetails={submit}
+                                                        is-captur-image-success={isCapturImageSuccess}
+                                                        is-coborrower-exist={isCoborrowerExist}
+                                                        current-stage={currentStage} onsubmit={submit}>
+                                                    </c-l-w-c-_-l-o-s-_-loan-application>
+
+                                                    
+                                                </div>
+                                            </lightning-tab>
+                                        </template>
+                                    </lightning-tabset>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Additional_Customer_Details}
+                                value={label.Additional_Customer_Details} onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.additionalcustomerdetails}>
+                                    <lightning-tabset active-tab-value={activeTabValue}>
+                                        <template for:each={tabList} for:item="tab">
+                                            <lightning-tab label={tab.applicantType} value={tab.applicantId}
+                                                key={tab.applicantId} onactive={handleActiveSecondSubTab}>
+                                                <div class="slds-m-left_small slds-m-right_small">
+                                                    <c-current-residential-address recordid={recordId}
+                                                        tab-data={tab.applicantType} onsubmit={submit}
+                                                        current-tab-id={tab.applicantId}
+                                                        onassetdetailseve={submit} creditval={getcreditvalue}
+                                                        current-stage={currentStage}>
+
+                                                    </c-current-residential-address>
+                                                </div>
+                                            </lightning-tab>
+                                        </template>
+                                    </lightning-tabset>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Asset_Details} value={label.Asset_Details}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.assetdetails}>
+                                    <div class="slds-m-left_small slds-m-right_small">
+                                        <c-l-w-c-_-l-o-s_get-asset-details onsubmit={submit} onvehicleinsurance={submit}
+                                            creditval={getcreditvalue} active-tab={activeTabValue} recordid={recordId}
+                                            current-stage={currentStage}>
+                                        </c-l-w-c-_-l-o-s_get-asset-details>
+                                    </div>
+                                </template>
+                            </lightning-tab>
+
+                            <template if:true={viewappsubtabs.vehicleinsurance}>
+                                <lightning-tab label={label.Vehicle_Insurance} value={label.Vehicle_Insurance}
+                                    onactive={handleActiveSubTab}>
+                                    <template if:true={viewappsubtabs.vehicleinsurance}>
+                                        <div class="slds-m-left_small slds-m-right_small">
+                                            <c-l-w-c-_-l-o-s-_-vehicle-insurance recordid={recordId}
+                                                onvehiclevaleve={submit} creditval={getcreditvalue} onsubmit={submit}
+                                                current-stage={currentStage}>
+                                            </c-l-w-c-_-l-o-s-_-vehicle-insurance>
+                                        </div>
+                                    </template>
+                                </lightning-tab>
+                            </template>
+
+                            <template if:true={viewappsubtabs.vehiclevaluation}>
+                                <lightning-tab label={label.Vehicle_Valuation} value={label.Vehicle_Valuation}
+                                    onactive={handleActiveSubTab}>
+                                    <template if:true={viewappsubtabs.vehiclevaluation}>
+                                        <div class="slds-m-left_small slds-m-right_small">
+                                            <c-l-W-C-_-L-O-S-_-Parent-Vehicle-Valuation recordid={recordId}
+                                                creditval={getcreditvalue} onloanvaleve={submit} onsubmit={submit}
+                                                current-stage={currentStage}
+                                                checkleadaccess={checkLeadAccess}>
+                                            </c-l-W-C-_-L-O-S-_-Parent-Vehicle-Valuation>
+                                        </div>
+                                    </template>
+                                </lightning-tab>
+                            </template>
+                            <lightning-tab label={label.Loan_Details} value={label.Loan_Details}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.loanDetails}>
+                                    <div class="slds-m-left_small slds-m-right_small">
+                                        <c-l-w-c-_-l-o-s-_-loan-details onsubmit={submit} recordid={recordId}
+                                            creditval={getcreditvalue} onincomevaleve={submit}
+                                            current-stage={currentStage}>
+                                        </c-l-w-c-_-l-o-s-_-loan-details>
+                                    </div>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Income_Details} value={label.Income_Details}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.incomeDetails}>
+                                    <lightning-tabset active-tab-value={activeTabValue}>
+                                        <template for:each={tabList} for:item="tab">
+                                            <lightning-tab label={tab.applicantType} value={tab.applicantId}
+                                                key={tab.applicantId} onactive={handleActiveSecondSubTab}>
+                                                <div class="slds-m-left_small slds-m-right_small">
+                                                    <c-l-w-c-_-l-o-s-_-income-detail recordid={recordId}
+                                                        onfinalvaleve={submit} onsubmit={submit}
+                                                        current-stage={currentStage} applicant-id={tab.applicantId}
+                                                        tab-value={tab.applicantType}
+                                                        onborrowersubmit={switchincomedetailstab}
+                                                        tab-list={applicantTypeList} active-tab={activeTabValue}>
+                                                    </c-l-w-c-_-l-o-s-_-income-detail>
+                                                </div>
+                                            </lightning-tab>
+                                        </template>
+                                    </lightning-tabset>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Final_Terms} value={label.Final_Terms}
+                                onactive={handleActiveSubTab}>
+                                <template lwc:if={viewappsubtabs.finalTerms}>
+                                    <div class="slds-m-left_small slds-m-right_small">
+                                        <template lwc:if={isTractor}><!-- SFTRAC-84-START -->
+                                            <c-lwc_-T-F-_-Final-Terms-Screen
+                                                activetab={activeMainTab}
+                                                tab-value={activeMainTab}
+                                                recordid={recordId} current-stage={currentStage}
+                                                onsubmitnavigation={handlefinaltermsevent}
+                                                oninsurancevaleve={submit}
+                                                onsubmit={submit}
+                                                creditval={getcreditvalue}
+                                                checkleadaccess={checkLeadAccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                            </c-lwc_-T-F-_-Final-Terms-Screen ><!-- SFTRAC-84-END -->
+                                        </template>
+                                        <template lwc:else>
+                                            <c-lwc-_-final-terms-screen recordid={recordId} onsubmit={submit}
+                                                creditval={getcreditvalue} oninsurancevaleve={submit}
+                                                activetab={activeMainTab} current-stage={currentStage}>
+                                            </c-lwc-_-final-terms-screen>
+                                        </template>
+                                    </div>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Insurance_Details} value={label.Insurance_Details}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.insuranceDetails}>
+                                    <lightning-tabset active-tab-value={activeTabValue}>
+                                        <template for:each={insuranceTabList} for:item="tab">
+                                            <lightning-tab label={tab.applicantType} value={tab.applicantId}
+                                                key={tab.applicantId} onactive={handleActiveSecondSubTab}>
+                                                <div class="slds-m-left_small slds-m-right_small" key={tab.applicantId}>
+                                                    <template if:false={isTractor}>
+                                                        <c-i-n-d-_-l-w-c-_-view-application-insurance-details record-id={recordId}
+                                                        oncustomcodevaleve={submit} active-tab={tab.applicantType}
+                                                        applicant-id={tab.applicantId}
+                                                        onsubmit={submit} activetab={activeMainTab}
+                                                        creditval={getcreditvalue} current-stage={currentStage}>
+                                                        </c-i-n-d-_-l-w-c-_-view-application-insurance-details>
+                                                    </template>
+                                                    <template if:true={isTractor}>
+                                                        <c-l-w-c_-t-f_-insurance-details
+                                                        active-tab={tab.applicantType}
+                                                        applicant-id={tab.applicantId}
+                                                        record-id={recordId}
+                                                        oncustomcodevaleve={submit}
+                                                        current-stage={currentStage}
+                                                        is-called-from-l1="true"></c-l-w-c_-t-f_-insurance-details>
+                                                    </template>
+                                                </div>
+                                            </lightning-tab>
+                                        </template>
+                                    </lightning-tabset>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Additional_Customer_Codes}
+                                value={label.Additional_Customer_Codes} onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.additionalCustomerCode}>
+                                    <div class="slds-m-left_small slds-m-right_small">
+                                        <c-lwc_addition-customer-code recordid={recordId} onsubmit={submit}
+                                            creditval={getcreditvalue} onoffervaleve={submit}
+                                            current-stage={currentStage}>
+                                        </c-lwc_addition-customer-code>
+                                    </div>
+                                </template>
+                            </lightning-tab>
+
+
+                            <lightning-tab label={label.Final_Offer_Page} value={label.Final_Offer_Page}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.finalOfferPage}>
+                                    <div class="slds-m-left_small slds-m-right_small">
+                                        final offer page
+                                        <c-i-N-D_-L-W-C_-final-offer-page record-id={recordId}
+                                            onfinalofferevent={submit} current-stage={currentStage}>
+                                        </c-i-N-D_-L-W-C_-final-offer-page>
+                                    </div>
+                                </template>
+                            </lightning-tab>
+
+                            <lightning-tab label={label.Engine_Outputs} value={label.Engine_Outputs}
+                                onactive={handleActiveSubTab}>
+                                <template if:true={viewappsubtabs.engineOutputs}>
+                                    <div class="slds-m-left_small slds-m-right_small">
+                                        <c-i-n-d-_-l-w-c-_-engineoutputs record-id={recordId} onsubmit={submit} current-stage={currentStage}
+                                            onrisksummaryevent={handlerisksummary}></c-i-n-d-_-l-w-c-_-engineoutputs>
+                                    </div>
+                                </template>
+                            </lightning-tab>
+                        </lightning-tabset>
+                    </template>
+                </lightning-tab>
+            
+
+                <template if:true={tabs.cibil}>
+                    <lightning-tab label={label.CIBIL} value={label.CIBIL} onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.cibil}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <template lwc:if={isTractor}>
+                                    <lightning-tabset active-tab-value={activeTabValue}>
+                                        <template for:each={cibilTabList} for:item="tab" for:index="index"> 
+                                            <div key={tab}>
+                                                <lightning-tab label={tab.applicantType} value={tab.applicantId}>
+                                                    <c-i-n-d_-l-w-c_-t-f_-cibil-equifax-report recordid={recordId}
+                                                    active-tab ={tab.applicantType} active-tab-id ={tab.applicantId}
+                                                    checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication} tab-index={index} oncibilsubmittfevent={handletfcibilevent}>
+                                                    <!-- SFTRAC-90 -->
+                                                    </c-i-n-d_-l-w-c_-t-f_-cibil-equifax-report>
+                                                </lightning-tab>
+                                            </div>
+                                        </template>
+                                    </lightning-tabset>
+                                </template>
+                                <template lwc:else>
+                                    <c-l-w-c-_-l-o-s-_-cibil-equifax-report recordid={recordId}
+                                    oncibilevent={handlecibilevent}
+                                    checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                    <!-- CISP-2735 -->
+                                    </c-l-w-c-_-l-o-s-_-cibil-equifax-report>
+                                </template>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.fieldinvestigation}>
+                    <lightning-tab label={label.Field_Investigation} value={label.Field_Investigation}
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.fieldinvestigation}>
+                            <lightning-tabset active-tab-value={activeFISubTab}>
+                                <template if:true={showFIsubtabs.currentResidenceFI}>
+                                    <lightning-tab label={label.Current_Residence_FI} value={label.Current_Residence_FI}
+                                        onactive={handleActiveFISubTab}>
+                                        <lightning-tabset active-tab-value={activeTabValue}>
+                                            <template for:each={currentResidenceFIMap} for:item="currentResidenceFI">
+                                                <lightning-tab label={currentResidenceFI.key}
+                                                    value={currentResidenceFI.value} key={currentResidenceFI.value}
+                                                    onactive={handleActiveSecondSubTab}>
+                                                    <div class="slds-m-left_small slds-m-right_small">
+                                                        <c-i-n-d-_-l-w-c-_-view-application-residence-f-i
+                                                            record-id={currentResidenceFI.value} onsubmit={submitFI} is-revoked-loan-application={isRevokedLoanApplication}>
+                                                        </c-i-n-d-_-l-w-c-_-view-application-residence-f-i>
+                                                    </div>
+                                                </lightning-tab>
+                                            </template>
+                                        </lightning-tabset>
+                                    </lightning-tab>
+                                </template>
+
+                                <template if:true={showFIsubtabs.permanentResidenceFI}>
+                                    <lightning-tab label={label.Permanent_Residence_FI}
+                                        value={label.Permanent_Residence_FI} onactive={handleActiveFISubTab}>
+                                        <lightning-tabset active-tab-value={activeTabValue}>
+                                            <template for:each={permanentResidenceFIMap}
+                                                for:item="permanentResidenceFI">
+                                                <lightning-tab label={permanentResidenceFI.key}
+                                                    value={permanentResidenceFI.value} key={permanentResidenceFI.value}
+                                                    onactive={handleActiveSecondSubTab}>
+                                                    <div class="slds-m-left_small slds-m-right_small">
+                                                        <c-i-n-d-_-l-w-c-_-view-application-residence-f-i
+                                                            record-id={permanentResidenceFI.value} onsubmit={submitFI} is-revoked-loan-application={isRevokedLoanApplication}>
+                                                        </c-i-n-d-_-l-w-c-_-view-application-residence-f-i>
+                                                    </div>
+                                                </lightning-tab>
+                                            </template>
+                                        </lightning-tabset>
+                                    </lightning-tab>
+                                </template>
+
+                                <template if:true={showFIsubtabs.officeFI}>
+                                    <lightning-tab label={label.Office_FI} value={label.Office_FI}
+                                        onactive={handleActiveFISubTab}>
+                                        <lightning-tabset active-tab-value={activeTabValue}>
+                                            <template for:each={officeFIMap} for:item="officeFI">
+                                                <lightning-tab label={officeFI.key} value={officeFI.value}
+                                                    key={officeFI.value} onactive={handleActiveSecondSubTab}>
+                                                    <div class="slds-m-left_small slds-m-right_small">
+                                                        <c-i-n-d-_-l-w-c-_-view-application-office-f-i
+                                                            record-id={officeFI.value} onsubmit={submitFI} is-revoked-loan-application={isRevokedLoanApplication}>
+                                                        </c-i-n-d-_-l-w-c-_-view-application-office-f-i>
+                                                    </div>
+                                                </lightning-tab>
+                                            </template>
+                                        </lightning-tabset>
+                                    </lightning-tab>
+                                </template>
+                            </lightning-tabset>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.valuationidv}>
+                    <lightning-tab label={label.Valuation_IDV} value={label.Valuation_IDV}
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.valuationidv}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <template lwc:if={isTractor}>
+                                    <c-i-n-d-_-l-w-c-_-valuation-i-d-v-tractor-parent record-id={recordId} is-tractor={isTractor} sub-stage={subStage} onvaluationidvevent={handlevaluationevent} checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}></c-i-n-d-_-l-w-c-_-valuation-i-d-v-tractor-parent>
+                                </template>
+                                <template lwc:else>
+                                    <c-i-n-d-_-l-w-c-_-valuation-i-d-v recordid={recordId}
+                                        onvaluationidvevent={handlevaluationevent}
+                                        checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                        <!-- CISP-2735 -->
+                                    </c-i-n-d-_-l-w-c-_-valuation-i-d-v>
+                                </template>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.incomedetails}>
+                    <lightning-tab label={label.IncomeTab} value={label.IncomeTab} onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.income}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <c-lwc_incomedetailsborrower recordid={recordId} onfinaltermsevent={handleincomeevent}
+                                checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                <!-- CISP-2735 -->
+                                </c-lwc_incomedetailsborrower>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.finalterms}>
+                    <lightning-tab label={label.Final_Terms} value={label.Final_Terms} onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.finalterms}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <template lwc:if={isTractor}><!-- SFTRAC-84-START -->
+                                    <c-lwc_-T-F-_-Final-Terms-Screen
+                                        activetab={activeMainTab}
+                                        tab-value={activeMainTab}
+                                        recordid={recordId} current-stage={currentStage}
+                                        onsubmitnavigation={handlefinaltermsevent}
+                                        checkleadaccess={checkLeadAccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                    </c-lwc_-T-F-_-Final-Terms-Screen ><!-- SFTRAC-84-END -->
+                                </template>
+                                <template lwc:else>
+                                    <c-lwc-_-final-terms-screen recordid={recordId} current-stage={currentStage}
+                                    activetab={activeMainTab} onfinaltermsevent={handlefinaltermsevent}
+                                    checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                    <!-- CISP-2735 -->
+                                    </c-lwc-_-final-terms-screen>
+                                </template>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+
+                <template if:true={tabs.insurancedetails}>
+                    <lightning-tab label="Insurance" value="Insurance" onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.insurance}>
+                            <lightning-tabset active-tab-value={activeTabValue}>
+                                <template for:each={insuranceTabList} for:item="tab">
+                                    <lightning-tab label={tab.applicantType} value={tab.applicantId} key={tab.applicantId}
+                                        onactive={handleActiveSecondSubTab} activ>
+                                        <div class="slds-m-left_small slds-m-right_small">
+                                            <template if:false={isTractor}>
+                                                <c-l-w-c-_-insurance-details-web record-id={recordId} active-tab={tab.applicantType}
+                                                    onsubmit={submit} current-stage={currentStage} tablength = {tabListCount}
+                                                    oncoborrower = {navigateCoborrower} activetab={activeMainTab}
+                                                    oninsurance={handleMainInsurnaceTabEvent}
+                                                    checkleadaccess={checkleadaccess} lead-source={oppty.LeadSource} is-revoked-loan-application={isRevokedLoanApplication}>
+                                                    <!-- CISP-2735 -->
+                                                </c-l-w-c-_-insurance-details-web>
+                                            </template>
+                                            <template if:true={isTractor}>
+                                                <c-l-w-c_-t-f_-insurance-details
+                                                    active-tab={tab.applicantType}
+                                                    applicant-id={tab.applicantId}
+                                                    record-id={recordId} is-called-from-l2="true"></c-l-w-c_-t-f_-insurance-details>
+                                            </template>
+                                        </div>
+                                    </lightning-tab>
+                                </template>
+                            </lightning-tabset>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.risksummary}>
+                    <lightning-tab label={label.Risk_Summary} value={label.Risk_Summary} onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.risksummary}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <c-i-n-d-_-l-w-c-_-risk-summary record-id={recordId}
+                                    onrisksummaryevent={handlerisksummaryevent}
+                                    checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                    <!-- CISP-2735 -->
+                                </c-i-n-d-_-l-w-c-_-risk-summary>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.exposureanalysis}>
+                    <lightning-tab label={label.Exposure_Analysis} value={label.Exposure_Analysis}
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.exposureanlaysis}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <c-i-n-d-_-l-w-c-_-exposure-analysis record-id={recordId}
+                                    onexposureevent={handleExposureevent}
+                                    checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                    <!-- CISP-2735 -->
+                                </c-i-n-d-_-l-w-c-_-exposure-analysis>
+
+
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.creditassesment}>
+                    <lightning-tab label={label.Credit_Assesment} value={label.Credit_Assesment}
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.creditassessment}>
+                            <lightning-tabset active-tab-value={activeTabValue}>
+                                <template for:each={tabList} for:item="tab">
+                                    <lightning-tab label={tab.applicantType} value={tab.applicantId} key={tab.applicantId}
+                                        onactive={handleActiveSecondSubTab}>
+                                        <div class="slds-m-left_small slds-m-right_small">
+                                            <c-i-n-d-_-l-w-c-_-credit-assessment record-id={recordId}
+                                                applicant-type={tab.applicantType}
+                                                applicant-id={tab.applicantId}
+                                                oncreditassessmentevent={handlecreditassesevent}
+                                                checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                                <!-- CISP-2735 -->
+                                            </c-i-n-d-_-l-w-c-_-credit-assessment>
+                                        </div>
+                                    </lightning-tab>
+                                </template>
+                            </lightning-tabset>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <template if:true={tabs.camapprovallog}>
+                    <lightning-tab label="CAM and Approval Log" value="CAM and Approval Log"
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.camapprovallog}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <c-i-n-d-_-l-w-c-_-c-a-mand-approval-log record-id={recordId} oncamandapprovalevent={handleCamAndApprovalEvent} oncamandapprovaltabevent={handleCamAndApprovalTabEvent}
+                                checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                <!-- CISP-2735 -->
+                                </c-i-n-d-_-l-w-c-_-c-a-mand-approval-log>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <!-- Gaurav Rawat : Added Final offer page component -->
+                <template if:true={tabs.sanctionofapplication}>
+                    <lightning-tab label={label.Final_Offer_Page} value={label.Sanction_of_Application}
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.sanctionofapplication}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <c-i-n-d_-l-w-c_-get-final-offer-page record-id={recordId}
+                                    onsanctionofapplicationevent={handleSanctionOfApplicationEvent}
+                                    checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                    <!-- CISP-2735 -->
+                                </c-i-n-d_-l-w-c_-get-final-offer-page>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+                <!-- Gaurav Rawat : Added Deal number and code generation component -->
+                <template if:true={tabs.dealnumberandcodegeneration}>
+                    <lightning-tab label={label.Deal_Number_Customer_Code} value={label.Deal_Number_Customer_Code}
+                        onactive={handleMainActiveTab}>
+                        <template if:true={mainTablist.dealnumberandcodegeneration}>
+                            <div class="slds-m-left_small slds-m-right_small">
+                                <c-i-n-d-_-l-w-c-_-deal-number-generator recordid={recordId}
+                                checkleadaccess={checkleadaccess} is-revoked-loan-application={isRevokedLoanApplication}>
+                                <!-- CISP-2735 -->
+                                </c-i-n-d-_-l-w-c-_-deal-number-generator>
+                            </div>
+                        </template>
+                    </lightning-tab>
+                </template>
+
+            </lightning-tabset>
+
+            <!-- <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={submit}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div> -->
+            <!-- <lightning-button class="slds-align_absolute-center" variant="brand" label="Submit" onclick={submit}
+            value={tabs.currentTab}></lightning-button> -->
+        </template>
+    </template>
+</template>
+
+
+<!-- <template for:each={applicantTypeList} for:item="applicantType">
+    <lightning-tab label={applicantType} value={applicantType} key={applicantType}>
+        Hii
+    </lightning-tab>
+</template> -->
+
+
+<!-- <template if:true={viewappsubtabs.additionalcustomerdetails}>
+    <lightning-tabset active-tab-value={activeTabValue} >
+        <template for:each={applicantTypeList} for:item="applicantType">
+            <lightning-tab label={applicantType} value={applicantType} key={applicantType}
+                onactive={handleActiveSecondSubTab}>
+                <div class="slds-m-left_small slds-m-right_small">
+                    <c-l-w-c-_-l-o-s-_-loan-application
+                        isborrowerincomeavailable={borroweIncomeSource} recordid={recordId}
+                        currenttab={applicantType} onborrowerincomesource={handleBorrowerIncomeSource}
+                        is-captur-image-success={isCapturImageSuccess}>
+                    </c-l-w-c-_-l-o-s-_-loan-application>
+
+                     <c-l-w-c-_-l-o-s-_-tab-loan-application record-id={recordId}
+                        current-stage={currentStage} onsubmit={submit}> 
+                    </c-l-w-c-_-l-o-s-_-tab-loan-application>
+                </div>
+            </lightning-tab>
+        </template>
+    </lightning-tabset>
+</template> -->

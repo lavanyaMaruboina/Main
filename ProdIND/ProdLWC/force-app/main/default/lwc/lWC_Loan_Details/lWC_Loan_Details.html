@@ -1,0 +1,906 @@
+<template >
+   <lightning-tabset style="background-color: red;">
+     <lightning-tab label="Borrower">
+      
+      <div class="slds-card" style="padding: 15px">
+         <div class="slds-form_horizontal slds-form slds-grid slds-wrap slds-align_absolute-center" 
+              style="width: 50%;">
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" id="customerFirstNameLbl"> Required Loan amount
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 
+                 <lightning-input formatter="currency" step="0.01"
+                                  class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  value={firstNameValue}
+                                  type="number"
+                                  required
+                                  onblur={handleCustomValidationRequriedLoanamountBorrower}
+                                  message-when-value-missing="Complete this field" 
+                                  data-id="RequiredLoanId">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label"> Required Tenured  
+                   <font style="color:red">*
+                   </font>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-combobox class="slds-form-element__control agentCss" 
+                                     variant="label-hidden"
+                                     name="agentBLCodeId" 
+                                     label="Required Tenured" 
+                                     data-id="RequiredTenuredId"
+                                     onblur={handleCustomValidationRequiredTenuredIdBorrower}
+                                     onchange={onrequiredTenuredChange}
+                                     value={selectedValue}
+                                     message-when-value-missing="Complete this field" 
+                                     options={options} 
+                                     required>
+                 </lightning-combobox>
+                 <!--                            
+ <lightning-combobox class="slds-form-element__control" variant="label-hidden" name="status" label="Agent BL code" placeholder="-- Select --" onchange={agentBLCodeHandler} options={agentBLCodeOptions} ></lightning-combobox> -->
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="RequiredROI"> Required ROI
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   required
+                                   onblur={handleCustomValidationRequiredROIIdBorrower}
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="RequiredROIId">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="RequiredROIfunding"> Funding on Ex-Showroom/ORP
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   type="checkbox"
+                                   onblur={handleCustomValidationfundingIDBorrower}
+                                   data-id="fundingID"
+                                   onchange={onchangeorp}
+                                   message-when-value-missing="Complete this field"  
+                                   >
+                  </lightning-input>
+                  <template if:true={showexorpDetails}>
+                    <div class="slds-checkbox">
+                      <lightning-input type="checkbox" label="Ex-Showroom">
+                      </lightning-input>
+                    </div>
+                    <div class="slds-checkbox">
+                      <lightning-input type="checkbox" label="ORP">
+                      </lightning-input>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="customerId"> Is customer interested in a motor insurance from IndusInd
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-checkbox-group name="Checkbox Group"
+                                              options={option}
+                                              value={valuemotor}
+                                              message-when-value-missing="Complete this field">
+                    </lightning-checkbox-group>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="FundedId"> Funded/non-funded
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   type="checkbox"
+                                   >
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="1styrinsurance"> 1st yr insurance prem
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   required
+                                   onblur={handleCustomValidation1styrpremIdBorrower}
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="1styrpremId">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="MotorInsurance"> Motor Insurance premium
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   required
+                                   onblur={handleCustomValidationMotorInsurancepremiumIdBorrower}
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="MotorInsurancepremiumId">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="BasicPrice"> Basic Price
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   onblur={handleCustomValidationBasicPriceIdBorrower}
+                                   required
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="BasicPriceId">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="GSTamount"> GST amount
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   required
+                                   onblur={handleCustomValidationGSTamountIDBorrower}
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="GSTamountID">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="Discount">Discount on Basic price
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   required
+                                   onblur={handleCustomValidationDiscountonBasicpriceIDBorrower}
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="DiscountonBasicpriceID">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+              <div class="slds-form-element slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                  <label class="slds-form-element__label" id="Exshowroom">Ex-showroom price
+                    <abbr title="required" class="slds-required">*
+                    </abbr>
+                  </label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                  <lightning-input class="slds-form-element__control" 
+                                   variant="label-hidden"
+                                   type="text"
+                                   required
+                                   onblur={handleCustomValidationExshowroompriceIdBorrower}
+                                   message-when-value-missing="Complete this field"  
+                                   data-id="ExshowroompriceId">
+                  </lightning-input>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form-element buttons slds-text-align_center">
+            <lightning-button variant="brand" 
+                              label="Get Price Details" 
+                              style="margin:1em auto 1em"
+                              onclick={handleClick}
+                              class=" slds-button slds-button--brand ">
+            </lightning-button>
+          </div>
+         
+
+        
+         <template if:true={showdetails}>
+
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                 <div class="slds-form-element slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-3">
+                     <label class="slds-form-element__label" id="showroomprice">Ex-showroomprice-Carwale
+                       <abbr title="required" class="slds-required">*
+                       </abbr>
+                     </label>
+                   </div>
+                   <div class="slds-col slds-size_2-of-3">
+                     <lightning-input class="slds-form-element__control" 
+                                      variant="label-hidden"
+                                      type="text"
+                                      required
+                                      onblur={handleCustomValidationExshowroompriceCarwaleIdBorrower}
+                                      message-when-value-missing="Complete this field"  
+                                      data-id="ExshowroompriceCarwaleId">
+                     </lightning-input>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+           
+             <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                 <div class="slds-form-element slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-3">
+                     <label class="slds-form-element__label" id="RTO">RTO Road Tax
+                     </label>
+                   </div>
+                   <div class="slds-col slds-size_2-of-3">
+                     <lightning-input class="slds-form-element__control" 
+                                      variant="label-hidden"
+                                      type="text"
+                                      data-id="RequiredROIId">
+                     </lightning-input>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+
+             <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                 <div class="slds-form-element slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-3">
+                     <label class="slds-form-element__label" id="OtherCharges">Other Charges
+                     </label>
+                   </div>
+                   <div class="slds-col slds-size_2-of-3">
+                     <lightning-input class="slds-form-element__control" 
+                                      variant="label-hidden"
+                                      type="text"
+                                      data-id="RequiredROIId">
+                     </lightning-input>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             
+             <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                 <div class="slds-form-element slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-3">
+                     <label class="slds-form-element__label" id="Onroad">Onroad price
+                       <abbr title="required" class="slds-required">*
+                       </abbr>
+                     </label>
+                   </div>
+                   <div class="slds-col slds-size_2-of-3">
+                     <lightning-input class="slds-form-element__control" 
+                                      variant="label-hidden"
+                                      type="text"
+                                      required
+                                      onblur={handleCustomValidationOnroadpriceIdBorrower}
+                                      message-when-value-missing="Complete this field"  
+                                      data-id="OnroadpriceId">
+                     </lightning-input>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                 <div class="slds-form-element slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-3">
+                     <label class="slds-form-element__label" id="OnroadpriceCarwale">Onroad price - Carwale
+                       <abbr title="required" class="slds-required">*
+                       </abbr>
+                     </label>
+                   </div>
+                   <div class="slds-col slds-size_2-of-3">
+                     <lightning-input class="slds-form-element__control" 
+                                      variant="label-hidden"
+                                      type="text"
+                                      required
+                                      onblur={handleCustomValidationOnroadpriceCarwaleIdBorrower}
+                                      message-when-value-missing="Complete this field"  
+                                      data-id="OnroadpriceCarwaleId">
+                     </lightning-input>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+               <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                 <div class="slds-form-element slds-grid slds-wrap">
+                   <div class="slds-col slds-size_1-of-3">
+                     <label class="slds-form-element__label" id="CSDId">Is this a CSD case? 
+                       <abbr title="required" class="slds-required">*
+                       </abbr>
+                     </label>
+                   </div>
+                   <div class="slds-col slds-size_2-of-3">
+                     <lightning-checkbox-group name="Checkbox Group"
+                                              options={option}
+                                              value={value}
+                                              data-id="csdID"
+                                              onblur={handleCustomValidationCSDIdBorrower}
+                                              onchange={handleChange} 
+                                              message-when-value-missing="Complete this field">
+                    </lightning-checkbox-group>
+                   </div>
+                 </div>
+               </div>
+             </div>
+            
+            
+            <div class="slds-form-element buttons slds-text-align_center">
+              <lightning-button variant="brand" 
+                                label="Submit" 
+                                style="margin:1em auto 1em"
+                                onclick={handlesaveBorrower}
+                                class=" slds-button slds-button--brand ">
+              </lightning-button>
+            </div>
+          </template>
+         </div>
+       
+       
+     </lightning-tab>
+
+     <!--CO - BORROWER-->
+     <lightning-tab label="Co- Borrower" title="2nd tab extended title">
+      <div class="slds-card" style="padding: 15px">
+        <div class="slds-form_horizontal slds-form slds-grid slds-wrap slds-align_absolute-center" 
+             style="width: 50%;">
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+          <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label" > Required Loan amount
+                  <abbr title="required" class="slds-required">*
+                  </abbr>
+                </label>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                
+                <lightning-input formatter="currency" step="0.01"
+                                 class="slds-form-element__control" 
+                                 variant="label-hidden"
+                                 value={firstNameValue}
+                                 type="number"
+                                 required
+                                 onblur={handleCustomValidationRequriedLoanamountBorrower}
+                                 message-when-value-missing="Complete this field" 
+                                 data-id="RequiredLoancoId">
+                </lightning-input>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+          <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label"> Required Tenured  
+                  <font style="color:red">*
+                  </font>
+                </label>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                <lightning-combobox class="slds-form-element__control agentCss" 
+                                    variant="label-hidden"
+                                    name="agentBLCodeId" 
+                                    label="Required Tenured" 
+                                    data-id="RequiredTenuredcoId"
+                                    onblur={handleCustomValidationRequiredTenuredIdBorrower}
+                                    onchange={onrequiredTenuredChange}
+                                    value={selectedValue}
+                                    message-when-value-missing="Complete this field" 
+                                    options={options} 
+                                    required>
+                </lightning-combobox>
+                <!--                            
+<lightning-combobox class="slds-form-element__control" variant="label-hidden" name="status" label="Agent BL code" placeholder="-- Select --" onchange={agentBLCodeHandler} options={agentBLCodeOptions} ></lightning-combobox> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > Required ROI
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  required
+                                  onblur={handleCustomValidationRequiredROIIdBorrower}
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="RequiredROIcoId">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > Funding on Ex-Showroom/ORP
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  type="checkbox"
+                                  onblur={handleCustomValidationfundingIDBorrower}
+                                  data-id="fundingID"
+                                  onchange={onchangeorp}
+                                  message-when-value-missing="Complete this field"  
+                                  >
+                 </lightning-input>
+                 <template if:true={showexorpDetails}>
+                   <div class="slds-checkbox">
+                     <lightning-input type="checkbox" label="Ex-Showroom">
+                     </lightning-input>
+                   </div>
+                   <div class="slds-checkbox">
+                     <lightning-input type="checkbox" label="ORP">
+                     </lightning-input>
+                   </div>
+                 </template>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > Is customer interested in a motor insurance from IndusInd
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-checkbox-group name="Checkbox Group"
+                                             options={option}
+                                             value={valuemotor}
+                                             message-when-value-missing="Complete this field">
+                   </lightning-checkbox-group>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > Funded/non-funded
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  type="checkbox"
+                                  >
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+
+        
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > 1st yr insurance prem
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  required
+                                  onblur={handleCustomValidation1styrpremIdBorrower}
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="1styrpremcoId">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > Motor Insurance premium
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  required
+                                  onblur={handleCustomValidationMotorInsurancepremiumIdBorrower}
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="MotorInsurancepremiumcoId">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > Basic Price
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  onblur={handleCustomValidationBasicPriceIdBorrower}
+                                  required
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="BasicPricecoId">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" > GST amount
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  required
+                                  onblur={handleCustomValidationGSTamountIDBorrower}
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="GSTamountcoID">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" >Discount on Basic price
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  required
+                                  onblur={handleCustomValidationDiscountonBasicpriceIDBorrower}
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="DiscountonBasicpricecoID">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+           <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+             <div class="slds-form-element slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-3">
+                 <label class="slds-form-element__label" >Ex-showroom price
+                   <abbr title="required" class="slds-required">*
+                   </abbr>
+                 </label>
+               </div>
+               <div class="slds-col slds-size_2-of-3">
+                 <lightning-input class="slds-form-element__control" 
+                                  variant="label-hidden"
+                                  type="text"
+                                  required
+                                  onblur={handleCustomValidationExshowroompriceIdBorrower}
+                                  message-when-value-missing="Complete this field"  
+                                  data-id="ExshowroompriceId">
+                 </lightning-input>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="slds-form-element buttons slds-text-align_center">
+           <lightning-button variant="brand" 
+                             label="Get Price Details" 
+                             style="margin:1em auto 1em"
+                             onclick={handleClick}
+                             class=" slds-button slds-button--brand ">
+           </lightning-button>
+         </div>
+        
+
+       
+        <template if:true={showdetails}>
+
+           <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+              <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >Ex-showroomprice-Carwale
+                      <abbr title="required" class="slds-required">*
+                      </abbr>
+                    </label>
+                  </div>
+                  <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" 
+                                     variant="label-hidden"
+                                     type="text"
+                                     required
+                                     onblur={handleCustomValidationExshowroompriceCarwaleIdBorrower}
+                                     message-when-value-missing="Complete this field"  
+                                     data-id="ExshowroompriceCarwalecoId">
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+              <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >RTO Road Tax
+                    </label>
+                  </div>
+                  <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" 
+                                     variant="label-hidden"
+                                     type="text"
+                                     data-id="RequiredROIcoId">
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+              <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >Other Charges
+                    </label>
+                  </div>
+                  <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" 
+                                     variant="label-hidden"
+                                     type="text"
+                                     data-id="RequiredROIcoId">
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+              <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >Onroad price
+                      <abbr title="required" class="slds-required">*
+                      </abbr>
+                    </label>
+                  </div>
+                  <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" 
+                                     variant="label-hidden"
+                                     type="text"
+                                     required
+                                     onblur={handleCustomValidationOnroadpriceIdBorrower}
+                                     message-when-value-missing="Complete this field"  
+                                     data-id="OnroadpricecoId">
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+              <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >Onroad price - Carwale
+                      <abbr title="required" class="slds-required">*
+                      </abbr>
+                    </label>
+                  </div>
+                  <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" 
+                                     variant="label-hidden"
+                                     type="text"
+                                     required
+                                     onblur={handleCustomValidationOnroadpriceCarwaleIdBorrower}
+                                     message-when-value-missing="Complete this field"  
+                                     data-id="OnroadpriceCarwalecoId">
+                    </lightning-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+              <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label" >Is this a CSD case? 
+                      <abbr title="required" class="slds-required">*
+                      </abbr>
+                    </label>
+                  </div>
+                  <div class="slds-col slds-size_2-of-3">
+                    <lightning-checkbox-group name="Checkbox Group"
+                                             options={option}
+                                             value={value}
+                                             data-id="csdcoID"
+                                             onblur={handleCustomValidationCSDIdBorrower}
+                                             onchange={handleChange} 
+                                             message-when-value-missing="Complete this field">
+                   </lightning-checkbox-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+           
+           <div class="slds-form-element buttons slds-text-align_center">
+             <lightning-button variant="brand" 
+                               label="Submit" 
+                               style="margin:1em auto 1em"
+                               onclick={handlesavecoBorrower}
+                               class=" slds-button slds-button--brand ">
+             </lightning-button>
+           </div>
+         </template>
+        </div>
+     </lightning-tab>
+   </lightning-tabset>
+ </template>

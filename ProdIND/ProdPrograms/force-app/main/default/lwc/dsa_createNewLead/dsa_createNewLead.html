@@ -1,0 +1,476 @@
+<template>
+    <!--CISP-13870 : Start-->
+    <template if:true={withdrawn}> 
+    <template if:true={showInitialScreen}>
+        <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+            <span class="slds-assistive-text">warning</span>
+              <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+               title="Description of icon when needed">
+                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning">
+               </lightning-icon>
+           </span>
+      <h2>This loan application has been withdrawn, you are no more allowed to edit this application.</h2>
+             </div>
+         </template>
+     </template>
+    <!--CISP-13870 : END-->
+    <template if:false={withdrawn}> 
+     <template if:true={showInitialScreen}>
+        <template if:true={showSpinner}>
+            <c-spinner-with-text
+                help-text={spinnerText}
+                size="medium"
+                variant="base"
+                show-spinner
+            ></c-spinner-with-text>
+        </template>
+        <template if:true={isShowModal}>
+            <c-dsa-_ibl-modal
+                onconfirm={handleModalConfirm}
+                oncancel={handleModalCancel}
+                header="Confirmation"
+                message={modalMessage}
+            ></c-dsa-_ibl-modal>
+        </template>
+        <lightning-card class="slds-text-align_center">
+            <!-- <slot name="title" class="cardTitle">{cardTitle}</slot> -->
+            <div class="slds-var-p-around_small">
+                <!--Added Withdraw button for CISP-13870 start-->
+                <lightning-layout-item class="slds-float_left">
+                    <div class="slds-p-top_small"> 
+                    <template if:false={withdrawn}>  
+                        <c-i-n-d-_-l-w-c-_-application-_-withdrwal record-id = {recordId} ></c-i-n-d-_-l-w-c-_-application-_-withdrwal>
+                        </template> 
+                    </div>
+                </lightning-layout-item>
+                <!--Added Withdraw button for CISP-13870 end-->
+                <!-- START - Initial Lead form screen -->
+                <lightning-layout-item size="12">
+                    <div class="page-header">
+                        <p>New Lead</p>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout class="ltngLayout" multiple-rows>
+                    <lightning-layout-item
+                        padding="around-small"
+                        size="12"
+                        large-device-size="6"
+                        small-device-size="12"
+                    >
+                        <lightning-input
+                            type="text"
+                            label="Lead Number"
+                            name="leadNumber"
+                            data-id="leadNumber"
+                            variant="label-inline"
+                            disabled="true"
+                            value={leadNumber}
+                        ></lightning-input>
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <span
+                                class="slds-form-element__label slds-no-flex"
+                                style="line-height: 40px"
+                            >
+                                <abbr class="slds-required" title="required"
+                                    >*</abbr
+                                >
+                                Customer Mobile
+                            </span>
+                            <div
+                                class="slds-form-element__control slds-grow input-box padding-left-100px"
+                            >
+                                <span class="prefix">+91</span>
+                                <lightning-input
+                                    class="inputphone marginleft0"
+                                    type="tel"
+                                    label="Customer Mobile"
+                                    name="customerMobile"
+                                    data-id="customerMobile"
+                                    variant="label-hidden"
+                                    value={customerMobile}
+                                    pattern={label.RegEx_Number}
+                                    min-length="10"
+                                    max-length="10"
+                                    onblur={handleCustomerMobileChange}
+                                    message-when-pattern-mismatch={label.Mobile_Number_Error_Msg}
+                                    required
+                                ></lightning-input>
+                            </div>
+                        </div>
+
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <div
+                                class="slds-form-element__control slds-grow input-box"
+                            >
+                                <lightning-input
+                                    type="checkbox"
+                                    label="WhatsApp number sames as contact number"
+                                    name="whatsAppNumberSameAsContactNumber"
+                                    data-id="whatsAppNumberSameAsContactNumber"
+                                    variant="label-hidden"
+                                    checked={whatsAppNumberSameAsContactNumber}
+                                    onchange={handleCheckBoxChange}
+                                ></lightning-input>
+                                <span class="cblabel">
+                                    WhatsApp number same as contact number
+                                </span>
+                            </div>
+                            <span class="slds-form-element__label slds-no-flex">
+                            </span>
+                        </div>
+
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <div
+                                class="slds-form-element__control slds-grow input-box"
+                            >
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Customer wants to register for WhatsApp banking"
+                                    name="registerForWhatsAppBanking"
+                                    data-id="registerForWhatsAppBanking"
+                                    variant="label-hidden"
+                                    checked={registerForWhatsAppBanking}
+                                ></lightning-input>
+                                <span class="cblabel">
+                                    Customer wants to register for WhatsApp
+                                    banking
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- <lightning-checkbox-group
+                                class="dsa-checkboxgroup"
+                                name="whatsAppOptions"
+                                data-id="whatsAppOptions"
+                                label=""
+                                options={whatsAppOptions}
+                                value={whatsAppCheckboxValues}
+                                onchange={handleWhatsAppOptionsChange}
+                            ></lightning-checkbox-group> -->
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <span
+                                class="slds-form-element__label slds-no-flex"
+                                style="line-height: 40px"
+                            >
+                                <abbr class="slds-required" title="required"
+                                    >*</abbr
+                                >
+                                WhatsApp Number
+                            </span>
+                            <div
+                                class="slds-form-element__control slds-grow input-box padding-left-90px"
+                            >
+                                <span class="prefix">+91</span>
+                                <lightning-input
+                                    class="inputphone marginleft0"
+                                    type="tel"
+                                    label="WhatsApp Number"
+                                    name="whatsAppNumber"
+                                    data-id="whatsAppNumber"
+                                    variant="label-hidden"
+                                    value={whatsAppNumber}
+                                    disabled={whatsAppNumberSameAsContactNumber}
+                                    pattern={label.RegEx_Number}
+                                    min-length="10"
+                                    max-length="10"
+                                    message-when-pattern-mismatch={label.Mobile_Number_Error_Msg}
+                                    required
+                                ></lightning-input>
+                            </div>
+                        </div>
+                        <template if:true={salutationValues.data}>
+                            <lightning-combobox
+                                data-id="salutation"
+                                variant="label-inline"
+                                name="salutation"
+                                label="Salutation"
+                                disabled={getSalutationDisabled}
+                                value={salutation}
+                                options={salutationValues.data.values}
+                                required
+                            ></lightning-combobox>
+                        </template>
+                        <lightning-input
+                            type="text"
+                            label="First Name"
+                            name="firstName"
+                            data-id="firstName"
+                            variant="label-inline"
+                            value={firstName}
+                            min-length="3"
+                            max-length="60"
+                            required
+                            pattern={label.RegEx_Alphabets_Only}
+                            message-when-pattern-mismatch="Invalid First Name"
+                            message-when-too-long="First Name is too long"
+                            message-when-too-short="First Name is too short"
+                        ></lightning-input>
+                        <lightning-input
+                            type="text"
+                            label="Last Name"
+                            name="lastName"
+                            data-id="lastName"
+                            variant="label-inline"
+                            value={lastName}
+                            min-length="1"
+                            max-length="255"
+                            required
+                            pattern={label.Regex_Alphabets_Only_DSA}
+                            message-when-pattern-mismatch="Invalid Last Name"
+                            message-when-too-long="Last Name is too long"
+                            message-when-too-short="Last Name is too short"
+                        ></lightning-input>
+                        <div
+                            class="slds-form-element_horizontal slds-form-element"
+                        >
+                            <p class="slds-form-element__label slds-no-flex">
+                                <abbr class="slds-required" title="required"
+                                    >*</abbr
+                                >
+                                PAN Number
+                            </p>
+                            <div
+                                class="slds-form-element__control slds-grow dob-div"
+                            >
+                                <lightning-input
+                                    class="marginleft0"
+                                    type="text"
+                                    label="Pan Number"
+                                    name="panNumber"
+                                    data-id="panNumber"
+                                    variant="label-hidden"
+                                    value={panNumber}
+                                    disabled={disablePANField}
+                                    pattern={label.Pan_Pattern}
+                                    onchange={handlePANChange}
+                                    message-when-pattern-mismatch="Invalid PAN"
+                                    required
+                                ></lightning-input>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <template if:false={disablePANField}>
+                                    <button
+                                        title="Verify PAN"
+                                        onclick={handleVerifyPANClick}
+                                        class={verifyPANBtnClass}
+                                        style="padding: 0px"
+                                        name="verifypanbtn"
+                                        disabled={disablePANField}
+                                    >
+                                        Verify PAN
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small" style="float: left;color: #832625; margin-top: 2em;"><strong>* Mandatory field</strong></div>
+                    </lightning-layout-item>
+                    <lightning-layout-item
+                        padding="around-small"
+                        size="12"
+                        large-device-size="6"
+                        small-device-size="12"
+                    >
+                        <lightning-input
+                            type="date"
+                            label="Date of Birth"
+                            name="dob"
+                            data-id="dob"
+                            variant="label-inline"
+                            value={dob}
+                            required
+                            onchange={handleDobChange}
+                        ></lightning-input>
+                        <template if:true={genderValues.data}>
+                            <lightning-combobox
+                                data-id="gender"
+                                variant="label-inline"
+                                name="gender"
+                                label="Gender"
+                                disabled={getGenderDisabled}
+                                value={gender}
+                                options={genderValues.data.values}
+                                required
+                            ></lightning-combobox>
+                        </template>
+                        <lightning-input
+                            type="text"
+                            label="Address Line 1"
+                            name="addressLine1"
+                            data-id="addressLine1"
+                            variant="label-inline"
+                            value={addressLine1}
+                            pattern={label.Address_Pattern}
+                            message-when-pattern-mismatch={label.AddressnotValid}
+                            message-when-too-short="Address Line 1 should be minimum 10 characters"
+                            max-length="80"
+                            min-length="10"
+                            required
+                        ></lightning-input>
+                        <lightning-input
+                            type="text"
+                            label="Address Line 2"
+                            name="addressLine2"
+                            data-id="addressLine2"
+                            variant="label-inline"
+                            value={addressLine2}
+                            pattern={label.Address_Pattern}
+                            message-when-pattern-mismatch={label.AddressnotValid}
+                            max-length="80"
+                            min-length="2"
+                            required
+                        ></lightning-input>
+                        <template if:true={stateList}>
+                            <lightning-combobox
+                                label="State"
+                                name="state"
+                                data-id="state"
+                                variant="label-inline"
+                                options={stateList}
+                                onchange={handleStateSelection}
+                                disabled={getStateDisabled}
+                                value={state}
+                                required
+                            ></lightning-combobox>
+                            <lightning-combobox
+                                label="City"
+                                name="city"
+                                data-id="city"
+                                variant="label-inline"
+                                options={cityList}
+                                disabled={getCityDisabled}
+                                value={city}
+                                required
+                            ></lightning-combobox>
+                        </template>
+                        <lightning-input
+                            type="text"
+                            label="Pin code"
+                            name="pincode"
+                            data-id="pincode"
+                            variant="label-inline"
+                            value={pincode}
+                            pattern={label.Pin_code_Pattern}
+                            message-when-pattern-mismatch="Invalid Pincode"
+                            max-length="6"
+                            disabled={getPincodeDisabled}
+                            onblur={handlePincodeChange}
+                            required
+                        ></lightning-input>
+                    </lightning-layout-item>
+                    <template if:false={consentReceived}>
+                        <lightning-layout-item
+                            padding="around-small"
+                            size="12"
+                            class="lli-flex-center"
+                        >
+                            <div style="display: flex">
+                                <button
+                                    title="Trigger consent"
+                                    name="consentbtn"
+                                    onclick={handleConsentClick}
+                                    class={consentBtnClass}
+                                    style="width: 150px"
+                                    disabled={disableConsentBtn}
+                                >
+                                    Consent
+                                </button>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+                <!-- END - Initial Lead form screen -->
+
+                <lightning-layout class="ltngLayout">
+                    <lightning-layout-item
+                        padding="around-small"
+                        size="12"
+                        class="lli-flex-center"
+                    >
+                        <div
+                            style="
+                                display: flex;
+                                width: 100%;
+                                justify-content: center;
+                            "
+                        >
+                            <!-- <template if:true={showPreviousBtn}>
+                                <button
+                                    title="Previous"
+                                    name="prevbtn"
+                                    onclick={handlePreviousClick}
+                                    class="ibl-btn-red"
+                                    style="width: 200px"
+                                >
+                                    Previous
+                                </button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </template> -->
+                            <button
+                                title="Next"
+                                name="nextbtn"
+                                onclick={handleNextClick}
+                                class="ibl-btn-red responsive-btn"
+                            >
+                                Next
+                            </button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button
+                                title="Save & Exit"
+                                name="saveandexitbtn"
+                                onclick={handleSaveExitClick}
+                                class={saveExitBtnClass}
+                                disabled={disableSaveExit}
+                            >
+                                Save & Exit
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </lightning-card>
+        <template if:true={modalPopUpToggleFlag}>
+            <c-l-W-C_-L-O-S_-O-T-P
+                currentapplicationid={applicantId}
+                otppopup={modalPopUpToggleFlag}
+                onchangebuttoncolor={handleOTPVerify}
+                oninvalidotp={handleInvalidOTP}
+                onresendexhausted={handleResendExhausted}
+                onchangeflagvalue={handleModalManualClose}
+                mode="DSA"
+            ></c-l-W-C_-L-O-S_-O-T-P>
+        </template>
+    </template>
+</template>
+    <!--Added dsarecord-id param for CISP-13870-->
+    <template if:true={showIncomeScreen}>
+        <c-dsa-_income-screen
+            dsarecord-id={dsarecordId}
+            applicant={applicantId}
+            oncomplete={handleComplete}
+        ></c-dsa-_income-screen>
+    </template>
+    <!--Added dsarecord-id param for CISP-13870-->
+    <template if:true={showAssetScreen}>
+        <c-dsa-_asset-screen
+            dsarecord-id={dsarecordId}
+            applicant={applicantId}
+            app-wrapper={dataWrapper}
+            onbrecomplete={handleBREComplete}
+        ></c-dsa-_asset-screen>
+    </template>
+
+    <template if:true={showOfferScreen}>
+        <c-dsa-_offer-screen dsarecord-id={dsarecordId} applicantid={dataWrapper.applicant.Id} loanid={dataWrapper.opp.Id} offerdata={offerData}></c-dsa-_offer-screen>
+    </template>
+    <!--Added dsarecord-id param for CISP-13870-->
+    <template if:true={showSummaryPage}>
+        <c-dsa-_summary-_page dt-wrapper={dataWrapper}></c-dsa-_summary-_page>
+    </template>
+</template>

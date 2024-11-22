@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_RCU_Sampling_Reason__c</fullName>
+    <label>Overall RCU Sampling Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Manipulated Document</fullName>
+                <default>false</default>
+                <label>Manipulated Document</label>
+            </value>
+            <value>
+                <fullName>Adverse Profile</fullName>
+                <default>false</default>
+                <label>Adverse Profile</label>
+            </value>
+            <value>
+                <fullName>Office/Residence Profile not satisfactory</fullName>
+                <default>false</default>
+                <label>Office/Residence Profile not satisfactory</label>
+            </value>
+            <value>
+                <fullName>Mismatch of Address</fullName>
+                <default>false</default>
+                <label>Mismatch of Address</label>
+            </value>
+            <value>
+                <fullName>Misrepresentation of Facts / False details</fullName>
+                <default>false</default>
+                <label>Misrepresentation of Facts / False details</label>
+            </value>
+            <value>
+                <fullName>Profile Mismatch</fullName>
+                <default>false</default>
+                <label>Profile Mismatch</label>
+            </value>
+            <value>
+                <fullName>Political Connection</fullName>
+                <default>false</default>
+                <label>Political Connection</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

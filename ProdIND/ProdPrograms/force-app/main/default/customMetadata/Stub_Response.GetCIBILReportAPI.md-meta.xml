@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>GetCIBILReportAPI</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{&quot;Data&quot;:{&quot;IsSuccess&quot;:&quot;True&quot;,&quot;StatusCode&quot;:&quot;200&quot;,&quot;StatusDescription&quot;:&quot;Success&quot;,&quot;Cibil_Report_URl&quot;:&quot;https://cfdservice.indusind.com/CIBIL_CIR_IDV_Report/Transunion/CibilViewReport&quot;,&quot;Application_Cibil_Details&quot;:[],&quot;Cibil_LoanAccount_Details&quot;:[],&quot;Cibil_TimeLine_Details&quot;:[],&quot;Cibil_ADE_Details&quot;:[],&quot;OverDueDocs_Details&quot;:[],&quot;Equifax_Generated&quot;:null,&quot;Equifax_Report_URl&quot;:null}}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">GetCIBILReport</value>
+    </values>
+</CustomMetadata>

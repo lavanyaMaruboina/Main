@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Add_POA_SD_Loan_agreement_accepted_by_CV__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Loan agreement accepted by CVO ?</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

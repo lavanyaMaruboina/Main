@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Incident_Closing_Mandatory_Fields</fullName>
+    <active>true</active>
+    <errorConditionFormula>(RecordType.DeveloperName = &quot;Incident&quot;) &amp;&amp; NOT(ISNEW()) &amp;&amp;  ISPICKVAL(Status , &quot;Closed&quot;) &amp;&amp; ISBLANK(TEXT(Case_Disposition__c)) &amp;&amp; ISBLANK( Root_Cause_details__c )</errorConditionFormula>
+    <errorMessage>Please select the proper &apos;Case disposition&apos; and fill in &apos;Root cause details&apos; before closing the incident.</errorMessage>
+</ValidationRule>

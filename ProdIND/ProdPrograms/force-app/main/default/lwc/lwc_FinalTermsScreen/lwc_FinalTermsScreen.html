@@ -1,0 +1,1778 @@
+<template>
+    <template if:true={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center">
+        <lightning-spinner alternative-text="Loading" size="large" variant="brand" style="height: 700vh !important;"></lightning-spinner>
+    </template>
+    <!-- Upload & View Document Button :Start -->
+    <template if:false={fromVfPage}>
+    <template lwc:if={isNotTractor}>
+        <div class="slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Final Terms</label>
+        </div>
+        <div class="slds-m-bottom_large slds-clearfix">
+            <lightning-button-icon icon-name="utility:home" onclick={handleSaveAndExit} variant="brand"
+                alternative-text="Home" class=" slds-float_right slds-m-left_medium slds-m-right_medium">
+            </lightning-button-icon>
+            <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+                alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton" disabled={isUploadViewDisabled}>
+            </lightning-button>
+        </div>
+    </template>
+    <!-- Upload & View Document Button :End -->
+    <div class="slds-form slds-grid slds-wrap">
+        </br>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label
+                        class="slds-form-element__label slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Scheme
+                        <abbr title="required" class="slds-required">*</abbr></label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox
+                        class="slds-form-element__control slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium scheme"
+                        variant="label-hidden" name="Scheme" options={schemeOptions} value={schemeOptionsValue}
+                        onchange={handleScheme} label="Required Tenured" disabled={disabledScheme} 
+                        message-when-value-missing="Complete this field" id="schemeID" required>
+                    </lightning-combobox>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    </template>
+
+    <lightning-accordion class="example-accordion" active-section-name="A">
+        <lightning-accordion-section name="A" label="Pay In">
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Service Charges<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="serChar" variant="label-hidden" label="payin"
+                                value={serviceChargesValue} onchange={handleServiceCharges}
+                                disabled={disabledServiceCharges} placeholder={phserviceChargesValue} required></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Documentation Charges<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="DocChar" variant="label-hidden" label="payin"
+                                value={documentationChargesValue} onchange={handleDocumentationCharges}
+                                disabled={disabledDocumentationCharges} placeholder={phdocumentationChargesValue} required></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Stamping Charges<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" onchange={handleStampingCharges} value={stampingChargesValue} label="payin"
+                                data-id="stamChar" variant="label-hidden" disabled={disableStampingCharges} required></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Due Date Shift Charges <template lwc:if={isNotTractor}><abbr title="required"
+                                class="slds-required">*</abbr></template></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" onchange={handleDueDateShiftCharges} label="payin"
+                                value={dueDateShiftChargesValue} data-id="dueDateChar" disabled={disabledueDateShiftCharges} variant="label-hidden" required={dueDateRequired}> 
+                                <!-- dueDateRequired added -->
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={forTwoWheeler}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">ECS Verification Charges<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  ecsVerifi" variant="label-hidden"
+                                name="ecsVerification" onchange={handleEcsVerification}
+                                options={ecsOption} value={ecsValue} data-id="ecsVerification" label="payin"
+                                message-when-value-missing="Complete this field" id="ecsVerificationID" required={teNewrequire} disabled={disabledecsVerificationChargeBy}>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Verification Charges<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" onchange={handleVerificationCharges} label="payin"
+                                value={verificationChargesValue} data-id="veriChar" variant="label-hidden" required={teNewrequire} disabled={disabledecsVerificationCharge}>
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Delinquency Fund<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" onchange={handleDelinquencyFund} value={delinquencyFundValue} label="payin"
+                                data-id="deliFund" variant="label-hidden" required={teNewrequire} disabled={disableddelinquencyFund}></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Delinquency Fund Type<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  deliFundType" variant="label-hidden"
+                                name="delinquencyFundType" options={delinquencyFundTypeOption} label="payin"
+                                value={delinquencyFundTypeValue} onchange={handleDelinquencyFundType}
+                                message-when-value-missing="Complete this field" data-id="deliFundType"
+                                id="delinquencyFundTypeID" required={teNewrequire} disabled={disableddelinquencyFundType}>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                </template>
+                <!-- SFTRAC-84 -->
+                <template if:true={isTractor}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Verification Charges<abbr
+                                        title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" onchange={handleVerificationCharges} label="payin"
+                                    value={verificationChargesValue} data-id="veriChar" variant="label-hidden" required={teNewrequire} disabled={disabledecsVerificationCharge}>
+                                </lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- SFTRAC-84 -->
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">RTO Prefix <template lwc:if={isNotTractor}><abbr title="required"
+                                class="slds-required">*</abbr></template></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input onchange={handleRTOPrefix} pattern={label.rtoPrefix} placeholder="MH01" label="payin"
+                                value={rtoPrefixValue} data-id="rtoPre" variant="label-hidden" required={rtoRequired} disabled={twNew}>
+                            </lightning-input>
+                            <!-- rtoRequired added  -->
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Trade Certificate <template lwc:if={isNotTractor}><abbr title="required"
+                                class="slds-required">*</abbr></template></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input data-id="tradeCerti" type="number" variant="label-hidden" label="payin"
+                                onchange={handleTradeCertificate} value={tradeCertificateValue} disabled={disableTradeCertificate}><!--CISP-2894-->
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <template lwc:if={isNotRefianceTractor}> <!-- SFTRAC-204 -->
+    <lightning-accordion class="example-accordion" active-section-name="B">
+        <template if:false={disableAllPayoutFields}>
+        <lightning-accordion-section name="B" label="Pay Out">
+            <div class="slds-form slds-grid slds-wrap">
+                <template if:true={forTwoWheeler}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Dealer Exp Reimburse Amount <abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dealExpReimburseAmt" variant="label-hidden"
+                                value={dealerExpReimburseAmountValue} onchange={handleDealerExpReimburseAmount}
+                                disabled={disabledExpReimburseAmountValue} placeholder={phdealerExpReimburseAmountValue} required ="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Dlr Exp. Reimbursement % <abbr title="required"
+                                    class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dealExpReimburseper" variant="label-hidden"
+                                value={dealerExpReimbursePercentageValue} onchange={handleDealerExpReimbursePercentage}
+                                disabled={disabledDealerExpReimbursePercentage} step=".01" placeholder={phdealerExpReimbursePercentageValue}
+                                required ="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Dealer Exp. Reimburse Type<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  dealerExpReimType"
+                                variant="label-hidden" name="dealerExpReimburseType"
+                                options={dealerExpReimburseTypeOption} value={dealerExpReimburseTypeValue} data-id="dealerExpReiType"
+                                onchange={handleDealerExpReimburseType} label="Dealer Exp. Reimburse Type" disabled={disabledDealerExpReimburseType} 
+                                message-when-value-missing="Complete this field" id="dealerExpReimburseTypeID" required>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                </template>
+                <template lwc:if={isNotTractor}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Mfr Exp Reimburse Amt<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="mfrExpReimAmt" variant="label-hidden"
+                                    onchange={handleMfrExpReimburseAmt} value={mfrExpReimburseAmtValue}
+                                    disabled={disabledMfrExpReimburseAmt} placeholder={phmfrExpReimburseAmtValue}
+                                    required ="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Mfr Exp. Reimburse %<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="mfrExpReimper" variant="label-hidden"
+                                    onchange={handleMfrExpReimbursePercentage} value={mfrExpReimbursePercentageValue}
+                                    disabled={disabledMfrExpReimbursePercentage} step=".01" placeholder={phmfrExpReimbursePercentageValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Mfr Exp Reimburse Type<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control  mfrExpReiType" variant="label-hidden"
+                                    name="mfrExpReimburseType" options={mfrExpReimburseTypeOption} data-id="mfrExpReiType"
+                                    value={mfrExpReimburseTypeValue} onchange={handleMfrExpReimburseType}
+                                    label="Mfr Exp. Reimburse Type" message-when-value-missing="Complete this field"
+                                    id="mfrExpReimburseTypeID" disabled={disabledMfrExpReimburseType} required>
+                                </lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Dealer Incentive Amount Main Dealer<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dealInceAmtMain" variant="label-hidden"
+                                value={dealerIncentiveAmountMainValue} onchange={handleDealerIncentiveAmountMainDealer} label="payout"
+                                disabled={disabledDealerIncentiveAmountMainDealer} placeholder={phdealerIncentiveAmountMainValue} 
+                                 required="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={forTwoWheeler}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Dealer Incentive Amount Main Dealer %<abbr
+                                        title="required" class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" step="0.01" data-id="dealInceMainPer" variant="label-hidden"
+                                    value={dealerMainPercentageValue} onchange={handleDealerMainPercentage}
+                                    disabled={disableDealerMainPercentage}></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Dealer Incentive Amount Sub Dealer<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dealInceAmtSub" variant="label-hidden"
+                                value={dealerIncentiveAmountSubValue} onchange={handleDealerIncentiveAmountSubDealer}
+                                disabled={disabledDealerIncentiveAmountSubDealer} placeholder={phdealerIncentiveAmountSubValue} onfocusout={handlesubdealer} required="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Dealer Incentive Amount Sub Dealer %<abbr
+                                        title="required" class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" step="0.01" data-id="dealInceSubPer" onchange={handleDealerSubPercentage}
+                                    value={dealerSubPercentageValue} disabled={disableDealerSubPercentage} variant="label-hidden"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Dealer Discount to Customer<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dealDiscCust" variant="label-hidden" label="payout"
+                                value={dealerDiscounttoCustomerValue} onchange={handleDealerDiscounttoCustomer}
+                                disabled={disabledDealerDiscounttoCustomer} placeholder={phdealerDiscounttoCustomerValue}
+                                required="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Gift Through Dealer Amount<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="giftDealAmt" variant="label-hidden" label="payout"
+                                value={giftThroughDealerAmountValue} onchange={handleGiftThroughDealerAmount}
+                                disabled={disabledGiftThroughDealerAmount} placeholder={phgiftThroughDealerAmountValue}
+                                required ="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={forTwoWheeler}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Gift Through Dealer Amount %<abbr title="required"
+                                        class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" step="0.01" data-id="giftDealPer" variant="label-hidden"
+                                    value={giftThroughDealerPercentageValue} onchange={handleGiftThroughDealerPercentage}
+                                    disabled={disableGiftThroughDealerPercentage}></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                <!--CISP-13104 Hide Manufacturer Incentive from UI-->
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" style={showOrHideStyle}>
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Manufacturer Incentive<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" value={manufacturerIncentiveValue} data-id="mfrIncent" onchange={handlemanufacturerIncentive}
+                                variant="label-hidden" disabled={disabledManufacturerIncentive} required="twRefinancerequire">
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <!--CISP-13104 Hide Manufacturer Incentive % from UI-->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" style={showOrHideStyle}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Manufacturer Incentive %<abbr title="required"
+                                        class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" step="0.01" value={mfrIncentivePercentageValue} data-id="mfrIncentPer"
+                                    variant="label-hidden" disabled={disableMfrIncentivePercentage} onchange={handleMfrIncentivePercentage}>
+                                </lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+            </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">DSM Name1</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  dsmName1" variant="label-hidden" onchange={handleDsmNameOne}
+                                name="DsmNameone" options={dsmNameOneOptionList} value={dsmNameOneValue} label="payout"
+                                id="dsmName1" disabled={isDSMNameOneDisabled}>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">DSM Incentive1<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dsmIncent" variant="label-hidden"
+                                value={dsmIncentiveOneValue} onchange={handleDsmIncentiveOne} label="payout"
+                                disabled={disabledDsmIncentiveOne} placeholder={phdsmIncentiveOneValue}
+                                required="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={forTwoWheeler}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSM Incentive1 %<abbr title="required"
+                                        class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" step="0.01" data-id="dsmIncentPer" variant="label-hidden"
+                                    value={dsmOnePercentageValue} onchange={handleDsmOnePercentage}
+                                    disabled={disabledsmOnePercentage}></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+            </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">DSM Name2</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  dsmName2" variant="label-hidden" onchange={handleDsmNameTwo}
+                                name="dsmNameTwo" options={dsmNameTwoOptionList} value={dsmNameTwoValue} label="payout" data-id="dsmNameTwo"
+                                id="dsmName2" disabled={isDSMNameTwoDisabled}>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">DSM Incentive2<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dsmInce" variant="label-hidden"
+                                value={dsmIncentiveTwoValue} onchange={handleDsmIncentiveTwo} label="payout"
+                                disabled={disabledDsmIncentiveTwo} placeholder={phdsmIncentiveTwoValue}
+                                required="twRefinancerequire"></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={forTwoWheeler}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSM Incentive2 %<abbr title="required"
+                                        class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" step="0.01" data-id="dsmIncePer" variant="label-hidden"
+                                    value={dsmTwoPercentageValue} onchange={handleDsmTwoPercentage}
+                                    disabled={disableDsmTwoPercentage}></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Non Dlr DSM Name1</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  nondlrdsmName1" onchange={handleNonDlrDsmNameOne}
+                                variant="label-hidden" name="nonDlrDsmNameOne" options={nonDsmNameOneOptionList}
+                                value={nonDlrDsmNameOneValue} id="nondlrdsmName1" disabled={disableNonDsmName1}>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Non Dlr DSM Incentive1<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="nondlrDsmIncen1" variant="label-hidden"
+                                value={nonDlrDsmIncentiveOneValue} onchange={handleNonDlrDsmIncentiveOne}
+                                disabled={disablednonDlrDsmIncentiveOne} placeholder={phnonDlrDsmIncentiveOneValue} ></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Non Dlr DSM Name2</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  dlrdsmName2" variant="label-hidden"
+                                name="nonDlrDsmNameTwo" options={nonDsmNameTwoOptionList} value={nonDlrDsmNameTwoValue}
+                                onchange={handleNonDlrDsmNameTwo} label="nonDlrDsmNameTwo"
+                                message-when-value-missing="Complete this field" id="dlrdsmName2" disabled={disableNonDsmName2}>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Non Dlr DSM Incentive2<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" value={nonDlrDsmIncentiveTwoValue} data-id="dlrdsmIncen2"
+                                variant="label-hidden" onchange={handleNonDlrDsmIncentiveTwo}
+                                disabled={disablednonDlrDsmIncentiveTwo} placeholder={phnonDlrDsmIncentiveTwoValue}
+                                required></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Referred by<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  refby" variant="label-hidden"
+                                name="referredby" onchange={handleReferredby} label="payout"
+                                options={referredbyOption} value={referredbyValue} disabled={hideReferrerFields} data-id="referredby"
+                                message-when-value-missing="Complete this field" id="referredbyID" required >
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <template if:false={hideReferrerFields}> <!--CISP-3143-->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Referrer Incentive 
+                                    <template if:false={isTractor} >
+                                        <abbr  title="required"
+                                    class="slds-required">*</abbr>
+                                    </template></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <template if:false={isTractor}>
+                                    <lightning-input data-id="refInc" variant="label-hidden" type="number"
+                                        value={referrerIncentiveValue} onchange={handlereferrerIncentive} min="0"
+                                        disabled={disabledReferrerIncentive} placeholder={phreferrerIncentiveValue} required>
+                                    </lightning-input>
+                                </template>
+                                <template if:true={isTractor}>
+                                    <lightning-input data-id="refInc" variant="label-hidden" type="number"
+                                        value={referrerIncentiveValue} onchange={handlereferrerIncentive} label="payout"
+                                        disabled={disabledReferrerIncentive} placeholder={phreferrerIncentiveValue}>
+                                    </lightning-input>
+                                </template>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <template if:true={forTwoWheeler}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Referrer Name 
+                                        <template if:true={isReferrerNameRequired} >
+                                            <abbr  title="required"
+                                        class="slds-required">*</abbr>
+                                        </template>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input onchange={handleReferrerName} pattern={label.RegEx_Alphabets_Only}
+                                        message-when-pattern-mismatch={label.validValue} value={referrerNameValue}
+                                        data-id="refName" variant="label-hidden" disabled={disabledReferrerName} required={isReferrerNameRequired}>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                
+            <template if:false={forTwoWheeler}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap" lwc:if={isTractor}>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">DSA Name 
+                                <template if:true={dsaReferrerNameRequired} >
+                                <abbr title="required"
+                            class="slds-required">*</abbr>
+                            </template></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control reffName" name="referrerName" variant="label-hidden" value={referrerNameValue} placeholder="Select DSA Name" options={referrerNameOptions} label="payout" onchange={handleReferrerName} disabled={disabledReferrerName} required></lightning-combobox><br />
+                        </div>
+                    </div>
+                    <div class="slds-form-element  slds-grid slds-wrap" lwc:else>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Referrer Name 
+                                <template if:true={dsaReferrerNameRequired} >
+                                <abbr title="required"
+                            class="slds-required">*</abbr>
+                            </template></label>
+                        </div>
+                        <template if:false={dsaReferrer}>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control reffName" name="referrerName" variant="label-hidden"
+                                value={referrerNameValue} placeholder="Select Referrer Name" options={referrerNameOptions} label="payout"
+                                onchange={handleReferrerName} disabled={disabledReferrerName} required={isReferrerNameRequired}>
+                                </lightning-combobox>
+                            
+                                <br />
+                            </div>
+                        </template>
+                        <template if:true={dsaReferrer}>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control reffName" name="referrerName" variant="label-hidden"
+                                value={referrerNameValue} placeholder="Select Referrer Name" options={referrerNameOptions} label="payout"
+                                onchange={handleReferrerName} disabled={disabledReferrerName} required>
+                                </lightning-combobox>
+                            
+                                <br />
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <template if:true={isPVUsedAndRefinance}><!--CISP-8762-->
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-align_absolute-center">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input type="checkbox" data-id="rcLimitcheckbox" label=" RC limit enabled DSA" disabled checked={isRcLimitChecked} ></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Branch</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input data-id="branch" onchange={handleBranch} value={branchValue} label="payout"
+                                variant="label-hidden" disabled={disabledBranch}></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Employee No</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input data-id="empNo" onchange={handleEmpNo} value={empNoValue} label="payout"
+                                variant="label-hidden" disabled={disabledEmpNo}></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Employee Name</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input data-id="empName" variant="label-hidden" value={empNameValue} label="payout"
+                                onchange={handleEmpName} disabled={disabledEmpName}></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Deal No</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="dealNo" variant="label-hidden" value={dealNoValue} label="payout"
+                                onchange={handleDealNo} disabled={disabledDealNo}></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <!--CISP-13104 Hide Provisional Channel Cost from UI-->
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" style={showOrHideStyle}>
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Provisional Channel Cost<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" data-id="proChnCost" variant="label-hidden"
+                                value={provisionalChannelCostValue} onchange={handleProvisionalChannelCost} label="payout"
+                                disabled={disabledProvisionalChannelCost} placeholder={phprovisionalChannelCostValue}
+                                required></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={displayDsaRcu}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSA Pay</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" onchange={handleDSAPay} value={dsaPayValue} label="payout"
+                                    data-id="dsapay" variant="label-hidden" disabled={disabledDsaPay}></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={forTwoWheeler}>
+                        <template if:false={nonD2cDsaTW}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">RC Retention Charges<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" onchange={handleRCURetentionCharges}
+                                    value={rcuRetentionChargesValue} disabled={disabledRcu} data-id="rcuRet"
+                                    variant="label-hidden" required>
+                                </lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                        </template>
+                    </template>
+                </template>
+            </div>
+        </lightning-accordion-section>
+        </template>
+        <!--ATE-4785 Disable all payout fields for L1 journey-->
+        <template if:true={disableAllPayoutFields}>
+            <lightning-accordion-section name="B" label="Pay Out">
+                <div class="slds-form slds-grid slds-wrap">
+                    <template if:true={forTwoWheeler}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Dealer Exp Reimburse Amount <abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" data-id="dealExpReimburseAmt" variant="label-hidden"
+                                        value={dealerExpReimburseAmountValue} onchange={handleDealerExpReimburseAmount}
+                                        disabled placeholder={phdealerExpReimburseAmountValue}
+                                        required="twRefinancerequire"></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Dlr Exp. Reimbursement % <abbr title="required"
+                                            class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" data-id="dealExpReimburseper" variant="label-hidden"
+                                        value={dealerExpReimbursePercentageValue} onchange={handleDealerExpReimbursePercentage}
+                                        disabled step=".01"
+                                        placeholder={phdealerExpReimbursePercentageValue}
+                                        required="twRefinancerequire"></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Dealer Exp. Reimburse Type<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control  dealerExpReimType"
+                                        variant="label-hidden" name="dealerExpReimburseType"
+                                        options={dealerExpReimburseTypeOption} value={dealerExpReimburseTypeValue}
+                                        data-id="dealerExpReiType" onchange={handleDealerExpReimburseType}
+                                        label="Dealer Exp. Reimburse Type" disabled
+                                        message-when-value-missing="Complete this field" required>
+                                    </lightning-combobox>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Mfr Exp Reimburse Amt<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="mfrExpReimAmt" variant="label-hidden"
+                                    onchange={handleMfrExpReimburseAmt} value={mfrExpReimburseAmtValue}
+                                    disabled placeholder={phmfrExpReimburseAmtValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Mfr Exp. Reimburse %<abbr title="required"
+                                        class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="mfrExpReimper" variant="label-hidden"
+                                    onchange={handleMfrExpReimbursePercentage} value={mfrExpReimbursePercentageValue}
+                                    disabled step=".01"
+                                    placeholder={phmfrExpReimbursePercentageValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Mfr Exp Reimburse Type<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control  mfrExpReiType" variant="label-hidden"
+                                    name="mfrExpReimburseType" options={mfrExpReimburseTypeOption} data-id="mfrExpReiType"
+                                    value={mfrExpReimburseTypeValue} onchange={handleMfrExpReimburseType}
+                                    label="Mfr Exp. Reimburse Type" message-when-value-missing="Complete this field" disabled required>
+                                </lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Dealer Incentive Amount Main Dealer<abbr
+                                        title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="dealInceAmtMain" variant="label-hidden"
+                                    value={dealerIncentiveAmountMainValue} onchange={handleDealerIncentiveAmountMainDealer}
+                                    disabled placeholder={phdealerIncentiveAmountMainValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={forTwoWheeler}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Dealer Incentive Amount Main Dealer %<abbr
+                                            title="required" class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" step="0.01" data-id="dealInceMainPer" variant="label-hidden"
+                                        value={dealerMainPercentageValue} onchange={handleDealerMainPercentage} disabled></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Dealer Incentive Amount Sub Dealer<abbr
+                                            title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" data-id="dealInceAmtSub" variant="label-hidden"
+                                        value={dealerIncentiveAmountSubValue} onchange={handleDealerIncentiveAmountSubDealer}
+                                        disabled placeholder={phdealerIncentiveAmountSubValue} onfocusout={handlesubdealer}
+                                        required="twRefinancerequire"></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Dealer Incentive Amount Sub Dealer %<abbr
+                                            title="required" class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" step="0.01" data-id="dealInceSubPer"
+                                        onchange={handleDealerSubPercentage} value={dealerSubPercentageValue}
+                                        disabled variant="label-hidden"></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Dealer Discount to Customer<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="dealDiscCust" variant="label-hidden"
+                                    value={dealerDiscounttoCustomerValue} onchange={handleDealerDiscounttoCustomer}
+                                    disabled placeholder={phdealerDiscounttoCustomerValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Gift Through Dealer Amount<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="giftDealAmt" variant="label-hidden"
+                                    value={giftThroughDealerAmountValue} onchange={handleGiftThroughDealerAmount}
+                                    disabled placeholder={phgiftThroughDealerAmountValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={forTwoWheeler}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Gift Through Dealer Amount %<abbr title="required"
+                                            class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" step="0.01" data-id="giftDealPer" variant="label-hidden"
+                                        value={giftThroughDealerPercentageValue} onchange={handleGiftThroughDealerPercentage} disabled></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <!--CISP-13104 Hide Manufacturer Incentive from UI-->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" style={showOrHideStyle}>
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Manufacturer Incentive<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" data-id="mfrIncent" onchange={handlemanufacturerIncentive}
+                                        variant="label-hidden" disabled required="twRefinancerequire">
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <!--CISP-13104 Hide Manufacturer Incentive % from UI-->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" style={showOrHideStyle}>
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Manufacturer Incentive %<abbr title="required"
+                                            class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" step="0.01" data-id="mfrIncentPer"
+                                        variant="label-hidden" disabled onchange={handleMfrIncentivePercentage}>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSM Name1</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control  dsmName1" variant="label-hidden"
+                                    onchange={handleDsmNameOne} name="DsmNameone" options={dsmNameOneOptionList}
+                                    value={dsmNameOneValue} label="DsmNameone" disabled>
+                                </lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSM Incentive1<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="dsmIncent" variant="label-hidden"
+                                    value={dsmIncentiveOneValue} onchange={handleDsmIncentiveOne}
+                                    disabled placeholder={phdsmIncentiveOneValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={forTwoWheeler}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">DSM Incentive1 %<abbr title="required"
+                                            class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" step="0.01" data-id="dsmIncentPer" variant="label-hidden"
+                                        value={dsmOnePercentageValue} onchange={handleDsmOnePercentage} disabled></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSM Name2</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control  dsmName2" variant="label-hidden"
+                                    onchange={handleDsmNameTwo} name="dsmNameTwo" options={dsmNameTwoOptionList}
+                                    value={dsmNameTwoValue} label="dsmNameTwo" data-id="dsmNameTwo" disabled>
+                                </lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">DSM Incentive2<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="dsmInce" variant="label-hidden"
+                                    value={dsmIncentiveTwoValue} onchange={handleDsmIncentiveTwo}
+                                    disabled placeholder={phdsmIncentiveTwoValue}
+                                    required="twRefinancerequire"></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={forTwoWheeler}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">DSM Incentive2 %<abbr title="required"
+                                            class="slds-required">*</abbr><lightning-helptext content="Please enter value as a percentage"></lightning-helptext></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" step="0.01" data-id="dsmIncePer" variant="label-hidden"
+                                        value={dsmTwoPercentageValue} onchange={handleDsmTwoPercentage} disabled></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Non Dlr DSM Name1</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control  nondlrdsmName1"
+                                        onchange={handleNonDlrDsmNameOne} variant="label-hidden" name="nonDlrDsmNameOne"
+                                        options={nonDsmNameOneOptionList} value={nonDlrDsmNameOneValue} label="nonDlrDsmNameOne" disabled>
+                                    </lightning-combobox>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Non Dlr DSM Incentive1<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" data-id="nondlrDsmIncen1" variant="label-hidden"
+                                        value={nonDlrDsmIncentiveOneValue} onchange={handleNonDlrDsmIncentiveOne}
+                                        disabled placeholder={phnonDlrDsmIncentiveOneValue}></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Non Dlr DSM Name2</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-combobox class="slds-form-element__control  dlrdsmName2" variant="label-hidden"
+                                        name="nonDlrDsmNameTwo" options={nonDsmNameTwoOptionList} value={nonDlrDsmNameTwoValue}
+                                        onchange={handleNonDlrDsmNameTwo} label="nonDlrDsmNameTwo"
+                                        message-when-value-missing="Complete this field" disabled>
+                                    </lightning-combobox>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Non Dlr DSM Incentive2<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" value={nonDlrDsmIncentiveTwoValue} data-id="dlrdsmIncen2"
+                                        variant="label-hidden" onchange={handleNonDlrDsmIncentiveTwo}
+                                        disabled placeholder={phnonDlrDsmIncentiveTwoValue}
+                                        required></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Referred by<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control  refby" variant="label-hidden"
+                                    name="referredby" onchange={handleReferredby} label="Referred by" options={referredbyOption}
+                                    value={referredbyValue} disabled data-id="referredby"
+                                    message-when-value-missing="Complete this field" required>
+                                </lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:false={hideReferrerFields}> <!--CISP-3143-->
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Referrer Incentive <abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input data-id="refInc" variant="label-hidden" type="number"
+                                        value={referrerIncentiveValue} onchange={handlereferrerIncentive} min="0"
+                                        disabled placeholder={phreferrerIncentiveValue} required>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+            
+                        <template if:true={forTwoWheeler}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">Referrer Name <abbr lwc:if={isReferrerNameRequired} title="required"
+                                            class="slds-required">*</abbr> </label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input onchange={handleReferrerName} pattern={label.RegEx_Alphabets_Only}
+                                            message-when-pattern-mismatch={label.validValue} value={referrerNameValue}
+                                            data-id="refName" variant="label-hidden" disabled required={isReferrerNameRequired}>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Branch</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input data-id="branch" onchange={handleBranch} value={branchValue}
+                                    variant="label-hidden" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Employee No</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input data-id="empNo" onchange={handleEmpNo} value={empNoValue}
+                                    variant="label-hidden" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Employee Name</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input data-id="empName" variant="label-hidden" value={empNameValue}
+                                    onchange={handleEmpName} disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Deal No</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="dealNo" variant="label-hidden" value={dealNoValue}
+                                    onchange={handleDealNo} disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--CISP-13104 Hide Provisional Channel Cost from UI-->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" style={showOrHideStyle}>
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Provisional Channel Cost<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" data-id="proChnCost" variant="label-hidden"
+                                    onchange={handleProvisionalChannelCost} disabled required></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={displayDsaRcu}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">DSA Pay</label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="number" onchange={handleDSAPay} value={dsaPayValue} data-id="dsapay"
+                                        variant="label-hidden" disabled></lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <template if:true={forTwoWheeler}>
+                            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                <div class="slds-form-element  slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <label class="slds-form-element__label">RC Retention Charges<abbr title="required"
+                                                class="slds-required">*</abbr></label>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-input type="number" onchange={handleRCURetentionCharges}
+                                            value={rcuRetentionChargesValue} disabled data-id="rcuRet"
+                                            variant="label-hidden" required>
+                                        </lightning-input>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </template> -->
+                    </template>
+                </div>
+            </lightning-accordion-section>
+        </template>
+    </lightning-accordion>
+    </template>
+    <lightning-accordion class="example-accordion" active-section-name="C">
+        <lightning-accordion-section name="C" label="Others">
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Repayment Mode<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <!-- <template if:true={repaymentModeOption.data}> -->
+                                <lightning-combobox class="slds-form-element__control  repaymo" variant="label-hidden"
+                                    options={repaymentModeOptions} value={repaymentModeValue}
+                                    onchange={handleRepaymentMode} name="repaymentMode" label="Repayment Mode"
+                                    id="repaymentModeID" disabled={disabledrepay} required>
+                                </lightning-combobox>
+                            <!-- </template> -->
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <template if:true={retryPopUp}>
+                    <section id="modal1" role="dialog" tabindex="-1" aria-labelledby="modal-heading-02"
+                        aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-form slds-modal__container">
+                            <header class="slds-modal__header">
+                                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                                    {apiMessage}
+                                </h2>
+                            </header>
+                            <lightning-card variant="base">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-1">
+                                        <lightning-button
+                                            class="okbtn slds-m-top_medium slds-m-right_xx-large slds-m-bottom_large slds-m-left_xx-large slds-align_absolute-center"
+                                            onclick={handleRetry} variant="brand" label="OK"></lightning-button>
+                                    </div>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open modalBackdrops" id="modalBackdrops1"></div>
+                </template>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input class="slds-form-element__control advanceEMIid" type="checkbox"
+                                label="Advance EMI" name="advanceEMI" data-id="advanceEMIid" onchange={handleAdvanceEmi}
+                                checked={advanceEmiValue} disabled={advanceEmiDisabled}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Moratorium Days</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  monDay" variant="label-hidden"
+                                name="monitoriumDays" onchange={handleMonitoriumDays} label="Monitorium Days"
+                                options={monitoriumDaysOption} value={monitoriumDaysValue}
+                                message-when-value-missing="Complete this field" data-id="monitoriumDaysID"
+                                disabled={monitoriumDaysDisabled} required>
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <template lwc:if={isNotTractor}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Agreement Amount</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" value={agreementAmountValue} data-id="AgreeAmt"
+                                variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </template>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:if={isTractor}>
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Emi Amount</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" value={emiValue} data-id="emiAmt" variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12" lwc:else>
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Emi Amount</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" value={emiValue} data-id="emiAmt" variant="label-hidden"
+                                step=".01" label="disabledThis" disabled></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={showfieldvalue}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Inputted IRR</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" onchange={handleInputtedIRR} value={inputtedIrrValue}
+                                    data-id="InpIrr" variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Net IRR</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" onchange={handleNetIRR} value={netIrrValue} data-id="NetIrr"
+                                variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <template if:true={showfieldvalue}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Bank IRR</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" onchange={handleBankIRR} value={bankIrrValue}
+                                    data-id="bankIrr" variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Gross IRR</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="number" value={grossIRRValue} data-id="grossIrr"
+                                variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Installment Type<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control  Install" variant="label-hidden"
+                                options={installmentTypeOption} value={installmentTypeValue}
+                                onchange={handleInstallmentType} name="installmentType" label="Installment Type"
+                                id="installmentTypeID" required disabled={isInstallmentTypeDisabled}><!-- Ola Integration changes -->
+                            </lightning-combobox>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Offer Agreement Amount</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="number" value={offerAgreementAmountValue} data-id="AgreeAmt"
+                                    variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                <template lwc:if={isNotTractor}>
+                <template lwc:if={isNotD2C}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st EMI due date<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox label="1st EMI due date" class="firstEMIDate" value={emidate} onchange={handleEmiChange} data-id="firstEMIDate" variant="label-hidden" options={emidatelist} name="firstEMI"  disabled={emidisable} message-when-value-missing="Complete this field" required></lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">2nd EMI Due Date</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="text" value={x2EmiDate} data-id="secondEMI"
+                                    variant="label-hidden" label="2ndEMIDueDate" name="secondEMI"  disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                </template>
+                <!-- sftrac-84 -->
+                <template lwc:if={isTractor}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Installment Frequency<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control  freqInst" variant="label-hidden"
+                                options={installmentFrequency} value={installmentFrequencyValue}
+                                onchange={handleInstallmentFrequency} name="installmentFrequencyName" label="installment Frequency"
+                                id="installmentFrequencyId" required disabled={installFreqDisabled}> 
+                            </lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                
+                    <template if:true={showFundingInfo}>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Funding for Body<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                        value={fundingForBody}
+                                        onchange={handleFundingForBody} name="fundingForBody" label="Funding for Body"
+                                        id="fundingForBodyId" required disabled={disabledFundingBody}>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Funding for Chassis<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" variant="label-hidden"
+                                        value={fundingForChassis}
+                                        onchange={handleFundingForChassis} name="fundingForChassis" label="Funding for Chassis"
+                                        id="fundingForChassisId" required disabled={disabledFundingChassis}>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!--Addition logic from SFTRAC-84-->
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Loan Deal Date</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="date" value={loanDealDate} data-id="lnDealDate"
+                                    variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st EMI Date</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="date" value={firstEMIDate} data-id="x1stemiDate"
+                                    variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">2nd EMI Date</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="date" value={secondEMIDate} data-id="x2ndemiDate"
+                                    variant="label-hidden" label="disabledThis" disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- sftrac-84 -->
+            </div>       
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <template lwc:if={isNotTractor}>
+        <template lwc:if={enableInsSchedule}>
+        <template lwc:if={isNotD2C}>
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button class="indusPrimaryButton slds-button slds-button_brand insSchedule"
+                            onclick={handleInstallmentSchedule} disabled={disaibleInstalmentSchedule}>Installment Schedule</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        </template>
+    </template>
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+            <div
+                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                <button class="indusPrimaryButton slds-button slds-button_brand checkEli"
+                    onclick={verifyEligibility} disabled={disabledCheckEligibility}>
+                    {buttonLabel} <span lwc:if={iconButtonCaptureUpload}>&#x2714;</span><span
+                    lwc:if={imageUploadRedCross}>&#10060;</span></button>
+            </div>
+        </div>
+    </div>
+    <template if:false={fromVfPage}>
+    <template lwc:if={showFileUploadAndView}><c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordid} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+      </template>
+      <template lwc:if={isNotTractor}>
+    <template lwc:if={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinish}>
+            Next
+        </button>
+    </template>
+    <c-next-button-final-terms if:true={olaNextVisible} record-id={recordid}></c-next-button-final-terms>
+    </template>    
+    </template>
+    <template if:true={showErrModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+           aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+           <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                 <h2 class="slds-text-heading_medium slds-hyphenate">Warning</h2>
+              </header>
+              <div class="slds-modal__content slds-p-around_medium slds-text-color_error" id="modal-content-id-1">
+                 <p>The following fields have amounts less than 10. Do you still wish to proceed?</p>
+                 <br>
+                 <ul class="slds-list_dotted">
+                    <template for:each={modalErrFlds} for:item="errField">
+                        <li key={errField}>
+                            {errField}
+                        </li>
+                    </template>
+                </ul>
+              </div>
+              <footer class="slds-modal__footer">
+                <lightning-button class="slds-m-right_small cancel-button" variant="neutral" label="No" onclick={hideErrModal}></lightning-button>
+                <lightning-button class="submit-button" variant="brand" type="submit" label="Yes" onclick={handleYesChoice}></lightning-button>
+              </footer>
+     
+           </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+     </template>
+
+    <template lwc:if={isModalOpen}>
+        <c-i-n-d-_-l-w-c-_-installment-schedule record-id={recordid}  show-installment-model={isModalOpen} onclose={handleCloseModal} onsubmit={handleInsSubmit}></c-i-n-d-_-l-w-c-_-installment-schedule>
+    </template>
+</template>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_to_be_made_to__c</fullName>
+    <label>Payment to be made to ?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Main Dealer</fullName>
+                <default>false</default>
+                <label>Main Dealer</label>
+            </value>
+            <value>
+                <fullName>sub dealer</fullName>
+                <default>false</default>
+                <label>sub dealer</label>
+            </value>
+            <value>
+                <fullName>OEM</fullName>
+                <default>false</default>
+                <label>OEM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,146 @@
+<template>
+
+    <div class="slds-card" style="background-color:#FFF5E7;width:68%;margin:1em auto 1em">
+        <article class="slds-card" style="width:68%;background-color:White;margin:1em auto 1em">
+        <img src={getIndBankImage} width="150" height="120" class="slds-align_absolute-center"/>
+
+        <div style="height: 80px;text-align: center;vertical-align: middle;padding: 1%;">
+            <p style="font-size: 20px; color: rgba(140, 49, 55, 1);">Insurance consent</p>
+            </div>  
+     
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure"></div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title" >             
+                        Dear {applicant_name}<br/>
+                        With reference to your application {appNumber} with Induslnd Bank, 
+                        you have opted for the following insurance products:
+                        <br/><br/>
+                        {vehicleName}<br>
+                    </h2>
+                </div>
+                <div class="slds-no-flex"></div>
+            </header>
+        </div>
+            <div class="slds-card__body slds-card__body_inner slds-p-horizontal_large">
+                
+                <div class="slds-scrollable_x">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+
+                <tr class="slds-line-height_reset"  > 
+                    <th class="" scope="col" style="background-color:#800000;color:white">
+                        <div class="slds-truncate" title="Applicant Name">S.No</div>
+                    </th>
+                    <th class="" scope="col" style="background-color:#800000;color:white">
+                        <div class="slds-truncate" title="Applicant Name">Product Name</div>
+                    </th>
+                  <!----  <th class="" scope="col" style="background-color:#800000;color:white">
+                        <div class="slds-truncate" title="Stage">Insurance Plan</div>
+                    </th>
+                    <th class="" scope="col" style="background-color:#800000;color:white">
+                        <div class="slds-truncate" title="Stage">Funded/Non-Funded</div>
+                    </th>  --->
+                    <th class="" scope="col" style="background-color:#800000;color:white">
+                        <div class="slds-truncate" title="Stage">Premium (Incl GST)</div>
+                    </th>
+                </tr>
+                <template for:each={insuranceConsentDetails} for:item="insurvar" for:index="index">          
+                   
+                        
+                        <tr key={insurvar.Applicant__c} > 
+                            <td class="slds-truncate">{inscrementRowNo}</td>
+                            <td class="slds-truncate">{insurvar.Name}</td>                             
+                           <!---- <td class="slds-truncate">{insurvar.Insurance_Plan__c}</td>  
+                            <td class="slds-truncate">{insurvar.Funded_Non_funded__c}</td>  -->   
+                            <td class="slds-truncate">{insurvar.Amount__c}</td>
+                        </tr>
+
+
+               
+            </template>
+
+            </table>
+        </div>
+            <div style="padding:20px;font-size:15px">
+                {label.InusuranceConsentVf}
+                <br/><br/>
+                {label.InsuranceConsentvfagree}
+                </div>
+            </div>
+
+
+            <div>
+
+              file :   {fileURL}
+            </div>
+
+           
+
+            <div class="slds-box slds-theme_shade">  
+                <lightning-button label="Navigate To URL" onclick={navigateToRecordPage}> </lightning-button>  
+              </div>  
+
+              <div class="slds-box slds-theme_shade">  
+                <lightning-button label="navigateToVFPage" onclick={navigateToVFPage}> </lightning-button>  
+              </div>
+              <div class="slds-box slds-theme_shade">  
+                <lightning-button label="navigateURLPage" onclick={navigateURLPage}> </lightning-button>  
+              </div>
+
+              <div class="slds-m-around_medium">
+                <img src={imageURL2}>
+               
+            </div>
+
+              <div class="slds-size_12-of-12">
+                <lightning-carousel>
+                    <lightning-carousel-image
+                        src={imageURL}
+                        header="Selfie_Mon Jul 11 12:23:01 GMT+05:30 2022_Customer Image_794.JPEG"
+                        description="Company logo uploaded to a static resource"
+                        alternative-text="Company logo">
+                    </lightning-carousel-image>
+
+
+                    <lightning-carousel-image
+                    src=data:image/jpeg;base64,{imageURL}
+                    header="Selfie_Mon Jul 11 12:23:01 GMT+05:30 2022_Customer Image_794.JPEG"
+                    description="Company logo uploaded to a static resource"
+                    alternative-text="Company logo">
+                </lightning-carousel-image>
+                    </lightning-carousel>
+                    </div>
+                                    
+        
+                    
+                   
+
+            <footer class="slds-card__footer slds-align_absolute-center">
+                <div class="slds-clearfix" style="margin-right: 16px">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                                onclick={updateConsent} disabled={isAgreeButtonDisabled} style="background-color:#800000;color:white">
+                                Agree
+                                <span if:true={iconButton}>&#x2714;</span></button>
+                        </div>
+                    </div>
+                </div>
+
+           <!----     <div class="slds-clearfix" style="margin-right: 16px">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryButton slds-button slds-button_brand colorgreen"
+                                onclick={handleClickDiagree} disabled={isDisagreeButtonDisabled} style="background-color:#800000;color:white">
+                                Disagree
+                                <span if:true={iconButton}>&#x2714;</span></button>
+                        </div>
+                    </div>
+                </div> -->
+            </footer>        
+        </article>
+    </div>
+</template>

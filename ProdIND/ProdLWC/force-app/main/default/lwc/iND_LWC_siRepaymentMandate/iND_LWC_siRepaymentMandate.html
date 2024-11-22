@@ -1,0 +1,35 @@
+<template>
+    <lightning-layout class="slds-box slds-size_12-of-12 slds-text-color_default" multiple-rows="true">
+
+        <div class="slds-p-around_small slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Initiation Method</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox name="initiationMethodField" disabled={isDisabledInitiateMethod} data-id="initiationMethodId" variant="label-hidden"
+                        options={initiationOption} value={initiationMethod} required onchange={handleInitiationChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+
+
+        <lightning-accordion active-section-name="\{accordionActiveSection}" class="slds-size_12-of-12">
+            <template if:true={onlineFlag}>
+                <lightning-accordion-section class="slds-accordion__summary-heading headingtext" name="online"
+                    label="For Online">
+                    <c-i-N-D-_-L-W-C-_si-Online-Repayment-Mandate current-step={currentStep} record-id={recordId} applicant-id={applicantId} repayment-id={repaymentId}></c-i-N-D-_-L-W-C-_si-Online-Repayment-Mandate>
+                </lightning-accordion-section>
+            </template>
+            <template if:true={offlineFlag}>
+                <lightning-accordion-section class="slds-accordion__summary-heading headingtext" name="offline"
+                    label="For Offline">
+
+                    <c-i-N-D-_-L-W-C-_si-Offline-Repayment-Mandate current-step={currentStep} record-id={recordId} applicant-id={applicantId} repayment-id={repaymentId} ondisableinitiation={disableInitiationEventHandler}></c-i-N-D-_-L-W-C-_si-Offline-Repayment-Mandate>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+
+    </lightning-layout>
+</template>

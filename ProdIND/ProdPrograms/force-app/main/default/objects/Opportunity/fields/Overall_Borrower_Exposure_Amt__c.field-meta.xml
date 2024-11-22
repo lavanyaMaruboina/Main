@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Overall_Borrower_Exposure_Amt__c</fullName>
+    <description>This is used to calculate the overall exposure amount of Borrower and Co-borrowers.</description>
+    <label>Overall Borrower Exposure Amt</label>
+    <summarizedField>Exposure__c.Current_Demand__c</summarizedField>
+    <summaryFilterItems>
+        <field>Exposure__c.Type__c</field>
+        <operation>equals</operation>
+        <value>Borrower Exposure, Co-Borrower Exposure</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Exposure__c.Loan_Application__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

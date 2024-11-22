@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Reassign_Owner_Logs</fullName>
+    <columns>NAME</columns>
+    <columns>Reassignment_Type__c</columns>
+    <columns>Loan_Application__c</columns>
+    <columns>Case__c</columns>
+    <columns>Case_RecordType__c</columns>
+    <columns>Previous_Record_Owner__c</columns>
+    <columns>New_Record_Owner__c</columns>
+    <columns>Reassignment_Requestor__c</columns>
+    <columns>Reassignment_Approver__c</columns>
+    <columns>Approval_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Approval_Status__c</field>
+        <operation>equals</operation>
+        <value>Pending</value>
+    </filters>
+    <label>Pending Reassign Owner Logs</label>
+</ListView>

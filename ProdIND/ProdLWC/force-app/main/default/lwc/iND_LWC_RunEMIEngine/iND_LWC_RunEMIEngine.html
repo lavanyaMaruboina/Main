@@ -1,0 +1,39 @@
+<template>
+    <!-- <template if:true={showRunEMIModel}> -->
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  slds-modal_large">
+            <div class="slds-modal__container" style="max-width: 80%!important;">
+                <header class="slds-modal__header" style="background: #8C3137;">
+                    <button style="background-color: grey"
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse closebtn" title="Close"
+                        onclick={closeFoirCalculate}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <div>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"
+                            style="color: white;margin-block: -9px">
+                            FOIR Calculation
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable_x"
+                    style="overflow-y: auto;" id="modal-content-id-12">
+                    <lightning-tabset active-tab-value={activeTabValue}>
+                        <template for:each={applicantTypeList} for:item="applicantType">
+                            <lightning-tab label={applicantType} value={applicantType}
+                                key={applicantType} onactive={handleActiveSecondSubTab}>
+                                    <c-i-n-d-_-l-w-c-_-f-o-i-r-calculate record-id={recordId}
+                                        active-tab={applicantType} is-tw={isTw} is-pv={isPv}
+                                        tablength={tabListCount} applicant-id={applicantId} oncoborrower={navigateCoborrower}
+                                        current-stage={currentStage}>
+                                    </c-i-n-d-_-l-w-c-_-f-o-i-r-calculate>
+                            </lightning-tab>
+                            </template>
+                    </lightning-tabset>
+            </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    <!-- </template> -->
+</template>

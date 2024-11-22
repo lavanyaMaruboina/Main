@@ -1,0 +1,613 @@
+<template>
+    <lightning-card>
+        <template if:true={isLoading}>
+            <div>
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+        <template if:true={isDeleteButton}>
+            <lightning-button label="Delete" slot="actions" disabled={isDeleteDisable} onclick={deleteIncomeSource}>
+            </lightning-button>
+        </template>
+        <div class="slds-m-bottom_large slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Income
+                Source</label>
+        </div>
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Annual Income<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="incomeDec" variant="label-hidden" data-id="insDecVal" onchange={handleInputFieldChange}
+                            value={incomeIncSource} formatter="currency" placeholder="Enter Income" message-when-value-missing={label.incomeAmountMandatory}
+                            step="0.01" name='incomeFromField' required pattern={label.Regex_NumberOnly}
+                            disabled={isIncomeDetailDisable} message-when-pattern-mismatch={label.Incomemessage} >
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Name of Recipient's Bank</label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <c-I-N-D_-L-W-C_-Custom_-Lookup is-value-selected={isBankSelected} selected-name={bankName}
+                            object-name="Bank_Masters__c" fetch-field="Name"
+                            is-custom-lookup-field-disabled={isCustomLookupFieldDisabled} search-field="Name"
+                            filter-field="" filter-term=" " onlookupselected={selectedStateHandler}
+                            onclearvalue={selectedStateHandler} select-field-name="Name" value={bankName}
+                            disable-value={isIncomeDetailDisable} inputdisabled={lookupInputDisabled}>
+                        </c-I-N-D_-L-W-C_-Custom_-Lookup>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Bank Account Number </label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" data-id="bankNumber" onchange={handleInputFieldChange}
+                            value={accountNum} placeholder="Bank Account Number" pattern={label.BankAccountNumberRegex}
+                            message-when-pattern-mismatch="Enter a valid Account number"
+                            message-when-value-missing="Please enter Bank Account Number" name='accountNumberField'
+                            disabled={isIncomeDetailDisable}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" type="checkbox" label="Salaried"
+                            name="salaried" onchange={handleSalaried} data-id="salaried"
+                            disabled={isIncomeDetailDisable} checked={isSalaried} required>
+                            <!-- CISP-2752 -->
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" type="checkbox" label="Self Employed"
+                            name="selfEmployed" onchange={handleSelfEmployed} data-id="selfEmployed"
+                            checked={isSelfEmployed} disabled={isIncomeDetailDisable} required></lightning-input>
+                            <!-- CISP-2752 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template if:true={isShowSaleriedNonSalired}>
+            <div class="slds-form slds-grid slds-wrap">
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Employer/Business Name<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input variant="label-hidden" data-id="insDecVal"
+                                onchange={handleInputFieldChange} value={employerName} name="employerNameField" required
+                                disabled={isIncomeDetailDisable}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Current Years in employment/business<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <template if:true={currentYearsValues.data}>
+                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="currentYearsField" value={currentYearsEmployment}
+                                    disabled={isIncomeDetailDisable} options={currentYearsValues.data.values}
+                                    variant="label-hidden" required>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Total Years in employment/business<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <template if:true={totalYearsValues.data}>
+                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="totalYearsField" value={totalYearsEmploymnet} disabled={isIncomeDetailDisable}
+                                    options={totalYearsValues.data.values} variant="label-hidden" required>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form slds-grid slds-wrap">
+                <template if:false={isTractor}>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Profile<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} data-id="profile"
+                                    name="profileField" value={profile} label={profile} disabled={isIncomeDetailDisable}
+                                    variant="label-hidden" options={profileValuesData} required><!-- //Ola Integration changes -->
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">BSR occupation</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <template if:true={bsrValues.data}>
+                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    data-id="bsrOcc" name="bsrField" value={bsrOccupation}
+                                    disabled={isIncomeDetailDisable} variant="label-hidden"
+                                    options={bsrValues.data.values}>
+                                </lightning-combobox>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </br>
+            <template if:true={showURN}>
+                <template if:true={showRegisterationOptions}>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <label class="slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Are You Registered with any of the following?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="MCI"
+                                        name="MCI" onchange={handleMCI} data-id="mci" disabled={isMCIDdisabled}
+                                        checked={mciChecked}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="ICAI"
+                                        name="ICAI" onchange={handleICAI} data-id="icai" disabled={isICAIDisable}
+                                        checked={icaiChecked}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" type="checkbox" label="ICWAI"
+                                        name="ICWAI" onchange={handleICWAI} data-id="icwai" disabled={isICWAIMDisable}
+                                        checked={icwaiChecked}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- <template if:true={showAreYouRegWith}>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control notPermanent" type="toggle"
+                                        message-toggle-active="Yes" message-toggle-inactive="No"
+                                        checked={regAnyFollowing} label="Are You Registered with any of the following?"
+                                        data-id="regWithAny" name="Are You Registered with any of the following?"
+                                        disabled={isIncomeDetailDisable} onchange={handleRegistered}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template> -->
+                <div class="slds-form slds-grid slds-wrap">
+                    <template if:true={showURNField}>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Unique Registeration Number<abbr
+                                            title="required" class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="urn" name="urnField"
+                                        onchange={handleInputFieldChange} disabled={isURNDisabled}
+                                        value={uniqueRegNumber} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={showAreaOfReg}>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Area of registration<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={areaOfRegValues.data}>
+                                        <lightning-combobox class="slds-form-element__control" data-id="areaReg"
+                                            onchange={handleInputFieldChange} name="areaOfRegField"
+                                            value={areaOfRegisteration} disabled={isAreaOfRegDisabled}
+                                            options={areaOfRegValues.data.values} variant="label-hidden" required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={showYearOfReg}>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Year of registration<abbr title="required"
+                                            class="slds-required">*</abbr></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="yearReg" name="yearOfRegField"
+                                        onchange={handleInputFieldChange} value={yearOfRegisteration}
+                                        disabled={isYearOfRegDisabled} required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template if:true={showIncomeCreditBankCheck}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control notPermanent"
+                                    data-id="incomeCreditedTobank" type="toggle" message-toggle-active="Yes"
+                                    message-toggle-inactive="No" checked={isIncomeCreditedTobank}
+                                    label="Is your income credited to your bank account?"
+                                    name="Is your income credited to your bank account?"
+                                    onchange={handleIncomeCreditedToBankAccount} disabled={isIncomeDetailDisable}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </br>
+            <template if:true={showCheckRegiateration}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                disabled={isCheckRegButtonDisable} onclick={checkRegisteration}>
+                                Check Registration <span if:true={checkRegButton}> &#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showItrTemplate}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" type="toggle"
+                                    message-toggle-active="Yes" message-toggle-inactive="No" checked={doFileITRChecked}
+                                    label="Do You File ITR?" name="Do You File ITR?" onchange={handleDoFileITR}
+                                    data-id="fileITR" disabled={isDoYouFileITRDisabled}></lightning-input>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showGstTemplate}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="slds-form-element__control" type="toggle"
+                                message-toggle-active="Yes" message-toggle-inactive="No" checked={doFileGSTChecked}
+                                label="Do You File GST?" name="Do You File GST?" onchange={handleDoFileGST}
+                                data-id="fileGST" disabled={isIncomeDetailDisable}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showIncomeOptions}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" type="checkbox"
+                                    label="Online Via Link?" name="Online Via Link?" onchange={handleOnlineViaLink}
+                                    data-id="onlineLink" disabled={isIncomeDetailDisable} checked={onlineLinkChecked}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" type="checkbox"
+                                    label="Upload Online Via Link?" name="Upload Online Via Link?"
+                                    onchange={handleUploadOnlineViaLink} data-id="uploadOnlineLink"
+                                    disabled={isIncomeDetailDisable} checked={onlineUploadLinkChecked}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={showScanAndDevice}>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="slds-form-element__control" type="checkbox"
+                                        label="Scan using device" name="Scan using device" onchange={handleScanDevice}
+                                        data-id="scanDevice" disabled={isIncomeDetailDisable}
+                                        checked={scanDeviceChecked}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+           <!--CISP: 2973 start -->
+            <template if:true={isOnlineViaLinkChecked}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">SMS to be triggered to<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <template if:true={SMSNeedToTrigger.data}>
+                            <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                            name="SMSTobeTriggered" value={SMSTobeTriggered}
+                            disabled={isSMSTobeTriggered} options={SMSNeedToTrigger.data.values}
+                            variant="label-hidden" required>
+                        </lightning-combobox>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+             <template if:true={isExecutive}>
+
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Mobile Number <abbr
+                                title="required" class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input type="text" name="ExecutiveNumber" pattern={label.RegEx_Number} value={ExecutiveMobileNo}
+                            max-length="10" min-length="10"   disabled={isExeNose} onchange={handleInputFieldChange} ></lightning-input>
+                        </div>
+                    </div>
+                </div>
+             </template>
+<!--CISP: 2973 end -->
+            <template if:true={showITR}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Assesment Year<abbr title="required"
+                                    class="slds-required">*</abbr></label></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange}
+                                    name="assesmentYearField" options={assessmentYearsValues} value={assesmentYear}
+                                    disabled={isIncomeDetailDisable} variant="label-hidden" required>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={showDocType}>
+                        <div
+                            class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Document Type<abbr title="required"
+                                        class="slds-required">*</abbr></label></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={documentTypesValues.data}>
+                                        <lightning-combobox class="slds-form-element__control"
+                                            onchange={handleInputFieldChange} name="docTypeField" value={documentType}
+                                            options={documentTypesValues.data.values} disabled={isIncomeDetailDisable}
+                                            variant="label-hidden" required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            </br>
+            <template if:true={showLinkSection}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">From Month</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control" type="month" variant="label-hidden"
+                                    name="fromMonthField" data-id="fromMonth" disabled={fromDateDisabled}
+                                    onchange={handleInputFieldChange} value={fromMonth}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">To Month<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control loanAmt" type="month"
+                                    variant="label-hidden" name="toMonthField" data-id="toMonth"
+                                    disabled={toDateDisabled} onchange={getDate} value={toMonth} required>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showPasswordStatement}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">Password for pdf protected statement</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control incomeDec" name="passwdForPdfField"
+                                    variant="label-hidden" disabled={isIncomeDetailDisable}
+                                    onchange={handleInputFieldChange} value={passwdForPdf}></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showGST}>
+                <div class="slds-form slds-grid slds-wrap">
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">GST Number<abbr title="required"
+                                        class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input class="slds-form-element__control incomeDec" name="gstNumberField"
+                                    variant="label-hidden" disabled={isIncomeDetailDisable}
+                                    onchange={handleInputFieldChange} value={gstNumber} required></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            </br>
+            <template if:true={showCaptureITR}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                onclick={captureITR} disabled={captureITRDisabled} data-id="captureITR">
+                                Capture {documentType} <span if:true={checkITRButton}> &#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showCaptureBankStatement}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                onclick={captureBankStatement} disabled={disableBS}  data-id="captureBS">
+                                Capture Bank statement <span if:true={bankStatementSuccessTick}>&#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showIncomeAssesment}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand " data-id="incomeAssesment"
+                                disabled={isIncomeAssesmentButtonDisable} onclick={checkIncomeAssesment} >
+                                Income Assesment <span if:true={checkAssessment}> &#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+                <template if:true={showSave}>
+                    <div class="slds-clearfix">
+                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                            <div
+                                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                    disabled={disableSave} onclick={handleSave}>
+                                    Save Income Source <span if:true={checkSaveButton}> &#x2714;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={showResend}>
+                    <div class="slds-clearfix">
+                        <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                            <div
+                                class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                    disabled={disableResend} onclick={handleResend}>
+                                    Resend
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            <!-- </template> -->
+            <template if:true={showIncomeAnalysis}>
+                <div class="slds-clearfix">
+                    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                        <div
+                            class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                onclick={handleIncomeAnalysis} disabled={disableIncomeAnalysis}>
+                                Income Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+        <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+                currentloanapplicationid={currentOppRecordId} currentapplicantid={applicantId}
+                uploadviewdocpopup={uploadViewDocFlag} doctype={docType} showdocview={showDocView}
+                showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+                documentrecordidfromparent={documentRecordId} ondocdelete={docDeleted}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+        </template>
+    </lightning-card>
+</template>

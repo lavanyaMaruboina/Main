@@ -1,0 +1,160 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner
+            alternative-text="Loading"
+            size="medium"
+        ></lightning-spinner>
+    </template>
+    <lightning-card class="slds-text-align_center">
+        <lightning-layout vertical-align="space" multiple-rows>
+            <lightning-layout-item
+                padding="around-small"
+                size="12"
+                large-device-size="6"
+                medium-device-size="6"
+                small-device-size="12"
+            >
+                <div class="li-container-div">
+                    <button
+                        name="createNewLeadBtn"
+                        onclick={handleClick}
+                        class="ibl-btn-red"
+                    >
+                        Create New Lead
+                    </button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item
+                padding="around-small"
+                size="12"
+                large-device-size="6"
+                medium-device-size="6"
+                small-device-size="12"
+            >
+                <div class="li-container-div">
+                    <button
+                        name="allLoanApplicationsBtn"
+                        onclick={handleClick}
+                        class="ibl-btn-red"
+                    >
+                        Lead History
+                    </button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item
+                padding="around-small"
+                size="12"
+                large-device-size="6"
+                medium-device-size="6"
+                small-device-size="12"
+            >
+                <div class="li-container-div">
+                    <button
+                        name="disbursedLeadBtn"
+                        onclick={handleClick}
+                        class="ibl-btn-red"
+                    >
+                    Disbursed Lead Status
+                    </button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item
+                padding="around-small"
+                size="12"
+                large-device-size="6"
+                medium-device-size="6"
+                small-device-size="12"
+            >
+                <div class="li-container-div">
+                    <button
+                        name="rcLimitStatusBtn"
+                        onclick={handleClick}
+                        class="ibl-btn-red"
+                    >
+                        RC Limit Status
+                    </button>
+                </div>
+            </lightning-layout-item>
+            <div class="slds-align_absolute-center">
+                <template if:true={showRCLimitStatus}>
+                    <div class="li-container-div rclimit-container">
+                        <!-- <div
+                            class="ibl-btn-red"
+                            style="width: 300px; height: 50px"
+                        >
+                            <p>RC Limit Status</p>
+                        </div> -->
+                        <table class="rclimit-table" style="width: 100%">
+                            <tr style="background-color: #dfdfe2">
+                                <th class="rcth">Limit</th>
+                                <th class="rcth">Vehicle Limit (units)</th>
+                                <th class="rcth">Amount Limit (INR)</th>
+                                <th class="rcth">Maximum Ageing (days)</th>
+                            </tr>
+                            <tr>
+                                <td class="rctd">Sanctioned</td>
+                                <td class="rctd">{sanctionedNoOfCars}</td>
+                                <td class="rctd">{sanctionedAmount}</td>
+                                <td class="rctd">{sanctionedNoOfDays}</td>
+                            </tr>
+                            <tr>
+                                <td class="rctd">Available</td>
+                                <td class="rctd" style={Vehilce}>{availableNoOfCars}</td>
+                                <td class="rctd" style={Amount}>{availableAmount}</td>
+                                <td class="rctd" style={Ageing}>{availableNoOfDays}</td>
+                            </tr>
+                        </table>
+                        <template if:true={rcLimitLoading}>
+                            <lightning-spinner
+                                alternative-text="Loading"
+                                size="small"
+                            ></lightning-spinner>
+                        </template>
+                        <br />
+                    
+                    <!--Added table for CISP-12436 start-->
+                    <br/>
+                    <p class="rcth" style="text-decoration: underline;"> RC LIMIT DETAILS</p>
+                    <br/>
+                    <template if:true={rcLimitData}>
+                        <table class="rclimit-table" style="width: 100%">
+                            <thead>
+                                <tr style="background-color: #dfdfe2">
+                                    <th class="rcth">S.no</th>
+                                    <th class="rcth">Deal No</th>
+                                    <th class="rcth">Location</th>
+                                    <th class="rcth">State</th>
+                                    <th class="rcth">Customer Name</th>
+                                    <th class="rcth">Deal Status</th>
+                                    <th class="rcth">Disbursed Amount</th>
+                                    <th class="rcth">Date of Disbursement</th>
+                                    <th class="rcth">PDD Days</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={rcLimitData} for:item="record">
+                                    <tr key={record.Id}>
+                                        <td class="rctd">{record.rowIndex}</td>
+                                        <td class="rctd">{record.Deal_No__c}</td>
+                                        <td class="rctd">{record.Bl_Name__c}</td>
+                                        <td class="rctd">{record.State_Name__c}</td>
+                                        <td class="rctd">{record.Customer_Name__c}</td>
+                                        <td class="rctd">{record.Deal_Status__c}</td>
+                                        <td class="rctd">{record.Fin_Amt__c}</td>
+                                        <td class="rctd">{record.Disbursed_Date__c}</td>
+                                        <td class="rctd">{record.PDD_Days__c}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                    <template if:false={rcLimitData}>
+                        No RC limit Data found!
+                    </template>
+                </div>
+                    <!--Added table for CISP-12436 end-->
+                </template>
+            </div>
+        </lightning-layout>
+    </lightning-card>
+</template>

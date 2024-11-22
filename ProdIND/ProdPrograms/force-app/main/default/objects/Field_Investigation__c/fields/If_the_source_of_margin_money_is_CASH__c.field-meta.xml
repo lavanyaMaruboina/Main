@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>If_the_source_of_margin_money_is_CASH__c</fullName>
+    <label>If the source of margin money is CASH</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BORROWED FROM MARKET</fullName>
+                <default>false</default>
+                <label>BORROWED FROM MARKET</label>
+            </value>
+            <value>
+                <fullName>SOLD BY CROP</fullName>
+                <default>false</default>
+                <label>SOLD BY CROP</label>
+            </value>
+            <value>
+                <fullName>SAVINGS</fullName>
+                <default>false</default>
+                <label>SAVINGS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

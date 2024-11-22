@@ -1,0 +1,57 @@
+lightning-input-field{
+    color: black;
+}
+
+lightning-input {
+    color: black;
+}
+
+div{
+    color: black;
+}
+
+lightning-primitive-icon > svg{
+    fill: white !important;
+}
+
+.slds-text-color_error{
+    color:#EA001E !important;
+}
+
+/*SFTRAC-1717 changes starts*/
+
+.slds-modal__header,
+.slds-modal__footer {
+    flex-shrink: 0;
+}
+
+.slds-modal__close {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    background-color: rgb(160, 157, 157); /* Set background color to black */
+    border-radius: 50%; /* Make it a circle */
+    padding: 5px; /* Adjust padding to center the icon */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .slds-modal__container {
+        max-width: 95%;
+        max-height: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .slds-modal__container {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+
+    .slds-modal__close {
+        top: 5px;
+        right: 5px;
+    }
+}
+/*SFTRAC-1717 changes ends*/

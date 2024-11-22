@@ -1,0 +1,579 @@
+<template>
+	<template if:true={validateScreenVisiblity}>
+		<template if:true={loadComponent}>
+			<lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+
+				<lightning-accordion allow-multiple-sections-open="true"
+					label="IHM receipts &amp; IHM receipts 1 &amp; Invoice break up &amp;Total non-funded insurance &amp;pay-ins &amp;EMI amount(in case od adv. EMI) &amp; Other Charges &amp; IHM calculation &amp; pay-ins(this section is for used vehical )"
+					active-section-name={activeSections} class="slds-size_12-of-12">
+					<template if:true={IsTractor}><!--SFTRAC-1715 start-->
+					<div class="slds-form slds-grid slds-wrap">
+						<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+							<div class="slds-form-element slds-grid slds-wrap">
+								<div class="slds-col slds-size_1-of-3">
+									<label class="slds-form-element__label"> RC retention applicable </label>
+								</div>
+								<div class="slds-col slds-size_2-of-3">
+									<template if:true={rcRetentionOptionsListTractor.data}>
+										<lightning-combobox class="slds-form-element__control" onchange={handleInputFieldChange} 
+											name="rcRetentionApplicableField" value={rcRetentionApplicable} variant="label-hidden" 
+											data-index={index} options={rcRetentionOptionsListTractor.data.values} disabled={isReadOnly}>
+										</lightning-combobox>
+									</template>
+								</div>
+							</div>
+						</div>
+						<template if:true={rcRetentionApplicableYes}>
+							<div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+								<div class="slds-form-element slds-grid slds-wrap">
+									<div class="slds-col slds-size_1-of-3">
+										<label class="slds-form-element__label"> RC Hold Amount </label>
+									</div>
+									<div class="slds-col slds-size_2-of-3">
+										<lightning-input class="slds-form-element__control" label="Enter RC Hold Amount" type="number" onchange={handleInputFieldChange} 
+											name="rcHoldAmountField" value={rcHoldAmount} variant="label-hidden" data-index={index} disabled={isReadOnly}>
+										</lightning-input>
+									</div>
+								</div>
+							</div>
+						</template>
+					</div>
+				</template><!--SFTRAC-1715 end-->
+					<template if:false={isUsedRefinancePV}>
+						<lightning-accordion-section class=" slds-accordion__summary-heading" name="Invoice break up"
+							label="Invoice break up">
+
+							<div class="slds-grid slds-wrap slds-m-top_x-small">
+								<template if:false={IsTractor}>
+									<div class="slds-col slds-size_4-of-12">
+										<lightning-input data-id="other-inputs"
+										data-name="Exshoroom_price__c" value={ihmDetails.exshoroomPrice} variant="label-inline" disabled
+											label="Ex-showroom price 	">
+										</lightning-input>
+									</div>
+									<div class="slds-col slds-size_4-of-12">
+										<lightning-input data-id="other-inputs"
+										data-name="On_Road_Price__c" value={ihmDetails.onRoadPrice} variant="label-inline" disabled label="On-Road Price (Ex-showroom + RTO + Motor Insurance + other charges)">
+										</lightning-input>
+									</div>
+								</template>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs"
+									data-name="Invoice_price_B__c" value={ihmDetails.invoicePrice} variant="label-inline" disabled
+										label="Invoice price (B)	">
+									</lightning-input>
+								</div>
+							</div>
+						</lightning-accordion-section>
+					</template>
+
+					<template if:false={isUsedRefinancePV}>
+						<lightning-accordion-section class=" slds-accordion__summary-heading" name="Pay-ins"
+									label="Pay-ins">
+
+									<div class="slds-grid slds-wrap slds-m-top_x-small">
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input data-id="other-inputs"
+											data-name="Pay_ins_Service_charges__c" value={finalTermDetails.serviceCharges} variant="label-inline" disabled
+												label="Service charges">
+											</lightning-input>
+										</div>
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input data-id="other-inputs"
+											data-name="Pay_ins_Documentation_charges__c" value={finalTermDetails.documentationCharges} variant="label-inline"
+												disabled label="Documentation charges">
+											</lightning-input>
+										</div>
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input data-id="other-inputs"
+											data-name="Pay_ins_Stamping_charges__c" value={finalTermDetails.stampingCharges} variant="label-inline"
+												disabled label="Stamping charges 	">
+											</lightning-input>
+										</div>
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input data-id="other-inputs"
+											data-name="Pay_ins_Trade_certificate_fee__c" value={finalTermDetails.tradeCertificate} variant="label-inline"
+												disabled label="Trade certificate fee">
+											</lightning-input>
+										</div>
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input data-id="other-inputs"
+											data-name="Pay_ins_Due_date_shift_charges__c" value={finalTermDetails.dueDateShiftCharges} variant="label-inline"
+												disabled label="Due date shift charges">
+											</lightning-input>
+										</div>
+										<div class="slds-col slds-size_4-of-12">
+											<lightning-input data-id="other-inputs" data-name="Total_of_above_Pay_ins_D__c"
+												value={totalOfAbovePay} variant="label-inline" label="Total - of above Pay ins (D)"
+												disabled>
+											</lightning-input>
+										</div>
+									</div>
+
+						</lightning-accordion-section>
+					</template>
+
+					<template if:true={valuationFieldVisible}>
+						<lightning-accordion-section class=" slds-accordion__summary-heading" name={paysInsUsedAccordianLabel}
+							label={paysInsUsedAccordianLabel}>
+
+							<div class="slds-grid slds-wrap slds-m-top_x-small">
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Pay_ins_Service_charges__c" value={finalTermDetails.serviceCharges} variant="label-inline" disabled
+										label="Service charges">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Pay_ins_Documentation_charges__c" value={finalTermDetails.documentationCharges} variant="label-inline" disabled
+										label="Documentation charges">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Pay_ins_Stamping_charges__c" value={finalTermDetails.stampingCharges} variant="label-inline" disabled
+										label="Stamping charges 	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Pay_ins_Trade_certificate_fee__c" value={finalTermDetails.tradeCertificate} variant="label-inline" disabled
+										label="Trade certificate fee">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Pay_ins_Due_date_shift_charges__c" value={finalTermDetails.dueDateShiftCharges} variant="label-inline" disabled
+										label="Due date shift charges">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_of_above_Pay_ins_D__c" value={totalOfAbovePay}
+										variant="label-inline" label="Total pay-ins (A)" disabled>
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_nonfunded_insurance_B__c" value={toalNonFundedIns}
+										disabled variant="label-inline" label="Total non-funded insurance (B)">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_EMI_to_be_considered_for_IHM_I__c" value={totalEmiToConsider} disabled
+										variant="label-inline" label="Advance EMI amount (if applicable) (C)">
+									</lightning-input>
+								</div>
+								<template if:true={borneDropdownShow}>
+									<div class="slds-col slds-size_4-of-12">
+										<lightning-combobox disabled={isReadOnly} data-name="Valuation_Charges_Borne_By__c" name="borneField"
+											variant="label-inline" label="Valuation Charges Borne By" options={borneByOptions} value={borneValue}
+											onchange={inputChangeHandler} required> </lightning-combobox>
+											<!-- CISP-2512 Added required -->
+									</div>
+								</template>
+								<div class="slds-col slds-size_4-of-12">
+									<template if:true={valuationFieldVisible}>
+										<lightning-input data-id="other-inputs" data-name="Valuation_charges_D__c" value={ihmvaluationcharges} onchange={inputChangeHandler} name="valuationField"
+											disabled={valuationDisabled} variant="label-inline" label="Valuation charges (D)" type="number">
+										</lightning-input>
+									</template>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="SA_account_opening_charges__c"
+										value={_saAccountOpeningCharge} disabled variant="label-inline"
+										label="SA account opening charges (if applicable) (E)">
+									</lightning-input>
+								</div>
+								<template if:true={isUsedRefinancePV}>
+									<div class="slds-col slds-size_4-of-12">
+										<lightning-input disabled={isReadOnly} data-id="other-inputs" data-name="IHM_Recovery__c"
+											name="ihmRecoveryField" value={ihmRecoveryValue} variant="label-inline" label="IHM Recovery" onchange={inputChangeHandler} required pattern="^[0-9]*$" message-when-pattern-mismatch="Enter a valid value.
+											">
+										</lightning-input>
+									</div>
+								</template>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Margin_money_to_be_deducted_from_disburs__c"
+										value={getTotalMarginDedDis} variant="label-inline" label={moneyDisburstmentInputLabel} disabled>
+									</lightning-input>
+								</div>
+
+								<template if:true={isUsedRefinancePV}>
+									<div class="slds-col slds-size_4-of-12">
+										<lightning-combobox data-id="cvo-inputs" data-name="Select_Yes_if_IHM_details_are_correct__c"
+											value={ihmDetails.selectYesIfIHMdetailsAreCorrect} disabled={cvoEnabledField} variant="label-inline" label="Please select Yes, if IHM details are correct 		
+																		" options={yesNoOptions}>
+										</lightning-combobox>
+									</div>
+									<div class="slds-col slds-size_4-of-12">
+										<lightning-input data-id="cvo-inputs" data-name="CVO_Remarks__c" value={ihmDetails.cvoRemarks}
+											disabled={cvoEnabledField} variant="label-inline" label="Remarks">
+										</lightning-input>
+									</div>
+								</template>
+							</div>
+
+						</lightning-accordion-section>
+					</template>
+					
+					<template if:false={isUsedRefinancePV}>
+						<lightning-accordion-section class=" slds-accordion__summary-heading" name="Total non-funded Insurance"
+							label="Total non-funded Insurance">
+
+							<div class="slds-grid slds-wrap slds-m-top_x-small">
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Is_motor_insurance_funded__c"
+										value={ihmDetails.isMotorInsuranceFunded} variant="label-inline" disabled
+										label="Is motor insurance funded ?		">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Xst_Year_Motor_Insurance_Premium_X__c"
+										value={ihmDetails.xstYearMotorInsurancePremium} variant="label-inline" disabled label="1st Year Motor Insurance Premium (X)		
+																	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_Non_funded_insurance_amount__c"
+										value={_totalNonFundedInsAmo} variant="label-inline"
+										label="Total Non-funded insurance amount (except Motor) (Y)	" disabled>
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_nonfunded_insurance_C__c" value={toalNonFundedInsC}
+										variant="label-inline" label="Total non-funded insurance (C)" disabled>
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									&nbsp;
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									&nbsp;
+								</div>
+							</div>
+
+						</lightning-accordion-section>
+					</template>
+
+					<template if:false={isUsedRefinancePV}>
+						<lightning-accordion-section class="slds-accordion__summary-heading" name="EMI amount (in case of Adv. EMI)"
+							label="EMI amount (in case of Adv. EMI)">
+
+							<div class="slds-grid slds-wrap slds-m-top_x-small">
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Has_customer_opted_for_Advance_EMI__c"
+										value={ihmDetails.hasCustomerOptedForAdvanceEMI} disabled variant="label-inline" label="Has customer opted for Advance EMI ?		
+																	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="EMI_amount__c" value={ihmDetails.eMIAmount} disabled
+										variant="label-inline" label="EMI amount	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_EMI_to_be_considered_for_IHM_I__c"
+										value={totalEmiToConsider} variant="label-inline" label="Total EMI to be considered for IHM (I)							"
+										disabled>
+									</lightning-input>
+								</div>
+							</div>
+
+						</lightning-accordion-section>
+					</template>
+
+					<template if:false={isUsedRefinancePV}>
+						<lightning-accordion-section class=" slds-accordion__summary-heading" name="Other charges" label="Other charges">
+
+							<div class="slds-grid slds-wrap slds-m-top_x-small">
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input disabled data-id="other-inputs" data-name="SA_account_opening_charges__c"
+										value={_saAccountOpeningCharge} variant="label-inline" label="SA account opening charges">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="other-inputs" data-name="Total_charges_O__c" value={_saAccountOpeningCharge}
+										variant="label-inline" label="Total charges (O)	" disabled>
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									&nbsp;
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									&nbsp;
+								</div>
+							</div>
+
+						</lightning-accordion-section>
+					</template>
+
+					<template if:true={isIHMReceiptShow}>
+						<template if:false={hideRecieptSectionForTractor}>
+							<lightning-accordion-section class="slds-accordion__summary-heading " name="Total amount paid by customer to dealer"
+								label="Total amount paid by customer to dealer">
+								<br />
+								<div>
+									<button class=" slds-button slds-button_brand" style="width:300px" onclick={addRow} disabled={disabledAddRow}>
+										Add Row </button>
+								</div><br />
+								<div>
+									<table class="slds-table slds-table_cell-buffer slds-table_bordered"
+										aria-labelledby="element-with-table-label other-element-with-table-label">
+										<thead>
+											<tr class="slds-line-height_reset">
+												<th class="" scope="col">
+													<div class="slds-truncate" title="Sr.No">Sr.No</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="Upload IHM Reciept">Upload IHM Reciept
+													</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="Preview Receipt">Preview Receipt</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="IHM receipt number">IHM receipt number
+													</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="IHM receipt date">IHM receipt date</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="IHM amount as per receipt ">IHM amount as
+														per
+														receipt </div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="Is IHM Receipt legible?">Is IHM Receipt
+														legible?</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="Remarks">Remarks</div>
+												</th>
+												<th class="" scope="col">
+													<div class="slds-truncate" title="Delete">Delete</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<template if:true={showDocList}>
+												<template for:each={documentsDetails} for:item="item" for:index="index">
+													<tr class="slds-hint-parent" key={item}>
+														<td>
+															<div class="slds-truncate" title={index}>{item.index}</div>
+														</td>
+														<td>
+															<lightning-button variant="brand" label="Upload" title="Upload" data-id={item.Id} data-index={index}
+																disabled={isReadOnlyola} onclick={openFileUploaderHandler}>
+															</lightning-button>
+														</td>
+														<td>
+															<lightning-button-icon icon-name="utility:preview" alternative-text="Preview" data-id={item.Id}
+																title="Preview" class="slds-align_absolute-center" size="small" onclick={handlePreview}>
+															</lightning-button-icon>
+														</td>
+														<td>
+															<lightning-input variant="label-hidden" name="IHM receipt number" value={item.IHM_receipt_number__c}
+																data-name="IHM_receipt_number__c" data-index={index} onchange={handleChange} data-id={item.Id}
+																disabled={isReadOnlyola}>
+															</lightning-input>
+														</td>
+														<td>
+															<lightning-input type="date" variant="label-hidden" name="IHM receipt date"
+																data-name="IHM_receipt_date__c" data-index={index} value={item.IHM_receipt_date__c}
+																onchange={handleChange} data-id={item.Id} disabled={isReadOnlyola}>
+															</lightning-input>
+														</td>
+														<td>
+															<lightning-input type="number" variant="label-hidden" name="IHM amount as per receipt"
+																value={item.IHM_amount_as_per_receipt__c} data-name="IHM_amount_as_per_receipt__c"
+																onchange={handleChange} data-index={index} data-id={item.Id} disabled={isReadOnlyola}>
+															</lightning-input>
+														</td>
+														<td>
+															<lightning-input type="checkbox" variant="label-hidden" name="Is IHM receipt legible?"
+																onchange={handleChange} checked={item.Is_IHM_Receipt_legible__c}
+																data-name="Is_IHM_Receipt_legible__c" data-index={index} data-id={item.Id}
+																disabled={cvoEnabledField}>
+															</lightning-input>
+														</td>
+														<td>
+															<lightning-input variant="label-hidden" data-name="Payment_Receipt_Remarks__c"
+																disabled={cvoEnabledField} onchange={handleChange} value={item.Payment_Receipt_Remarks__c}
+																data-index={index} name="Remarks" data-id={item.Id}>
+															</lightning-input>
+														</td>
+														<td>
+															<lightning-button variant="brand" label="Delete" title="Delete" data-id={item.Id} id={item.Id}
+																data-index={index} onclick={removeRow} disabled={isReadOnlyola}>
+															</lightning-button>
+														</td>
+
+													</tr>
+												</template>
+											</template>
+										</tbody>
+									</table>
+								</div><br />
+								<div style="width: 40%">
+									<lightning-input data-id="IHM_Paid_To_Dealer" variant="label-inline" disabled
+										label="Total IHM paid to dealer (A)"></lightning-input>
+								</div>
+
+							</lightning-accordion-section>
+						</template>
+					</template>
+
+					<lightning-accordion-section class=" slds-accordion__summary-heading" name={paidByBankAccordianLabel}
+						label={paidByBankAccordianLabel}>
+						<div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+							<button onclick={fetchAmountHandler} disabled={isReadOnly}
+								class=" slds-button slds-button_brand slds-align_absolute-center" style="width:300px">
+								Fetch amount collected by executive </button>
+						</div>
+
+						<div class="slds-grid slds-wrap slds-m-top_x-small">
+							<div class="slds-col slds-size_4-of-12">
+								<lightning-input data-id="other-inputs" data-name="Total_amount_paid_to_bank__c" value={toalAmountPaidToBank}
+									disabled variant="label-inline" label="Total amount paid to bank">
+								</lightning-input>
+							</div>
+						</div>
+
+					</lightning-accordion-section>
+
+					<template if:false={isUsedRefinancePV}>
+						<lightning-accordion-section class=" slds-accordion__summary-heading" name="IHM calculation" label="IHM calculation">
+
+							<div class="slds-grid slds-wrap slds-m-top_x-small">
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" data-name="Loan_amt_sanctioned_F_excl_fund_insu__c"
+										value={ihmDetails.loanAmtSanctionedFexclFundInsu} variant="label-inline" disabled={isLoanAmountSanctionedexcelFundInsur} label="Loan amount sanctioned (F) - excl. funded insurance		
+																	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" data-name="Total_amount_to_be_paid_by_customer_G__c" name="AddtionalCal"
+										disabled value={getTotalAmountToPaid} variant="label-inline" label="Total amount to be paid by customer (G)		
+																	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" data-name="Total_amount_customer_paid_to_bank_E__c" name="AddtionalCal"
+										disabled value={toalAmountPaidToBank} variant="label-inline" label="Total amount customer paid to bank (E)		
+																	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" disabled name="AddtionalCal" data-name="Total_IHM_paid_to_dealer_A__c"
+										value={totalIHMpaidToDealer} variant="label-inline" label="Total amount customer paid to dealer (A)		
+																	">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" data-name="Customer_need_to_pay_additional_amount__c"
+										value={doesCustomerNeedToPay} variant="label-inline" label="Does customer need to pay additional amount ?		
+																	" disabled>
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" data-name="Additional_IHM_amount_to_be_paid__c"
+										value={additionalAmountPaid} variant="label-inline" label="Additional IHM amount to be paid		
+																	" disabled>
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cal-inputs" disabled={isReadOnly} data-name="Remarks__c" value={ihmDetails.remarks}
+										variant="label-inline" label="Remarks">
+									</lightning-input>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									&nbsp;
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									&nbsp;
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-combobox data-id="cvo-inputs" data-name="Select_Yes_if_IHM_details_are_correct__c"
+										value={ihmDetails.selectYesIfIHMdetailsAreCorrect} disabled={cvoEnabledField} variant="label-inline" label="Please select Yes, if IHM details are correct 		
+																	" options={yesNoOptions}>
+									</lightning-combobox>
+								</div>
+								<div class="slds-col slds-size_4-of-12">
+									<lightning-input data-id="cvo-inputs" data-name="CVO_Remarks__c" value={ihmDetails.cvoRemarks}
+										disabled={cvoEnabledField} variant="label-inline" label="Remarks">
+									</lightning-input>
+								</div>
+
+							</div>
+
+
+						</lightning-accordion-section>
+					</template>
+
+					<div if:true={preCalSubmitDisabled}
+						class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+						<button class=" slds-button slds-button_brand slds-align_absolute-center" style="width:300px"
+							onclick={submitCVOHandler} disabled={cvoEnabledField}>
+							Submit</button>
+					</div>
+					<div if:false={preCalSubmitDisabled}
+						class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+						<button class=" slds-button slds-button_brand slds-align_absolute-center" style="width:300px"
+							onclick={submitCalculationHandler} disabled={isReadOnly}>
+							Submit</button>
+					</div>
+
+					<!-- <div class="slds-m-bottom_large  slds-m-top_small slds-large-size_12-of-12 slds-clearfix">
+						<button onclick={submitHandler} class=" slds-button slds-button_brand slds-align_absolute-center" style="width:300px"
+							disabled={isReadOnly}>
+							Submit</button>
+					</div> -->
+					
+				</lightning-accordion>
+
+			</lightning-layout>
+		</template>
+		
+		<template if:false={loadComponent}>
+			<div class="slds-is-relative">
+				<lightning-spinner alternative-text="Loading..." variant="brand">
+				</lightning-spinner>
+			</div>
+		</template>
+	</template>
+	<template if:false={validateScreenVisiblity}>
+		<lightning-layout class="slds-box slds-size_12-of-12" multiple-rows="true">
+			<div class="slds-text-color_error slds-align_absolute-center">{validateWarningMessage}</div>
+	</lightning-layout>
+	</template>
+
+	<template if:true={uploadIHMRecieptFlag}>
+		<c-l-W-C_-L-O-S_-Generic-Upload-Document-M5 onchangeflagvalue={changeFlagValue}
+			currentloanapplicationid={recordId} currentapplicantid={applicantid}
+			uploadviewdocpopup={uploadIHMRecieptFlag} createdoconparentbutton="false" title="Upload IHM Reciept"
+			doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy} docotherrecordtype="true"
+			showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+			documentrecordidfromparent={documentRecordId} currentvehiclerecordid={vehiclerecordid}
+			onfileuploadstatus={docUploadSuccessfully} iscommunityuser = {isCommunityUser}></c-l-W-C_-L-O-S_-Generic-Upload-Document-M5>
+	</template>
+	<template if:true={isPreview}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+					aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+					<div class="slds-modal__container" style="background-color: grey;">
+						<!-- modal header start -->
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+								title="Close" onclick={hideModalBox}>
+								<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+									size="small"></lightning-icon>
+								<span class="slds-assistive-text">Close</span>
+							</button>
+						</header>
+						<!-- modal body start -->
+						<c-preview-file contentversionid={converId} height-in-rem={height}></c-preview-file>
+						<!-- modal footer start-->
+						<footer class="slds-modal__footer">
+							<!--<button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>-->
+						</footer>
+					</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+	</template>
+
+</template>

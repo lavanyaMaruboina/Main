@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>IBM Keys D2C</label>
+    <protected>false</protected>
+    <values>
+        <field>Client_Id__c</field>
+        <value xsi:type="xsd:string">749b3e3f8c1de54ec9260b755749ebc5</value>
+    </values>
+    <values>
+        <field>Client_Secret__c</field>
+        <value xsi:type="xsd:string">b60cdb72ff324ba9b5e6772fa7f503ab</value>
+    </values>
+    <values>
+        <field>IV_Key__c</field>
+        <value xsi:type="xsd:string">bcf30ad32b693840</value>
+    </values>
+    <values>
+        <field>Private_Key__c</field>
+        <value xsi:type="xsd:string">82b645bbbc5cd41c9a2cb4d0d3ba17af</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,750 @@
+<template>
+    <lightning-spinner if:true={showSpinner} alternative-text="Loading" size="medium"></lightning-spinner>
+        <lightning-button-icon icon-name="utility:home" onclick={navigateToHomePage} variant="brand" alternative-text="Home"
+            class=" slds-float_right slds-m-left_medium slds-m-right_medium">
+        </lightning-button-icon>
+
+        <div class="demo-only demo-only--sizing slds-grid slds-wrap padUp">
+            <div class="slds-size_1-of-2">
+                <div class="slds-text-align_center slds-m-around_x-small">
+                    <button disabled={camdisable} class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                        onclick={generateCam}>
+                        Generate CAM
+                    </button>
+                </div>
+            </div>
+
+            <div class="slds-size_1-of-2">
+                <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <button disabled={viewCAMDisable} class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                        onclick={viewCam}>
+                        View CAM
+                    </button>
+                </div>
+            </div>
+
+            <template if:true={isTractor}>
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass" disabled={disableViewDeviations}
+                                onclick={generateDeviationRec}>
+                                Generate Deviations
+                            </button>
+                        </div>
+                    </div>
+    
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-text-align_center slds-m-around_x-small">
+                            <c-i-n-d-_-l-w-c-_-view-deviation receviedvaluefromparent={valuesPassedToChild} ontriggerdeviations={triggerDeviationsClick} istractor={isTractor} camrecordid={camRecId}>
+                            </c-i-n-d-_-l-w-c-_-view-deviation>
+                        
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass" disabled={finalDisableTriggerDeviations}
+                                onclick={triggerDeviationsClick}>
+                                Initiate Approval
+                                <span if:true={iconButton} class="slds-p-left_small">&#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+            </template>
+
+            <template if:false={isTractor}>
+                <!-- D2C_CHANGE - Raman, added d2c conditions with template element-->
+                <template if:false={d2cCheck}>
+
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass" disabled={disableViewDeviations}
+                                onclick={generateDeviationRec}>
+                                View Deviations
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="slds-size_1-of-2">
+                        <div class="slds-text-align_center slds-m-around_x-small">
+                            <c-i-n-d-_-l-w-c-_-view-deviation receviedvaluefromparent={valuesPassedToChild} ontriggerdeviations={triggerDeviationsClick}>
+                            </c-i-n-d-_-l-w-c-_-view-deviation>
+
+                            <!-- </template> -->
+                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass" disabled={finalDisableTriggerDeviations}
+                                onclick={triggerDeviationsClick}>
+                                Trigger Deviations
+                                <span if:true={iconButton} class="slds-p-left_small">&#x2714;</span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            
+
+            <div class="slds-size_1-of-2" if:false={isTractor}>
+                <div class="slds-text-align_center slds-m-around_x-small">
+                    <button disabled={fwdToSCM} class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                        onclick={camForwardedToSCM}>
+                        Forward to SCM
+                    </button>
+                </div>
+            </div>
+            <div class="slds-size_1-of-2" if:false={isTractor}>
+                <div class="slds-text-align_center slds-m-around_x-small">
+                    <button disabled={fwdToCCT} class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                        onclick={forwardedToCCTClicked}>
+                        Forward to Central Credit Team
+                    </button>
+                </div>
+            </div>
+            <template if:true={isTractor}>
+                <template if:false={viewCAMDisable}>
+                    <div class="slds-size_1-of-1">
+                            <c-l-w-c-_-manual-deviation-mitigants disable-child-button={isdisableChildButton} cam-rec-id={camRecId} is-c-a-m-approved={isCAMApproved} disable-deviation-btn={disableDeviationBtn} record-id={recordId} is-revoked-loan-application={isRevokedLoanApplication}></c-l-w-c-_-manual-deviation-mitigants>
+                        </div>
+                </template>
+                
+            </template>
+            <!-- D2C_CHANGE - Raman, added d2c conditions with template element-->
+            <template if:false={d2cCheck}>
+                <template if:false={isTractor}>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                    <div class="slds-text-align_center slds-m-around_x-small">
+                        <lightning-input type="text" value={holdRemark} disabled={applicationAccepted} data-field-name="Hold_Remark__c"
+                            label="Hold Remarks"></lightning-input>
+                    </div>
+                </div>
+                </template>
+                <template if:true={isTractor}>
+                    <div class="slds-text-align_center slds-m-around_x-small">
+                        <lightning-textarea type="text" value={holdRemark1} disabled={camNotGenerated} 
+                            label="Hold Remarks" max-length="3000" onchange={handleRemarksChange}></lightning-textarea>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+
+        <div class="slds-border_top">
+            <div class="slds-col slds-size_1-of-1 slds-size_4-of-12 slds-p-horizontal_medium">
+                <lightning-combobox label="Do You Want to Forward this Proposal" data-name="forwarded" options={replyOptions} value={reply}
+                    onchange={handleReplyOptions} disabled={applicationAccepted}>
+                </lightning-combobox>
+            </div>
+        </div>
+
+        <template if:true={isShowForwardData}>
+            <div class="slds-section slds-is-open slds-border_top">
+                <h3 class="slds-section__title">
+                    <button data-position="0"
+                        class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn "
+                        aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+                        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                            aria-hidden="true">
+                            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch">
+                            </use>
+                        </svg>
+                        <span class="slds-truncate" title="Section Title">Forward</span>
+                    </button>
+                </h3>
+                <div class="slds-section__content">
+                    <div class="slds-form_horizontal slds-form slds-grid slds-wrap">
+                        <div class="slds-size_1-of-3">
+                            <div class="slds-text-align_center slds-m-around_x-small">
+                                <lightning-combobox name="Forward to" label="Forward to" value={forwardTo}
+                                    placeholder="Select Role" options={picklistOptions} required="true"
+                                    onchange={handleforwardEvent}></lightning-combobox>
+
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-3">
+                            <div class="slds-text-align_center slds-m-around_x-small">
+                                <lightning-input value={vehicleId} disabled required="true" type="text" title="Vehicle ID" label="Vehicle ID"
+                                    onchange={handleValueChange}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-3">
+                            <div class="slds-text-align_center slds-m-around_x-small">
+                                <lightning-textarea value={remarks} required="true" title="Forward Remarks" label="Remarks"
+                                    onchange={handleValueChange}></lightning-textarea>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-text-align_center slds-m-around_x-small">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                                onclick={forwardCAM}>
+                                Forward
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <div class="slds-section slds-is-open slds-border_top">
+            <h3 class="slds-section__title">
+                <button data-position="1"
+                    class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn "
+                    aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+                    <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                        aria-hidden="true">
+                        <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch">
+                        </use>
+                    </svg>
+                    <span class="slds-truncate" title="Section Title">Forward logs</span>
+                </button>
+            </h3>
+            <div class="slds-section__content">
+
+                <template if:true={isShowData}>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Forwarded On">Forwarded On</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Forwarded By Role">Forwarded By Role</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Forwarded Role">Forwarded Role</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Emp Name">Emp Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Remarks">Remarks</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <template for:each={approvalLogDetails} for:item="logRecord">
+
+                                <tr class="slds-hint-parent" key={logRecord.Id} style={logRecord.style} >
+                                    <td data-label="Forwarded On">
+                                        <div class="slds-truncate" title={logRecord.readableDate}>
+                                            {logRecord.readableDate}</div>
+                                    </td>
+                                    <td data-label="Forwarded By Role">
+                                        <div class="slds-truncate" title={logRecord.Forwarding_Role__c}>
+                                            {logRecord.Forwarding_Role__c}</div>
+                                    </td>
+                                    <td data-label="Forwarded Role">
+                                        <div class="slds-truncate" title={logRecord.Forwarded_Role__c}>
+                                            {logRecord.Forwarded_Role__c}</div>
+                                    </td>
+                                    <td data-label="Emp Name">
+                                        <template if:true={logRecord.Forwarded_Employee__c}>
+                                            <div class="slds-truncate" title={logRecord.Forwarded_Employee__r.Name}>
+                                                {logRecord.Forwarded_Employee__r.Name}</div>
+                                        </template>
+                                    </td>
+                                    <td data-label="Remarks">
+                                        <div class="slds-truncate" title={logRecord.Proposal_Remark__c}>{logRecord.Proposal_Remark__c}<!--CISP-2332-->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </template>
+            </div>
+        </div>
+        <div class="slds-border_top">
+            <div class="slds-size_1-of-1 slds-text-align_center slds-m-around_x-small">
+                <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass" disabled={addChangeCoBorrowerDisabled}
+                    onclick={handleRevokeModal}><!--Start CISP-2392-->
+                    Add/Change {coBorrowerLabel}
+                </button>
+                <template if:true={showRevokeModal}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  slds-modal_large">
+                        <div class="slds-modal__container" style="max-width: 40%!important;">
+                            <header class="slds-modal__header" style="background: #8C3137;">
+                                <button style="background-color: grey" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelRevoke}>
+                                    <lightning-icon icon-name="utility:close"
+                                        alternative-text="close"
+                                        variant="inverse"
+                                        size="small" ></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <div>
+                                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"
+                                     style="color: white;margin-block: -9px">
+                                        Alert!
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium slds-scrollable_x slds-grid" style="overflow-y: auto;"
+                                id="modal-content-id-12">
+                                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-align_absolute-center">
+                                        This application will be revoked. Do you wish to continue?
+                                    </div>
+                                    <!--CISP-4628 Start-->
+                                    <div class="slds-col slds-size_1-of-1">
+                                        <template lwc:if={showUserSelectionLookupOnRevoke}>
+                                            <c-generic-custom-lookup is-value-selected={isUserSelected} selected-name={selectedUserName}
+                                                icon-name='standard:avatar' is-called-from-revoke="true" parent-data={revokeData}
+                                                onclearvalue={clearUserSelection} onlookupselected={handleUserSelection} select-field-name='Ben Code'
+                                                small-input="true">
+                                            </c-generic-custom-lookup>
+                                        </template>
+                                    </div>
+                                    <!--CISP-4628 End-->
+                                    <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                            onclick={addOrChangeCoBorrower} disabled={isRevokeDisabled}>
+                                            Revoke
+                                        </button>
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                            onclick={cancelRevoke}>
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+                </template><!-- End CISP-2392-->
+                <!--SFTRAC-166-->
+                <template if:true={showRevokeModalForTractor}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  slds-modal_large">
+                        <div class="slds-modal__container" style="max-width: 40%!important;">
+                            <header class="slds-modal__header" style="background: #8C3137;">
+                                <button style="background-color: grey" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelRevoke}>
+                                    <lightning-icon icon-name="utility:close"
+                                        alternative-text="close"
+                                        variant="inverse"
+                                        size="small" ></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <div>
+                                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate"
+                                     style="color: white;margin-block: -9px">
+                                        Alert!
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium slds-scrollable_x slds-grid" style="overflow-y: auto;"
+                                id="modal-content-id-13">
+                                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-align_absolute-center">
+                                        This application will be revoked. Do you wish to continue?
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning-combobox class="slds-form-element__control" data-id="salutationId" variant="label-hidden" name="status" label=""
+                                            placeholder="-Select-" options={revokeReasonVal} value={revokeTypeValue} required disabled></lightning-combobox>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                            onclick={addOrChangeCoBorrower}>
+                                            Revoke
+                                        </button>
+                                        <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                            onclick={cancelRevoke}>
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+                </template><!--SFTRAC-166-->
+            </div>
+        </div>
+        <div class="slds-border_top">
+            <div class="slds-form_horizontal slds-form slds-size_1-of-3">
+                <div class="slds-text-align_center slds-m-around_x-small">
+                    <lightning-textarea label="Credit Analyst Remarks" onchange={handleCARemarkChange}  value={caRemark} disabled={disableCARemark}></lightning-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-section slds-is-open slds-border_top">
+            <h3 class="slds-section__title">
+                <button data-position="2"
+                    class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn"
+                    aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+                    <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                        aria-hidden="true">
+                        <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch">
+                        </use>
+                    </svg>
+                    <span class="slds-truncate" title="Section Title">Proposal Approval Log</span>
+                </button>
+            </h3>
+            <div class="slds-section__content">
+
+                <template if:true={isShowData}>
+
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Role">Role</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Approval Status">Approval Status</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Approval Log">Approval Log</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Date/Time">Date/Time</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={proposalApprovalListToView} for:item="logRecord">
+                                <tr class="slds-hint-parent" key={logRecord.role}  style={logRecord.style}>
+                                    <td data-label="Role">
+                                        <div class="slds-truncate" title={logRecord.role}>{logRecord.role}</div>
+                                    </td>
+                                    <td data-label="Approval Status">
+                                        <div class="slds-truncate" title={logRecord.approvalStatus}>
+                                            {logRecord.approvalStatus}</div>
+                                    </td>
+                                    <td data-label="Approval Log">
+                                        <div class="slds-truncate" title={logRecord.logName}>{logRecord.approvalLog}</div>
+                                    </td>
+                                    <td data-label="Date/Time">
+                                        <div class="slds-truncate" title={logRecord.dateTime}>{logRecord.dateTime}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                </template>
+            </div>
+        </div>
+
+        <div class="slds-section slds-is-open slds-border_top">
+            <h3 class="slds-section__title">
+                <button data-position="3"
+                    class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn"
+                    aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+                    <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                        aria-hidden="true">
+                        <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch">
+                        </use>
+                    </svg>
+                    <span class="slds-truncate" title="Section Title">Proposal Approval Condition</span>
+                </button>
+            </h3>
+            <div class="slds-section__content">
+                <template if:true={isShowData}>
+
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="ID">ID</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Approval Conditions">Approval Conditions</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Remarks">Remarks</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={conditionalyApprovedProposalList} for:item="logRecord" for:index="i">
+                                <tr class="slds-hint-parent" key={logRecord.role} >
+                                    <td data-label="ID">
+                                        <div class="slds-truncate" title={logRecord.role}>{logRecord.role}</div>
+                                    </td>
+                                    <td data-label="Approval Conditions">
+                                        <div class="slds-truncate" title={logRecord.approvalCondition}>
+                                            {logRecord.approvalCondition}</div>
+                                    </td>
+                                    <td data-label="Action">
+                                        <lightning-combobox type="Picklist" data-field-name="Action"
+                                        name="action" variant="label-hidden" options={actionOptionsValue} disabled={logRecord.disabled} label={i} onchange={handleActionChange}
+                                         value={logRecord.action}></lightning-combobox>
+                                        <!-- <div class="slds-truncate" title={logRecord.action}>{logRecord.action}</div> -->
+                                    </td>
+                                    <td data-label="Remarks">
+                                        <lightning-input variant="label-hidden" onchange={handleConditionalRemarkChange} disabled={logRecord.disabled} label={i} value={logRecord.remark}></lightning-input>
+                                        <!-- <div class="slds-truncate" title={logRecord.remark}>{logRecord.remark}</div> -->
+                                    </td>
+                                </tr>
+                            </template>
+
+                        </tbody>
+                    </table>
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-around_x-small" disabled={disableCondtionalSubmit}
+                     onclick={handleCondtionalChanges}>
+                    Submit
+                </button>
+                </template>
+            </div>
+        </div>
+        <div class="slds-border_top">
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <template lwc:if={isTractor}>
+                    <div class="slds-form_horizontal slds-form slds-size_4-of-4">
+                        <div class="slds-section slds-is-open slds-border_top">
+                            <h3 class="slds-section__title">
+                                <button data-position="3"
+                                    class="indusPrimaryVehicleButton slds-button slds-section__title-action section-btn"
+                                    aria-controls="expando-unique-id" aria-expanded="true" onclick={handleclick}>
+                                    <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                                        aria-hidden="true">
+                                        <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch">
+                                        </use>
+                                    </svg>
+                                    <span class="slds-truncate" title="Section Title">Approved Assets</span>
+                                </button>
+                            </h3>
+                            <div class="slds-section__content">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-border_left slds-border_right"
+                                    aria-labelledby="element-with-table-label other-element-with-table-label">
+                                        <thead>
+                                            <tr>
+                                                <th>Vehicle Variant</th>
+                                                <th>Loan Amount</th>
+                                                <th>Funded Premium</th>
+                                                <th>Required CRM IRR</th>
+                                                <th>Net IRR</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <template for:each={finalTermList} for:item="finalTerm" for:index="index">
+                                                <tr key={finalTerm}>
+                                                    <td>{finalTerm.Vehicle_Detail__r.Variant__c}</td>
+                                                    <td>{finalTerm.Loan_Amount__c}</td>
+                                                    <td>{finalTerm.Vehicle_Detail__r.Total_Funded_Amount__c}</td>
+                                                    <td>{finalTerm.Required_CRM_IRR__c}</td>
+                                                    <td>{finalTerm.Net_IRR__c}</td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                        <div class="slds-text-align_center slds-m-around_x-small">
+                            <lightning-input type="text" disabled="true" label="Total Loan Amount" value={totalLoanAmount}></lightning-input>
+                        </div>
+                    </div>
+                </template>
+                <template lwc:else>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                    <div class="slds-text-align_center slds-m-around_x-small">
+                        <lightning-input type="text" disabled="true" label="Loan Amount" value={loanAmmount}></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4" if:true={showComputeButton}>
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input type="number" step="0.01" disabled={netIRRDisable} label={labelIRR} value={requiredNetIRR} onblur={handleNetIRRChange} data-id="netIRR" required></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4" if:false={showComputeButton}>
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4" if:false={showComputeButton}>
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-input type="number" step="0.01" disabled={netIRRDisable} label={labelIRR} value={requiredNetIRR} onblur={handleNetIRRChange} data-id="netIRR" required></lightning-input>
+                    </div>
+                </div>
+                </template>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4" if:true={showComputeButton}>
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-around_x-small" style="margin-left: 124px; margin-top: 0px;"
+                     onclick={openInsRecompute} disabled={disablePayinPayout}>Insurance Recompute
+                    </button>
+                        <c-i-n-d-_-l-w-c-_-c-a-m-insurance-details record-id={camRecId} oncloseinsrecompute={closeIns}></c-i-n-d-_-l-w-c-_-c-a-m-insurance-details>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4" if:false={isPassengerVehicle}>
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4" if:true={isPassengerVehicle}><!--Start CISP-131-->
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-around_x-small" style="margin-left: 124px; margin-top: 0px;"
+                     onclick={handleChangePayinPayout} disabled={disablePayinPayout}>Change Pay In / Pay Out
+                    </button>
+                        <c-i-n-d-_-l-w-c-_-change-payin-payout-c-a-m lead-source={leadSource} product-type={productType} final-term-data={finalTermsRecord} onmycustomevent={handleCustomEvent}></c-i-n-d-_-l-w-c-_-change-payin-payout-c-a-m> <!--Passing product type and lead source in child component CISP-10091-->
+                    </div>
+                </div><!--End CISP-131-->
+                <template lwc:if={isTractor}>
+                </template>
+                <template lwc:else>
+                    
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                        <div class="slds-align_absolute-center slds-m-around_x-small">
+                            <button type="button" class="indusPrimaryVehicleButton slds-button slds-button_brand" style="margin-left: 124px; margin-top: 0px;" onclick={handleInstallmentSchedule} disabled={disableInsSchedule}>Installment Schedule</button>
+                        </div>
+                    </div>
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                        <div class="slds-text-align_center slds-m-around_x-small">
+                        </div>
+                    </div>
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                        <div class="slds-text-align_center slds-m-around_x-small">
+                            <lightning-combobox label="1st EMI due date" class="firstEMIDate" value={emidate} onchange={handleEmiChange} data-id="firstEMIDate" options={emidatelist} name="firstEMI" disabled={emidisable} message-when-value-missing="Complete this field" required></lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                        <div class="slds-text-align_center slds-m-around_x-small">
+                            <lightning-input type="text" value={x2EmiDate} data-id="secondEMI" label="2nd EMI Due Date" name="secondEMI" disabled></lightning-input>
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">1st EMI due date<abbr
+                                    title="required" class="slds-required">*</abbr></label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox label="1st EMI due date" class="firstEMIDate" value={emidate} onchange={handleEmiChange} data-id="firstEMIDate" variant="label-hidden" options={emidatelist} name="firstEMI" disabled={emidisable} message-when-value-missing="Complete this field" required></lightning-combobox>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form-element  slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3">
+                                <label class="slds-form-element__label">2nd EMI Due Date</label>
+                            </div>
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-input type="text" value={x2EmiDate} data-id="secondEMI"
+                                    variant="label-hidden" label="2ndEMIDueDate" name="secondEMI"  disabled></lightning-input>
+                                <br />
+                            </div>
+                        </div>
+                    </div> -->
+                </template>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__legend slds-form-element__label">Decision</legend>
+                            <div class="slds-form-element__control">
+                                <span class="slds-radio">
+                                    <input if:false={getDisabledAccept} type="radio" id="Accept" data-id="Accept" value="Accept" name="default" onchange={handleFieldValueChange}/>
+                                    <input if:true={getDisabledAccept} type="radio" id="Accept1" value="Accept" name="default" disabled />
+                                    <label class="slds-radio__label" for="Accept">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Accept</span>
+                                    </label>
+                                </span>
+                                <span class="slds-radio">
+                                    <input type="radio" id="Reject" data-id="Reject" value="Reject" name="default" onchange={handleFieldValueChange}/>
+                                    <label class="slds-radio__label" for="Reject">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Reject</span>
+                                    </label>
+                                </span>
+                                <span class="slds-radio">
+                                    <input type="radio" data-id="Withdrawn" id="Withdrawn" value="Withdrawn" name="default" onchange={handleFieldValueChange}/>
+                                    <label class="slds-radio__label" for="Withdrawn">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Withdrawn</span>
+                                    </label>
+                                </span>
+                                <template if:true={isTractor}><!--SFTRAC-1786-->
+                                <span class="slds-radio">
+                                    <input type="radio" data-id="Hold" id="Hold" value="Hold" name="default" onchange={handleFieldValueChange} disabled={camNotGenerated}/>
+                                    <label class="slds-radio__label" for="Hold">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Hold</span>
+                                    </label>
+                                </span>
+                                </template>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                </div>
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-textarea onchange={handleValueChange} disabled={hideSubmit} title="Final Remark" required="true" value={finalRemark} label="Remarks"></lightning-textarea>
+                    </div>
+                </div>
+
+                <div class="slds-form_horizontal slds-form slds-size_1-of-4">
+                    <div class="slds-align_absolute-center slds-m-around_x-small">
+                        <lightning-combobox type="Picklist" data-field-name="Proposal_Rejected_by_any_authority__c"
+                            name="prpslrejAut" label="Proposal Rejected by any authority" options={optionsValue}
+                            onchange={handleChange} value={PrpslRejByAnyAuthy} disabled="true"></lightning-combobox>
+                    </div>
+                </div>
+
+                <div class="slds-size_1-of-1 slds-text-align_center slds-m-around_x-small">
+                    <div class="slds-form_horizontal slds-form slds-size_1-of-1">
+                        <!-- <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                            disabled={disableRevoke} onclick={onRevokeClickEvent}>
+                            Revoke Application
+                        </button> -->
+                        <button if:false={hideSubmit} class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass"
+                            disabled={disableSubmit} onclick={onSubmitClickEvent}>
+                            Submit
+                        </button>
+                        <button if:true={hideSubmit} class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass" onclick={onNextClickEvent}>
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+    <template if:true={showRejectModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  slds-modal_large">
+            <div class="slds-modal__container" style="max-width: 40%!important;">
+                <header class="slds-modal__header" style="background: #8C3137;">
+                    <button style="background-color: grey" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelReject}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <div>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"
+                         style="color: white;margin-block: -9px">
+                            Alert!
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable_x slds-grid" style="overflow-y: auto;"
+                    id="modal-content-id-11">
+                    <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-align_absolute-center">
+                            You are currently trying to reject the proposal. Do you wish to continue?
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                onclick={saveReject}>
+                                Ok
+                            </button>
+                            <button class="indusPrimaryVehicleButton slds-button slds-button_brand btnClass slds-m-top_small"
+                                onclick={cancelReject}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+    <template if:true={showWithdrawnModal}>
+        <c-i-n-d-_-l-w-c-_-application-_-withdrwal record-id = {recordId} is-modal-open = "true" hide-button = "true"></c-i-n-d-_-l-w-c-_-application-_-withdrwal>
+    </template>
+    <template lwc:if={isModalOpen}>
+        <c-i-n-d-_-l-w-c-_-installment-schedule record-id={recordId} show-installment-model={isModalOpen} onclose={handleCloseModal} onsubmit={handleInsSubmit}></c-i-n-d-_-l-w-c-_-installment-schedule>
+    </template>
+</template>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Journey_Stage__c</fullName>
+    <label>Journey Stage</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>User Details</fullName>
+                <default>false</default>
+                <label>User Details</label>
+            </value>
+            <value>
+                <fullName>Capture current residential address</fullName>
+                <default>false</default>
+                <label>Capture current residential address</label>
+            </value>
+            <value>
+                <fullName>Capture permanent residential address</fullName>
+                <default>false</default>
+                <label>Capture permanent residential address</label>
+            </value>
+            <value>
+                <fullName>Capture PAN or Other KYC</fullName>
+                <default>false</default>
+                <label>Capture PAN or Other KYC</label>
+            </value>
+            <value>
+                <fullName>Capture Dedupe</fullName>
+                <default>false</default>
+                <label>Capture Dedupe</label>
+            </value>
+            <value>
+                <fullName>Vehicle Dedupe</fullName>
+                <default>false</default>
+                <label>Vehicle Dedupe</label>
+            </value>
+            <value>
+                <fullName>Declared Income/Required Loan Amount</fullName>
+                <default>false</default>
+                <label>Declared Income/Required Loan Amount</label>
+            </value>
+            <value>
+                <fullName>Bank Account Check</fullName>
+                <default>false</default>
+                <label>Bank Account Check</label>
+            </value>
+            <value>
+                <fullName>Gatting And Screening</fullName>
+                <default>false</default>
+                <label>Gatting And Screening</label>
+            </value>
+            <value>
+                <fullName>Current Residential Address</fullName>
+                <default>false</default>
+                <label>Current Residential Address</label>
+            </value>
+            <value>
+                <fullName>Perment Residential Address</fullName>
+                <default>false</default>
+                <label>Perment Residential Address</label>
+            </value>
+            <value>
+                <fullName>Demographic Details</fullName>
+                <default>false</default>
+                <label>Demographic Details</label>
+            </value>
+            <value>
+                <fullName>Office Address for primary Income Source</fullName>
+                <default>false</default>
+                <label>Office Address for primary Income Source</label>
+            </value>
+            <value>
+                <fullName>Income Details</fullName>
+                <default>false</default>
+                <label>Income Details</label>
+            </value>
+            <value>
+                <fullName>Run EMI Engine</fullName>
+                <default>false</default>
+                <label>Run EMI Engine</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

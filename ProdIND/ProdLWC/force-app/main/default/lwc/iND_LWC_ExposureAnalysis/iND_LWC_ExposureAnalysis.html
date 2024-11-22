@@ -1,0 +1,458 @@
+<template>
+
+    <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
+        active-section-name={activeSections}>
+
+
+        <lightning-accordion-section name="A" label="BORROWER EXPOSURE">
+            <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </template>
+            <lightning-card title="" icon-name="">
+                <!--Borrower table starts here-->
+                <div class="slds-m-bottom_small">
+                    <lightning-datatable
+                        class="wrapped-header-datatable slds-table slds-table_bordered slds-table_col-bordered slds-max-medium-table_stacked-horizontal"
+                        key-field="Id" data={dataBorrowerExposure} columns={columns_BorrowerExposure}
+                        hide-checkbox-column onrowaction={callRowAction}>
+                    </lightning-datatable>
+                    <template if:false={hasBorrowerExposure}>
+                        <div class="noRecord">No data to display</div>
+                    </template>
+                </div><!-- End of Borrower table-->
+
+
+                <template if:true={isModalOpenLien}>
+                    <!-- Modal/Popup Box LWC starts here -->
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+                        aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open slds-modal_medium">
+                        <div class="slds-modal__container">
+                            <!-- Modal/Popup Box LWC header here -->
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                        size="small"></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Lien Details
+                                </h2>
+                            </header>
+                            <!-- Modal/Popup Box LWC body starts here -->
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                <lightning-datatable key-field="Id" data={dataLienDetails} columns={columns_LienDetls}
+                                    hide-checkbox-column class="slds-table slds-table_bordered slds-table_col-bordered">
+                                </lightning-datatable>
+                                <template if:false={hasLienDetails}>
+                                    <div class="noRecord">No data to display</div>
+                                </template>
+                            </div>
+                            <!-- Modal/Popup Box LWC footer starts here -->
+                            <footer class="slds-modal__footer">
+                                <!--button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button-->
+                                <button class="slds-button slds-button_brand" onclick={submitDetails}
+                                    title="close">Close</button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+                </template>
+            </lightning-card>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="B" label="CO BORROWER EXPOSURE">
+            <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </template>
+            <lightning-card title="" icon-name="">
+                <div class="slds-m-bottom_small">
+                    <lightning-datatable key-field="Id" data={datacoBorrowerExposure}
+                        columns={columns_coBorrowerExposure} hide-checkbox-column onrowaction={callRowAction}
+                        class="wrapped-header-datatable slds-table slds-table_bordered slds-table_col-bordered  slds-max-medium-table_stacked-horizontal">
+                    </lightning-datatable>
+                    <template if:false={hascoBorrowerExposure}>
+                        <div class="noRecord">No data to display</div>
+                    </template>
+                </div><!-- End of Co-Borrower table-->
+            </lightning-card>
+        </lightning-accordion-section>
+
+        <!--Added by Prashant Dixit for Guarantor : SFTRAC-96 start-->
+       <template if:true={isProductTypeTractor}>
+            <lightning-accordion-section name="D" label="GUARANTOR EXPOSURE">
+                <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+                </template>
+                <lightning-card title="" icon-name="">
+                    <div class="slds-m-bottom_small">
+                        <lightning-datatable key-field="Id" data={dataGuarantorExposure}
+                            columns={columns_GuarantorExposure} hide-checkbox-column onrowaction={callRowAction}
+                            class="wrapped-header-datatable slds-table slds-table_bordered slds-table_col-bordered  slds-max-medium-table_stacked-horizontal">
+                        </lightning-datatable>
+                        <template if:false={hasGuarantorExposure}>
+                            <div class="noRecord">No data to display</div>
+                        </template>
+                    </div>
+                </lightning-card>
+            </lightning-accordion-section>
+        </template>
+        <!--Added by Prashant Dixit for Guarantor : SFTRAC-96 end-->
+
+        <lightning-accordion-section name="C" label="ADDITIONAL EXPOSURE">
+            <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </template>
+            <lightning-card title="" icon-name="">
+                <!-- <div class="slds-m-bottom_small">
+                    <lightning-datatable key-field="Id" data={datacustomerExposure} columns={columns_customerExposure}
+                        hide-checkbox-column onrowaction={callRowAction}
+                        class="slds-table slds-table_bordered slds-table_col-bordered">
+                    </lightning-datatable>
+                    <template if:false={hascustomerExposure}>
+                        <div class="noRecord">No data to display</div>
+                    </template>
+                </div> -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template for:each={additionalExpDetails} for:item="keyValue">
+                        <h1 style="text-align: left; " key={keyValue.key}>{keyValue.key}</h1>
+                        <br key={keyValue.value} />
+                        <div key={keyValue.value} class="slds-form slds-grid slds-wrap ">
+                            <lightning-datatable key-field="id" data={keyValue.value}
+                                columns={columns_customerExposure} hide-checkbox-column onrowaction={callRowAction}
+                                class="slds-table slds-table_bordered slds-table_col-bordered slds-border_right"
+                                sorted-by={sortBy}
+                                sorted-direction="asc"
+                                style="border: 0.5px solid;">
+                            </lightning-datatable>
+                        </div>
+                        <br key={keyValue.value} />
+                        <template if:false={keyValue.value}>
+                            <div class="noRecord" key={keyValue.value} >No data to display</div>
+                        </template>
+                    </template>
+                    
+                    <template if:true={isModalOpenLien}>
+                        <!-- Modal/Popup Box LWC starts here -->
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+                            aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open slds-modal_medium">
+                            <div class="slds-modal__container">
+                                <!-- Modal/Popup Box LWC header here -->
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                        title="Close" onclick={closeModal}>
+                                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                            size="small"></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 id="modal-heading-2" class="slds-text-heading_medium slds-hyphenate">Lien Details
+                                    </h2>
+                                </header>
+                                <!-- Modal/Popup Box LWC body starts here -->
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                                    <lightning-datatable key-field="Id" data={dataLienDetails} columns={columns_LienDetls}
+                                        hide-checkbox-column class="slds-table slds-table_bordered slds-table_col-bordered">
+                                    </lightning-datatable>
+                                    <template if:false={hasLienDetails}>
+                                        <div class="noRecord">No data to display</div>
+                                    </template>
+                                </div>
+                                <!-- Modal/Popup Box LWC footer starts here -->
+                                <footer class="slds-modal__footer">
+                                    <!--button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button-->
+                                    <button class="slds-button slds-button_brand" onclick={submitDetails}
+                                        title="close">Close</button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+                    </template>
+                </div>
+            </lightning-card>
+        </lightning-accordion-section>
+
+    </lightning-accordion>
+
+
+
+    <div style="padding-top:20px; text-align: center;">
+        <!-- Family exposure button for open modal window -->
+        <lightning-button variant="brand" label="Show Family Exposure" title="Show Family Exposure" onclick={openModal}
+            class="slds-button slds-m-left_x-small">
+        </lightning-button>
+
+        <!--Use template if:true to display/hide popup based on isModalOpen family exposure value-->
+        <template if:true={isModalOpen}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Family Exposure</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <template for:each={familyExpDetails} for:item="keyValue">
+                            <h1 style="text-align: left; " key={keyValue.key}>{keyValue.key}</h1>
+                            <br key={keyValue.value} />
+                            <div key={keyValue.value} class="slds-form slds-grid slds-wrap slds-box">
+                                <lightning-datatable key-field="id" data={keyValue.value}
+                                    columns={columns_familyExposure} hide-checkbox-column
+                                    class="slds-table slds-table_bordered slds-table_col-bordered slds-border_right"
+                                    style="border: 0.5px solid;">
+                                </lightning-datatable>
+                            </div>
+                            <br key={keyValue.value} />
+                        </template>
+                        <template if:false={hasfamilyExposure}>
+                            <div class="noRecord">No data to display</div>
+                        </template>
+
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <!--button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button-->
+                        <button class="slds-button slds-button_brand" onclick={submitDetails}
+                            title="close">Close</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+
+
+        <template if:true={isLoading}>
+            <div class="spinner">
+                <lightning-spinner alternative-text="Loading the details.." size="large"></lightning-spinner>
+            </div>
+        </template>
+
+
+
+
+        <lightning-button variant="brand" label="Add additional customer code" title="Add additional customer code"
+            disabled={disableActionsPostSubmit} onclick={openModalAdditionalCustomerCode}
+            class="slds-button slds-m-bottom_medium">
+        </lightning-button>
+        <lightning-button variant="brand" label="Add Bank Exposure" title="Add Bank Exposure"
+            disabled={disableActionsPostSubmit} onclick={openModalBankExposure} class="slds-button">
+        </lightning-button>
+        <lightning-button variant="brand" disabled={disableActionsPostSubmit} label="Check Exposure"
+            title="Check Exposure" onclick={checkExposurefunct} class="slds-button">
+        </lightning-button>
+
+        <template if:true={isModalAdditionalExp}>
+            <!-- Modal/Popup Box LWC starts here -->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true"
+                aria-describedby="modal-content-id-3" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box LWC header here -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Add additional
+                            customer code</h2>
+                    </header>
+                    <!-- Modal/Popup Box LWC body starts here -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                        <div class="slds-m-bottom_small addcustForm">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-3">
+                                    <div class="slds-form-element_horizontal slds-is-editing">
+                                        <label class="slds-form-element__label" for="Customer_Code__c">Customer
+                                            Code</label>
+                                        <lightning-input type="text" onchange={changeHandler}
+                                            id="Additional_Customer_Code__c" data-name="Additional_Customer_Code__c"
+                                            name="Additional_Customer_Code__c" placeholder="Enter Customer Code">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-button variant="brand" label="Add" title="Add" class="slds-button"
+                                        onclick={addCustomerfunct}> </lightning-button>
+                                </div>
+                            </div>
+                        </div> <!-- End of Addition customer Exposure table-->
+                        <div class="slds-m-bottom_small slds-m-top_medium">
+                            {errormessage}
+                            <lightning-datatable key-field="Id" data={datacustomerCode} onrowaction={callRowAction}
+                                columns={columns_customerCode} hide-checkbox-column
+                                class="slds-table slds-table_bordered slds-table_col-bordered">
+                            </lightning-datatable>
+                            <template if:false={hasRecordsCustomerCode}>
+                                <div class="noRecord">No data to display</div>
+                            </template>
+                        </div> <!-- End of Bank Exposure table-->
+                        <!--div class="slds-m-bottom_small slds-m-top_medium slds-align_absolute-center">
+                                <lightning-button variant="brand"
+                            label="Submit"
+                            title="Submit"  
+                            class="slds-button" onclick={sumbitAddedCustCode}>
+                        </lightning-button>
+                            </div-->
+
+                    </div>
+                    <!-- Modal/Popup Box LWC footer starts here -->
+                    <footer class="slds-modal__footer">
+                        <!--button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button-->
+                        <button class="slds-button slds-button_brand" onclick={submitDetails}
+                            title="close">Close</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+        </template>
+
+    </div>
+
+
+    <template if:true={isModalBankExposure}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-04" aria-modal="true"
+            aria-describedby="modal-content-id-4" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">Bank Exposure</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                    <form onsubmit={addBankExposure}>
+                        <lightning-input type="hidden" id="ExposureEditId" name="ExposureEditId"
+                            onchange={changeHandler} placeholder="ID" value={formdata.ExposureEditId}></lightning-input>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element_horizontal slds-is-editing">
+                                    <label class="slds-form-element__label" for="CIF_ID__c">CIF ID</label>
+                                    <lightning-input type="text" id="CIF_ID__c" name="CIF_ID__c"
+                                        onchange={changeHandler} placeholder="Enter CIF ID" value={formdata.CIF_ID__c}
+                                        required></lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element_horizontal slds-is-editing">
+                                    <label class="slds-form-element__label" for="Type_of_Facility__c">Type of
+                                        Facility</label>
+                                    <lightning-input type="text" id="Type_of_Facility__c" name="Type_of_Facility__c"
+                                        onchange={changeHandler} placeholder="Enter Type of Facility"
+                                        value={formdata.Type_of_Facility__c} required></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element_horizontal slds-is-editing dateFld" data-id="datefield">
+                                    <label class="slds-form-element__label" for="Date_of_Sanction__c">Date of
+                                        Sanction</label>
+                                    <lightning-input type="date" id="Date_of_Sanction__c" name="Date_of_Sanction__c"
+                                        onchange={changeHandler} placeholder="Enter Date"
+                                        value={formdata.Date_of_Sanction__c} required></lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element_horizontal slds-is-editing">
+                                    <label class="slds-form-element__label" for="Sanctioned_Amt__c">Amount
+                                        Sanctioned</label>
+                                    <lightning-input type="number" id="Sanctioned_Amt__c" name="Sanctioned_Amt__c"
+                                        onchange={changeHandler} placeholder="0.00" value={formdata.Sanctioned_Amt__c}
+                                        required></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element_horizontal slds-is-editing">
+                                    <label class="slds-form-element__label" for="Amount_Utilized__c">Amount
+                                        Utilized</label>
+                                    <lightning-input type="number" id="Amount_Utilized__c" name="Amount_Utilized__c"
+                                        onchange={changeHandler} placeholder="0.00" value={formdata.Amount_Utilized__c}
+                                        required></lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element_horizontal slds-is-editing">
+                                    <label class="slds-form-element__label" for="ApprButPenForDis__c">Approved But
+                                        Pending For Disbursement</label>
+                                    <lightning-input type="number" name="ApprButPenForDis__c" id="ApprButPenForDis__c"
+                                        onchange={changeHandler} placeholder="0.00" value={formdata.ApprButPenForDis__c}
+                                        required></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-m-left_x-large">
+                                <lightning-button variant="brand" label="Submit" title="Submit" type="submit"
+                                    class="slds-button">
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="slds-m-bottom_small slds-m-top_medium">
+                        <lightning-datatable key-field="Id" data={databankExposureData} columns={columns_bankExposure}
+                            hide-checkbox-column onrowaction={callRowAction}
+                            class="slds-table slds-table_bordered slds-table_col-bordered">
+                        </lightning-datatable>
+                        <template if:false={hasExposureData}>
+                            <div class="noRecord">No data to display</div>
+                        </template>
+                    </div> <!-- End of Bank Exposure table-->
+                </div>
+
+            </div>
+            <!-- Modal/Popup Box LWC footer starts here -->
+            <footer class="slds-modal__footer">
+                <!--button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button-->
+                <button class="slds-button slds-button_brand" onclick={submitDetails} title="close">Close</button>
+            </footer>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+    </template>
+
+    <div class="summaryLables" style="padding: 0 20px;">
+        <div><span>{label.currentexposurelabel} : </span>{currentExposureAmount} </div>
+        <div><span>{label.ExistingBorrowerExposure} : </span>{existingBorrowerExposureAmount}</div>
+        <!--div><span>{label.Existing_Beneficiary_Exposure_label} : </span> </div-->
+        <div><span>{label.Existing_Co_Borrower_Exposure} : </span>{existingCoBorrowerExposureAmount}</div>
+        <div><span>{label.Existing_Other_Exposure}: </span>{existingOtherExposureAmount} </div>
+        <div><span>{label.Bank_Exposure} : </span>{bankExposureAmount}</div>
+        <div><span>{label.Total_Exposure} : </span>{totalExposureAmount}</div>
+        <div><span>{label.Cheque_Return} : </span>{chequeReturn}</div>
+        <div><span>{label.Relationship_Since} </span>{relationshipSince}</div>
+        <div if:true={pvProductType}>
+            <template if:true={isPersonalPurpose}>
+            <div><span>Borrower FOIR : </span>{borrowerFoir}</div>
+            <div if:true={isCoBorrowerExsist}><span>Co-Borrower FOIR : </span>{coBorrowerFoir}</div>
+            <div><span>Average FOIR : </span>{averageFoir}</div>
+            </template>
+        </div> 
+    </div>
+
+    <div style="text-align: right;">
+        <!--*Note:Please click on check exposure to enable submit.-->
+        <lightning-button variant="brand" label="Submit" title="Submit" class="slds-button" onclick={handleNavigate}
+            disabled={disableSubmitBtn}>
+        </lightning-button>
+
+    </div>
+    <!--template if:true={isLoading}>
+         <div>
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+         </div>
+      </template-->
+</template>

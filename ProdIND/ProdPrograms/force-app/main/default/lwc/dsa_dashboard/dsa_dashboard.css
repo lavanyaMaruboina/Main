@@ -1,0 +1,67 @@
+:host{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.ibl-btn-red{
+    background-color: #832625;
+    color: white;
+    font-size: 1.3em;
+    border-radius: 5px;
+    margin-bottom: 8%;
+    width: 200px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.li-container-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.displayNone{
+    display: none;
+}
+
+.rclimit-table {
+    border: 1px solid #dfdfe2;
+}
+
+.rcth{
+    text-align: center;
+    padding: 10px;
+}
+
+.rctd{
+    border: 1px solid #dfdfe2;
+    text-align: center;
+    padding: 10px;
+}
+
+.ibl-btn-red_small{
+    color: white;
+    background-color: #832625;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .rclimit-container{
+        width: 100%;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .rclimit-container{
+        width: 600px;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .rclimit-container{
+        width: 600px;
+    }
+}

@@ -1,0 +1,43 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <section role="dialog" class="slds-modal slds-fade-in-open zindex ">
+        <div class='slds-modal__container'>
+
+            <!-- START TOP CROSS ICON/HEADER SECTION-->
+            <header class="slds-modal__header">
+                <button if:false={showDeleteSpinner}
+                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                    onclick={closemodal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="Close" variant="inverse" size="small">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{header}</h2>
+            </header>
+            <!-- END TOP CROSS ICON/HEADER SECTION-->
+
+            <!-- START BODY SECTION-->
+            <div class="slds-modal__content slds-p-around_medium slds-text-align_center" id="modal-content-id-1">
+                {message}
+            </div>
+            <!-- END BODY SECTION-->
+
+            <!-- START FOOTER SECTION-->
+            <footer class="slds-modal__footer ">
+                <!-- START BUTTON SECTION-->
+                <div class="slds-align_absolute-center">
+
+                    <lightning-button class="slds-p-right_small" label="Cancel" onclick={closemodal}>
+                    </lightning-button>
+
+                    <lightning-button label="Okay" variant='brand' onclick={confirm}>
+                    </lightning-button>
+
+                </div>
+                <!-- END BUTTON SECTION-->
+            </footer>
+            <!-- END FOOTER SECTION-->
+        </div>
+    </section>    
+    <div class="slds-backdrop slds-backdrop_open" style="height: 300vh !important;"></div>
+</template>

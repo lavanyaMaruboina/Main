@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Disposition__c</fullName>
+    <label>Sub-Disposition</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Disposition__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Agent not available/rejected</fullName>
+                <default>false</default>
+                <label>Agent not available/rejected</label>
+            </value>
+            <value>
+                <fullName>Customer not available</fullName>
+                <default>false</default>
+                <label>Customer not available</label>
+            </value>
+            <value>
+                <fullName>Car not needed</fullName>
+                <default>false</default>
+                <label>Car not needed</label>
+            </value>
+            <value>
+                <fullName>Car needed no finance</fullName>
+                <default>false</default>
+                <label>Car needed no finance</label>
+            </value>
+            <value>
+                <fullName>Car finance not needed from IBL</fullName>
+                <default>false</default>
+                <label>Car finance not needed from IBL</label>
+            </value>
+            <value>
+                <fullName>Deal closed somewhere else</fullName>
+                <default>false</default>
+                <label>Deal closed somewhere else</label>
+            </value>
+            <value>
+                <fullName>Customer to be called back later</fullName>
+                <default>false</default>
+                <label>Customer to be called back later</label>
+            </value>
+            <value>
+                <fullName>Customer to complete journey on his own</fullName>
+                <default>false</default>
+                <label>Customer to complete journey on his own</label>
+            </value>
+            <value>
+                <fullName>Customer disconnected the call without talking</fullName>
+                <default>false</default>
+                <label>Customer disconnected the call without talking</label>
+            </value>
+            <value>
+                <fullName>Car not finalised yet</fullName>
+                <default>false</default>
+                <label>Car not finalised yet</label>
+            </value>
+            <value>
+                <fullName>Car finalised but buy/finance later</fullName>
+                <default>false</default>
+                <label>Car finalised but buy/finance later</label>
+            </value>
+            <value>
+                <fullName>Other reason (Free-text mandatory)</fullName>
+                <default>false</default>
+                <label>Other reason (Free-text mandatory)</label>
+            </value>
+            <value>
+                <fullName>Customer completed the process</fullName>
+                <default>false</default>
+                <label>Customer completed the process</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Pre-mature leads</controllingFieldValue>
+            <valueName>Agent not available/rejected</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pre-mature leads</controllingFieldValue>
+            <valueName>Customer not available</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not Interested</controllingFieldValue>
+            <valueName>Car not needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not Interested</controllingFieldValue>
+            <valueName>Car needed no finance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not Interested</controllingFieldValue>
+            <valueName>Car finance not needed from IBL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Not Interested</controllingFieldValue>
+            <valueName>Deal closed somewhere else</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Warm leads - call back</controllingFieldValue>
+            <valueName>Customer to be called back later</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Warm leads - call back</controllingFieldValue>
+            <valueName>Customer to complete journey on his own</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Warm leads - call back</controllingFieldValue>
+            <valueName>Customer disconnected the call without talking</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deferred leads - call back</controllingFieldValue>
+            <valueName>Car not finalised yet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deferred leads - call back</controllingFieldValue>
+            <valueName>Car finalised but buy/finance later</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Deferred leads - call back</controllingFieldValue>
+            <valueName>Other reason (Free-text mandatory)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Completed leads</controllingFieldValue>
+            <valueName>Customer completed the process</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

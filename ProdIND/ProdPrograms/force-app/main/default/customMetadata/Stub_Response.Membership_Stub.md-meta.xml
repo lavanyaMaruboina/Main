@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Membership icai Stub</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;RequestId&quot;: &quot;04102021160607796&quot;,
+    &quot;ResponseData&quot;: {
+        &quot;Status&quot;: &quot;Success&quot;,
+        &quot;ResponseInfo&quot;: {
+            &quot;ApplicationId&quot;: 22552896,
+            &quot;SolutionSetInstanceId&quot;: &quot;485cec38-c9d8-465f-a247-cda921ea3e46&quot;
+        },
+        &quot;Fields&quot;: {
+            &quot;Applicants&quot;: {
+                &quot;Applicant&quot;: {
+                    &quot;Services&quot;: {
+                        &quot;Service&quot;: [
+                            {
+                                &quot;Id&quot;: &quot;&quot;,
+                                &quot;Name&quot;: &quot;PublicDataAPI&quot;,
+                                &quot;Operations&quot;: {
+                                    &quot;Operation&quot;: [
+                                        {
+                                            &quot;Id&quot;: &quot;&quot;,
+                                            &quot;Name&quot;: &quot;icai&quot;,
+                                            &quot;Params&quot;: {
+                                                &quot;Param&quot;: [
+                                                    {
+                                                        &quot;Name&quot;: &quot;consent&quot;,
+                                                        &quot;Value&quot;: &quot;Y&quot;
+                                                    },
+                                                    {
+                                                        &quot;Name&quot;: &quot;membership_no&quot;,
+                                                        &quot;Value&quot;: &quot;140733&quot;
+                                                    }
+                                                ]
+                                            },
+                                            &quot;Data&quot;: {
+                                                &quot;Response&quot;: {
+                                                    &quot;RawResponse&quot;: &quot;{\&quot;result\&quot;:{\&quot;icai\&quot;:{\&quot;result\&quot;:{\&quot;name\&quot;:\&quot;KIRTI DINESH JAIN\&quot;,\&quot;address\&quot;:\&quot;39/1364 YASHODHAN KUTIR CO OP HSG SOCIETY SUBHASH NAGAR CHEMBUR MUMBAI - 400071, MAHARASHTRA, INDIA\&quot;,\&quot;gender\&quot;:\&quot;F\&quot;,\&quot;AssociateYear\&quot;:\&quot;A2011\&quot;,\&quot;Qualification\&quot;:\&quot;BCOM\&quot;,\&quot;COPStatus\&quot;:\&quot;Full Time\&quot;,\&quot;FellowYear\&quot;:\&quot;F2017\&quot;,\&quot;memberStatus\&quot;:\&quot;Active\&quot;},\&quot;request_id\&quot;:\&quot;6997124c-4a0f-478d-b49a-f17699d64dac\&quot;,\&quot;status-code\&quot;:\&quot;101\&quot;},\&quot;request_id\&quot;:\&quot;292cafba-45cc-4ef6-b5b0-ec831caa448c\&quot;,\&quot;status-code\&quot;:\&quot;101\&quot;}}&quot;
+                                                }
+                                            },
+                                            &quot;Status&quot;: &quot;Pass&quot;
+                                        }
+                                    ]
+                                },
+                                &quot;Status&quot;: &quot;Pass&quot;
+                            }
+                        ]
+                    },
+                    &quot;ApplicantIdentifier&quot;: &quot;5d2d6f47-6b35-4f86-90ea-c70d12ddf096&quot;
+                }
+            },
+            &quot;ApplicationData&quot;: {
+                &quot;Services&quot;: {
+                    &quot;Service&quot;: {
+                        &quot;Id&quot;: &quot;&quot;,
+                        &quot;Name&quot;: &quot;PublicDataAPI&quot;,
+                        &quot;Skip&quot;: &quot;N&quot;,
+                        &quot;Consent&quot;: &quot;true&quot;,
+                        &quot;EnableSimulation&quot;: &quot;&quot;
+                    }
+                }
+            },
+            &quot;Decision&quot;: &quot;Pass&quot;,
+            &quot;ApplicationId&quot;: &quot;22552896&quot;
+        }
+    }
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">icai</value>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,77 @@
+<template>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-3">
+                    <label class="slds-form-element__label">Please select search option</label>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox name="searchOption" label="Search Option"
+                                    variant="label-hidden" value={optionValue} 
+                                    onchange={handleChange} placeholder="Select State" required
+                                    options={searchOptions} ></lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+            <div class="slds-form-element  slds-grid slds-wrap">
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input class="slds-form-element__control" placeholder="Search value" variant="label-hidden" type="text" value={searchValue} onchange={handleSerachChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-button-icon icon-name="utility:search"  variant="border-filled" alternative-text="Search"  title="Search"  onclick={handleSearchClick}></lightning-button-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-modal__content slds-p-around_medium slds-scrollable_y " style="overflow-y: auto; border:2px;height:15rem;"  id="modal-content-id-2">
+        <table class="slds-table slds-table_cell-buffer slds-table_col-bordered slds-scrollable_y" border="1" width="100%" >
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Lead NO</div>     
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Stage Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">Current Owner</div>
+                    </th>
+                    <th class="slds-truncate" scope="col">
+                        <div class="labelClass slds-cell-wrap">Owner Type</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="labelClass slds-cell-wrap">New Owner</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={leadDetailsList} for:item='item' for:index="index">
+                    <tr class="slds-hint-parent" key={item}>
+                        <td data-label="Lead Number">
+                            <div class="slds-ztruncate centerClass" >{item.Name}</div>
+                        </td> 
+                        <td data-label="Stage Name">
+                            <div class="slds-ztruncate centerClass" >{item.StageName}</div>
+                        </td> 
+                        <td data-label="Owner Name">
+                            <div class="slds-ztruncate centerClass" >{item.Owner.Name}</div>
+                        </td> 
+                        <td data-label="Owner Type">
+                            <div class="slds-ztruncate centerClass" >{item.Owner.Profile.Name}</div>
+                        </td>
+                        <td>
+                            <c-l-w-c_-l-o-s_-custom-lookup  object-api-name="user" icon-name="standard:user"
+                            onrecordselection={onRecordSelection} data-target-id={index} agentblcode={item.AccountId} fromleadassignment={fromLeadAssignment} accrole ={item.Owner.Profile.Name} currentowner ={item.Owner.Name}></c-l-w-c_-l-o-s_-custom-lookup >
+                        </td> 
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    <div class="slds-form slds-grid slds-wrap">
+        <div class="slds-p-around_small slds-align_absolute-center slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+            <button class="indusPrimaryButton slds-button slds-button_brand donebutton" onclick={handleDone} disabled={doneDisable} >Save</button>
+        </div>
+    </div>
+</template>

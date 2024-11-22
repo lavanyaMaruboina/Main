@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LastStageName__c</fullName>
+    <label>Last Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Loan Initiation</fullName>
+                <default>false</default>
+                <label>Loan Initiation</label>
+            </value>
+            <value>
+                <fullName>Additional Details</fullName>
+                <default>false</default>
+                <label>Additional Details</label>
+            </value>
+            <value>
+                <fullName>Asset Details</fullName>
+                <default>false</default>
+                <label>Asset Details</label>
+            </value>
+            <value>
+                <fullName>Vehicle Valuation</fullName>
+                <default>false</default>
+                <label>Vehicle Valuation</label>
+            </value>
+            <value>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+                <label>Vehicle Insurance</label>
+            </value>
+            <value>
+                <fullName>Loan Details</fullName>
+                <default>false</default>
+                <label>Loan Details</label>
+            </value>
+            <value>
+                <fullName>Income Details</fullName>
+                <default>false</default>
+                <label>Income Details</label>
+            </value>
+            <value>
+                <fullName>Insurance Details</fullName>
+                <default>false</default>
+                <label>Insurance Details</label>
+            </value>
+            <value>
+                <fullName>Final Terms</fullName>
+                <default>false</default>
+                <label>Final Terms</label>
+            </value>
+            <value>
+                <fullName>Journey Stop</fullName>
+                <default>false</default>
+                <label>Journey Stop</label>
+            </value>
+            <value>
+                <fullName>Offer Screen</fullName>
+                <default>false</default>
+                <label>Offer Screen</label>
+            </value>
+            <value>
+                <fullName>Customer Code Addition</fullName>
+                <default>false</default>
+                <label>Customer Code Addition</label>
+            </value>
+            <value>
+                <fullName>Final Offer</fullName>
+                <default>false</default>
+                <label>Final Offer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,36 @@
+<template>
+
+<div class="fiWrapper">
+    <template if:true={isLoading} class="slds-spinner">
+        <lightning-spinner
+          class="slds-is-fixed"
+          alternative-text="Loading"
+          size="large"
+          variant="brand"
+        ></lightning-spinner>
+    </template>
+
+    
+    <template if:true={isVlosPage}>
+        <div>
+            <c-l-w-c_-l-o-s_-tab-loan-application
+                record-id={recordId}
+            >
+            </c-l-w-c_-l-o-s_-tab-loan-application>
+        </div>
+    </template>    
+    <template if:true={isD2CPage}>
+        <div>
+            <c-business-executive-screen
+                onstagechangedtocreditprocessing={handleCreditProcessingStageChanged}
+                record-id={recordId}
+            >
+            </c-business-executive-screen>
+        </div>
+    </template>
+
+</div>
+    
+    
+    
+</template>

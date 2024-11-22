@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Office_Business_Board__c</fullName>
+    <label>Office/Business Board</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Appearing outside the Building</fullName>
+                <default>false</default>
+                <label>Appearing outside the Building</label>
+            </value>
+            <value>
+                <fullName>Appearing on the Door</fullName>
+                <default>false</default>
+                <label>Appearing on the Door</label>
+            </value>
+            <value>
+                <fullName>Printed on paper stick to door</fullName>
+                <default>false</default>
+                <label>Printed on paper stick to door</label>
+            </value>
+            <value>
+                <fullName>No name board seen</fullName>
+                <default>false</default>
+                <label>No name board seen</label>
+            </value>
+            <value>
+                <fullName>Not matching with the name available us</fullName>
+                <default>false</default>
+                <label>Not matching with the name available us</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

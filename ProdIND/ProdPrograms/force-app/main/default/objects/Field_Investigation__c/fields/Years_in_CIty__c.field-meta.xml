@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Years_in_CIty__c</fullName>
+    <label># Years in City</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>&lt; 1 yr</fullName>
+                <default>false</default>
+                <label>&lt; 1 yr</label>
+            </value>
+            <value>
+                <fullName>b/w 1-2 yrs</fullName>
+                <default>false</default>
+                <label>b/w 1-2 yrs</label>
+            </value>
+            <value>
+                <fullName>b/w 2-3 yrs</fullName>
+                <default>false</default>
+                <label>b/w 2-3 yrs</label>
+            </value>
+            <value>
+                <fullName>&gt;3 yrs</fullName>
+                <default>false</default>
+                <label>&gt;3 yrs</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

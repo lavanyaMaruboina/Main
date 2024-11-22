@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rejection_field_multipicklist</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT(ISBLANK(Rejection_Fields__c))</errorConditionFormula>
+    <errorMessage>select value</errorMessage>
+</ValidationRule>

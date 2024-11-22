@@ -1,0 +1,261 @@
+<template>
+    <div>
+        <template if:true={isSpinnerMoving} class="slds-is-relative slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
+
+<lightning-accordion class="example-accordion" active-section-name="A">
+    <lightning-accordion-section name="A" label={label.Business_Payment}>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Pymt org. From<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" required="true" variant="label-hidden" name="paymentOrgFromField" value={paymentFromOrg} onchange={handleInputFieldChange} data-id="paymentOrgFromField" placeholder="-- Select --" options={paymentOrgFromOptions}
+                            disabled={isPaymentShow}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Vehicle Sold By<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" required="true" variant="label-hidden" name="vehicleSoldByField" data-id="vehicleSoldByField" onchange={handleInputFieldChange} value={vehicleSoldBy} disabled={isEditableVehicleSoldBy}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Veh Reg in Name of<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control loanAmt" required="true" variant="label-hidden" name="vehRegInNameOfField" data-id="vehRegInNameOfField" disabled={disableVehRegInName} onchange={handleInputFieldChange} type="textarea" value={vehRegInNameOf}>
+                        </lightning-input>
+                        <!-- CISP-2983 -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Buss Sourced By<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <template if:false={isPVProduct}>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control loanAmt" required="true" variant="label-hidden" name="bussSourcedByField" data-id="bussSourcedByField" onchange={handleInputFieldChange} type="textarea" value={businessSourcedByName} disabled="true">
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:true={isPVProduct}><div class="slds-col slds-size_2-of-3">
+                    <lightning-combobox class="slds-form-element__control" required="true" variant="label-hidden" name="bussSourcedByField" value={businessSourcedById} onchange={handleInputFieldChange} data-id="bussSourcedByField" placeholder="-- Select --" options={bussSourceByFieldOptions}
+                    disabled ={disablefields}> </lightning-combobox></div>
+                </template>
+                </div>
+            </div>
+            
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Buss Done By<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" required="true" variant="label-hidden" name="bussDoneByField" value={businessDoneById} onchange={handleInputFieldChange} data-id="bussDoneByField" placeholder="-- Select --" options={bussDoneByFieldOptions}
+                        disabled={disablefields}>
+                    </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Fl Done By<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" required="true" variant="label-hidden" name="fiDoneByField" data-id="fiDoneByField" onchange={handleInputFieldChange} value={fieldInvestigationByName} disabled="true">
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Colln Exec<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" required="true" variant="label-hidden" name="collectionExecutiveField" value={collectionExecutive} onchange={handleInputFieldChange} data-id="collectionExecutiveField" placeholder="-- Select --" options={collectionExecutiveOptions}
+                            disabled={disablefields}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">DO Issuance<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" required="true" variant="label-hidden" name="doIssuanceField" value={doIssuance} onchange={handleInputFieldChange} data-id="doIssuanceField" placeholder="-- Select --" options={doIssuanceOptions}
+                            disabled={disablefields}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Do Issuance Mode<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-radio-group class="slds-form-element__control" required="true" variant="label-hidden" data-id="doIssuanceModeField" name="doIssuanceModeField" value={doIssuanceMode} onchange={handleInputFieldChange} options={doIssuanModeeOptions} disabled={disablefields}
+                            type="radio">
+                        </lightning-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">DO To Be Authorised By<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" required="true" variant="label-hidden" data-id="doToBeAuthorizeByField" name="doToBeAuthorizeByField" value={doToBeAuthorizedBy} onchange={handleInputFieldChange} placeholder="-- Select --" options={doToBeAuthorizedByOptions}
+                            disabled={isEditableDoToBeAuthorize}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">BT(in Rs.)<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="slds-form-element__control" required="true" variant="label-hidden" name="balanceTranserField" data-id="balanceTranserField" onchange={handleInputFieldChange} value={balanceTranser} disabled={isBalanceTransferFieldDisable}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Purchase Doc Catq.<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" disabled={disablefields} required="true" variant="label-hidden" data-id="purchaseDocCatqField" name="purchaseDocCatqField" value={purchaseDocCatq} onchange={handleInputFieldChange} placeholder="-- Select --"
+                            options={purchaseDocCatqOptions}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Original Purchase value(in Rs.)<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input disabled={getDisableOrigFields} class="slds-form-element__control" required="true" variant="label-hidden" name="originalPurchaseValueField" data-id="originalPurchaseValueField" onchange={handleInputFieldChange} value={originalPurchaseValue}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Original Purchase Date<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input disabled={getDisableOrigFields} class="slds-form-element__control" required="true" variant="label-hidden" name="originalPurchaseDateField" data-id="originalPurchaseDateField" onchange={handleInputFieldChange} type="date" value={originalPurchaseDate}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Fund End Use<abbr title="required" class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-combobox class="slds-form-element__control" disabled={disableOrigFields} required="true" variant="label-hidden" data-id="fundEndUseField" name="fundEndUseField" value={fundEndUse} onchange={handleInputFieldChange} placeholder="-- Select --" options={fundEndUseOptions}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+
+<!--SFTRAC-147 Starts-->
+            <template if:true={isTractor}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">PDAV Flag</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-combobox class="slds-form-element__control" disabled={disablefields} required variant="label-hidden" data-id="pdavFlagField" name="pdavFlagField" value={pdavFlagValue} onchange={handlePDAVFlagChange} placeholder="-- Select --" options={pdavFlagoptions}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <!--SFTRAC-147 Ends-->
+        </div>
+        </br>
+
+    </lightning-accordion-section>
+</lightning-accordion>
+
+<div class="slds-clearfix">
+    <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+        <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+            <button class="indusPrimaryVehicleButton slds-button slds-button_brand " disabled={disablefields} name="businessPaymentSubmit" onclick={handleSubmit}>
+                        Submit
+                    </button>
+        </div>
+    </div>
+</div>
+</div>
+
+<template if:true={uploadViewDocFlag}>
+        <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue}
+            currentloanapplicationid={recordid} currentapplicantid={applicantId}
+            uploadviewdocpopup={uploadViewDocFlag}
+            doctype={docType} showdocview={showDocView} isphotocopy={showPhotoCopy}
+            showupload={showUpload} vehicledocs={isVehicleDoc} alldocs={isAllDocType}
+            documentrecordidfromparent={documentRecordId}></c-l-W-C_-L-O-S_-Upload-And-View-Document>
+    </template>
+
+</template>

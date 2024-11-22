@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Queue_Can_not_complete_milestone</fullName>
+    <active>true</active>
+    <description>Cases which are assigned to Queue can not complete milestones.</description>
+    <errorConditionFormula>(Case.Owner:Queue.DeveloperName=&quot;L1_Support&quot; ||Case.Owner:Queue.DeveloperName=&quot;L2_Support&quot;) &amp;&amp;   NOT(ISBLANK(CompletionDate)) &amp;&amp; NOT( Case.IsFlowvalidationBypassed__c) &amp;&amp; (Case.RecordType.DeveloperName = &quot;Incident&quot;)</errorConditionFormula>
+    <errorMessage>You can not complete milestones when case is assigned to Queue</errorMessage>
+</ValidationRule>

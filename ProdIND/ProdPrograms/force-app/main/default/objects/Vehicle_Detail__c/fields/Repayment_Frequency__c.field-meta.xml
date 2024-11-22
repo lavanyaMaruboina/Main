@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Repayment_Frequency__c</fullName>
+    <label>Repayment Frequency</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HALF YEARLY</fullName>
+                <default>false</default>
+                <label>HALF YEARLY</label>
+            </value>
+            <value>
+                <fullName>QUARTERLY</fullName>
+                <default>false</default>
+                <label>QUARTERLY</label>
+            </value>
+            <value>
+                <fullName>MONTHLY</fullName>
+                <default>false</default>
+                <label>MONTHLY</label>
+            </value>
+            <value>
+                <fullName>BI-MONTHLY</fullName>
+                <default>false</default>
+                <label>BI-MONTHLY</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

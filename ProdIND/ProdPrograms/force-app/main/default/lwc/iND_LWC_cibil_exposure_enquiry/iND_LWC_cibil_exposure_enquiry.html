@@ -1,0 +1,71 @@
+<template>
+    <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium slds-p-around_medium"><strong>Exposure with Other Financier - CIBIL Enquiries</strong>
+    </div>
+    <template if:false={hasCIBILContent}>
+        <div class="slds-box">
+            <div class="slds-required">{errorMsg}</div>
+        </div>
+   </template>
+   <template if:true={hasCIBILContent}>
+    <template if:true={showCIBILExposure}>
+        <div class="slds-box slds-m-vertical_medium">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table" border="1">
+                <caption><b>Exposure with Other Financier </b></align:left></caption>
+                <thead>
+                    <tr>
+                        <th>Account Type</th>
+                        <th>Owner</th>
+                        <th>Open Date</th>
+                        <th>Last Payment Date</th>
+                        <th>High Credit</th>
+                        <th>Current Balance</th>
+                        <th>Amount OD</th>
+                        <th>Reason for OD</th>
+                        <th>Financier Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={cIBILExposureContent} for:item="expObj" for:index="i">
+                        <tr class="slds-hint-parent" key={expObj.Name__c}>
+                            <td height=25px><div class="slds-truncate">{expObj.Account_Type_Desc__c}</div></td>
+                            <td height=25px><div class="slds-truncate">{expObj.Ownership__c}</div></td>  
+                            <td height=25px><div class="slds-truncate">{expObj.Open_Date__c}</div></td>  
+                            <td height=25px><div class="slds-truncate">{expObj.Last_Payment_Date__c}</div></td>  
+                            <td height=25px><div class="slds-truncate">{expObj.HighCredit__c}</div></td>  
+                            <td><div class="slds-truncate">{expObj.CurrentBalance__c}</div></td>  
+                            <td><div class="slds-truncate">{expObj.AmountOverdue__c}</div></td>  
+                            <td><div class="slds-truncate">{expObj.ReasonforOverdue__c}</div></td>  
+                            <td><div class="slds-truncate">{expObj.Name__c}</div></td>  
+                        </tr>
+                    </template>
+                </tbody>
+        </table>
+        </div>
+    </template>
+    <template if:true={showCIBILEnquiry}>
+        <div class="slds-box slds-m-vertical_medium">
+            <caption><b>CIBIL Enquiries</b></caption>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered fi-table" border="1">
+                <thead>
+                    <tr>
+                        <th>CIC No</th>
+                        <th>Date Of Enquiry</th>
+                        <th>Enquiring Member</th>
+                        <th>Enquiry Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={cIBILEnquiryContent} for:item="enqObj" for:index="i">
+                        <tr class="slds-hint-parent" key={enqObj.CIC_No__c}>
+                            <td width = 270px height=25px><div class="slds-truncate">{enqObj.CIC_No__c}</div></td>
+                            <td width = 270px height=25px><div class="slds-truncate">{enqObj.Date_Of_Enquiry__c}</div></td>
+                            <td width = 270px height=25px><div class="slds-truncate">{enqObj.Enquiring_Member__c}</div></td>
+                            <td width = 270px height=25px><div class="slds-truncate">{enqObj.Enquiry_Amount__c}</div></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+    </div>
+    </template>
+    </template>
+</template>

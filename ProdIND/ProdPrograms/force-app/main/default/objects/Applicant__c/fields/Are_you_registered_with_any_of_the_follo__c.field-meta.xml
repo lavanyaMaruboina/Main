@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Are_you_registered_with_any_of_the_follo__c</fullName>
+    <label>Are you registered with any of the follo</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MCI</fullName>
+                <default>false</default>
+                <label>MCI</label>
+            </value>
+            <value>
+                <fullName>ICAI</fullName>
+                <default>false</default>
+                <label>ICAI</label>
+            </value>
+            <value>
+                <fullName>ICWAI</fullName>
+                <default>false</default>
+                <label>ICWAI</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

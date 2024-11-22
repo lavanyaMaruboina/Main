@@ -1,0 +1,12 @@
+.iBLButton {
+    padding: 5px !important;
+    font-size: 12px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    background: #8C3137 !important;
+    border: 1px solid #fff !important;
+    border-radius: 25px !important;
+    border-color: #e0e3e5;
+    color: white !important;
+    min-width: 135px !important;
+}

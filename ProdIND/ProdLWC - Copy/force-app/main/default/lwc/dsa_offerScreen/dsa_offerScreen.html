@@ -1,0 +1,216 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <c-dsa_-b-r-e_engines
+        oncheckeligibility={handleScreening}
+        onbrecomplete={handleBREComplete}
+    ></c-dsa_-b-r-e_engines>
+    <!--CISP-13870 : Start-->
+    <template if:true={withdrawn}>
+  
+        <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+          <span class="slds-assistive-text">warning</span>
+           <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small"
+                title="Description of icon when needed">
+                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning">
+                </lightning-icon>
+            </span>
+            <h2>This loan application has been withdrawn, you are no more allowed to edit this application.</h2>
+        </div>
+    </template>
+    <!--CISP-13870 : END-->
+    <template if:false={withdrawn}> <!--added outer template for CISP-13870 Start-->
+    <lightning-card class="slds-text-align_center">
+        <div class="slds-var-p-around_small">
+            <lightning-layout class="ltngLayout" multiple-rows>
+                <lightning-layout-item
+                    size="12"
+                    class="lli-flex-center slds-p-top_large slds-p-bottom_large"
+                >
+                    <div class="container-div">
+                        <!--Added Withdraw button for CISP-13870 start-->
+                        <lightning-layout-item class="slds-float_left">
+                            <div class="slds-p-top_small"> 
+                            <c-i-n-d-_-l-w-c-_-application-_-withdrwal record-id = {recordId} ></c-i-n-d-_-l-w-c-_-application-_-withdrwal>
+                            </div>
+                        </lightning-layout-item>
+                        <!--Added Withdraw button for CISP-13870 end-->
+                        <div class="page-header">
+                            <p>Eligible Offer</p>
+                        </div>
+                        <div style="width: 100%">
+                            <template if:true={offerdata}>
+                                <lightning-input
+                                    type="number"
+                                    label="Max. eligible loan amount (Rs)"
+                                    name="maxEligibleLoanAmount"
+                                    data-id="maxEligibleLoanAmount"
+                                    variant="label-inline"
+                                    value={offerdata.maxEligibleLoanAmount}
+                                    disabled
+                                ></lightning-input>
+                                <!-- CISP-12435  <lightning-input
+                                    type="number"
+                                    label="IRR (%)"
+                                    name="irr"
+                                    data-id="irr"
+                                    variant="label-inline"
+                                    value={offerdata.irr}
+                                    disabled
+                               ></lightning-input> CISP-12435-->
+                                <lightning-input
+                                    type="number"
+                                    label="Max. Tenure (Months)"
+                                    name="maxTenure"
+                                    data-id="maxTenure"
+                                    variant="label-inline"
+                                    value={offerdata.maxTenure}
+                                    disabled
+                                ></lightning-input>
+                                <!-- CISP-12435 <lightning-input
+                                    type="number"
+                                    label="EMI (Rs)"
+                                    name="emi"
+                                    data-id="emi"
+                                    variant="label-inline"
+                                    value={offerdata.emi}
+                                    disabled
+                               ></lightning-input>CISP-12435 -->
+                                <template if:false={offerdata.disableCoborrowerIncomeField}>
+                                    <div class="slds-form-element_horizontal slds-form-element">
+                                        <p class="slds-form-element__label slds-no-flex">
+                                            Need higher loan amount?
+                                        </p>
+                                        <lightning-helptext content="Co-borrower information and documents will have to be provided to Bank Executive; higher offer subject to  co-borrower meeting eligibility criteria"></lightning-helptext>
+                                        <div class="slds-form-element__control slds-grow dob-div">
+                                            <lightning-input
+                                                type="number"
+                                                label="Need higher loan amount?"
+                                                name="coborrowerAnnualIncome"
+                                                data-id="coborrowerAnnualIncome"
+                                                variant="label-hidden"
+                                                onchange={handleIncome}
+                                                maxlength="8"
+                                                value={coborrowerAnnualIncome}
+                                                placeholder="Add co-borrower annual income"
+                                                class="coborr-input"
+                                            ></lightning-input>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button
+                                                title="Submit"
+                                                onclick={handleCoborrowerSubmit}
+                                                style="padding: 0px"
+                                                class={submitBtnClass}
+                                                name="coborrowerSubmit"
+                                                disabled={checksubmitdisabled}
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-layout class="ltngLayout" multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" class="lli-flex-center">
+                    <div style="display: flex; width: 100%; justify-content: center">
+                        <button
+                            title="Save & Exit"
+                            name="nextbtn"
+                            onclick={handleSaveExit}
+                            class="ibl-btn-red_secondary responsive-btn"
+                        >
+                            Save & Exit
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button
+                            title="Transfer to BE"
+                            name="nextbtn"
+                            onclick={showBETransferPopUp}
+                            disabled={disableTransferToBE}
+                            class={transferToBEClass}
+                        >
+                            Transfer to BE
+                        </button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" class="lli-flex-center">
+                    <p style="color: #832625">
+                        <strong>Note: </strong>Offer reflects a maximum eligible loan amount basis max tenure.
+                        Customer can alter amount & tenure as per requirements. Loan to be approved
+                        post verification of declared details.
+                    </p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+    <template if:true={shallShowBETransferPopUp}>
+    <section role="dialog" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <!-- modal header start -->
+        <header class="slds-modal__header">
+          <button
+            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+            title="Close"
+            onclick={hideBETransferPopUp}
+          >
+            <lightning-icon
+              icon-name="utility:close"
+              alternative-text="close"
+              variant="inverse"
+              size="small"
+            ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 class="slds-text-heading_medium slds-hyphenate">Transfer to BE</h2>
+        </header>
+
+        <!-- modal body start -->
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          style="text-align: center">
+          <lightning-combobox
+                                label="Business Executive"
+                                name="Business Executive"
+                                data-id="BEDetails"
+                                variant="label-inline"
+                                options={BElistOptions}
+                                onchange={handleBESelection}
+                                value={prefBEId}
+                                required
+                            ></lightning-combobox>
+        </div>
+
+        <!-- modal footer start-->
+        <footer class="slds-modal__footer lli-flex-center">
+          <div style="display: flex; width: 100%; justify-content: center">
+            <button
+              title="Cancel"
+              name="cancel"
+              onclick={hideBETransferPopUp}
+              class="ibl-btn-red responsive-btn"
+            >
+              Cancel
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button
+              title="Confirm"
+              name="Confirm"
+              onclick={handleBETransfer}
+              class="ibl-btn-red responsive-btn"
+            >
+              Submit
+            </button>
+          </div>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template> <!--added outer template for CISP-13870 End-->
+</template>

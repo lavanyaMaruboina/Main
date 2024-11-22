@@ -1,0 +1,10 @@
+.cblabel{
+    font-size: 0.75rem;
+    color: #5a5a5a;
+}
+ 
+.input-box {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}

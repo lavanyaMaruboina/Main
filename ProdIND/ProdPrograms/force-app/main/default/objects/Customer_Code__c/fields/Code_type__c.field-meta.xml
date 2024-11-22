@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Code_type__c</fullName>
+    <label>Code type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Borrower</fullName>
+                <default>false</default>
+                <label>Borrower</label>
+            </value>
+            <value>
+                <fullName>coborrower</fullName>
+                <default>false</default>
+                <label>coborrower</label>
+            </value>
+            <value>
+                <fullName>Addition Customer</fullName>
+                <default>false</default>
+                <label>Addition Customer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

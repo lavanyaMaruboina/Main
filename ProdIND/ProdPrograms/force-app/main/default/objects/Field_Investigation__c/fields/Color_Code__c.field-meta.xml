@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Color_Code__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Coordinates_Distance__c &gt;=500, IMAGE(&apos;/resource/FI_Ring_Resource/Red_Ring.png&apos;, &apos;Red Ring&apos;,  25, 25),
+  IF(AND(Coordinates_Distance__c &lt;500,Coordinates_Distance__c &gt;300),  IMAGE(&apos;/resource/FI_Ring_Resource/Yellow_Ring.png&apos;, &apos;Yellow Ring&apos;,  25, 25), 
+ IMAGE(&apos;/resource/FI_Ring_Resource/Green_Ring.png&apos;, &apos;Green Ring&apos;,  25, 25)) )</formula>
+    <label>Color Code</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

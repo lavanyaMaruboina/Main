@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Module_Name__c</fullName>
+    <label>Module Name</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Additional Details</fullName>
+                <default>false</default>
+                <label>Additional Details</label>
+            </value>
+            <value>
+                <fullName>Asset Details</fullName>
+                <default>false</default>
+                <label>Asset Details</label>
+            </value>
+            <value>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+                <label>Vehicle Insurance</label>
+            </value>
+            <value>
+                <fullName>Vehicle Valuation</fullName>
+                <default>false</default>
+                <label>Vehicle Valuation</label>
+            </value>
+            <value>
+                <fullName>Loan Details</fullName>
+                <default>false</default>
+                <label>Loan Details</label>
+            </value>
+            <value>
+                <fullName>Income Details</fullName>
+                <default>false</default>
+                <label>Income Details</label>
+            </value>
+            <value>
+                <fullName>Final Terms</fullName>
+                <default>false</default>
+                <label>Final Terms</label>
+            </value>
+            <value>
+                <fullName>Insurance Details</fullName>
+                <default>false</default>
+                <label>Insurance Details</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>FI</label>
+            </value>
+            <value>
+                <fullName>Post Sanction Checks and Documentation</fullName>
+                <default>false</default>
+                <label>Post Sanction Checks and Documentation</label>
+            </value>
+            <value>
+                <fullName>Disbursement Request Preparation</fullName>
+                <default>false</default>
+                <label>Disbursement Request Preparation</label>
+            </value>
+            <value>
+                <fullName>Qualification</fullName>
+                <default>false</default>
+                <label>Qualification</label>
+            </value>
+            <value>
+                <fullName>Needs Analysis</fullName>
+                <default>false</default>
+                <label>Needs Analysis</label>
+            </value>
+            <value>
+                <fullName>Proposal</fullName>
+                <default>false</default>
+                <label>Proposal</label>
+            </value>
+            <value>
+                <fullName>Closed Won</fullName>
+                <default>false</default>
+                <label>Closed Won</label>
+            </value>
+            <value>
+                <fullName>Loan Initiation</fullName>
+                <default>false</default>
+                <label>Loan Initiation</label>
+            </value>
+            <value>
+                <fullName>Prospecting</fullName>
+                <default>false</default>
+                <label>Prospecting</label>
+            </value>
+            <value>
+                <fullName>Offer Screen</fullName>
+                <default>false</default>
+                <label>Offer Screen</label>
+            </value>
+            <value>
+                <fullName>Existing EMI</fullName>
+                <default>false</default>
+                <label>Existing EMI</label>
+            </value>
+            <value>
+                <fullName>Credit Processing</fullName>
+                <default>false</default>
+                <label>Credit Processing</label>
+            </value>
+            <value>
+                <fullName>Additional Customer Details</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Additional Customer Details</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

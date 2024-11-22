@@ -1,0 +1,58 @@
+<template>
+  <template if:true={isCmpLoaded}>
+    <template if:true={isTractorProduct}>
+        <div class="slds-m-bottom_small slds-clearfix">
+            <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+                class=" slds-float_right ">
+            </lightning-button-icon>
+        </div>
+        <div class="slds-m-bottom_large slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Vehicle
+                Valuation</label>
+        </div>
+        <div class="slds-m-bottom_small slds-clearfix">
+            <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+            alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton">
+            </lightning-button>
+        </div>
+    
+        <lightning-accordion active-section-name="1">
+            <template if:true={vehiclePresent}>
+            <template for:each={allVehicleDetails} for:item="vehicleInfo" for:index="index">
+                <lightning-accordion-section key={vehicleInfo.vehicleRecordId} name={index}
+                    label={vehicleInfo.accordionLabel}>
+                    <c-l-W-C-_-L-O-S-_-Vehicle-Valuation index-val={index} active-tab={activeTab} recordid={recordid}
+                        checkleadaccess={checkLeadAccess} tfvehicleid={vehicleInfo.vehicleRecordId} onhomenavigation={homenavigation} current-stage={currentStage} onsubmitvehiclevaluation={submitVehicleValuation}
+                        is-revoked-loan-application={isRevokedLoanApplication}>
+                    </c-l-W-C-_-L-O-S-_-Vehicle-Valuation>
+                </lightning-accordion-section>
+            </template>
+            </template>
+            <template if:false={vehiclePresent}>
+                <div class="slds-text-align_center slds-m-around_medium"><h1><b> Valuation is not applicable for implement</b> </h1></div>
+            </template>
+        </lightning-accordion>
+        <div class="slds-m-bottom_large slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium" if:true={vehiclePresent}>
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="submitBtn indusPrimaryVehicleButton slds-button slds-button_brand " data-id="submitButton" onclick={handleSubmit}
+                        disabled={submitButtonDisabled}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+            <template if:true={isEnableNext}>
+                <button class="slds-button slds-float_right slds-button_brand next slds-m-top_large" onclick={handleOnfinish}>
+                    Next
+                </button>
+            </template>
+        </div>
+    </template>
+    <template if:false={isTractorProduct}>
+        <c-l-W-C-_-L-O-S-_-Vehicle-Valuation active-tab={activeTab} recordid={recordid}
+            checkleadaccess={checkLeadAccess} 
+            is-revoked-loan-application={isRevokedLoanApplication}>
+        </c-l-W-C-_-L-O-S-_-Vehicle-Valuation>
+    </template>
+  </template>
+</template>

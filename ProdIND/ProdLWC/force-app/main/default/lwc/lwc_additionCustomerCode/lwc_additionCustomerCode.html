@@ -1,0 +1,189 @@
+<template>
+    <template if:true={isLoading}>
+        <div>
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </div>
+    </template>
+
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button
+                        class="indusPrimaryButton slds-align_absolute-center slds-button slds-button_brand colorgreen"
+                        onclick={addCustomerDeal} disabled={consentDisable}>
+                        Add Customer Code/Deal number
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Customer Code/Deal number Button Code Closed -->
+        <template if:true={showFields}>
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+                <div class="slds-var-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" id="customercode">Customer Code</label>
+                        </div>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small">
+                                <div
+                                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                    <lightning-input disabled={isDisabledCustomerCode}
+                                        class="slds-form-element__control" value={customerCodeValue}
+                                        variant="label-hidden" type="text" label="Customer Code"
+                                        onchange={handleCustomerCode} data-id="customerCodeId">
+                                    </lightning-input>
+                                    <lightning-icon if:true={warningCustCode} size="xxx-large"
+                                        class="slds-var-m-left_small" icon-name="utility:warning" variant="container">
+                                    </lightning-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-form slds-grid slds-wrap slds-align_absolute-center">
+                <div class="slds-var-p-around_small  slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label" id="dealno">Deal Number</label>
+                        </div>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small">
+                                <div
+                                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                    <lightning-input disabled={isDisabledDealNo} class="slds-form-element__control"
+                                        value={dealNoValue} variant="label-hidden" type="text" label="Deal Number"
+                                        onchange={handleDealNumber} data-id="dealNoId">
+                                    </lightning-input>
+                                    <lightning-icon if:true={warningDealNo} size="xxx-large"
+                                        class="slds-var-m-left_small" icon-name="utility:warning" variant="container">
+                                    </lightning-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-clearfix">
+                <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small">
+                    <div
+                        class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                        <button
+                            class="indusPrimaryButton slds-align_absolute-center slds-button slds-button_brand colorgreen"
+                            onclick={handleCheckCustomerCodeDealNumber} disabled={disableCheckCustomerCodeDealNumber}>
+                            Check Customer Code/Deal number
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        </br>
+
+        <!-- Start : Capture Customer Image Code -->
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small">
+                <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                    <div style="display: flex; justify-content:center; align-items:center;">
+                        <div style="width:220px; box-sizing:border-box; margin:0px;">
+                            <button class="indusPrimaryButton slds-align_absolute-center slds-button slds-button_brand "
+                                onclick={checkExposure} disabled={isDisabledExposure}>
+                                Check Exposure
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End : Capture Customer Image Code -->
+
+        
+
+        <div class={tableStyle}>
+            <table aria-describedby="conatact-list" class="slds-table  slds-table_bordered ">
+                <!--Header of the table-->
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-size_1-of-6 " scope="col">
+                            <div class="slds-truncate " title="First Name">Customer Code</div>
+                        </th>
+                        <th class="slds-size_1-of-6 " scope="col">
+                            <div class="slds-truncate " title="Last Name">Deal Number</div>
+                        </th>
+                        <th class="slds-size_1-of-6 " scope="col">
+                            <div class="slds-truncate " title="Email">Customer Name</div>
+                        </th>
+                        <!-- <th class="slds-size_1-of-6" scope="col">
+                            <div class="slds-truncate " title="">Flag</div>
+                        </th> -->
+                        <th class="slds-size_1-of-6" scope="col">
+                            <div class="slds-truncate " title="">Action</div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <!--Body of the table-->
+                <tbody>
+                    <template for:each={customerList} for:item="customer" for:index="indexVar">
+                        <tr key={customer.customerCode} class="slds-hint-parent">
+                            <td class="slds-size_1-of-6">
+                                <div>
+                                    {customer.customerCode}
+                                    <span if:true={customer.IsExposureRecived}>&#x2714;</span>
+                                </div>
+                            </td>
+                            <td class="slds-size_1-of-6">
+                                <div>
+                                    {customer.dealNumber}
+                                </div>
+                            </td>
+                            <td class="slds-size_1-of-6">
+                                <div>
+                                    {customer.customerName}
+                                </div>
+                            </td>
+                            <!-- <td class="slds-size_1-of-6">
+                                <div>
+                                    {customer.flag}
+                                </div>
+                            </td> -->
+                            <td class="slds-size_1-of-6">
+                                <div>
+                                    <lightning-button-icon icon-name="utility:delete" value={indexVar}
+                                        alternative-text="Delete" class="slds-var-m-left_xx-small" title="Delete"
+                                        onclick={handleDeleteRow} disabled={customer.disableDelete}>
+                                    </lightning-button-icon>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+
+    <!-- start :  Submit Button -->
+    <div class="slds-clearfix">
+        <div class="slds-form slds-grid slds-wrap slds-var-p-bottom_small slds-var-p-top_small">
+            <div class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                <div style="display: flex; justify-content:center; align-items:center;">
+                    <div style="width:220px; box-sizing:border-box; margin:0px;">
+                        <button class="indusPrimaryButton slds-align_absolute-center slds-button slds-button_brand "
+                            onclick={handleSubmit} disabled={isDisabledSubmit}>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End : Submit Button  -->
+    <template if:true={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinish}>
+            Next
+        </button>
+    </template>
+</template>

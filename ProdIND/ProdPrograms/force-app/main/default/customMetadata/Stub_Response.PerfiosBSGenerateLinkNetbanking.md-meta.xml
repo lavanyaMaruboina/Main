@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>PerfiosBSGenerateLinkNetbanking</label>
+    <protected>false</protected>
+    <values>
+        <field>Response_Type__c</field>
+        <value xsi:type="xsd:string">Success</value>
+    </values>
+    <values>
+        <field>Response_xml_Json__c</field>
+        <value xsi:type="xsd:string">{ 
+	&quot;txnId&quot;:&quot;28122020162315966&quot;, 
+	&quot;Request_Initiation_Url&quot;:&quot;https://demo.perfios.com/KuberaVault/insights/tr/de5a7acd-8fb1-4065-bfbe-4ea1e0d00ac8&quot;, 
+	&quot;Url_Expires&quot;:&quot;2020-12-31 16:24&quot;, 
+	&quot;Message&quot;:&quot;SUCCESS&quot; 
+}</value>
+    </values>
+    <values>
+        <field>Service_Name__c</field>
+        <value xsi:type="xsd:string">Perfios BS Generate Link</value>
+    </values>
+</CustomMetadata>

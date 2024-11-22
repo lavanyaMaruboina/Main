@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Reverse Status</label>
+    <protected>false</protected>
+    <values>
+        <field>Client_Id__c</field>
+        <value xsi:type="xsd:string">864002643ff416436fc894227feec744</value>
+    </values>
+    <values>
+        <field>Client_Secret__c</field>
+        <value xsi:type="xsd:string">fbdbae041552036aeaeade529373a694</value>
+    </values>
+    <values>
+        <field>IV_Key__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Private_Key__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

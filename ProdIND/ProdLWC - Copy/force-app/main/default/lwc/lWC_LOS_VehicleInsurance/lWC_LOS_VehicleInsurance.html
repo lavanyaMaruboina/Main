@@ -1,0 +1,376 @@
+<!-- Screen created By : Vinita K
+Screen Name: 'LWC_LOS_VehicleInsurance'
+Description : Vehicle Insurance details will capture in this module.
+created on: 30 Nov 2021
+-->
+<template>
+    <template if:true={showVehicleInsurance}>
+        <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+        </template>
+
+        <!--prashanth-->
+        <template if:false = {isD2cApplication}>
+            <div class="slds-m-bottom_small slds-clearfix">
+                <lightning-button-icon icon-name="utility:home" onclick={handleHome} variant="brand" alternative-text="Home"
+                    class=" slds-float_right ">
+                </lightning-button-icon>
+            </div>
+        </template>
+
+        <div class="slds-m-bottom_large slds-clearfix">
+            <label class="font_design slds-align_absolute-center slds-p-bottom_medium slds-p-top_medium">Vehicle
+                Insurance</label>
+            <!--prashanth-->
+            <template if:false = {isD2cApplication}>
+                <template if:true={isEnableUploadViewDoc}>
+                    <lightning-button onclick={viewUploadViewFloater} variant="brand" label="Upload and View Document"
+                        alternative-text="Upload and View Document" class=" slds-float_right indusPrimaryVehicleButton" disabled={isUploadViewDisabled}>
+                    </lightning-button>
+                </template>
+            </template>
+        </div>
+        <template if:false={isProductTypeTractor}>
+        <div class="slds-form slds-grid slds-wrap">
+            </br>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Insurance Number<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input class="validate" variant="label-hidden" data-id="insNum"
+                            onchange={handleInsuranceNumber} value={insuranceNumber} required>
+                        </lightning-input>
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Insurer Name<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" onchange={handleInsuranceName} data-id="insName"
+                            value={insurerName} required>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Insurance Type<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <template if:true={insuranceTypeValues.data}>
+                            <lightning-combobox class="slds-form-element__control insType" variant="label-hidden"
+                                value={insuranceType} onchange={handleInsuranceType} placeholder="-- Select --"
+                                options={insuranceTypeValues.data.values} required>
+                            </lightning-combobox>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element  slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Insurance declared value<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input variant="label-hidden" data-id="insDecVal"
+                            onchange={handleInsuranceDeclaredValue} value={insuranceDeclaredValue} required>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Ins Issuance Date<abbr title="required"
+                                class="slds-required">*</abbr></label>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="date" class="validate" data-id="issDate" onchange={handleIssuanceDate}
+                            variant="label-hidden" value={insuranceDateField} required></lightning-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <label class="slds-form-element__label">Ins. Expiry date<abbr title="required"
+                                class="slds-required">*</abbr></label>
+
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="date" class="validate" data-id="expDate" onchange={handleExpiryDate}
+                            variant="label-hidden" value={insuranceExpiryDate} required></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-form slds-grid slds-wrap">
+            <template lwc:if={isPv}>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input class="slds-form-element__control" type="checkbox"
+                                label="Insurance expiring within 90 days" name="Insurance expiring within 90 days" disabled
+                                checked={insuranceExpiryCheckbox}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    <div class="slds-form-element  slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="slds-form-element__label">Existing Motor Insurance Premium<abbr title="required"
+                                    class="slds-required">*</abbr></label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning-input class="validate" type="text" pattern={label.Regex_NumberOnly} variant="label-hidden" data-id="exiMip"
+                                onchange={handleExistingMotorInsPre} value={existingMotorInsurancePremium} required >
+                            </lightning-input>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                
+            </template> 
+            <template lwc:else>
+            <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                <div class="slds-form-element slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input class="slds-form-element__control" type="checkbox"
+                            label="Insurance expiring within 60 days" name="Insurance expiring within 60 days" disabled
+                            checked={insuranceExpiryCheckbox}></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </template>
+        </div>
+
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                        onclick={handleInsurancePolicy} disabled={captureVehicleInsuranceDisabled}>
+                        Capture Insurance Policy <span if:true={tickCaptureInsurancePolicy}> &#x2714;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- For Product Type Tractor -->
+    <template if:true={isProductTypeTractor}>
+        <lightning-accordion active-section-name="1">
+            <template for:each={allVehicleDetails} for:item="vehicleInfo" for:index="index">
+                <lightning-accordion-section key={vehicleInfo.vehicleDetailId} name={index} label={vehicleInfo.accordionLabel}>
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning-input class="slds-form-element__control" data-id="toggle" type="toggle" label="Insurance Available" 
+                                    onchange={handleChange} data-index={index} data-fieldname="insuranceAvailable" message-toggle-active="Yes" message-toggle-inactive="No" checked={vehicleInfo.insuranceAvailable} ></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-form slds-grid slds-wrap">
+                        </br>
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">
+                                        Insurance Number
+                                        <template if:true={vehicleInfo.insuranceAvailable}>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                        </template>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input class="validate" variant="label-hidden" data-id="insNum"
+                                        data-index={index} data-fieldname="insuranceNumber" onchange={handleChange} value={vehicleInfo.insuranceNumber} disabled={vehicleInfo.isDisabled} required={vehicleInfo.insuranceAvailable}>
+                                    </lightning-input>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Insurer Name
+                                        <template if:true={vehicleInfo.insuranceAvailable}>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                        </template>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insName"
+                                    data-index={index} data-fieldname="insurerName" onchange={handleChange} value={vehicleInfo.insurerName} disabled={vehicleInfo.isDisabled} required={vehicleInfo.insuranceAvailable}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Insurance Type<template if:true={vehicleInfo.insuranceAvailable}>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                    </template>
+                                </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <template if:true={insuranceTypeValues.data}>
+                                        <lightning-combobox class="slds-form-element__control insType" variant="label-hidden"
+                                            value={vehicleInfo.insuranceType} data-index={index} data-fieldname="insuranceType" onchange={handleChange} placeholder="-- Select --"
+                                            options={insuranceTypeValues.data.values} disabled={vehicleInfo.isDisabled} required={vehicleInfo.insuranceAvailable}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element  slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Insurance declared value<template if:true={vehicleInfo.insuranceAvailable}>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                    </template></label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input variant="label-hidden" data-id="insDecVal"
+                                    data-index={index} data-fieldname="insuranceDeclaredValue" onchange={handleChange} value={vehicleInfo.insuranceDeclaredValue} disabled={vehicleInfo.isDisabled} required={vehicleInfo.insuranceAvailable}>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Ins Issuance Date
+                                        <template if:true={vehicleInfo.insuranceAvailable}>
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                        </template>
+                                    </label>
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="date" class="validate" data-id="issDate" data-index={index} data-fieldname="insuranceDateField" onchange={handleChange}
+                                        variant="label-hidden" value={vehicleInfo.insIssuanceDate} disabled={vehicleInfo.isDisabled} required={vehicleInfo.insuranceAvailable}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label class="slds-form-element__label">Ins. Expiry date<template if:true={vehicleInfo.insuranceAvailable}>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                </template></label>
+            
+                                </div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <lightning-input type="date" class="validate" data-id="expDate" data-index={index} data-fieldname="insuranceExpiryDate" onchange={handleChange}
+                                        variant="label-hidden" value={vehicleInfo.insExpiryDate} disabled required={vehicleInfo.insuranceAvailable}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="slds-form slds-grid slds-wrap">
+                        <div class="slds-p-around_small slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <div class="slds-form-element slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning-input class="slds-form-element__control" type="checkbox"
+                                        label="Insurance expiring within 90 days" name="Insurance expiring within 90 days" disabled
+                                        checked={vehicleInfo.insuranceExpiryCheckbox}></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <template if:true={vehicleInfo.insuranceAvailable}>
+                        <div class="slds-clearfix">
+                            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                                <div
+                                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand "
+                                        onclick={handleInsurancePolicy} data-index={index} data-vehicleid={vehicleInfo.vehicleDetailId} data-documentid={vehicleInfo.documentId} disabled={vehicleInfo.isCaptureInsuranceAvailable}>
+                                        Capture Insurance Policy <span if:true={vehicleInfo.istickCaptureInsurancePolicy}> &#x2714;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template> 
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </template>
+        <div class="slds-clearfix">
+            <div class="slds-form slds-grid slds-wrap slds-p-bottom_small slds-p-top-medium">
+                <div
+                    class="slds-form-element slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-align_absolute-center">
+                    <button class="indusPrimaryVehicleButton slds-button slds-button_brand " onclick={handleSubmit}>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+    
+    <template lwc:if={isProductTypeTractor}>
+        <template if:true={uploadViewDocFlag}>
+            <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue} 
+                currentloanapplicationid={recordid} currentapplicantid={applicantId}
+                currentvehiclerecordid={tractorVehicleId} uploadviewdocpopup={uploadViewDocFlag} doctype={docType}
+                showdocview={showDocView} isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc}
+                alldocs={isAllDocType} documentrecordidfromparent={documentRecordIdForTractorVehicle} createdoconparentbutton={createdoconparentbutton}>
+            </c-l-W-C_-L-O-S_-Upload-And-View-Document>
+        </template>
+    </template>
+    <template  lwc:else>
+    <template if:true={uploadViewDocFlag}>
+        <c-l-W-C_-L-O-S_-Upload-And-View-Document onchangeflagvalue={changeflagvalue} 
+            currentloanapplicationid={recordid} currentapplicantid={applicantId}
+            currentvehiclerecordid={vehicleDetailId} uploadviewdocpopup={uploadViewDocFlag} doctype={docType}
+            showdocview={showDocView} isphotocopy={showPhotoCopy} showupload={showUpload} vehicledocs={isVehicleDoc}
+            alldocs={isAllDocType} documentrecordidfromparent={documentRecordId}>
+        </c-l-W-C_-L-O-S_-Upload-And-View-Document>
+    </template>   
+    </template>
+    <template if:true={showFileUploadAndView}>
+        <c-i-N-D-_-L-W-C-_-Document-Upload recordid={recordid} onchangeflagvalue={closeUploadViewFloater}></c-i-N-D-_-L-W-C-_-Document-Upload>
+    </template>
+    <!-- <template if:true={navToVehicleValuation}>
+        <c-l-w-c_-l-o-s_-vehicle-valuation vehicle-id={vehicleDetailId} applicant-id={applicantId} opp-id={recordid}>
+        </c-l-w-c_-l-o-s_-vehicle-valuation>
+    </template> -->
+    <template if:true={isEnableNext}>
+        <button class="slds-button slds-float_right slds-button_brand next" onclick={handleOnfinish}>
+            Next
+        </button>
+    </template>
+</template>

@@ -1,0 +1,36 @@
+<template>
+  <lightning-quick-action-panel header="Submit Case">
+
+    <template if:true={isSpining}>
+      <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+
+    <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} onsuccess={handleSuccess}>
+      <lightning-layout multiple-rows="true" class="slds-size_12-of-12 slds-var-m-top_small">
+        <lightning-layout-item size="6" class="slds-var-p-around_medium">
+          <lightning-input-field field-name="Overall_RCU_Verification_Status__c" data-name="Overall_RCU_Verification_Status__c"
+            onchange={inputHandler} required class ="inputVeri"></lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" class="slds-var-p-around_medium">
+          <lightning-input-field field-name="Overall_RCU_Verification_Remarks__c" data-name="Overall_RCU_Verification_Remarks__c"
+            onchange={inputHandler} required></lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" class="slds-var-p-around_medium">
+          <template if:false={isDisabledRCUSampling}>
+            <lightning-input-field field-name="Overall_RCU_Sampling_Reason__c"
+              data-name="Overall_RCU_Sampling_Reason__c" disabled={isDisabledRCUSampling} onchange={inputHandler}
+              required></lightning-input-field>
+          </template>
+          <template if:true={isDisabledRCUSampling}>
+            &nbsp;
+          </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" class="slds-var-p-around_medium">
+          &nbsp;
+        </lightning-layout-item>
+      </lightning-layout>
+      <lightning-button variant="brand" class="slds-m-left_x-small slds-float_right" label="Save" onclick={handleClick}>
+      </lightning-button>
+    </lightning-record-edit-form>
+  </lightning-quick-action-panel>
+</template>

@@ -1,0 +1,101 @@
+<template>
+  <lightning-layout class="slds-box slds-size_12-of-12 slds-text-color_default" multiple-rows="true">
+    <template if:false={wouldApplLikeToOpenAcc}>
+        <template if:true={siStatus}>
+            <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center"> SI Status : {siStatus} </lightning-layout-item>
+            <template if:true={siMessage}>
+              <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center"> Message : {siMessage} </lightning-layout-item>
+            </template>
+          </template>
+      <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+        <lightning-button label="Initiate SI" variant="brand" onclick={handleInitiateSI} disabled={isInitiateSIButtonDisabled}> </lightning-button>
+      </div>
+      <div class="slds-m-bottom_large slds-m-top_small slds-large-size_12-of-12 slds-align_absolute-center">
+        <span>
+          <lightning-button label="Trigger SI Link" variant="brand" onclick={sendSMS} disabled={isLinkDisabled}> </lightning-button>
+          <template if:true={showTimer}>
+            <span class="counter slds-m-left_medium slds-text-color_weak">{timeLeft} seconds remaining...</span>
+          </template>
+        </span>
+      </div>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Repayment Captured Correctly ?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <template if:true={siCapturedPicklist.data}>
+              <lightning-combobox variant="label-hidden" name="siCapturedPicklist" value={siCapturedPicklistSelected} options={siCapturedPicklist.data.values} onchange={handleInputChange} disabled={disableSICapturedCorrectly}> </lightning-combobox>
+            </template>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Online CVO Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="siOnlineCVORemarks" value={siOnlineCVORemarks} variant="label-hidden" type="text" data-id="siOnlineCVORemarks" onchange={handleInputChange} disabled={disableOnlineCVORemarks}> </lightning-input>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center">
+        <lightning-button label="Submit" variant="brand" onclick={handleSubmitWhenNoAcc} disabled={disableSubmitWhenNoAcc}> </lightning-button>
+      </lightning-layout-item>
+    </template>
+    <template if:true={wouldApplLikeToOpenAcc}>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Details Unavailable At Present ?</label>
+          </div>
+          <template if:true={siUnavailablePicklist.data}>
+            <lightning-combobox variant="label-hidden" name="siUnavailablePicklist" value={siUnavailablePicklistSelected} options={siUnavailablePicklist.data.values} onchange={handleInputChange} disabled={disableSIDetailsUnav}> </lightning-combobox>
+          </template>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Post-Sanction Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="siPostSanctionRemarks" value={siPostSanctionRemarks} variant="label-hidden" type="text" data-id="siPostSanctionRemarks" onchange={handleInputChange} disabled={disbaleSIPostSanctionRem}> </lightning-input>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small"></lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Repayment Captured Correctly ?</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <template if:true={siCapturedPicklist.data}>
+              <lightning-combobox variant="label-hidden" name="siCapturedPicklist" value={siCapturedPicklistSelected} options={siCapturedPicklist.data.values} onchange={handleInputChange} disabled={disableSICapturedCorrectly}> </lightning-combobox>
+            </template>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <div class="slds-form-element slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-3">
+            <label class="slds-form-element__label">SI Online CVO Remarks</label>
+          </div>
+          <div class="slds-col slds-size_2-of-3">
+            <lightning-input class="slds-form-element__control" name="siOnlineCVORemarks" value={siOnlineCVORemarks} variant="label-hidden" type="text" data-id="siOnlineCVORemarks" onchange={handleInputChange} disabled={disableOnlineCVORemarks}> </lightning-input>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="12" class="slds-p-around_small slds-align_absolute-center">
+        <lightning-button label="Submit" variant="brand" onclick={handleSubmitWhenOpenAcc}> </lightning-button>
+      </lightning-layout-item>
+    </template>
+    <template if:true={showSpinner}>
+      <div class="slds-m-around_large">
+        <lightning-spinner variant="brand" alternative-text="Loading" size="large"></lightning-spinner>
+      </div>
+    </template>
+  </lightning-layout>
+</template>

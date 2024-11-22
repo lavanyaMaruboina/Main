@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TAFE_BE_Counter__c</fullName>
+    <description>Used to store how many TAFE Loan application is assigned to BE user</description>
+    <externalId>false</externalId>
+    <label>TAFE_BE_Counter</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

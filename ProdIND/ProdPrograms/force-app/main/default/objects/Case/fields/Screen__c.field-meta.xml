@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Screen__c</fullName>
+    <label>Screen</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Stages__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lead details</fullName>
+                <default>false</default>
+                <label>Lead details</label>
+            </value>
+            <value>
+                <fullName>Capture current residential address</fullName>
+                <default>false</default>
+                <label>Capture current residential address</label>
+            </value>
+            <value>
+                <fullName>Capture permanent residential address</fullName>
+                <default>false</default>
+                <label>Capture permanent residential address</label>
+            </value>
+            <value>
+                <fullName>Capture PAN and other KYC</fullName>
+                <default>false</default>
+                <label>Capture PAN and other KYC</label>
+            </value>
+            <value>
+                <fullName>Capture customer dedupe</fullName>
+                <default>false</default>
+                <label>Capture customer dedupe</label>
+            </value>
+            <value>
+                <fullName>Vehicle dedupe</fullName>
+                <default>false</default>
+                <label>Vehicle dedupe</label>
+            </value>
+            <value>
+                <fullName>Declared Income/Required Loan Amount</fullName>
+                <default>false</default>
+                <label>Declared Income/Required Loan Amount</label>
+            </value>
+            <value>
+                <fullName>Bank Account Check</fullName>
+                <default>false</default>
+                <label>Bank Account Check</label>
+            </value>
+            <value>
+                <fullName>Gating And Screening</fullName>
+                <default>false</default>
+                <label>Gating And Screening</label>
+            </value>
+            <value>
+                <fullName>Additional customer details</fullName>
+                <default>false</default>
+                <label>Additional customer details</label>
+            </value>
+            <value>
+                <fullName>Asset details</fullName>
+                <default>false</default>
+                <label>Asset details</label>
+            </value>
+            <value>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+                <label>Vehicle Insurance</label>
+            </value>
+            <value>
+                <fullName>Vehicle Valuation</fullName>
+                <default>false</default>
+                <label>Vehicle Valuation</label>
+            </value>
+            <value>
+                <fullName>Loan details</fullName>
+                <default>false</default>
+                <label>Loan details</label>
+            </value>
+            <value>
+                <fullName>Income detail</fullName>
+                <default>false</default>
+                <label>Income detail</label>
+            </value>
+            <value>
+                <fullName>Office Address for primary Income Source</fullName>
+                <default>false</default>
+                <label>Office Address for primary Income Source</label>
+            </value>
+            <value>
+                <fullName>Existing EMI</fullName>
+                <default>false</default>
+                <label>Existing EMI</label>
+            </value>
+            <value>
+                <fullName>Offer Screen</fullName>
+                <default>false</default>
+                <label>Offer Screen</label>
+            </value>
+            <value>
+                <fullName>Additional customer code</fullName>
+                <default>false</default>
+                <label>Additional customer code</label>
+            </value>
+            <value>
+                <fullName>Insurance details</fullName>
+                <default>false</default>
+                <label>Insurance details</label>
+            </value>
+            <value>
+                <fullName>Final offer Page</fullName>
+                <default>false</default>
+                <label>Final offer Page</label>
+            </value>
+            <value>
+                <fullName>View Applicant details</fullName>
+                <default>false</default>
+                <label>View Applicant details</label>
+            </value>
+            <value>
+                <fullName>CIBIL</fullName>
+                <default>false</default>
+                <label>CIBIL</label>
+            </value>
+            <value>
+                <fullName>Field Investigation</fullName>
+                <default>false</default>
+                <label>Field Investigation</label>
+            </value>
+            <value>
+                <fullName>Validation IDV</fullName>
+                <default>false</default>
+                <label>Validation IDV</label>
+            </value>
+            <value>
+                <fullName>Income</fullName>
+                <default>false</default>
+                <label>Income</label>
+            </value>
+            <value>
+                <fullName>Final terms</fullName>
+                <default>false</default>
+                <label>Final terms</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Risk summary</fullName>
+                <default>false</default>
+                <label>Risk summary</label>
+            </value>
+            <value>
+                <fullName>Exposure Analysis</fullName>
+                <default>false</default>
+                <label>Exposure Analysis</label>
+            </value>
+            <value>
+                <fullName>Credit Assessment</fullName>
+                <default>false</default>
+                <label>Credit Assessment</label>
+            </value>
+            <value>
+                <fullName>CAM and Approval Log</fullName>
+                <default>false</default>
+                <label>CAM and Approval Log</label>
+            </value>
+            <value>
+                <fullName>Deal number and Customer code generation</fullName>
+                <default>false</default>
+                <label>Deal number and Customer code generation</label>
+            </value>
+            <value>
+                <fullName>Vehicle inspection and RC check</fullName>
+                <default>false</default>
+                <label>Vehicle inspection and RC check</label>
+            </value>
+            <value>
+                <fullName>Structured EMI</fullName>
+                <default>false</default>
+                <label>Structured EMI</label>
+            </value>
+            <value>
+                <fullName>Additional documents</fullName>
+                <default>false</default>
+                <label>Additional documents</label>
+            </value>
+            <value>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+                <label>Invoice</label>
+            </value>
+            <value>
+                <fullName>IHM</fullName>
+                <default>false</default>
+                <label>IHM</label>
+            </value>
+            <value>
+                <fullName>Repayment Mandate</fullName>
+                <default>false</default>
+                <label>Repayment Mandate</label>
+            </value>
+            <value>
+                <fullName>RTO, DPN, POA documents upload</fullName>
+                <default>false</default>
+                <label>RTO, DPN, POA documents upload</label>
+            </value>
+            <value>
+                <fullName>CAM and Conditional Approval</fullName>
+                <default>false</default>
+                <label>CAM and Conditional Approval</label>
+            </value>
+            <value>
+                <fullName>Security Mandate</fullName>
+                <default>false</default>
+                <label>Security Mandate</label>
+            </value>
+            <value>
+                <fullName>Loan Agreement</fullName>
+                <default>false</default>
+                <label>Loan Agreement</label>
+            </value>
+            <value>
+                <fullName>Business Payment</fullName>
+                <default>false</default>
+                <label>Business Payment</label>
+            </value>
+            <value>
+                <fullName>Insurance Detail</fullName>
+                <default>false</default>
+                <label>Insurance Detail</label>
+            </value>
+            <value>
+                <fullName>New/Used vehicle</fullName>
+                <default>false</default>
+                <label>New/Used vehicle</label>
+            </value>
+            <value>
+                <fullName>Beneficiary details</fullName>
+                <default>false</default>
+                <label>Beneficiary details</label>
+            </value>
+            <value>
+                <fullName>RC Upload</fullName>
+                <default>false</default>
+                <label>RC Upload</label>
+            </value>
+            <value>
+                <fullName>Current residence FI case</fullName>
+                <default>false</default>
+                <label>Current residence FI case</label>
+            </value>
+            <value>
+                <fullName>Permanent residence FI case</fullName>
+                <default>false</default>
+                <label>Permanent residence FI case</label>
+            </value>
+            <value>
+                <fullName>Office FI case</fullName>
+                <default>false</default>
+                <label>Office FI case</label>
+            </value>
+            <value>
+                <fullName>CMU case</fullName>
+                <default>false</default>
+                <label>CMU case</label>
+            </value>
+            <value>
+                <fullName>TVR case</fullName>
+                <default>false</default>
+                <label>TVR case</label>
+            </value>
+            <value>
+                <fullName>Incident case</fullName>
+                <default>false</default>
+                <label>Incident case</label>
+            </value>
+            <value>
+                <fullName>Agreement Docs Upload</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Agreement Docs Upload</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Lead details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Capture current residential address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Capture permanent residential address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Capture PAN and other KYC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Capture customer dedupe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Vehicle dedupe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Declared Income/Required Loan Amount</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Bank Account Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Gating And Screening</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Additional customer details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Asset details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Vehicle Insurance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Vehicle Valuation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Loan details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Income detail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Office Address for primary Income Source</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Existing EMI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Offer Screen</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Additional customer code</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <valueName>Insurance details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Final offer Page</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Tab (L1)</controllingFieldValue>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Final terms</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>View Applicant details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>CIBIL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Field Investigation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Validation IDV</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Income</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Insurance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Risk summary</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Exposure Analysis</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Credit Assessment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>CAM and Approval Log</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Verification</controllingFieldValue>
+            <valueName>Deal number and Customer code generation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>Vehicle inspection and RC check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <valueName>Structured EMI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>Additional documents</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>IHM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>Repayment Mandate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>RTO, DPN, POA documents upload</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>Security Mandate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Post Sanction</controllingFieldValue>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>Loan Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pre disbursement</controllingFieldValue>
+            <valueName>CAM and Conditional Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Requests</controllingFieldValue>
+            <valueName>Business Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Requests</controllingFieldValue>
+            <valueName>Insurance Detail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Requests</controllingFieldValue>
+            <valueName>New/Used vehicle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Requests</controllingFieldValue>
+            <valueName>Beneficiary details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment Requests</controllingFieldValue>
+            <valueName>RC Upload</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cases</controllingFieldValue>
+            <valueName>Current residence FI case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cases</controllingFieldValue>
+            <valueName>Permanent residence FI case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cases</controllingFieldValue>
+            <valueName>Office FI case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cases</controllingFieldValue>
+            <valueName>CMU case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cases</controllingFieldValue>
+            <valueName>TVR case</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cases</controllingFieldValue>
+            <valueName>Incident case</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

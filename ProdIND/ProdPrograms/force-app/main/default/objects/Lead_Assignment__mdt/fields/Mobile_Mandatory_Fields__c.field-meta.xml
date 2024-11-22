@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile_Mandatory_Fields__c</fullName>
+    <description>This field stores the field names that are required for mobile devices.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Please store values in this format: Field1;Field2;Field3;Field4....</inlineHelpText>
+    <label>Mobile Mandatory Fields</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

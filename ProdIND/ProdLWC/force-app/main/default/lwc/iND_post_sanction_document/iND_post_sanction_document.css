@@ -1,0 +1,28 @@
+.slds-box{
+    background-color: #c9c9c9;
+} 
+.post-sanction{
+    background-color: #84181F;
+text-align: center;
+color: white;
+font-size: 17px !important;
+}
+.ibl-btn-red{
+    --sds-c-button-brand-color-background: #832625;
+}
+.uploadMessageclr{
+    color: green;
+}
+.Preview{
+    --sds-c-button-color-background: #832625;
+}
+table {
+    border-collapse: collapse;
+    width: 80%;
+  }
+  
+  td, th {
+    /*border: 1px solid #dddddd;*/
+    text-align: left;
+    padding: 10px;
+  }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Loan_Agreement_Stamp_Value__c</fullName>
+    <label>Total Loan Agreement Stamping</label>
+    <summarizedField>Stamp_Detail__c.Stamp_Value__c</summarizedField>
+    <summaryFilterItems>
+        <field>Stamp_Detail__c.Type__c</field>
+        <operation>equals</operation>
+        <value>Loan Agreement, Additional LA</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Stamp_Detail__c.Loan_Agreement__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

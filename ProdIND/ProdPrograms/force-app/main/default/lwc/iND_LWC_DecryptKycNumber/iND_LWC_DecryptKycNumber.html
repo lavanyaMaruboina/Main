@@ -1,0 +1,23 @@
+<template>
+  <lightning-card  variant="Narrow"  title="KYC Information" icon-name="standard:record" if:true={showComponent}>
+      <div class="slds-form slds-grid slds-wrap">
+          <div class="slds-p-around_small slds-size_1-of-1">
+            <div class="slds-form-element slds-grid slds-wrap">
+              <div class="slds-col slds-size_1-of-3">
+                <label class="slds-form-element__label">{kycDocumentType}</label>
+              </div>
+              <div class="slds-col slds-size_2-of-3">
+                <lightning-input class="slds-form-element__control" value={KycNumber} label={kycDocumentType} variant="label-hidden" type="text" disabled></lightning-input>
+              </div>
+            </div>
+          </div>
+          <div class="slds-p-around_small slds-size_1-of-1">
+            <button class="slds-button slds-button_brand" onclick={handleGoldenSource} disabled={goldenSourceButtonDisable} >Re-trigger Golden Source</button>
+          </div>
+        </div>
+        <template if:true={isSpinnerMoving} class=" slds-align_absolute-center">
+          <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+      </template>
+  </lightning-card>
+  
+</template>

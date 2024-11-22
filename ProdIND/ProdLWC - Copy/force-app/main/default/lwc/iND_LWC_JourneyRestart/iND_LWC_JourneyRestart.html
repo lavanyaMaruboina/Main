@@ -1,0 +1,24 @@
+<template>
+    <lightning-card>
+        <div class="slds-card__body_inner"> 
+            <div class="slds-card__body_inner">
+                <div class="slds-align_absolute-center" style="font-size: 0.8125rem;">
+                    <div>You really want to restart the journey?</div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <lightning-button-group class="slds-button-group-row slds-align_absolute-center">
+                <div class="slds-button-group-item">
+                    <lightning-button class="slds-m-right_xx-large slds-theme_brand" icon-position="left" variant="brand" type="button" label="Yes" onclick={handleYes}></lightning-button>
+                </div>
+                <div class="slds-button-group-item">
+                    <lightning-button class="slds-m-left_xx-large slds-theme_brand" icon-position="left" variant="brand" type="button" label="No" onclick={handleNo}></lightning-button>
+                </div>
+            </lightning-button-group>
+            <br>
+            <br>
+            </div>
+            
+    </lightning-card>
+</template>

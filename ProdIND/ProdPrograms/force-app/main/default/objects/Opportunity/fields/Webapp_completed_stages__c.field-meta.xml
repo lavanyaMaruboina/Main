@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Webapp_completed_stages__c</fullName>
+    <label>Webapp completed stages</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>View Loan Application Details</fullName>
+                <default>false</default>
+                <label>View Loan Application Details</label>
+            </value>
+            <value>
+                <fullName>CIBIL</fullName>
+                <default>false</default>
+                <label>CIBIL</label>
+            </value>
+            <value>
+                <fullName>FI Modules</fullName>
+                <default>false</default>
+                <label>FI Modules</label>
+            </value>
+            <value>
+                <fullName>Valuation IDE</fullName>
+                <default>false</default>
+                <label>Valuation IDE</label>
+            </value>
+            <value>
+                <fullName>Income</fullName>
+                <default>false</default>
+                <label>Income</label>
+            </value>
+            <value>
+                <fullName>Final Terms</fullName>
+                <default>false</default>
+                <label>Final Terms</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>Risk Summary</fullName>
+                <default>false</default>
+                <label>Risk Summary</label>
+            </value>
+            <value>
+                <fullName>Exposure</fullName>
+                <default>false</default>
+                <label>Exposure</label>
+            </value>
+            <value>
+                <fullName>Analysis</fullName>
+                <default>false</default>
+                <label>Analysis</label>
+            </value>
+            <value>
+                <fullName>Edit Assessment Remarks</fullName>
+                <default>false</default>
+                <label>Edit Assessment Remarks</label>
+            </value>
+            <value>
+                <fullName>Tele-verification</fullName>
+                <default>false</default>
+                <label>Tele-verification</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,46 @@
+.slds-box{
+    background-color: lightgrey; 
+}
+
+.yellowworld{
+    --sds-c-icon-color-foreground: white;
+    --sds-c-icon-color-background: yellow;
+}
+
+.greenworld{
+    --sds-c-icon-color-foreground: white;
+    --sds-c-icon-color-background: green;
+}
+.exampleHolder{
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+    width: 55px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+@media only screen and (max-width: 768px) {
+    .slds-modal__container {
+        max-width: 60% !important;
+    }
+}
+
+/* BYOD Responsive table styles */
+@media (max-width: 768px) {
+    .slds-table {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .slds-table thead th {
+        padding: 0.5rem;
+    }
+    .slds-table tbody tr td {
+        padding: 0.5rem;
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+    }
+    .mobile-wrap {
+        white-space: normal;
+        padding: 10px;
+    }
+}

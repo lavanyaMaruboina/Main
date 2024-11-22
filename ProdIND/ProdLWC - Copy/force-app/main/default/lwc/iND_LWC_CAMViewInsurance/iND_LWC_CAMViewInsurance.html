@@ -1,0 +1,82 @@
+<template>
+  <div class="slds-p-around_medium"> 
+    <lightning-card class="slds-p-around_medium">
+
+      <div class="slds-text-heading_medium slds-border_bottom slds-m-vertical_medium slds-p-around_medium">
+        <strong>Insurance Details - Customer Chosen Insurance Product</strong>
+      </div>
+      <template if:true={hasInsurancePlans}>
+        <div class="slds-box slds-m-vertical_medium slds-p-around_medium">
+
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+            style="border: 1px solid rgb(201, 201, 201);">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th scope="col">
+                  <div class="slds-truncate">Type</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate">Product Name</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate">Premium Amount</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate">Funded (Yes - Funded by IBL / No - Paid Upfront)</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={insuranceDetails} for:item="insuranceObj" for:index="i">
+                <tr class="slds-hint-parent" key={insuranceObj.Name}>
+                  <td>
+                    <div class="slds-truncate">{insuranceObj.Applicant__r.Applicant_Type__c}</div>
+                  </td>
+                  <td>
+                    <div class="slds-truncate">{insuranceObj.Insurance_Plan__c}</div>
+                  </td>
+                  <td>
+                    <div class="slds-truncate">{insuranceObj.Amount__c}</div>
+                  </td>
+                  <td>
+                    <div class="slds-truncate">{insuranceObj.Funded_Non_funded__c}</div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+        <div class="slds-box slds-m-vertical_medium slds-p-around_medium">
+
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+            style="border: 1px solid rgb(201, 201, 201);">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th scope="col">
+                  <div class="slds-truncate">Total Insurance Amount Payable</div>
+                </th>
+                <th scope="col">
+                  <div class="slds-truncate">Total Insurance Amount Funded</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="slds-hint-parent">
+                <td>
+                  <div class="slds-truncate">{totalAmountPayable}</div>
+                </td>
+                <td>
+                  <div class="slds-truncate">{totalAmountFunded}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
+      <div class="slds-float_right slds-m-around_medium ">
+        <input class="iBLButton" type="submit" value="Close" onclick={handleCloseButton} />
+      </div>
+
+    </lightning-card>
+  </div>
+</template>
